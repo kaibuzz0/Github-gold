@@ -9,33 +9,65 @@
       "repository": "https://github.com/meshtastic/firmware",
       "owner": "meshtastic",
       "category": ["lora", "mesh-networking", "embedded-firmware", "off-grid-communications"],
-      "evidence": "VERIFIED",
-      "tier": "S",
-      "score": 28,
-      "license": "GPL-3.0",
+      "evidence": "VERIFIED", "tier": "S", "score": 28, "license": "GPL-3.0",
       "license_copy_status": "allowed-with-license-obligations",
       "platforms": ["ESP32", "nRF52", "RP2040/RP2350", "Linux"],
       "useful_components": ["mesh routing", "LoRa transport", "position modules", "packet handling", "node database", "telemetry", "hardware variants"],
       "verification": ["README inspected", "LICENSE inspected", "recent commits inspected"],
-      "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "hardware_tested_by_github_gold": false, "research_priority": "high"
     },
     {
       "name": "OUI-SPY Unified Blue",
       "repository": "https://github.com/colonelpanichacks/oui-spy-unified-blue",
       "owner": "colonelpanichacks",
       "category": ["esp32-s3", "ble", "wifi", "pcap", "remote-id", "radio-observation"],
-      "evidence": "PROMISING",
-      "tier": "A",
-      "score": 24,
-      "license": "UNKNOWN",
+      "evidence": "PROMISING", "tier": "A", "score": 24, "license": "UNKNOWN",
       "license_copy_status": "do-not-copy-until-resolved",
       "platforms": ["Seeed Studio XIAO ESP32-S3"],
       "useful_components": ["boot selector", "BLE signature matching", "RSSI foxhunter", "Wi-Fi promiscuous capture", "PCAP streaming", "Open Drone ID parsing", "BLE advertising capture", "USB-CDC command protocol", "SPIFFS persistence", "browser flasher"],
       "verification": ["README inspected", "recent commits inspected", "root LICENSE lookup returned 404"],
-      "hardware_tested_by_github_gold": false,
-      "research_priority": "high",
+      "hardware_tested_by_github_gold": false, "research_priority": "high",
       "copy_restriction_note": "Catalog and study upstream only until licensing or explicit permission is established."
+    },
+    {
+      "name": "Termux Tools",
+      "repository": "https://github.com/termux/termux-tools",
+      "owner": "termux",
+      "category": ["android", "termux", "shell-utilities", "package-infrastructure"],
+      "evidence": "VERIFIED", "tier": "A", "score": 25, "license": "GPL-3.0",
+      "license_copy_status": "allowed-with-license-obligations",
+      "platforms": ["Android", "Termux"],
+      "useful_components": ["scripts utilities", "src programs", "mirror infrastructure", "properties initialization", "login environment helpers"],
+      "verification": ["official README inspected", "COPYING inspected"],
+      "hardware_tested_by_github_gold": false, "research_priority": "high"
+    },
+    {
+      "name": "termux-adb",
+      "repository": "https://github.com/nohajc/termux-adb",
+      "owner": "nohajc",
+      "category": ["android", "termux", "adb", "fastboot", "usb-interoperability"],
+      "evidence": "VERIFIED", "tier": "A", "score": 23, "license": "MIT",
+      "license_copy_status": "root-license-permissive-review-upstream-submodule-licenses",
+      "platforms": ["Android", "Termux"],
+      "useful_components": ["termux-usb integration", "USB file descriptor bridging", "Unix domain socket FD transfer", "patched ADB/Fastboot enumeration", "Termux package adaptations"],
+      "verification": ["README inspected", "root LICENSE inspected"],
+      "hardware_tested_by_github_gold": false, "research_priority": "high"
+    },
+    {
+      "name": "ESP32-S3 Remote ID Add-on",
+      "repository": "https://github.com/peinser/esp-remoteid",
+      "owner": "peinser",
+      "category": ["esp32-s3", "opendroneid", "embedded-firmware", "interoperability"],
+      "evidence": "PROMISING", "tier": "A", "score": 24, "license": "Apache-2.0",
+      "license_copy_status": "permissive-root-license-review-dependency-licenses",
+      "platforms": ["ESP32-S3"],
+      "useful_components": ["OpenDroneID transport integration", "BLE Remote ID advertisements", "Wi-Fi beacon/NAN transport", "Kconfig configuration", "MAVLink OpenDroneID ingestion", "readiness gating", "status indicators"],
+      "verification": ["README inspected", "root Apache-2.0 LICENSE inspected"],
+      "hardware_tested_by_github_gold": false, "research_priority": "high"
     }
+  ],
+  "deferred_or_rejected": [
+    {"repository": "https://github.com/PeterJBurke/esp32-c3-remote-id", "reason": "Upstream README explicitly says project is broken after ESP development-stack changes and may be deleted."},
+    {"repository": "https://github.com/colonelpanichacks/Remote-ID-Spoofer", "reason": "Primary purpose is Remote ID spoofing; not promoted under defensive/interoperability catalog scope."}
   ]
 }
