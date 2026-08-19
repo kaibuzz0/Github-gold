@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "generated_for": "kaibuzz0/Github-gold",
+  "purpose": "Machine-readable catalog of high-value repositories, working tools, reusable code, and research leads.",
+  "evidence_levels": ["VERIFIED", "PROMISING", "LEAD", "ARCHIVED"],
+  "entries": []
+}
