@@ -64,6 +64,42 @@
       "useful_components": ["OpenDroneID transport integration", "BLE Remote ID advertisements", "Wi-Fi beacon/NAN transport", "Kconfig configuration", "MAVLink OpenDroneID ingestion", "readiness gating", "status indicators"],
       "verification": ["README inspected", "root Apache-2.0 LICENSE inspected"],
       "hardware_tested_by_github_gold": false, "research_priority": "high"
+    },
+    {
+      "name": "OpenDroneID Core C",
+      "repository": "https://github.com/opendroneid/opendroneid-core-c",
+      "owner": "opendroneid",
+      "category": ["c-library", "remote-id", "protocol-encoding", "embedded-interoperability"],
+      "evidence": "VERIFIED", "tier": "S", "score": 28, "license": "Apache-2.0",
+      "license_copy_status": "permissive-with-attribution-and-notice-review",
+      "platforms": ["portable-C", "Linux", "embedded-downstream-integrations"],
+      "useful_components": ["OpenDroneID message encoders and decoders", "libopendroneid API", "MAVLink conversion layer", "Wi-Fi beacon and NaN reference code", "unit tests", "low-memory compile options"],
+      "verification": ["README inspected", "root Apache-2.0 LICENSE inspected", "build and test documentation inspected", "recent commits inspected"],
+      "hardware_tested_by_github_gold": false, "research_priority": "high"
+    },
+    {
+      "name": "LocalSend",
+      "repository": "https://github.com/localsend/localsend",
+      "owner": "localsend",
+      "category": ["local-first", "offline-file-transfer", "cross-platform", "privacy"],
+      "evidence": "VERIFIED", "tier": "S", "score": 28, "license": "Apache-2.0",
+      "license_copy_status": "permissive-root-license-review-dependency-licenses",
+      "platforms": ["Android", "iOS", "macOS", "Windows", "Linux", "Fire OS"],
+      "useful_components": ["local peer discovery", "HTTPS certificate generation", "REST transfer flow", "file and message transfer", "portable configuration mode", "cross-platform packaging", "LocalSend protocol specification"],
+      "verification": ["README inspected", "root Apache-2.0 LICENSE inspected", "build documentation inspected", "recent commits inspected"],
+      "hardware_tested_by_github_gold": false, "research_priority": "high"
+    },
+    {
+      "name": "scrcpy",
+      "repository": "https://github.com/Genymobile/scrcpy",
+      "owner": "Genymobile",
+      "category": ["android", "device-control", "screen-mirroring", "usb", "media-streaming"],
+      "evidence": "VERIFIED", "tier": "S", "score": 29, "license": "Apache-2.0",
+      "license_copy_status": "permissive-root-license-review-dependency-licenses",
+      "platforms": ["Android target", "Linux host", "Windows host", "macOS host"],
+      "useful_components": ["temporary app_process server", "ADB reverse and forward tunnels", "video audio control socket architecture", "MediaCodec capture and encoding", "SDL FFmpeg host pipeline", "control and clipboard protocol", "Android hidden API wrappers", "UHID and OTG input", "V4L2 sink"],
+      "verification": ["README inspected", "developer architecture documentation inspected", "root Apache-2.0 LICENSE inspected", "recent commits inspected"],
+      "hardware_tested_by_github_gold": false, "research_priority": "high"
     }
   ],
   "deferred_or_rejected": [
