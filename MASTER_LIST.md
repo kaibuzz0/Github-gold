@@ -33,17 +33,17 @@ Suggested tiers:
 - **Evidence:** VERIFIED
 - **Tier / Score:** S / 28
 - **What it does:** Official firmware for the Meshtastic decentralized LoRa mesh network. Supports text messaging, location sharing, telemetry, and communication without cellular or internet infrastructure.
-- **Why it is valuable:** Mature multi-platform firmware with active development, build instructions, flashing instructions, tests/CI signals, and support for ESP32, nRF52, RP2040/RP2350, and Linux-class targets.
-- **Useful code/components:** mesh routing logic; LoRa transport; position/location modules; packet handling; node database; telemetry; Wi-Fi and HTTP/TLS support; hardware variants; modular device support.
-- **Install / runtime:** Build from source or flash supported hardware using official Meshtastic tooling.
-- **Platforms:** ESP32, nRF52, RP2040/RP2350, Linux and supported Meshtastic boards.
-- **License:** GNU GPL-3.0.
-- **Maintenance signals:** Multiple commits observed on 2026-08-18/19 fixing routing, position-channel behavior, device builds, and TLS memory recovery; project README exposes CI status.
-- **Verification performed:** Inspected official README, license, and latest commit history. Not hardware-tested by GitHub Gold yet.
-- **Source discovery:** GitHub-first discovery pass.
+- **Why it is valuable:** Mature multi-platform firmware with active development, build/flashing instructions, tests/CI signals, and support for ESP32, nRF52, RP2040/RP2350, and Linux-class targets.
+- **Useful code/components:** mesh routing; LoRa transport; position modules; packet handling; node database; telemetry; Wi-Fi/HTTP/TLS support; hardware variants.
+- **Install / runtime:** Build from source or flash supported hardware with official Meshtastic tooling.
+- **Platforms:** ESP32, nRF52, RP2040/RP2350, Linux.
+- **License:** GPL-3.0.
+- **Maintenance signals:** Multiple commits observed on 2026-08-18/19 fixing routing, position-channel behavior, device builds, and TLS memory recovery; README exposes CI status.
+- **Verification performed:** README, license, and recent commit history inspected. Not hardware-tested by GitHub Gold.
+- **Source discovery:** GitHub-first discovery.
 - **Related projects:** meshtastic/Meshtastic-Android; meshtastic/python; meshtastic/web; meshtastic/protobufs; ShakataGaNai/awesome-meshtastic.
-- **Caveats / risks:** GPL-3.0 is copyleft; copied/modified covered code must be handled under its license obligations. Radio operation must comply with applicable local rules.
-- **Research notes:** Strong candidate for deeper component-level extraction analysis rather than wholesale duplication.
+- **Caveats / risks:** GPL-3.0 copyleft obligations apply to covered reused code. Radio operation must comply with local rules.
+- **Research notes:** Strong candidate for deeper component-level study rather than wholesale duplication.
 
 ### OUI-SPY Unified Blue
 
@@ -52,18 +52,18 @@ Suggested tiers:
 - **Category:** ESP32-S3 / passive radio observation / BLE / Wi-Fi / PCAP / drone Remote ID
 - **Evidence:** PROMISING
 - **Tier / Score:** A / 24
-- **What it does:** Multi-mode firmware for the Seeed Studio XIAO ESP32-S3. The README documents six modes: configurable BLE target detection, RSSI foxhunting, passive Flock-oriented Wi-Fi observation, Wi-Fi PCAP capture, FAA Remote ID drone monitoring, and passive BLE advertising capture.
-- **Why it is valuable:** Combines several reusable embedded-radio ideas behind one small device and exposes browser flashing, on-device dashboards, USB-CDC command protocols, packet capture, persistence, and modular firmware selection.
-- **Useful code/components:** boot firmware selector; BLE signature matching; RSSI proximity feedback; Wi-Fi promiscuous capture; PCAP streaming; Wireshark extcap helpers; Open Drone ID parsing; BLE advertisement PCAP; USB-CDC command protocol; SPIFFS persistence; browser flasher.
-- **Install / runtime:** README documents browser flashing plus Python/esptool flashing for Seeed Studio XIAO ESP32-S3.
-- **Platforms:** Seeed Studio XIAO ESP32-S3; desktop browser/Python tools for flashing; companion host tooling referenced by upstream.
-- **License:** UNKNOWN — no root LICENSE file found during this pass.
-- **Maintenance signals:** Active commits observed on 2026-08-18, including fixes to BLE SNIFF rendering and flasher updates for newly integrated modes.
-- **Verification performed:** Inspected upstream README and recent commit history. Root LICENSE lookup returned 404. No hardware test performed by GitHub Gold yet.
-- **Source discovery:** GitHub-first discovery pass; matches the broader hardware/tool research direction.
+- **What it does:** Multi-mode firmware for the Seeed Studio XIAO ESP32-S3. Its README documents BLE target detection, RSSI foxhunting, passive Wi-Fi observation, Wi-Fi PCAP, Remote ID monitoring, and passive BLE advertising capture.
+- **Why it is valuable:** Combines several reusable embedded-radio ideas behind one small device and exposes browser flashing, dashboards, USB-CDC command protocols, packet capture, persistence, and modular firmware selection.
+- **Useful code/components:** boot selector; BLE signature matching; RSSI proximity feedback; Wi-Fi promiscuous capture; PCAP streaming; Wireshark helpers; Open Drone ID parsing; USB-CDC protocol; SPIFFS persistence; browser flasher.
+- **Install / runtime:** Browser flashing plus Python/esptool flashing are documented upstream.
+- **Platforms:** Seeed Studio XIAO ESP32-S3 plus desktop/browser companion tooling.
+- **License:** UNKNOWN — no root LICENSE found during inspection.
+- **Maintenance signals:** Active commits observed on 2026-08-18, including BLE SNIFF fixes and flasher updates.
+- **Verification performed:** README and recent history inspected; root LICENSE lookup returned 404. No hardware test performed.
+- **Source discovery:** GitHub-first discovery.
 - **Related projects:** colonelpanichacks/flock-you; colonelpanichacks/ouispy-pcap; colonelpanichacks/ouispy-blesniff; colonelpanichacks/Oui-Spy-UniPwn.
-- **Caveats / risks:** Do not copy or redistribute source into GitHub Gold until licensing/permission is established. Some modes concern surveillance-device detection; catalog for defensive, interoperability, research, and personal situational-awareness use.
-- **Research notes:** High-priority repository to map at file/component level once license status is resolved.
+- **Caveats / risks:** Do not copy or redistribute source into GitHub Gold until licensing/permission is established. Cataloged for defensive, interoperability, research, and situational-awareness use.
+- **Research notes:** High-priority component map once license status is resolved.
 
 ### Termux Tools
 
@@ -72,18 +72,18 @@ Suggested tiers:
 - **Category:** Android / Termux / shell utilities / package infrastructure
 - **Evidence:** VERIFIED
 - **Tier / Score:** A / 25
-- **What it does:** Official collection of scripts and small programs shipped in Termux's core `termux-tools` package, including package/mirror plumbing and Termux environment utilities.
-- **Why it is valuable:** It is upstream infrastructure rather than a third-party wrapper, making it a strong reference for portable Android shell patterns, package tooling, mirror selection, environment setup, and small utilities that are known to live inside the Termux ecosystem.
-- **Useful code/components:** `scripts/` utilities; `src/` programs; mirror metadata and selection infrastructure; Termux properties initialization; login/environment helpers.
-- **Install / runtime:** Distributed as part of Termux package infrastructure; source includes autotools build files.
+- **What it does:** Official scripts and small programs shipped in Termux's core `termux-tools` package.
+- **Why it is valuable:** Upstream infrastructure and a strong reference for Android shell patterns, package tooling, mirror selection, environment setup, and compact utilities.
+- **Useful code/components:** `scripts/`; `src/`; mirror selection infrastructure; properties initialization; login/environment helpers.
+- **Install / runtime:** Distributed through Termux package infrastructure; source includes build files.
 - **Platforms:** Android / Termux.
-- **License:** GNU GPL-3.0.
-- **Maintenance signals:** Upstream Termux organization; repository history and active issue/PR surface observed during discovery.
-- **Verification performed:** Inspected official README and COPYING file. No local Android execution performed by GitHub Gold.
-- **Source discovery:** Independent Termux ecosystem pass.
+- **License:** GPL-3.0.
+- **Maintenance signals:** Official Termux organization with active repository/issue surface.
+- **Verification performed:** Official README and COPYING inspected. No Android execution performed by GitHub Gold.
+- **Source discovery:** Termux ecosystem pass.
 - **Related projects:** termux/termux-app; termux/termux-packages; termux/termux-api.
-- **Caveats / risks:** GPL-3.0 obligations apply to copied/modified covered code. Prefer linking or clearly separated compliant reuse rather than casually vendoring pieces.
-- **Research notes:** High-value source for future component-level mapping of tiny, battle-tested Android/Termux utilities.
+- **Caveats / risks:** GPL obligations apply to covered copied/modified code.
+- **Research notes:** High-value source for future mapping of small battle-tested Android utilities.
 
 ### termux-adb
 
@@ -92,18 +92,18 @@ Suggested tiers:
 - **Category:** Android / Termux / ADB / Fastboot / USB interoperability
 - **Evidence:** VERIFIED
 - **Tier / Score:** A / 23
-- **What it does:** Patches ADB and Fastboot so one Android device can debug another over USB from Termux without root, using `termux-usb` to obtain user-approved USB file descriptors.
-- **Why it is valuable:** Solves a concrete Android limitation with a clever reusable interoperability pattern: Android's USB permission API plus Unix-domain-socket file-descriptor passing into otherwise conventional native tooling.
-- **Useful code/components:** patched ADB/Fastboot USB enumeration; `termux-usb` integration; Unix-domain-socket file-descriptor transfer; install repository bootstrap; Termux package build adaptations.
-- **Install / runtime:** Requires Termux and Termux:API; upstream provides an install script and apt repository. USB device access requires Android user approval.
-- **Platforms:** Android / Termux; target devices accessed through USB/OTG.
-- **License:** MIT for this repository; bundled/submodule upstream Android tools may carry their own licenses and must be reviewed separately before extraction.
-- **Maintenance signals:** Repository contains substantial history and documented current limitations rather than presenting the patch as magic.
-- **Verification performed:** Inspected README and root MIT LICENSE. No device-to-device ADB test performed by GitHub Gold.
-- **Source discovery:** Independent Termux ecosystem pass.
+- **What it does:** Patches ADB and Fastboot so one Android device can debug another over USB from Termux without root using user-approved USB file descriptors.
+- **Why it is valuable:** Demonstrates a reusable interoperability pattern combining Android USB permission APIs with Unix-domain-socket file-descriptor passing.
+- **Useful code/components:** `termux-usb` integration; USB FD bridging; Unix-socket FD transfer; patched ADB/Fastboot enumeration; package adaptations.
+- **Install / runtime:** Requires Termux and Termux:API; upstream provides an install flow and apt repository.
+- **Platforms:** Android / Termux.
+- **License:** MIT at repository root; upstream Android tools/submodules have separate licenses.
+- **Maintenance signals:** Substantial history and documented limitations.
+- **Verification performed:** README and root MIT license inspected. No device-to-device ADB test performed.
+- **Source discovery:** Termux ecosystem pass.
 - **Related projects:** termux/termux-api; termux/termux-packages; Android platform-tools.
-- **Caveats / risks:** Installation command pipes a remote script into a shell; inspect before execution. Fastboot enumeration can be slow. Component licensing must account for upstream Android code, not only the repository's root MIT license.
-- **Research notes:** Strong candidate for architecture notes explaining Android USB FD bridging without copying the large Android-tools codebase.
+- **Caveats / risks:** Inspect remote install scripts before execution. Review component licenses before extraction.
+- **Research notes:** Strong architecture reference for non-root Android USB FD bridging.
 
 ### ESP32-S3 Remote ID Add-on (`esp-remoteid`)
 
@@ -112,18 +112,18 @@ Suggested tiers:
 - **Category:** ESP32-S3 / OpenDroneID / embedded firmware / interoperability
 - **Evidence:** PROMISING
 - **Tier / Score:** A / 24
-- **What it does:** ESP-IDF firmware for broadcasting standards-based OpenDroneID / ASTM F3411 Remote ID messages over BLE and Wi-Fi, with configuration for identity, position, transports, indicators, and MAVLink input.
-- **Why it is valuable:** Well-documented standards implementation built around the official `opendroneid-core-c` library, with clear transport behavior, ESP-IDF configuration, devcontainer tooling, and integration paths for flight-controller telemetry.
-- **Useful code/components:** OpenDroneID state/transport integration; BLE Remote ID advertisements; Wi-Fi beacon/NAN transport; Kconfig configuration; MAVLink OpenDroneID ingestion; readiness gating; status indicators; devcontainer build workflow.
-- **Install / runtime:** ESP-IDF environment with recursive git submodules; upstream documents build/flash/monitor workflow.
-- **Platforms:** ESP32-S3 plus compatible host development environment.
-- **License:** Apache-2.0 at repository root; dependency/submodule licenses must also be preserved.
-- **Maintenance signals:** 2026 project with extensive current documentation and active feature TODOs.
-- **Verification performed:** Inspected upstream README and Apache-2.0 LICENSE. No firmware build or RF hardware test performed by GitHub Gold.
-- **Source discovery:** Remote ID ecosystem branch from the ESP32/OUI-SPY research direction.
+- **What it does:** ESP-IDF firmware for standards-based OpenDroneID / ASTM F3411 Remote ID broadcast over BLE and Wi-Fi with MAVLink input.
+- **Why it is valuable:** Well-documented standards implementation built around `opendroneid-core-c`, with explicit transport behavior and flight-controller integration paths.
+- **Useful code/components:** OpenDroneID state/transport integration; BLE advertisements; Wi-Fi beacon/NAN transport; Kconfig; MAVLink ingestion; readiness gating; indicators.
+- **Install / runtime:** ESP-IDF environment with recursive submodules; build/flash/monitor workflow documented upstream.
+- **Platforms:** ESP32-S3.
+- **License:** Apache-2.0 at root; dependency licenses must also be preserved.
+- **Maintenance signals:** Current 2026 project with extensive documentation and active TODOs.
+- **Verification performed:** README and root license inspected. No firmware build or RF hardware test performed.
+- **Source discovery:** OpenDroneID ecosystem branch.
 - **Related projects:** opendroneid/opendroneid-core-c; opendroneid/receiver-android; ArduPilot/ArduRemoteID.
-- **Caveats / risks:** Regulatory compliance depends on jurisdiction and configuration. Catalog for legitimate Remote ID implementation, interoperability, education, and receiver testing; do not treat documentation claims as independent certification.
-- **Research notes:** Apache licensing and modular design make this a particularly useful candidate for deeper source-level study after dependency-license review.
+- **Caveats / risks:** Regulatory compliance depends on jurisdiction and configuration.
+- **Research notes:** Good candidate for deeper source-level study after dependency-license review.
 
 ### OpenDroneID Core C
 
@@ -132,18 +132,18 @@ Suggested tiers:
 - **Category:** C library / Remote ID / protocol encoding / embedded interoperability
 - **Evidence:** VERIFIED
 - **Tier / Score:** S / 28
-- **What it does:** Core C library for packing and unpacking Open Drone ID messages defined by ASTM F3411 and ASD-STAN Direct Remote ID specifications, with MAVLink conversion helpers and reference Wi-Fi code.
-- **Why it is valuable:** This is the standards-focused core used by other Remote ID implementations rather than a device-specific wrapper. It exposes compact encode/decode APIs, data structures, tests, memory-reduction options, MAVLink adapters, and reference broadcast code suitable for embedded or Linux integrations.
-- **Useful code/components:** `libopendroneid/opendroneid.h`; message encoders/decoders for Basic ID, Location, Authentication, Self ID, System, Operator ID, and MessagePack; `libmav2odid` conversion layer; Wi-Fi beacon/NaN reference code; CMake build; unit tests; low-memory compile options.
-- **Install / runtime:** CMake build on Linux; upstream documents dependencies and commands for building the shared library, sample app, and tests.
-- **Platforms:** Portable C library; Linux reference tooling; embedded integrations through downstream projects.
+- **What it does:** Core C library for packing and unpacking Open Drone ID messages defined by ASTM F3411 and ASD-STAN specifications, with MAVLink conversion and Wi-Fi reference code.
+- **Why it is valuable:** Standards-focused, portable core with compact APIs, tests, memory-reduction options, adapters, and reference broadcast code.
+- **Useful code/components:** `libopendroneid`; Basic ID/Location/Auth/Self ID/System/Operator ID encoders and decoders; `libmav2odid`; Wi-Fi reference code; unit tests; low-memory compile options.
+- **Install / runtime:** CMake build on Linux; upstream documents sample and test builds.
+- **Platforms:** Portable C / Linux / embedded downstream integrations.
 - **License:** Apache-2.0.
-- **Maintenance signals:** Commits observed on 2026-08-01 updating protocol validation/documentation and adding GB 46750-2025 work; README documents CI and tests.
-- **Verification performed:** Inspected README, root Apache-2.0 LICENSE, build/test documentation, public API description, and recent commit history. GitHub Gold did not execute the test suite in this pass.
-- **Source discovery:** Follow-up from `esp-remoteid` and the OpenDroneID ecosystem.
+- **Maintenance signals:** August 2026 protocol-validation/documentation work; README documents CI and tests.
+- **Verification performed:** README, license, public API, build/test docs, and recent history inspected. Tests not executed by GitHub Gold.
+- **Source discovery:** OpenDroneID ecosystem follow-up.
 - **Related projects:** opendroneid/receiver-android; opendroneid/wireshark-dissector; opendroneid/transmitter-linux; ArduPilot/ArduRemoteID; peinser/esp-remoteid.
-- **Caveats / risks:** Standards and jurisdictional compliance can change; dependency licenses and specification requirements still need review for any redistributed integrated product.
-- **Research notes:** Strong component-level Gold. Prefer consuming or adapting this core with preserved Apache notices instead of reimplementing Remote ID packing logic from scratch.
+- **Caveats / risks:** Standards and jurisdictional requirements can change.
+- **Research notes:** Strong component-level Gold; prefer standards-core reuse with required notices over reimplementation.
 
 ### LocalSend
 
@@ -152,18 +152,18 @@ Suggested tiers:
 - **Category:** local-first / offline file transfer / cross-platform / privacy
 - **Evidence:** VERIFIED
 - **Tier / Score:** S / 28
-- **What it does:** Cross-platform local-network file and message transfer without cloud infrastructure or an internet connection. Devices discover and communicate locally using a documented REST/HTTPS protocol.
-- **Why it is valuable:** Mature example of a user-controlled, serverless local workflow with Android, iOS, macOS, Windows, Linux, and Fire OS distribution. It combines local discovery, encrypted transfers, portable mode, cross-platform packaging, and a separately documented protocol.
-- **Useful code/components:** local peer discovery; HTTPS certificate generation; REST-based transfer flow; file/message transfer logic; portable configuration mode; cross-platform packaging; companion `localsend/protocol` specification.
-- **Install / runtime:** Distributed through major app stores/package managers; source build uses Flutter, Rust, FVM, and platform-specific packaging steps.
+- **What it does:** Cross-platform LAN file/message transfer without cloud infrastructure or internet access.
+- **Why it is valuable:** Mature serverless local workflow spanning Android, iOS, macOS, Windows, Linux, and Fire OS with a documented protocol.
+- **Useful code/components:** peer discovery; HTTPS certificate generation; REST transfer flow; file/message transfer; portable configuration; packaging; companion protocol spec.
+- **Install / runtime:** Distributed through major package channels; source build uses Flutter/Rust and platform tooling.
 - **Platforms:** Android, iOS, macOS, Windows, Linux, Fire OS.
 - **License:** Apache-2.0.
-- **Maintenance signals:** Same-day commit activity observed on 2026-08-19; release 1.18.2 observed on 2026-08-17; README exposes CI and broad distribution channels.
-- **Verification performed:** Inspected README, root Apache-2.0 LICENSE, build documentation, protocol description, and recent commit history. No local transfer test performed by GitHub Gold.
-- **Source discovery:** Independent local-first/offline software pass.
+- **Maintenance signals:** Same-day activity observed 2026-08-19; release 1.18.2 observed 2026-08-17.
+- **Verification performed:** README, license, build docs, protocol description, and recent history inspected. No transfer test performed by GitHub Gold.
+- **Source discovery:** Local-first/offline software pass.
 - **Related projects:** localsend/protocol; localsend/web; community protocol implementations.
-- **Caveats / risks:** Local-network reachability depends on firewall/router configuration and AP isolation. Dependency licenses must be reviewed before extracting bundled implementation pieces.
-- **Research notes:** Excellent reference for offline-first device-to-device workflows and for projects that need a simple LAN transfer/control plane without external infrastructure.
+- **Caveats / risks:** LAN firewall/router/AP isolation can affect discovery and transfer.
+- **Research notes:** Excellent reference for offline-first device-to-device control and transfer planes.
 
 ### scrcpy
 
@@ -172,23 +172,83 @@ Suggested tiers:
 - **Category:** Android / device control / screen mirroring / USB / media streaming
 - **Evidence:** VERIFIED
 - **Tier / Score:** S / 29
-- **What it does:** Mirrors and controls Android devices from Linux, Windows, or macOS over USB or TCP/IP without root or a permanently installed Android app. It supports video/audio forwarding, recording, virtual displays, camera capture, HID input, OTG mode, gamepads, and V4L2 webcam output.
-- **Why it is valuable:** Highly developed native Android interoperability architecture with low-latency streaming and a clean temporary server/client model. Its developer documentation exposes concrete reusable patterns rather than only end-user features.
-- **Useful code/components:** temporary Android `app_process` server; ADB reverse/forward tunnel setup; separate video/audio/control sockets; MediaCodec screen and audio encoders; SDL/FFmpeg host pipeline; demux/decoder/recorder flow; bidirectional clipboard/control protocol; Android hidden-API wrappers; UHID/OTG input handling; V4L2 sink.
-- **Install / runtime:** Official binaries/packages for Linux, Windows, and macOS; Android target requires API 21+ for core mirroring and USB debugging for normal control, with OTG mode available for some control without USB debugging.
-- **Platforms:** Android target; Linux, Windows, and macOS hosts.
+- **What it does:** Mirrors and controls Android devices from desktop hosts over USB or TCP/IP without root or a permanently installed Android app.
+- **Why it is valuable:** Highly developed native Android interoperability architecture with low-latency streaming and a temporary server/client model.
+- **Useful code/components:** temporary `app_process` server; ADB tunnels; video/audio/control sockets; MediaCodec; SDL/FFmpeg host pipeline; control/clipboard protocol; hidden-API wrappers; UHID/OTG; V4L2 sink.
+- **Install / runtime:** Official binaries/packages on Linux, Windows, and macOS; normal control uses USB debugging.
+- **Platforms:** Android target; Linux, Windows, macOS hosts.
 - **License:** Apache-2.0.
-- **Maintenance signals:** Version 4.1 released in July 2026 with dependency upgrades and current documentation; repository remains active and unarchived.
-- **Verification performed:** Inspected README, developer architecture documentation, root Apache-2.0 LICENSE, and recent commit history. No device mirroring/control session executed by GitHub Gold.
-- **Source discovery:** Independent Android interoperability pass.
-- **Related projects:** ADB/platform-tools; SDL; FFmpeg; community frontends and integrations.
-- **Caveats / risks:** The internal client/server protocol is explicitly version-coupled and may change; Android hidden APIs vary by OS version. Review dependency licenses when extracting host-side pieces.
-- **Research notes:** One of the strongest architecture-study candidates in the catalog for Android host/device communication, low-latency streaming, and temporary on-device services.
+- **Maintenance signals:** Version 4.1 released July 2026; active and unarchived.
+- **Verification performed:** README, developer architecture docs, license, and recent history inspected. No mirroring session executed by GitHub Gold.
+- **Source discovery:** Android interoperability pass.
+- **Related projects:** ADB/platform-tools; SDL; FFmpeg.
+- **Caveats / risks:** Internal protocol is version-coupled; hidden APIs vary across Android versions.
+- **Research notes:** One of the strongest Android host/device architecture references in the catalog.
+
+### ZIM Tools
+
+- **Repository:** https://github.com/openzim/zim-tools
+- **Author / Org:** openZIM
+- **Category:** offline knowledge / archival / ZIM / CLI tools / content packaging
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 28
+- **What it does:** Provides command-line tooling for creating, validating, inspecting, extracting, and splitting ZIM offline-content archives used by the Kiwix/openZIM ecosystem.
+- **Why it is valuable:** It is infrastructure for turning web-style content into portable offline archives and validating those archives rather than merely a reader application.
+- **Useful code/components:** `zimcheck` validation; `zimdump` inspection/extraction; `zimsplit` chunking; `zimwriterfs` HTML-directory-to-ZIM packaging; Meson build; automated tests; official container image.
+- **Install / runtime:** Meson/Ninja build with libzim and documented dependencies; official container image also available.
+- **Platforms:** Linux and other supported Unix-like build environments; containerized deployment.
+- **License:** GPL-3.0-or-later.
+- **Maintenance signals:** Version 3.8.0 release merged 2026-08-13; additional code modernization merged 2026-08-15; README exposes CI/codecov/release signals.
+- **Verification performed:** README, build/test instructions, license declaration, and recent release/commit history inspected. GitHub Gold did not execute the tools.
+- **Source discovery:** Independent offline-knowledge/archival pass.
+- **Related projects:** openzim/libzim; Kiwix readers; kiwix/kiwix-android; kiwix/kiwix-desktop; kiwix/kiwix-js.
+- **Caveats / risks:** GPL copyleft obligations apply to covered reused code; `zimwriterfs` has multiple third-party dependencies that require separate license review.
+- **Research notes:** High-value foundation for portable offline libraries, disaster/off-grid reference collections, and archival pipelines.
+
+### ntfy
+
+- **Repository:** https://github.com/binwiederhier/ntfy
+- **Author / Org:** Philipp C. Heckel / binwiederhier
+- **Category:** self-hosting / notifications / HTTP API / pub-sub / automation
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 27
+- **What it does:** Simple HTTP-based publish/subscribe notification service that accepts PUT/POST messages and can be self-hosted, with web and mobile clients in the ecosystem.
+- **Why it is valuable:** Extremely composable automation primitive: shell scripts, CI jobs, servers, sensors, and personal tools can publish notifications through a minimal HTTP interface without building a custom push stack.
+- **Useful code/components:** HTTP PUT/POST publish API; topic pub-sub model; self-hosted server; CLI/automation integrations; web client; Docker/release build machinery.
+- **Install / runtime:** Self-hosted server packages/containers or the hosted service; Android/iOS clients are maintained in related repositories.
+- **Platforms:** Linux/server, Docker, web; mobile clients via related repositories.
+- **License:** Root `LICENSE` is Apache-2.0; repository also contains a secondary GPLv2 license file, so component-level licensing must be checked before code extraction.
+- **Maintenance signals:** Recent commits observed through 2026-08-04; README exposes release, tests, Go report, and coverage signals.
+- **Verification performed:** README, root license, repository root, and recent commit history inspected. No server/client session executed by GitHub Gold.
+- **Source discovery:** Independent self-hosting/automation pass.
+- **Related projects:** binwiederhier/ntfy-android; binwiederhier/ntfy-ios; community integrations.
+- **Caveats / risks:** Authentication, topic privacy, TLS, and internet exposure must be configured appropriately when self-hosting. Review the secondary license and component notices before copying code.
+- **Research notes:** Strong candidate for alerting/automation glue in user-controlled systems because the publish surface is intentionally small.
+
+### OpenObserve
+
+- **Repository:** https://github.com/openobserve/openobserve
+- **Author / Org:** OpenObserve
+- **Category:** observability / logs / metrics / traces / OpenTelemetry / self-hosting
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 29
+- **What it does:** Rust-based observability platform unifying logs, metrics, traces, dashboards, alerts, pipelines, real-user monitoring, and related analytics with OpenTelemetry ingestion.
+- **Why it is valuable:** Demonstrates a modern self-hostable observability architecture around a single binary, columnar Parquet storage, object-store/S3 design, SQL/PromQL querying, and multi-signal workflows.
+- **Useful code/components:** single-binary Rust server; OpenTelemetry ingestion; Parquet storage; S3-native persistence architecture; SQL/PromQL paths; logs/metrics/traces UI; alerting; pipelines/stream processing; multi-tenancy.
+- **Install / runtime:** Upstream documents a single Docker command for local startup plus HA/cloud-native deployment paths.
+- **Platforms:** Linux, Docker, Kubernetes/cloud-native environments.
+- **License:** AGPL-3.0.
+- **Maintenance signals:** Heavy same-day activity observed on 2026-08-19, including search/queue fixes, compactor fixes, CI work, and test changes; upstream commit messages include specific build/test validation evidence.
+- **Verification performed:** README, root AGPL-3.0 license, and same-day commit history inspected. GitHub Gold did not deploy or benchmark it; performance/cost claims in upstream README remain upstream claims, not independent verification.
+- **Source discovery:** Independent observability pass.
+- **Related projects:** OpenTelemetry ecosystem; Parquet/object-storage tooling; OpenObserve deployment integrations.
+- **Caveats / risks:** AGPL-3.0 has network-use source-sharing implications for modified covered software; do not casually vendor code into differently licensed projects. Some enterprise features are separate from the open-source edition.
+- **Research notes:** Excellent architecture-study candidate; particularly valuable for self-hosted telemetry ingestion, object-store design, and unified signal pipelines.
 
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
-- **colonelpanichacks/Remote-ID-Spoofer:** not promoted. Although technically related, its primary purpose is Remote ID spoofing; outside this catalog's preferred defensive/interoperability quality bar.
+- **colonelpanichacks/Remote-ID-Spoofer:** not promoted. Its primary purpose is Remote ID spoofing, outside this catalog's preferred defensive/interoperability scope.
 
 ## Entry format
 
