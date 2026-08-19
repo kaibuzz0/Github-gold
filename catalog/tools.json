@@ -3,5 +3,39 @@
   "generated_for": "kaibuzz0/Github-gold",
   "purpose": "Machine-readable catalog of high-value repositories, working tools, reusable code, and research leads.",
   "evidence_levels": ["VERIFIED", "PROMISING", "LEAD", "ARCHIVED"],
-  "entries": []
+  "entries": [
+    {
+      "name": "Meshtastic Firmware",
+      "repository": "https://github.com/meshtastic/firmware",
+      "owner": "meshtastic",
+      "category": ["lora", "mesh-networking", "embedded-firmware", "off-grid-communications"],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "license": "GPL-3.0",
+      "license_copy_status": "allowed-with-license-obligations",
+      "platforms": ["ESP32", "nRF52", "RP2040/RP2350", "Linux"],
+      "useful_components": ["mesh routing", "LoRa transport", "position modules", "packet handling", "node database", "telemetry", "hardware variants"],
+      "verification": ["README inspected", "LICENSE inspected", "recent commits inspected"],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high"
+    },
+    {
+      "name": "OUI-SPY Unified Blue",
+      "repository": "https://github.com/colonelpanichacks/oui-spy-unified-blue",
+      "owner": "colonelpanichacks",
+      "category": ["esp32-s3", "ble", "wifi", "pcap", "remote-id", "radio-observation"],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 24,
+      "license": "UNKNOWN",
+      "license_copy_status": "do-not-copy-until-resolved",
+      "platforms": ["Seeed Studio XIAO ESP32-S3"],
+      "useful_components": ["boot selector", "BLE signature matching", "RSSI foxhunter", "Wi-Fi promiscuous capture", "PCAP streaming", "Open Drone ID parsing", "BLE advertising capture", "USB-CDC command protocol", "SPIFFS persistence", "browser flasher"],
+      "verification": ["README inspected", "recent commits inspected", "root LICENSE lookup returned 404"],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "Catalog and study upstream only until licensing or explicit permission is established."
+    }
+  ]
 }
