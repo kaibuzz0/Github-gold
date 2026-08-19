@@ -245,6 +245,66 @@ Suggested tiers:
 - **Caveats / risks:** AGPL-3.0 has network-use source-sharing implications for modified covered software; do not casually vendor code into differently licensed projects. Some enterprise features are separate from the open-source edition.
 - **Research notes:** Excellent architecture-study candidate; particularly valuable for self-hosted telemetry ingestion, object-store design, and unified signal pipelines.
 
+### Syncthing
+
+- **Repository:** https://github.com/syncthing/syncthing
+- **Author / Org:** Syncthing
+- **Category:** local-first / continuous synchronization / peer-to-peer / data replication
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 29
+- **What it does:** Continuously synchronizes folders between two or more computers while prioritizing data safety, security, automation, and user control.
+- **Why it is valuable:** Mature decentralized replication architecture with a documented wire protocol, automatic device discovery, relay infrastructure, conflict handling, signed releases, and straightforward source builds.
+- **Useful code/components:** Block Exchange Protocol; folder reconciliation; device discovery; relaying; conflict handling; filesystem watcher integration; versioning; signed automatic upgrades; API/web GUI.
+- **Install / runtime:** Native releases, packages, or Docker; source builds with `go run build.go`.
+- **Platforms:** Linux, Windows, macOS, BSD and other supported Go targets.
+- **License:** MPL-2.0.
+- **Maintenance signals:** Same-day commit observed 2026-08-19 updating the Go toolchain, plus 2026-08-18 discovery-server/infrastructure fixes and Docker-signing work.
+- **Verification performed:** README, license declaration, build instructions, signed-release notes, and recent commits inspected. No live synchronization test performed by GitHub Gold.
+- **Source discovery:** Independent resilient-data/local-first pass.
+- **Related projects:** syncthing/docs; GUI wrappers; discovery and relay infrastructure.
+- **Caveats / risks:** MPL-2.0 is file-level copyleft; modifications to covered files require license compliance. Operational deployments should review discovery/relay exposure and versioning behavior.
+- **Research notes:** Excellent complement to LocalSend: continuous state replication rather than ad-hoc transfer.
+
+### rclone
+
+- **Repository:** https://github.com/rclone/rclone
+- **Author / Org:** rclone
+- **Category:** data movement / cloud storage / synchronization / filesystem abstraction
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 27
+- **What it does:** A cross-platform command-line data-movement engine supporting a very large set of cloud, object-storage, network, and local backends plus virtual backends layered on top of them.
+- **Why it is valuable:** The backend abstraction is unusually reusable: one command surface spans S3, WebDAV, SFTP, SMB, cloud drives, object stores, local filesystems, encryption, chunking, unions, FUSE mounts, and serving protocols.
+- **Useful code/components:** storage-backend interface; `copy`, `sync`, `bisync`, and `check`; Crypt; Chunker; Union/Combine; FUSE mount; hash verification; HTTP/WebDAV/FTP/SFTP/DLNA serving; remote-control API and GUI.
+- **Install / runtime:** Native binaries/packages, Docker, or source builds; broad Go-supported platform coverage.
+- **Platforms:** Linux, Windows, macOS, BSD and other Go targets.
+- **License:** MIT.
+- **Maintenance signals:** Same-day activity observed 2026-08-19 and 2026-08-18, including GUI maintenance, transform fixes, and security-advisory documentation.
+- **Verification performed:** README, MIT license declaration, CI/build signals, recent commits, and security-advisory documentation inspected. GitHub Gold did not execute transfers.
+- **Source discovery:** Independent resilient-data/data-movement pass.
+- **Related projects:** restic (rclone backend integration); cloud/object-store ecosystems; FUSE.
+- **Caveats / risks:** Recent v1.75.0 advisories document multiple assigned CVEs involving `serve restic` path traversal, proxy CONNECT memory exhaustion, FTP/SFTP command injection, and local filename handling. Use patched releases and review exposed serving/backend features.
+- **Research notes:** Gold is primarily the backend abstraction and composable virtual-filesystem layers, not merely the CLI surface.
+
+### restic
+
+- **Repository:** https://github.com/restic/restic
+- **Author / Org:** restic
+- **Category:** backup / encrypted storage / deduplication / snapshots / data integrity
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 29
+- **What it does:** Fast, efficient, encrypted backup software designed around verifiability, untrusted storage backends, deduplication, snapshots, restore, and reproducible builds.
+- **Why it is valuable:** Provides a compact reference architecture for secure content-addressed backup repositories, incremental snapshots, repository verification, and portable storage-backend integration.
+- **Useful code/components:** encrypted repository format; deduplication; snapshots; restore; FUSE browsing; repository verification; SFTP/REST/S3/B2/Azure/GCS backends; rclone integration; reproducible build pipeline.
+- **Install / runtime:** Native binaries/packages across major desktop/server OSes; documented CLI workflow and backend setup.
+- **Platforms:** Linux, Windows, macOS, FreeBSD, OpenBSD.
+- **License:** BSD-2-Clause.
+- **Maintenance signals:** Dependency and CI maintenance observed through 2026-08-01; README exposes active test workflow and reproducible-build documentation.
+- **Verification performed:** README, license declaration, backend list, design principles, reproducible-build notes, and recent maintenance commits inspected. No backup/restore cycle executed by GitHub Gold.
+- **Source discovery:** Independent resilient-data/backup pass.
+- **Related projects:** restic/rest-server; restic/builder; rclone; S3-compatible storage systems.
+- **Caveats / risks:** Password loss makes encrypted repositories unrecoverable by design; backup quality depends on actually testing restores and repository checks.
+- **Research notes:** Particularly strong for studying integrity-first encrypted backup architecture and deduplicated snapshot design.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
