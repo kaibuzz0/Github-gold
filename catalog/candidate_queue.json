@@ -82,6 +82,38 @@
       "verification": ["README inspected", "REUSE license-file search inspected", "recent commits inspected"],
       "tested_by_github_gold": false,
       "promotion_status": "ready-with-file-level-license-review"
+    },
+    {
+      "name": "Caddy",
+      "repository": "https://github.com/caddyserver/caddy",
+      "owner": "caddyserver",
+      "category": ["web-server", "reverse-proxy", "automatic-https", "self-hosting", "server-platform"],
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 29,
+      "license": "Apache-2.0",
+      "license_copy_status": "permissive-with-attribution-and-notice-review",
+      "platforms": ["Linux", "Windows", "macOS", "BSD", "other Go-supported systems"],
+      "useful_components": ["automatic HTTPS", "native JSON configuration", "dynamic configuration API", "config adapters", "reverse proxy", "HTTP/1.1 HTTP/2 HTTP/3", "modular Go app/plugin architecture", "local CA", "cluster-aware TLS coordination", "xcaddy custom builds"],
+      "verification": ["official README inspected", "root Apache-2.0 LICENSE inspected", "build/test documentation inspected", "recent security and maintenance commits inspected"],
+      "tested_by_github_gold": false,
+      "promotion_status": "ready"
+    },
+    {
+      "name": "CertMagic",
+      "repository": "https://github.com/caddyserver/certmagic",
+      "owner": "caddyserver",
+      "category": ["go-library", "tls-automation", "acme", "certificate-management", "reusable-infrastructure"],
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 29,
+      "license": "Apache-2.0",
+      "license_copy_status": "permissive-with-attribution-and-notice-review",
+      "platforms": ["Go-supported systems", "Linux", "Windows", "macOS", "BSD", "Android"],
+      "useful_components": ["certificate issuance and renewal", "ACME HTTP TLS-ALPN and DNS challenges", "multiple issuers", "pluggable storage", "distributed challenge locking", "certificate cache", "OCSP stapling", "on-demand issuance controls", "retry and backoff", "event hooks", "tls.Config integration", "libdns interoperability"],
+      "verification": ["official README inspected", "Apache-2.0 LICENSE.txt inspected", "API/feature documentation inspected", "recent maintenance and security-sensitive fixes inspected"],
+      "tested_by_github_gold": false,
+      "promotion_status": "ready"
     }
   ]
 }
