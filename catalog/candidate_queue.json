@@ -50,6 +50,38 @@
       "verification": ["README inspected", "custom LICENSE inspected", "installation and interface documentation inspected", "recent commits inspected"],
       "tested_by_github_gold": false,
       "promotion_status": "ready-with-license-warning"
+    },
+    {
+      "name": "Espressif esptool",
+      "repository": "https://github.com/espressif/esptool",
+      "owner": "espressif",
+      "category": ["embedded-tooling", "esp32", "flashing", "provisioning", "serial-protocol"],
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 28,
+      "license": "GPL-2.0-or-later",
+      "license_copy_status": "allowed-with-copyleft-obligations",
+      "platforms": ["Python-supported host systems", "Espressif SoCs via serial/USB bridges"],
+      "useful_components": ["serial bootloader protocol", "chip detection", "flash read/write/erase", "image parsing and validation", "provisioning operations", "flasher stub loading", "cross-platform CLI"],
+      "verification": ["official README inspected", "GPL license inspected", "recent commits inspected", "CI signals inspected"],
+      "tested_by_github_gold": false,
+      "promotion_status": "ready"
+    },
+    {
+      "name": "App Manager",
+      "repository": "https://github.com/MuntashirAkon/AppManager",
+      "owner": "MuntashirAkon",
+      "category": ["android", "package-inspection", "app-management", "diagnostics", "backup"],
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 27,
+      "license": "REUSE/SPDX model; primary app documented GPL-3.0-or-later with additional file-level licenses",
+      "license_copy_status": "file-level-spdx-review-required-before-code-reuse",
+      "platforms": ["Android", "optional ADB/root-enhanced capabilities"],
+      "useful_components": ["package/component inspection", "manifest and signature analysis", "APK bundle install flows", "tracker/library scanning", "logcat tools", "profiles and batch operations", "encrypted backup/restore", "ADB/root capability layers", "file manager", "terminal integration"],
+      "verification": ["README inspected", "REUSE license-file search inspected", "recent commits inspected"],
+      "tested_by_github_gold": false,
+      "promotion_status": "ready-with-file-level-license-review"
     }
   ]
 }
