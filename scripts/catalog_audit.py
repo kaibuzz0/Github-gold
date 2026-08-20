@@ -70,6 +70,18 @@ def normalize_repo(value: str) -> str:
     return value.casefold()
 
 
+def normalize_heading(value: str) -> str:
+    """Normalize optional descriptive heading aliases used only in MASTER_LIST.md.
+
+    Human-readable headings may append a parenthetical repository alias, such as
+    ``Project Name (`repo-slug`)``. The canonical machine-readable name remains
+    ``Project Name``. Only a trailing parenthetical is stripped; the underlying
+    project name must still match exactly after case folding.
+    """
+    value = value.strip()
+    return re.sub(r"\s+\([^\n()]+\)\s*$", "", value).strip().casefold()
+
+
 def validate_entry(
     entry: Any,
     *,
@@ -202,7 +214,7 @@ def main() -> int:
 
     master_counts: dict[str, int] = {}
     for heading in master_headings:
-        key = heading.casefold()
+        key = normalize_heading(heading)
         master_counts[key] = master_counts.get(key, 0) + 1
 
     for name, _ in canonical_names:
@@ -214,7 +226,7 @@ def main() -> int:
 
     canonical_keys = {name.casefold() for name, _ in canonical_names}
     for heading in master_headings:
-        if heading.casefold() not in canonical_keys:
+        if normalize_heading(heading) not in canonical_keys:
             audit.warn(f"MASTER_LIST.md heading has no matching canonical JSON entry: {heading}")
 
     print(
