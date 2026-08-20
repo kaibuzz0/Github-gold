@@ -305,6 +305,146 @@ Suggested tiers:
 - **Caveats / risks:** Password loss makes encrypted repositories unrecoverable by design; backup quality depends on actually testing restores and repository checks.
 - **Research notes:** Particularly strong for studying integrity-first encrypted backup architecture and deduplicated snapshot design.
 
+### Organic Maps
+
+- **Repository:** https://github.com/organicmaps/organicmaps
+- **Author / Org:** Organic Maps
+- **Category:** offline maps / navigation / OpenStreetMap / privacy / mobile
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 29
+- **What it does:** Privacy-focused offline navigation using downloadable OpenStreetMap-derived maps, routing, search, bookmarks/tracks, and elevation-related data.
+- **Why it is valuable:** Strong offline-first architecture spanning map generation, compact local map storage, rendering, routing, geocoding/search, and mobile navigation without a required cloud backend.
+- **Useful code/components:** offline map storage/rendering; routing engine; offline geocoding/search; OpenStreetMap ingestion; map update pipeline; KML/KMZ/GPX/GeoJSON import-export; elevation and contour support.
+- **Install / runtime:** Native Android/iOS applications with repository build tooling and map-generation infrastructure.
+- **Platforms:** Android, iOS, desktop/build tooling.
+- **License:** Apache-2.0 for code; binary map/data artifacts use a separate license.
+- **Maintenance signals:** Same-day development activity was inspected during the research pass.
+- **Verification performed:** README, commit history, and code/data license boundary inspected. No navigation field test performed by GitHub Gold.
+- **Source discovery:** Offline/resilient systems pass.
+- **Related projects:** OpenStreetMap ecosystem; map-generation and routing tooling.
+- **Caveats / risks:** Treat code and generated map/data licensing separately; do not assume Apache-2.0 covers binary map artifacts.
+- **Research notes:** Excellent reference for fully offline mobile mapping and routing pipelines.
+
+### Kopia
+
+- **Repository:** https://github.com/kopia/kopia
+- **Author / Org:** Kopia
+- **Category:** backup / encrypted snapshots / deduplication / storage abstraction / self-hosting
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 28
+- **What it does:** Encrypted, compressed, deduplicated snapshot backup system with local, cloud, network, and repository-server modes plus CLI and GUI clients.
+- **Why it is valuable:** Combines content-addressed encrypted repositories, multiple storage backends, snapshot policy, error correction, and a server mode in a composable Go codebase.
+- **Useful code/components:** encrypted snapshot repository; deduplication; compression; error correction; repository server; S3/Azure/B2/GCS/WebDAV/SFTP/local backends; rclone integration; CLI and GUI.
+- **Install / runtime:** Native binaries/packages and container/server workflows documented upstream.
+- **Platforms:** Linux, Windows, macOS and Go/Electron-supported environments.
+- **License:** Apache-2.0.
+- **Maintenance signals:** Recent maintenance included dependency and CodeQL updates during the August 2026 research pass.
+- **Verification performed:** README, root Apache-2.0 license, and recent commits inspected. No backup/restore cycle executed by GitHub Gold.
+- **Source discovery:** Offline/resilient systems pass.
+- **Related projects:** rclone; cloud/object-storage backends; snapshot/backup ecosystems.
+- **Caveats / risks:** Operational confidence requires restore testing and repository verification; dependency/backend behavior varies by deployment.
+- **Research notes:** Strong complement to restic, especially for repository-server and policy architecture study.
+
+### Reticulum Network Stack
+
+- **Repository:** https://github.com/markqvist/Reticulum
+- **Author / Org:** markqvist
+- **Category:** off-grid networking / delay-tolerant networking / cryptographic routing / heterogeneous transports
+- **Evidence:** VERIFIED
+- **Tier / Score:** A / 25
+- **What it does:** Networking stack designed to carry encrypted communication across very-low-bandwidth and heterogeneous transports including LoRa/RNode, packet radio, serial links, TCP/UDP/IP, pipes, and custom interfaces.
+- **Why it is valuable:** Provides a transport-agnostic path-discovery and cryptographic-routing model for disconnected, intermittent, and unconventional networks rather than assuming conventional internet infrastructure.
+- **Useful code/components:** interface abstraction; path discovery/routing; cryptographic identities; link establishment; request-response API; channels/buffers; low-bandwidth transport; `rnsd`; `rnstatus`; `rnpath`; `rnprobe`; `rncp`; `rnid`; `rnsh`; `rnx`; `rngit`; `git-remote-rns`.
+- **Install / runtime:** Python 3 systems plus supported radio/network interfaces.
+- **Platforms:** Python systems, LoRa/RNode, packet radio, serial, TCP/UDP/IP, custom interfaces.
+- **License:** Custom Reticulum License; protocol is stated upstream as public domain.
+- **Maintenance signals:** Recent commits and current installation/interface documentation were inspected.
+- **Verification performed:** README, custom license, installation/interface documentation, and recent commits inspected. No live Reticulum network was run by GitHub Gold.
+- **Source discovery:** Offline/resilient systems pass.
+- **Related projects:** LXMF, Sideband, RNode and broader Reticulum ecosystem projects.
+- **Caveats / risks:** The custom license includes restrictions beyond standard permissive/copyleft open-source licenses. Review exact terms before any code reuse; protocol-level study is safer than assuming source-code reuse rights.
+- **Research notes:** High-value architecture reference for off-grid communication even where code reuse is constrained.
+
+### Espressif esptool
+
+- **Repository:** https://github.com/espressif/esptool
+- **Author / Org:** Espressif
+- **Category:** embedded tooling / ESP32 / flashing / provisioning / serial protocol
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 28
+- **What it does:** Official Python tooling for communicating with Espressif ROM bootloaders and flasher stubs to identify chips, read/write/erase flash, inspect images, and perform provisioning-related operations.
+- **Why it is valuable:** Mature host-side reference implementation for Espressif serial bootloader protocols and cross-platform flashing workflows.
+- **Useful code/components:** serial bootloader protocol; chip detection; flash read/write/erase; image parsing/validation; provisioning operations; flasher stub loading; cross-platform CLI.
+- **Install / runtime:** Python-supported host systems connected to Espressif SoCs through supported serial/USB bridges.
+- **Platforms:** Python hosts; Espressif SoCs.
+- **License:** GPL-2.0-or-later.
+- **Maintenance signals:** Recent research observed flasher-stub integration, new chip support, and active CI.
+- **Verification performed:** Official README, GPL license, CI signals, and recent commits inspected. No physical flashing test performed by GitHub Gold.
+- **Source discovery:** Embedded/Android tooling pass.
+- **Related projects:** ESP-IDF; Espressif flasher stubs and provisioning tooling.
+- **Caveats / risks:** GPL copyleft obligations apply to covered reused code; flashing/provisioning operations can alter or erase target devices.
+- **Research notes:** Especially valuable at the protocol/image-tooling layer, not just as a command-line utility.
+
+### App Manager
+
+- **Repository:** https://github.com/MuntashirAkon/AppManager
+- **Author / Org:** MuntashirAkon
+- **Category:** Android / package inspection / app management / diagnostics / backup
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 27
+- **What it does:** Advanced Android package-management and diagnostics suite covering package/component inspection, manifests/signatures, tracker/library scanning, APK bundle workflows, backups, logcat, profiles, files, and terminal functionality.
+- **Why it is valuable:** Consolidates many Android package-analysis and device-management capabilities behind explicit privilege layers, making it a useful architecture reference for non-root, ADB-assisted, and root-enhanced workflows.
+- **Useful code/components:** package/component inspection; manifest/signature analysis; APK bundle installation; tracker/library scanning; logcat tools; profiles/batch operations; encrypted backup/restore; ADB/root capability layers; file manager; terminal integration.
+- **Install / runtime:** Android application with optional ADB/root-enhanced capabilities.
+- **Platforms:** Android.
+- **License:** REUSE/SPDX model; primary application is documented GPL-3.0-or-later with additional file-level licenses.
+- **Maintenance signals:** Recent commits were inspected during the research pass.
+- **Verification performed:** README, REUSE/license metadata, and recent commits inspected. No Android execution performed by GitHub Gold.
+- **Source discovery:** Embedded/Android tooling pass.
+- **Related projects:** Android package manager APIs, ADB, APK analysis and backup ecosystems.
+- **Caveats / risks:** Perform file-level SPDX/license review before code reuse; powerful package/device operations should be used only on devices the operator controls.
+- **Research notes:** Particularly strong as a map of Android package metadata, privilege abstraction, and diagnostics workflows.
+
+### Caddy
+
+- **Repository:** https://github.com/caddyserver/caddy
+- **Author / Org:** CaddyServer
+- **Category:** web server / reverse proxy / automatic HTTPS / self-hosting / server platform
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 29
+- **What it does:** Modular Go web server and reverse proxy with automatic HTTPS, dynamic configuration, HTTP/1.1/2/3, internal PKI support, and a broad plugin ecosystem.
+- **Why it is valuable:** Combines production-grade serving/proxying with an API-driven configuration model and reusable TLS automation, making it a strong self-hosting and infrastructure reference.
+- **Useful code/components:** automatic HTTPS; native JSON configuration; dynamic configuration API; config adapters; reverse proxy; HTTP/1.1 HTTP/2 HTTP/3; modular Go app/plugin architecture; local CA; cluster-aware TLS coordination; xcaddy custom builds.
+- **Install / runtime:** Native Go binaries/packages and containerized deployments.
+- **Platforms:** Linux, Windows, macOS, BSD and other Go-supported systems.
+- **License:** Apache-2.0.
+- **Maintenance signals:** August 2026 research observed recent security-sensitive and correctness fixes in proxy/server paths.
+- **Verification performed:** Official README, root Apache-2.0 license, build/test documentation, and recent security/maintenance commits inspected. No live deployment performed by GitHub Gold.
+- **Source discovery:** TLS/self-hosting pass.
+- **Related projects:** caddyserver/certmagic; xcaddy; config adapters; libdns ecosystem.
+- **Caveats / risks:** Internet-facing deployments must track patched releases and carefully review exposed admin/config APIs and proxy behavior.
+- **Research notes:** High-value platform entry; deeper Gold lies in module/config/TLS architecture rather than a simple web-server feature list.
+
+### CertMagic
+
+- **Repository:** https://github.com/caddyserver/certmagic
+- **Author / Org:** CaddyServer
+- **Category:** Go library / TLS automation / ACME / certificate management / reusable infrastructure
+- **Evidence:** VERIFIED
+- **Tier / Score:** S / 29
+- **What it does:** Go library for automated certificate issuance, renewal, caching, storage, OCSP, ACME challenges, on-demand issuance, and `tls.Config` integration.
+- **Why it is valuable:** Extracts Caddy's certificate-management capabilities into a reusable library that can be embedded into other Go applications.
+- **Useful code/components:** certificate issuance/renewal; ACME HTTP/TLS-ALPN/DNS challenges; multiple issuers; pluggable storage; distributed challenge locking; certificate cache; OCSP stapling; on-demand issuance controls; retry/backoff; event hooks; `tls.Config` integration; libdns interoperability.
+- **Install / runtime:** Go library embedded in Go applications and services.
+- **Platforms:** Go-supported systems including Linux, Windows, macOS, BSD, and Android targets where dependencies permit.
+- **License:** Apache-2.0.
+- **Maintenance signals:** Recent research observed fixes to certificate-renewal retry/error behavior and other security-sensitive maintenance.
+- **Verification performed:** Official README, Apache-2.0 license, API/feature documentation, and recent maintenance commits inspected. No certificate issuance flow executed by GitHub Gold.
+- **Source discovery:** TLS/self-hosting pass.
+- **Related projects:** Caddy; libdns providers; ACME issuers; storage backends.
+- **Caveats / risks:** Certificate automation is security-critical; deployments must configure storage, permissions, on-demand controls, and issuer policies carefully.
+- **Research notes:** Strong reusable component entry independent of Caddy itself.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
