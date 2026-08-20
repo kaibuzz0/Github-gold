@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "generated_for": "kaibuzz0/Github-gold",
+  "purpose": "Promotion-ready candidate queue kept separate from the canonical catalog until MASTER_LIST.md and catalog/tools.json can be updated together.",
+  "candidates": [
+    {
+      "name": "Organic Maps",
+      "repository": "https://github.com/organicmaps/organicmaps",
+      "owner": "organicmaps",
+      "category": ["offline-maps", "navigation", "openstreetmap", "privacy", "mobile"],
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 29,
+      "license": "Apache-2.0 code; separate binary map/data license",
+      "license_copy_status": "code-permissive-review-data-license-notice-and-reuse-metadata",
+      "platforms": ["Android", "iOS", "desktop build tooling"],
+      "useful_components": ["offline map storage and rendering", "routing engine", "offline geocoding/search", "OpenStreetMap ingestion", "map update pipeline", "KML/KMZ/GPX/GeoJSON import-export", "elevation and contour support"],
+      "verification": ["README inspected", "same-day commit history inspected", "code/data license boundary inspected"],
+      "tested_by_github_gold": false,
+      "promotion_status": "ready"
+    },
+    {
+      "name": "Kopia",
+      "repository": "https://github.com/kopia/kopia",
+      "owner": "kopia",
+      "category": ["backup", "encrypted-snapshots", "deduplication", "storage-abstraction", "self-hosting"],
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 28,
+      "license": "Apache-2.0",
+      "license_copy_status": "permissive-with-attribution-and-notice-review",
+      "platforms": ["Linux", "Windows", "macOS", "Go/Electron supported environments"],
+      "useful_components": ["encrypted snapshot repository", "deduplication", "compression", "error correction", "repository server", "S3/Azure/B2/GCS/WebDAV/SFTP/local backends", "rclone integration", "CLI and GUI"],
+      "verification": ["README inspected", "root Apache-2.0 LICENSE inspected", "recent commits inspected"],
+      "tested_by_github_gold": false,
+      "promotion_status": "ready"
+    },
+    {
+      "name": "Reticulum Network Stack",
+      "repository": "https://github.com/markqvist/Reticulum",
+      "owner": "markqvist",
+      "category": ["off-grid-networking", "delay-tolerant-networking", "cryptographic-routing", "heterogeneous-transports"],
+      "evidence": "VERIFIED",
+      "provisional_tier": "A",
+      "provisional_score": 25,
+      "license": "Custom Reticulum License; protocol stated upstream as public domain",
+      "license_copy_status": "custom-restricted-license-review-required-before-code-reuse",
+      "platforms": ["Python 3 systems", "LoRa/RNode", "packet radio", "serial", "TCP/UDP/IP", "custom interfaces"],
+      "useful_components": ["interface abstraction", "path discovery and routing", "cryptographic identities", "link establishment", "request-response API", "channels and buffers", "low-bandwidth transport", "rnsd", "rnstatus", "rnpath", "rnprobe", "rncp", "rnid", "rnsh", "rnx", "rngit", "git-remote-rns"],
+      "verification": ["README inspected", "custom LICENSE inspected", "installation and interface documentation inspected", "recent commits inspected"],
+      "tested_by_github_gold": false,
+      "promotion_status": "ready-with-license-warning"
+    }
+  ]
+}
