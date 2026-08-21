@@ -1,0 +1,36 @@
+name: Catalog Audit
+
+on:
+  pull_request:
+    paths:
+      - "MASTER_LIST.md"
+      - "catalog/**"
+      - "scripts/catalog_audit.py"
+      - ".github/workflows/catalog-audit.yml"
+  push:
+    branches:
+      - main
+      - "agent/**"
+    paths:
+      - "MASTER_LIST.md"
+      - "catalog/**"
+      - "scripts/catalog_audit.py"
+      - ".github/workflows/catalog-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Audit catalog invariants
+        run: python scripts/catalog_audit.py
