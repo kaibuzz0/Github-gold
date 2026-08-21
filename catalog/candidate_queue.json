@@ -49,6 +49,31 @@
       "caveats": "Root project is MIT licensed; optional ecosystem repositories and bindings should be checked separately before code reuse.",
       "source": "GitHub-first discovery; research/2026-08-20-local-ai-crdt.md",
       "promotion_status": "READY"
+    },
+    {
+      "name": "DuckDB",
+      "repository": "https://github.com/duckdb/duckdb",
+      "author_or_org": "duckdb",
+      "category": "embedded analytics / SQL / data tooling / columnar processing",
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "license": "MIT",
+      "useful_components": [
+        "embeddable analytical SQL engine",
+        "public version-targeted C API",
+        "CSV and Parquet readers",
+        "query planner and optimizer",
+        "vectorized execution engine",
+        "storage and transaction layers",
+        "extension architecture",
+        "CLI and language-client integration points",
+        "unit-test and benchmark infrastructure"
+      ],
+      "verification": "Inspected repository metadata, README, root MIT LICENSE, generated public C API header, and 2026-08-20 maintenance commits including C API static-link, nested-schema, and ARM64 correctness work. Not independently built or benchmarked by GitHub Gold in this pass.",
+      "caveats": "Optional extensions and third-party dependencies can have separate licensing; consumers should target documented public compatibility surfaces rather than private internals.",
+      "source": "GitHub-first discovery; research/2026-08-20-embedded-analytics.md",
+      "promotion_status": "READY"
     }
   ]
 }
