@@ -12,23 +12,8 @@
       "provisional_tier": "S",
       "provisional_score": 29,
       "license": "MIT",
-      "useful_components": [
-        "include/whisper.h C API",
-        "src/whisper.cpp inference core",
-        "CLI and streaming examples",
-        "VAD and quantization tooling",
-        "Android iOS WASM Java and Docker examples",
-        "GPU and accelerator backend integrations",
-        "talk-llama speech-to-LLM example"
-      ],
-      "verification": [
-        "repository metadata inspected",
-        "README inspected",
-        "root LICENSE inspected",
-        "recent commits inspected",
-        "v1.9.3 release dated 2026-08-20 observed upstream",
-        "not independently built or benchmarked by GitHub Gold"
-      ],
+      "useful_components": ["include/whisper.h C API","src/whisper.cpp inference core","CLI and streaming examples","VAD and quantization tooling","Android iOS WASM Java and Docker examples","GPU and accelerator backend integrations","talk-llama speech-to-LLM example"],
+      "verification": ["repository metadata inspected","README inspected","root LICENSE inspected","recent commits inspected","v1.9.3 release dated 2026-08-20 observed upstream","not independently built or benchmarked by GitHub Gold"],
       "caveats": "MIT source licensing is permissive, but model weights and third-party dependencies/backends may have separate terms.",
       "source": "GitHub-first discovery; research/2026-08-20-local-ai-crdt.md",
       "promotion_status": "READY"
@@ -42,24 +27,8 @@
       "provisional_tier": "S",
       "provisional_score": 28,
       "license": "MIT",
-      "useful_components": [
-        "Rust CRDT core",
-        "JavaScript/WASM loro-crdt package",
-        "Swift support",
-        "Fugue text and rich-text CRDTs",
-        "moveable tree and list CRDTs",
-        "delta synchronization APIs",
-        "shallow snapshots and time travel",
-        "Loro Inspector"
-      ],
-      "verification": [
-        "README inspected",
-        "root LICENSE inspected",
-        "repository metadata inspected",
-        "August 2026 correctness and performance maintenance commits inspected",
-        "upstream commits with tests observed",
-        "test suites not independently run by GitHub Gold"
-      ],
+      "useful_components": ["Rust CRDT core","JavaScript/WASM loro-crdt package","Swift support","Fugue text and rich-text CRDTs","moveable tree and list CRDTs","delta synchronization APIs","shallow snapshots and time travel","Loro Inspector"],
+      "verification": ["README inspected","root LICENSE inspected","repository metadata inspected","August 2026 correctness and performance maintenance commits inspected","upstream commits with tests observed","test suites not independently run by GitHub Gold"],
       "caveats": "Root project is MIT licensed; optional ecosystem repositories and bindings should be checked separately before code reuse.",
       "source": "GitHub-first discovery; research/2026-08-20-local-ai-crdt.md",
       "promotion_status": "READY"
@@ -73,27 +42,8 @@
       "provisional_tier": "S",
       "provisional_score": 29,
       "license": "MIT",
-      "useful_components": [
-        "embeddable analytical SQL engine",
-        "public version-targeted C API",
-        "CSV and Parquet readers",
-        "query planner and optimizer",
-        "vectorized execution engine",
-        "storage and transaction layers",
-        "extension architecture",
-        "CLI and language-client integration points",
-        "unit-test and benchmark infrastructure"
-      ],
-      "verification": [
-        "repository metadata inspected",
-        "README inspected",
-        "root MIT LICENSE inspected",
-        "generated public C API header inspected",
-        "2026-08-20 C API static-link maintenance commit inspected",
-        "2026-08-20 nested-schema correctness commit inspected",
-        "2026-08-20 ARM64 portability and test evidence inspected",
-        "not independently built or benchmarked by GitHub Gold"
-      ],
+      "useful_components": ["embeddable analytical SQL engine","public version-targeted C API","CSV and Parquet readers","query planner and optimizer","vectorized execution engine","storage and transaction layers","extension architecture","CLI and language-client integration points","unit-test and benchmark infrastructure"],
+      "verification": ["repository metadata inspected","README inspected","root MIT LICENSE inspected","generated public C API header inspected","2026-08-20 C API static-link maintenance commit inspected","2026-08-20 nested-schema correctness commit inspected","2026-08-20 ARM64 portability and test evidence inspected","not independently built or benchmarked by GitHub Gold"],
       "caveats": "Optional extensions and third-party dependencies can have separate licensing; consumers should target documented public compatibility surfaces rather than private internals.",
       "source": "GitHub-first discovery; research/2026-08-20-embedded-analytics.md",
       "promotion_status": "READY"
@@ -107,29 +57,25 @@
       "provisional_tier": "S",
       "provisional_score": 29,
       "license": "MIT",
-      "useful_components": [
-        "host and network abstractions",
-        "transport composition",
-        "NAT traversal and hole punching",
-        "reachability and AutoNAT logic",
-        "peer identity and secure channel layers",
-        "stream multiplexing",
-        "protocol negotiation",
-        "connection management",
-        "examples",
-        "Grafana production dashboards"
-      ],
-      "verification": [
-        "repository metadata inspected",
-        "README inspected",
-        "root MIT LICENSE inspected",
-        "v0.49.0 release commit dated 2026-07-28 observed upstream",
-        "2026-07-29 reachability stress-test commit inspected",
-        "2026-08-03 hole-punch timeout fix inspected",
-        "not independently built, tested, or benchmarked by GitHub Gold"
-      ],
+      "useful_components": ["host and network abstractions","transport composition","NAT traversal and hole punching","reachability and AutoNAT logic","peer identity and secure channel layers","stream multiplexing","protocol negotiation","connection management","examples","Grafana production dashboards"],
+      "verification": ["repository metadata inspected","README inspected","root MIT LICENSE inspected","v0.49.0 release commit dated 2026-07-28 observed upstream","2026-07-29 reachability stress-test commit inspected","2026-08-03 hole-punch timeout fix inspected","not independently built, tested, or benchmarked by GitHub Gold"],
       "caveats": "Root repository is MIT licensed, but dependencies, integrations, protocol implementations, and downstream projects may carry separate licenses and operational constraints.",
       "source": "GitHub-first discovery; research/2026-08-20-p2p-networking.md",
+      "promotion_status": "READY"
+    },
+    {
+      "name": "uv",
+      "repository": "https://github.com/astral-sh/uv",
+      "author_or_org": "astral-sh",
+      "category": "Python tooling / package manager / project manager / runtime management",
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 29,
+      "license": "Apache-2.0 OR MIT",
+      "useful_components": ["PubGrub-based dependency resolution","universal lockfile and project synchronization","global cache and dependency deduplication","pip-compatible interface","isolated script environments","tool execution and installation","Python interpreter discovery/download/selection","workspace management","package build and publish flows","installer and self-update machinery","cross-platform process/trampoline handling","integration and regression test infrastructure"],
+      "verification": ["official repository metadata inspected","README inspected","LICENSE-MIT inspected","LICENSE-APACHE inspected","recent commit history through 2026-08-20 inspected","upstream regression-test and artifact-policy work observed","not independently installed, benchmarked, built, or integration-tested by GitHub Gold"],
+      "caveats": "The upstream 10-100x speed claim is not independently benchmarked here. Downloaded Python distributions, packages, and third-party components retain separate licenses and supply-chain considerations.",
+      "source": "GitHub-first discovery; research/2026-08-21-python-tooling.md",
       "promotion_status": "READY"
     }
   ]
