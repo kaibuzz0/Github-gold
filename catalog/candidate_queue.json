@@ -92,6 +92,21 @@
       "caveats": "Catalog inclusion is not a cryptographic audit. Plugins, independent implementations, cryptographic dependencies, downloaded binaries, and hardware-token integrations may have separate licensing and security considerations.",
       "source": "GitHub-first discovery; research/2026-08-21-file-encryption.md",
       "promotion_status": "READY"
+    },
+    {
+      "name": "Tailscale",
+      "repository": "https://github.com/tailscale/tailscale",
+      "author_or_org": "Tailscale Inc. and contributors",
+      "category": "overlay networking / WireGuard / NAT traversal / embedded networking / private networks",
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 29,
+      "license": "BSD-3-Clause",
+      "useful_components": ["tsnet embedded private-network node","wgengine userspace WireGuard integration","gVisor-backed netstack integration","NAT traversal and path selection","DERP relay client/server architecture","tailcfg control-plane structures","local API","tailscale CLI and tailscaled daemon composition","Kubernetes operator networking patterns"],
+      "verification": ["official README inspected","root BSD-3-Clause LICENSE inspected","tsnet package documentation inspected","wgengine/netstack and related implementation areas located","2026-08-21 same-day maintenance commits inspected","not independently deployed, benchmarked, security-audited, or interoperability-tested by GitHub Gold"],
+      "caveats": "The repository contains the majority, not all, of Tailscale's open code. Some GUI wrappers are not open source; hosted coordination/control service behavior and separately maintained dependencies or companion repositories have distinct terms and operational considerations.",
+      "source": "GitHub-first discovery; research/2026-08-21-overlay-networking.md",
+      "promotion_status": "READY"
     }
   ]
 }
