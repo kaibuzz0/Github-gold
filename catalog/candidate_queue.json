@@ -9,8 +9,8 @@
       "author_or_org": "ggml-org",
       "category": "local AI / speech recognition / embedded inference",
       "evidence": "VERIFIED",
-      "tier": "S",
-      "score": 29,
+      "provisional_tier": "S",
+      "provisional_score": 29,
       "license": "MIT",
       "useful_components": [
         "include/whisper.h C API",
@@ -21,7 +21,14 @@
         "GPU and accelerator backend integrations",
         "talk-llama speech-to-LLM example"
       ],
-      "verification": "Inspected repository metadata, README, root LICENSE, and recent commits; v1.9.3 released 2026-08-20. Not independently built or benchmarked by GitHub Gold in this pass.",
+      "verification": [
+        "repository metadata inspected",
+        "README inspected",
+        "root LICENSE inspected",
+        "recent commits inspected",
+        "v1.9.3 release dated 2026-08-20 observed upstream",
+        "not independently built or benchmarked by GitHub Gold"
+      ],
       "caveats": "MIT source licensing is permissive, but model weights and third-party dependencies/backends may have separate terms.",
       "source": "GitHub-first discovery; research/2026-08-20-local-ai-crdt.md",
       "promotion_status": "READY"
@@ -32,8 +39,8 @@
       "author_or_org": "loro-dev",
       "category": "local-first / CRDT / collaborative state infrastructure",
       "evidence": "VERIFIED",
-      "tier": "S",
-      "score": 28,
+      "provisional_tier": "S",
+      "provisional_score": 28,
       "license": "MIT",
       "useful_components": [
         "Rust CRDT core",
@@ -45,7 +52,14 @@
         "shallow snapshots and time travel",
         "Loro Inspector"
       ],
-      "verification": "Inspected README, root LICENSE, repository metadata, and August 2026 maintenance commits including correctness and performance fixes with tests. Test suites were not independently run by GitHub Gold in this pass.",
+      "verification": [
+        "README inspected",
+        "root LICENSE inspected",
+        "repository metadata inspected",
+        "August 2026 correctness and performance maintenance commits inspected",
+        "upstream commits with tests observed",
+        "test suites not independently run by GitHub Gold"
+      ],
       "caveats": "Root project is MIT licensed; optional ecosystem repositories and bindings should be checked separately before code reuse.",
       "source": "GitHub-first discovery; research/2026-08-20-local-ai-crdt.md",
       "promotion_status": "READY"
@@ -56,8 +70,8 @@
       "author_or_org": "duckdb",
       "category": "embedded analytics / SQL / data tooling / columnar processing",
       "evidence": "VERIFIED",
-      "tier": "S",
-      "score": 29,
+      "provisional_tier": "S",
+      "provisional_score": 29,
       "license": "MIT",
       "useful_components": [
         "embeddable analytical SQL engine",
@@ -70,7 +84,16 @@
         "CLI and language-client integration points",
         "unit-test and benchmark infrastructure"
       ],
-      "verification": "Inspected repository metadata, README, root MIT LICENSE, generated public C API header, and 2026-08-20 maintenance commits including C API static-link, nested-schema, and ARM64 correctness work. Not independently built or benchmarked by GitHub Gold in this pass.",
+      "verification": [
+        "repository metadata inspected",
+        "README inspected",
+        "root MIT LICENSE inspected",
+        "generated public C API header inspected",
+        "2026-08-20 C API static-link maintenance commit inspected",
+        "2026-08-20 nested-schema correctness commit inspected",
+        "2026-08-20 ARM64 portability and test evidence inspected",
+        "not independently built or benchmarked by GitHub Gold"
+      ],
       "caveats": "Optional extensions and third-party dependencies can have separate licensing; consumers should target documented public compatibility surfaces rather than private internals.",
       "source": "GitHub-first discovery; research/2026-08-20-embedded-analytics.md",
       "promotion_status": "READY"
