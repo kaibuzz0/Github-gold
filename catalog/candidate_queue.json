@@ -97,6 +97,40 @@
       "caveats": "Optional extensions and third-party dependencies can have separate licensing; consumers should target documented public compatibility surfaces rather than private internals.",
       "source": "GitHub-first discovery; research/2026-08-20-embedded-analytics.md",
       "promotion_status": "READY"
+    },
+    {
+      "name": "go-libp2p",
+      "repository": "https://github.com/libp2p/go-libp2p",
+      "author_or_org": "libp2p",
+      "category": "peer-to-peer networking / protocol stack / NAT traversal / distributed systems",
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 29,
+      "license": "MIT",
+      "useful_components": [
+        "host and network abstractions",
+        "transport composition",
+        "NAT traversal and hole punching",
+        "reachability and AutoNAT logic",
+        "peer identity and secure channel layers",
+        "stream multiplexing",
+        "protocol negotiation",
+        "connection management",
+        "examples",
+        "Grafana production dashboards"
+      ],
+      "verification": [
+        "repository metadata inspected",
+        "README inspected",
+        "root MIT LICENSE inspected",
+        "v0.49.0 release commit dated 2026-07-28 observed upstream",
+        "2026-07-29 reachability stress-test commit inspected",
+        "2026-08-03 hole-punch timeout fix inspected",
+        "not independently built, tested, or benchmarked by GitHub Gold"
+      ],
+      "caveats": "Root repository is MIT licensed, but dependencies, integrations, protocol implementations, and downstream projects may carry separate licenses and operational constraints.",
+      "source": "GitHub-first discovery; research/2026-08-20-p2p-networking.md",
+      "promotion_status": "READY"
     }
   ]
 }
