@@ -77,6 +77,21 @@
       "caveats": "The upstream 10-100x speed claim is not independently benchmarked here. Downloaded Python distributions, packages, and third-party components retain separate licenses and supply-chain considerations.",
       "source": "GitHub-first discovery; research/2026-08-21-python-tooling.md",
       "promotion_status": "READY"
+    },
+    {
+      "name": "age",
+      "repository": "https://github.com/FiloSottile/age",
+      "author_or_org": "FiloSottile / age contributors",
+      "category": "file encryption / cryptographic format / Go library / CLI",
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 27,
+      "license": "BSD 3-Clause-style",
+      "useful_components": ["age CLI","age-keygen","age-inspect","Go library API","recipient and identity abstractions","streaming encrypted-file format","passphrase recipients","SSH recipient support","hybrid post-quantum recipient support","plugin architecture","Sigsum release-verification workflow","C2SP interoperability specification"],
+      "verification": ["repository metadata inspected","README inspected","root LICENSE inspected","recent commit history inspected","upstream specification and interoperability ecosystem observed","not independently built, cryptographically audited, fuzzed, benchmarked, or interoperability-tested by GitHub Gold"],
+      "caveats": "Catalog inclusion is not a cryptographic audit. Plugins, independent implementations, cryptographic dependencies, downloaded binaries, and hardware-token integrations may have separate licensing and security considerations.",
+      "source": "GitHub-first discovery; research/2026-08-21-file-encryption.md",
+      "promotion_status": "READY"
     }
   ]
 }
