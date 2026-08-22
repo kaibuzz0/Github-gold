@@ -92,6 +92,66 @@
       "caveats": "Catalog inclusion is not a cryptographic audit. Plugins, independent implementations, cryptographic dependencies, downloaded binaries, and hardware-token integrations may have separate licensing and security considerations.",
       "source": "GitHub-first discovery; research/2026-08-21-file-encryption.md",
       "promotion_status": "READY"
+    },
+    {
+      "name": "Tailscale",
+      "repository": "https://github.com/tailscale/tailscale",
+      "author_or_org": "Tailscale Inc. and contributors",
+      "category": "overlay networking / WireGuard / NAT traversal / embedded networking / private networks",
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 29,
+      "license": "BSD-3-Clause",
+      "useful_components": ["tsnet embedded private-network node","wgengine userspace WireGuard integration","gVisor-backed netstack integration","NAT traversal and path selection","DERP relay client/server architecture","tailcfg control-plane structures","local API","tailscale CLI and tailscaled daemon composition","Kubernetes operator networking patterns"],
+      "verification": ["official README inspected","root BSD-3-Clause LICENSE inspected","tsnet package documentation inspected","wgengine/netstack and related implementation areas located","2026-08-21 same-day maintenance commits inspected","not independently deployed, benchmarked, security-audited, or interoperability-tested by GitHub Gold"],
+      "caveats": "The repository contains the majority, not all, of Tailscale's open code. Some GUI wrappers are not open source; hosted coordination/control service behavior and separately maintained dependencies or companion repositories have distinct terms and operational considerations.",
+      "source": "GitHub-first discovery; research/2026-08-21-overlay-networking.md",
+      "promotion_status": "READY"
+    },
+    {
+      "name": "Headscale",
+      "repository": "https://github.com/juanfont/headscale",
+      "author_or_org": "Juan Font / Headscale contributors",
+      "category": "self-hosted networking / Tailscale control plane / WireGuard coordination",
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 28,
+      "license": "BSD-3-Clause",
+      "useful_components": ["hscontrol control-server and state layers","node registration and authentication flows","pre-auth keys and tag authorization","policy and ACL handling","route coordination","ephemeral-node lifecycle management","control-protocol polling and map responses","OIDC integration","DERP coordination interfaces","API and CLI management surfaces","protobuf/API bindings","Nix plus Make build and test workflow","integration-test infrastructure"],
+      "verification": ["official README inspected","root BSD-3-Clause LICENSE inspected","repository metadata inspected","CI and integration-test workflows located","late-July 2026 release and correctness commits inspected","documented make test/make build/Nix workflow observed","not independently deployed, tested, benchmarked, security-audited, or compatibility-tested by GitHub Gold"],
+      "caveats": "Headscale intentionally targets one self-hosted tailnet for personal, lab, enthusiast, or small-organization use rather than feature parity with Tailscale's hosted service. Compatibility follows an evolving external protocol. Upstream documentation should be followed for deployment assumptions; the maintainers explicitly do not support or encourage reverse-proxy/container deployment as the preferred path.",
+      "source": "Recursive Tailscale ecosystem research; research/2026-08-21-self-hosted-control-plane.md",
+      "promotion_status": "READY"
+    },
+    {
+      "name": "wireguard-go",
+      "repository": "https://github.com/WireGuard/wireguard-go",
+      "author_or_org": "WireGuard LLC / WireGuard contributors",
+      "category": "userspace VPN / encrypted networking / Go networking / TUN interface",
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 28,
+      "license": "MIT-style permissive",
+      "useful_components": ["device protocol engine and packet pipeline","conn UDP endpoint/socket abstraction and batching","tun cross-platform virtual-interface plumbing","ipc control interface","ratelimiter handshake-rate limiting","replay anti-replay window","rwcancel cancellable descriptor I/O","tai64n protocol timestamps","tests and regression surfaces","compact main/device composition"],
+      "verification": ["official upstream README inspected","root repository structure inspected","upstream licensing text inspected","recent commit history inspected","2026-05-22 Linux vectorized-I/O/TUN header correctness fix observed","not independently built, fuzzed, benchmarked, deployed, cryptographically audited, or interoperability-tested by GitHub Gold"],
+      "caveats": "Upstream recommends the kernel WireGuard implementation on Linux when available. Catalog inclusion is not a cryptographic audit, and downstream forks such as Tailscale's may contain meaningful divergence.",
+      "source": "Recursive networking research; research/2026-08-21-wireguard-userspace.md",
+      "promotion_status": "READY"
+    },
+    {
+      "name": "Nebula",
+      "repository": "https://github.com/slackhq/nebula",
+      "author_or_org": "Slack Technologies / slackhq contributors",
+      "category": "overlay networking / peer-to-peer SDN / NAT traversal / private networking",
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 28,
+      "license": "MIT",
+      "useful_components": ["Noise-based authenticated handshake path","lighthouse peer discovery and endpoint learning","host map and remote state","UDP hole punching","certificate identity and nebula-cert tooling","group-aware firewall engine","TUN packet path","roaming and connection management","configuration loader","native Go FIPS build support"],
+      "verification": ["repository metadata inspected","official README inspected","root license metadata inspected","recent maintenance commits inspected","2026-08-21 native Go fips140 support observed","2026-08-21 TUN offload work observed","2026-08-20 fail-closed IPv6 parsing fix observed","2026-08-20 32-bit CA command memory-safety fix observed","not independently deployed, built, tested, benchmarked, fuzzed, cryptographically audited, or FIPS-validated by GitHub Gold"],
+      "caveats": "Private-network infrastructure is security-sensitive; catalog inclusion is not an audit. Direct paths depend on NAT/firewall topology, CA key handling is critical, companion mobile code is separate, and FIPS build support is not blanket deployment compliance.",
+      "source": "GitHub-first and recursive networking research; research/2026-08-22-nebula-overlay-networking.md",
+      "promotion_status": "READY"
     }
   ]
 }
