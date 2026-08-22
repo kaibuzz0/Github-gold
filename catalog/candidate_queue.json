@@ -107,6 +107,21 @@
       "caveats": "The repository contains the majority, not all, of Tailscale's open code. Some GUI wrappers are not open source; hosted coordination/control service behavior and separately maintained dependencies or companion repositories have distinct terms and operational considerations.",
       "source": "GitHub-first discovery; research/2026-08-21-overlay-networking.md",
       "promotion_status": "READY"
+    },
+    {
+      "name": "Headscale",
+      "repository": "https://github.com/juanfont/headscale",
+      "author_or_org": "Juan Font / Headscale contributors",
+      "category": "self-hosted networking / Tailscale control plane / WireGuard coordination",
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 28,
+      "license": "BSD-3-Clause",
+      "useful_components": ["hscontrol control-server and state layers","node registration and authentication flows","pre-auth keys and tag authorization","policy and ACL handling","route coordination","ephemeral-node lifecycle management","control-protocol polling and map responses","OIDC integration","DERP coordination interfaces","API and CLI management surfaces","protobuf/API bindings","Nix plus Make build and test workflow","integration-test infrastructure"],
+      "verification": ["official README inspected","root BSD-3-Clause LICENSE inspected","repository metadata inspected","CI and integration-test workflows located","late-July 2026 release and correctness commits inspected","documented make test/make build/Nix workflow observed","not independently deployed, tested, benchmarked, security-audited, or compatibility-tested by GitHub Gold"],
+      "caveats": "Headscale intentionally targets one self-hosted tailnet for personal, lab, enthusiast, or small-organization use rather than feature parity with Tailscale's hosted service. Compatibility follows an evolving external protocol. Upstream documentation should be followed for deployment assumptions; the maintainers explicitly do not support or encourage reverse-proxy/container deployment as the preferred path.",
+      "source": "Recursive Tailscale ecosystem research; research/2026-08-21-self-hosted-control-plane.md",
+      "promotion_status": "READY"
     }
   ]
 }
