@@ -152,6 +152,36 @@
       "caveats": "Private-network infrastructure is security-sensitive; catalog inclusion is not an audit. Direct paths depend on NAT/firewall topology, CA key handling is critical, companion mobile code is separate, and FIPS build support is not blanket deployment compliance.",
       "source": "GitHub-first and recursive networking research; research/2026-08-22-nebula-overlay-networking.md",
       "promotion_status": "READY"
+    },
+    {
+      "name": "Nushell",
+      "repository": "https://github.com/nushell/nushell",
+      "author_or_org": "Nushell Project",
+      "category": "developer tooling / shell / structured data pipelines / cross-platform automation",
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 28,
+      "license": "MIT",
+      "useful_components": ["structured value and pipeline model","parser and language engine","typed command signatures","external-process stream bridging","plugin architecture","structured file ingestion","cross-platform process behavior","configuration/default-file architecture","editor and tooling ecosystem"],
+      "verification": ["official README inspected","root MIT license inspected","repository metadata inspected","CI/nightly and release surfaces inspected","0.114.1 release dated 2026-07-11 observed upstream","August 2026 ecosystem maintenance observed","not independently built, benchmarked, or cross-platform tested by GitHub Gold"],
+      "caveats": "Nushell semantics differ materially from POSIX shells and some commands/design details may evolve. Plugins, packages, integrations, and separately maintained ecosystem repositories require independent license checks.",
+      "source": "GitHub-first discovery; research/2026-08-22-structured-shell.md",
+      "promotion_status": "READY"
+    },
+    {
+      "name": "Reedline",
+      "repository": "https://github.com/nushell/reedline",
+      "author_or_org": "Nushell Project",
+      "category": "developer tooling / interactive CLI / line editor / Rust library",
+      "evidence": "VERIFIED",
+      "provisional_tier": "S",
+      "provisional_score": 28,
+      "license": "MIT",
+      "useful_components": ["Reedline editor engine and builder","completion abstraction and menus","highlighter hinter and validator traits","file-backed and SQLite history","Emacs Vi and Helix edit modes","keybinding and edit-command engine","Unicode/grapheme-aware terminal editing","clipboard and external-printer feature integrations","integration examples"],
+      "verification": ["official README inspected","root MIT license inspected","Cargo.toml and feature definitions inspected","current manifest version 0.50.0 observed","recent commits through 2026-08-21 inspected","correctness fixes and RustSec-driven dependency maintenance observed","not independently built, fuzzed, benchmarked, terminal-matrix tested, or security-audited by GitHub Gold"],
+      "caveats": "Upstream lists complex Unicode scripts, expensive completion/prompt handling, and full-duplex concurrent output as areas needing further improvement. Optional dependencies and downstream integrations retain separate licenses.",
+      "source": "Recursive Nushell ecosystem research; research/2026-08-22-line-editor.md",
+      "promotion_status": "READY"
     }
   ]
 }
