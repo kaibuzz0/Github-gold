@@ -11,6 +11,7 @@ Upstream inspected at commit `d7253cb40e38cd71cdf4366246ff3078414b1662`.
 Primary source paths:
 
 - `wgengine/magicsock/derp.go`
+- `util/backoff/backoff.go`
 - `health/health.go`
 - DERP HTTP/client behavior already mapped in the preceding admission dossiers
 
@@ -42,16 +43,42 @@ When `dc.RecvDetail()` returns an error, the loop:
 
 A successful receive resets the backoff with `bo.BackOff(ctx, nil)`.
 
-## What the 5-second value means
+## Exact backoff semantics
 
-The constructor is given a 5-second duration, but this research pass does **not** treat that as a guaranteed constant retry interval. The imported `util/backoff` implementation was not fully re-derived here, so the safe claim is:
+The 5-second value passed by magicsock is **the maximum backoff parameter**, not a fixed reconnect interval.
 
-- magicsock uses Tailscale's shared backoff helper;
-- the DERP reader configures it with a 5-second parameter;
-- failure retries are intentionally delayed rather than tight-looped;
-- success resets the backoff state.
+The shared `util/backoff.Backoff` implementation tracks consecutive failures as `n` and computes the pre-jitter delay as:
 
-Do not rewrite this as "DERP retries exactly every five seconds" without separately inspecting and validating `util/backoff` semantics.
+```text
+min(n² × 10 ms, maxBackoff)
+```
+
+It then multiplies that delay by a random factor in the range **0.5x to 1.5x** to reduce thundering-herd synchronization.
+
+For DERP, `maxBackoff` is configured as 5 seconds. Because jitter is applied after the cap, the final sleep can be below or above 5 seconds; once the pre-jitter value has reached the cap, the randomized sleep is approximately **2.5 to 7.5 seconds**.
+
+Illustrative pre-jitter progression:
+
+- failure 1: 10 ms
+- failure 2: 40 ms
+- failure 3: 90 ms
+- failure 4: 160 ms
+- failure 5: 250 ms
+- failure 10: 1 s
+- failure 20: 4 s
+- failure 23 and later: capped at 5 s before jitter
+
+The implementation intentionally uses `n²` rather than exponential `2^n` growth because upstream describes quadratic growth as smoother.
+
+If `BackOff` receives a nil error, it resets `n` to zero immediately. Cancellation also interrupts an in-progress timer through the supplied context.
+
+Operationally, this means DERP reconnect is:
+
+- very fast for the first few failures;
+- progressively damped during repeated failure;
+- jittered to avoid synchronized client reconnect storms;
+- bounded rather than growing without limit;
+- reset as soon as the reader observes a successful receive.
 
 ## Health-state transition
 
@@ -100,7 +127,7 @@ Therefore persistent failure of one DERP connection does not imply that the read
 
 The preceding source trace established that a DERP client may locally finish construction before positive server-side admission is observed, and that rejection does not carry a dedicated structured denial frame to the normal client.
 
-Combined with the reconnect code above, a persistent policy rejection can plausibly enter the generic DERP failure/reconnect machinery rather than a specialized "admission denied" state.
+Combined with the reconnect code above, a persistent policy rejection can plausibly enter the generic DERP failure/reconnect machinery rather than a specialized `admission denied` state.
 
 Safe source-derived conclusion:
 
@@ -111,7 +138,7 @@ Safe source-derived conclusion:
 Not established in this pass:
 
 - exact user-visible error text under repeated admission rejection;
-- exact retry timing under a continuously rejecting controller;
+- exact sequence of reconnect attempts under a continuously rejecting controller;
 - whether a particular caller suppresses or escalates repeated failures;
 - whether health UI surfaces distinguish admission rejection from ordinary DERP transport failure.
 
@@ -141,19 +168,23 @@ A transport reader can own retry/backoff while a higher policy layer owns prefer
 
 Triggering fresh network checks after relay receive errors acknowledges that the cause may be local path/NAT change, not only relay-server failure.
 
-### 3. Reset retry state only after observed success
+### 3. Use bounded jittered retry growth
+
+Quadratic growth gives fast early recovery without allowing persistent failures to become a tight reconnect storm. Randomization reduces synchronized reconnect bursts across many clients.
+
+### 4. Reset retry state only after observed success
 
 The DERP reader clears its backoff after successful receive activity rather than merely after scheduling a new connection.
 
-### 4. Distinguish connection state from server health
+### 5. Distinguish connection state from server health
 
 A boolean connected signal and a protocol-provided health problem string answer different operational questions and should remain separate.
 
-### 5. Bound reconnect-adjacent queues
+### 6. Bound reconnect-adjacent queues
 
 The 32-entry write queue is deliberately kept shallow. Upstream comments reject queue growth as the primary fix for slow/broken paths.
 
-### 6. Do not over-interpret generic reconnect telemetry
+### 7. Do not over-interpret generic reconnect telemetry
 
 A generic connection failure may represent server failure, network movement, control-plane issues, policy rejection, or transport errors. Admission-specific diagnosis requires admission-specific telemetry.
 
@@ -173,6 +204,7 @@ Together they now cover:
 - admission-controller timeout and concurrency behavior;
 - client-visible denial limitations;
 - reconnect/backoff after generic DERP failures;
+- exact retry-growth, jitter, cap, cancellation, and reset semantics;
 - per-region health-state transitions;
 - the separation between reconnect and home-DERP selection.
 
@@ -193,8 +225,8 @@ No third-party source code was copied into GitHub Gold.
 
 ## Strong next leads
 
-1. Inspect `util/backoff` to derive the exact delay/jitter/reset semantics behind the 5-second DERP configuration.
-2. Trace higher-level health consumers to see how repeated `SetDERPRegionConnectedState(false)` affects user-visible network-health reporting.
-3. Search recent Tailscale issues/PRs for persistent DERP reconnect storms, admission diagnostics, or requests for admission-specific metrics.
-4. Compare this generic reconnect model with Iroh relay `AccessControl` rejection and reconnection behavior.
-5. Design an upstream-style in-memory regression test that proves the client-visible behavior of repeated external admission rejection without requiring public relay infrastructure.
+1. Trace higher-level health consumers to see how repeated `SetDERPRegionConnectedState(false)` affects user-visible network-health reporting.
+2. Search recent Tailscale issues/PRs for persistent DERP reconnect storms, admission diagnostics, or requests for admission-specific metrics.
+3. Compare this generic reconnect model with Iroh relay `AccessControl` rejection and reconnection behavior.
+4. Design an upstream-style in-memory regression test that proves the client-visible behavior of repeated external admission rejection without requiring public relay infrastructure.
+5. Inspect whether any DERP-specific caller adds an additional retry/backoff layer around the `derphttp.Client` connection path.
