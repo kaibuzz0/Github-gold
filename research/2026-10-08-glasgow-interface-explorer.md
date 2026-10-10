@@ -61,7 +61,7 @@ Glasgow is a programmable hardware/software interface explorer rather than a fix
 
 ## GitHub Gold catalog hygiene
 
-A GitHub Gold code search for `Glasgow` returned no matches, and the inspected draft research branch file listing had no Glasgow dossier. This is a new **local** dossier pending a repository write. Do not update `MASTER_LIST.md` without synchronizing `catalog/tools.json` and running `scripts/catalog_audit.py`.
+Before integration, GitHub Gold's branch inventory and catalog checks found no Glasgow dossier or canonical entry. This research dossier was committed to the existing draft research branch on 2026-10-10. It is **not** yet a canonical catalog promotion. Update `MASTER_LIST.md` and `catalog/tools.json` together when promoting, and run `scripts/catalog_audit.py`.
 
 ## Component update — 2026-10-09
 
