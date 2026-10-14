@@ -445,6 +445,46 @@ Suggested tiers:
 - **Caveats / risks:** Certificate automation is security-critical; deployments must configure storage, permissions, on-demand controls, and issuer policies carefully.
 - **Research notes:** Strong reusable component entry independent of Caddy itself.
 
+### whisper.cpp
+
+- **Repository:** https://github.com/ggml-org/whisper.cpp
+- **Author / Org:** ggml-org
+- **Category:** local AI / speech recognition / embedded inference
+- **Evidence:** VERIFIED (upstream code, release and CI evidence; not independently executed)
+- **Tier / Score:** S / 29 (provisional)
+- **What it does:** Local cross-platform speech recognition implementation in C/C++.
+- **Why it is valuable:** Embeddable C API and CPU/GPU backends for offline transcription.
+- **Useful code/components:** include/whisper.h C API; src/whisper.cpp inference core; CLI and streaming examples; VAD and quantization tooling; Android iOS WASM Java and Docker examples; GPU and accelerator backend integrations; talk-llama speech-to-LLM example.
+- **Install / runtime:** Build with CMake; obtain separately licensed model weights; run whisper-cli or link the C API.
+- **Platforms:** Linux, Windows, macOS, Android, iOS, WebAssembly.
+- **License:** MIT for the inspected root repository; third-party code and assets may differ.
+- **Maintenance signals:** Upstream stable release v1.9.5 published 2026-10-06; CI workflows cover multiple platforms.
+- **Verification performed:** README, license, upstream release and CI definitions inspected. No independent build, runtime test, or benchmark.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-local-ai-crdt.md
+- **Related projects:** ggml-org/ggml and Whisper model ecosystem.
+- **Caveats / risks:** MIT source licensing is permissive, but model weights and third-party dependencies/backends may have separate terms.
+- **Research notes:** Promoted from READY queue; scoring remains provisional.
+
+### Loro
+
+- **Repository:** https://github.com/loro-dev/loro
+- **Author / Org:** loro-dev
+- **Category:** local-first / CRDT / collaborative state infrastructure
+- **Evidence:** VERIFIED (upstream code, release and CI evidence; not independently executed)
+- **Tier / Score:** S / 28 (provisional)
+- **What it does:** Conflict-free replicated data types for local-first collaborative application state.
+- **Why it is valuable:** Reusable mergeable text, rich-text, tree, list and map structures, with delta synchronization and history.
+- **Useful code/components:** Rust CRDT core; JavaScript/WASM loro-crdt package; Swift support; Fugue text and rich-text CRDTs; moveable tree and list CRDTs; delta synchronization APIs; shallow snapshots and time travel; Loro Inspector.
+- **Install / runtime:** Use the Rust crates, JavaScript/WASM package, or documented Swift integration.
+- **Platforms:** Rust, JavaScript/WebAssembly, Swift.
+- **License:** MIT for the inspected root repository; third-party code and assets may differ.
+- **Maintenance signals:** Upstream loro-crdt@1.16.4 published 2026-09-30; Rust CI and release workflows present.
+- **Verification performed:** README, license, upstream release and CI definitions inspected. No independent build, runtime test, or benchmark.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-local-ai-crdt.md
+- **Related projects:** loro-dev ecosystem, local-first applications, CRDT research.
+- **Caveats / risks:** Root project is MIT licensed; optional ecosystem repositories and bindings should be checked separately before code reuse.
+- **Research notes:** Promoted from READY queue; scoring remains provisional.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

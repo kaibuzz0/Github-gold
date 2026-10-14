@@ -4,36 +4,6 @@
   "purpose": "Promotion-ready candidate queue kept separate from the canonical catalog until MASTER_LIST.md and catalog/tools.json can be updated together.",
   "candidates": [
     {
-      "name": "whisper.cpp",
-      "repository": "https://github.com/ggml-org/whisper.cpp",
-      "author_or_org": "ggml-org",
-      "category": "local AI / speech recognition / embedded inference",
-      "evidence": "VERIFIED",
-      "provisional_tier": "S",
-      "provisional_score": 29,
-      "license": "MIT",
-      "useful_components": ["include/whisper.h C API","src/whisper.cpp inference core","CLI and streaming examples","VAD and quantization tooling","Android iOS WASM Java and Docker examples","GPU and accelerator backend integrations","talk-llama speech-to-LLM example"],
-      "verification": ["repository metadata inspected","README inspected","root LICENSE inspected","recent commits inspected","v1.9.3 release dated 2026-08-20 observed upstream","not independently built or benchmarked by GitHub Gold"],
-      "caveats": "MIT source licensing is permissive, but model weights and third-party dependencies/backends may have separate terms.",
-      "source": "GitHub-first discovery; research/2026-08-20-local-ai-crdt.md",
-      "promotion_status": "READY"
-    },
-    {
-      "name": "Loro",
-      "repository": "https://github.com/loro-dev/loro",
-      "author_or_org": "loro-dev",
-      "category": "local-first / CRDT / collaborative state infrastructure",
-      "evidence": "VERIFIED",
-      "provisional_tier": "S",
-      "provisional_score": 28,
-      "license": "MIT",
-      "useful_components": ["Rust CRDT core","JavaScript/WASM loro-crdt package","Swift support","Fugue text and rich-text CRDTs","moveable tree and list CRDTs","delta synchronization APIs","shallow snapshots and time travel","Loro Inspector"],
-      "verification": ["README inspected","root LICENSE inspected","repository metadata inspected","August 2026 correctness and performance maintenance commits inspected","upstream commits with tests observed","test suites not independently run by GitHub Gold"],
-      "caveats": "Root project is MIT licensed; optional ecosystem repositories and bindings should be checked separately before code reuse.",
-      "source": "GitHub-first discovery; research/2026-08-20-local-ai-crdt.md",
-      "promotion_status": "READY"
-    },
-    {
       "name": "DuckDB",
       "repository": "https://github.com/duckdb/duckdb",
       "author_or_org": "duckdb",
