@@ -525,6 +525,46 @@ Suggested tiers:
 - **Caveats / risks:** Root repository is MIT licensed, but dependencies, integrations, protocol implementations, and downstream projects may carry separate licenses and operational constraints.
 - **Research notes:** Promoted from READY queue on 2026-10-14; score remains provisional. No third-party source copied.
 
+### uv
+
+- **Repository:** https://github.com/astral-sh/uv
+- **Author / Org:** Astral
+- **Category:** Python tooling / dependency management / Rust CLI
+- **Evidence:** VERIFIED (upstream evidence; not independently executed)
+- **Tier / Score:** S / 29 (provisional; Utility + Working Evidence + Reusability + Novelty + Documentation + Maintenance = 5+5+5+4+5+5)
+- **What it does:** Fast Rust-based Python package and project manager supporting lockfiles, interpreters, workspaces, tools, scripts, caching and pip-compatible commands.
+- **Why it is valuable:** A reusable dependency resolver, package installation stack and environment manager with extensive upstream tests and cross-platform distribution.
+- **Useful code/components:** `crates/uv-resolver/src/pubgrub/` dependency solver; `crates/uv-lock/` lockfiles; `crates/uv-cache/` cache; `crates/uv-install-wheel/` wheel installation; `crates/uv-python-discovery/` interpreter discovery; `crates/uv-virtualenv/` environments; `crates/uv-build-backend/` builds.
+- **Install / runtime:** Standalone installers or PyPI; Rust toolchain for source builds; some operations access package indexes or download interpreters.
+- **Platforms:** Linux, macOS, Windows.
+- **License:** Apache-2.0 OR MIT; inspect dependency and component terms before copying.
+- **Maintenance signals:** Upstream v0.13.1 published 2026-10-14; same-day commits; CI, integration, smoke and release workflows.
+- **Verification performed:** README, MIT and Apache-2.0 root licenses inspected; uv-resolver source tree and GitHub Actions test workflows inspected; v0.13.1 upstream release published 2026-10-14 inspected; No independent build, install or benchmark.
+- **Source discovery:** GitHub-first; research/2026-08-21-python-tooling.md
+- **Related projects:** Astral Ruff, ty; Python packaging standards.
+- **Caveats / risks:** Upstream 10–100x speed claims not independently benchmarked. Downloaded interpreters, packages and third-party dependencies have separate licenses and supply-chain risks.
+- **Research notes:** Promoted from READY queue on 2026-10-14. No upstream code copied.
+
+### age
+
+- **Repository:** https://github.com/FiloSottile/age
+- **Author / Org:** Filippo Valsorda and contributors
+- **Category:** File encryption / Go cryptography / CLI / interoperability
+- **Evidence:** VERIFIED (upstream evidence; not independently executed)
+- **Tier / Score:** S / 27 (provisional; Utility + Working Evidence + Reusability + Novelty + Documentation + Maintenance = 5+4+5+4+5+4)
+- **What it does:** Interoperable encrypted-file format, Go library and command-line tools supporting recipients, identities, passphrases, plugins and hybrid post-quantum options.
+- **Why it is valuable:** Small composable encryption interfaces, documented format and independent implementations enable secure file-exchange applications.
+- **Useful code/components:** `age.go` Go API; `x25519.go` key recipients; `scrypt.go` passphrases; `pq.go` hybrid post-quantum support; `plugin/` extensions; `cmd/age/`, `cmd/age-keygen/`, `cmd/age-inspect/` tools; `age_test.go` tests.
+- **Install / runtime:** Prebuilt CLI or Go module `filippo.io/age`; source go.mod specifies Go 1.25 and toolchain Go 1.27.
+- **Platforms:** Linux, macOS, Windows, BSD.
+- **License:** BSD 3-Clause-style; inspect dependency and component terms before copying.
+- **Maintenance signals:** Upstream v1.3.2 published 2026-08-29; test, build and interoperability workflows; release parser hardening.
+- **Verification performed:** README and BSD-3-Clause-style root LICENSE inspected; age.go, cmd directory, go.mod, test files and CI workflows inspected; v1.3.2 upstream release published 2026-08-29 inspected; No independent build, interoperability test or security audit.
+- **Source discovery:** GitHub-first; research/2026-08-21-file-encryption.md
+- **Related projects:** str4d/rage; FiloSottile/typage; str4d/age-plugin-yubikey; age C2SP format.
+- **Caveats / risks:** Catalog inclusion is not a cryptographic audit. Plugins and dependencies require separate review. v1.3.2 rejects some formerly accepted malformed or oversized inputs.
+- **Research notes:** Promoted from READY queue on 2026-10-14. No upstream code copied.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

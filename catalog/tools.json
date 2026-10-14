@@ -1044,6 +1044,97 @@
       "research_priority": "high",
       "source_discovery": "GitHub-first discovery; research/2026-08-20-p2p-networking.md",
       "caveats": "Root repository is MIT licensed, but dependencies, integrations, protocol implementations, and downstream projects may carry separate licenses and operational constraints."
+    },
+    {
+      "name": "uv",
+      "repository": "https://github.com/astral-sh/uv",
+      "owner": "astral-sh",
+      "category": [
+        "python",
+        "package-management",
+        "dependency-resolution",
+        "rust",
+        "developer-tooling"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "license": "Apache-2.0 OR MIT",
+      "license_copy_status": "dual-permissive-with-attribution",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "useful_components": [
+        "PubGrub-based dependency resolution",
+        "universal lockfile and project synchronization",
+        "global cache and dependency deduplication",
+        "pip-compatible interface",
+        "isolated script environments",
+        "tool execution and installation",
+        "Python interpreter discovery/download/selection",
+        "workspace management",
+        "package build and publish flows",
+        "installer and self-update machinery",
+        "cross-platform process/trampoline handling",
+        "integration and regression test infrastructure"
+      ],
+      "verification": [
+        "README, MIT and Apache-2.0 root licenses inspected",
+        "uv-resolver source tree and GitHub Actions test workflows inspected",
+        "v0.13.1 upstream release published 2026-10-14 inspected",
+        "No independent build, install or benchmark"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "Upstream speed claims not independently benchmarked. Downloaded Python versions, packages and dependencies have separate terms and supply-chain risks."
+    },
+    {
+      "name": "age",
+      "repository": "https://github.com/FiloSottile/age",
+      "owner": "FiloSottile",
+      "category": [
+        "file-encryption",
+        "cryptography",
+        "go-library",
+        "cli-tools",
+        "interoperability"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "license": "BSD 3-Clause-style",
+      "license_copy_status": "bsd-3-clause-permissive-with-notices",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "BSD"
+      ],
+      "useful_components": [
+        "age CLI",
+        "age-keygen",
+        "age-inspect",
+        "Go library API",
+        "recipient and identity abstractions",
+        "streaming encrypted-file format",
+        "passphrase recipients",
+        "SSH recipient support",
+        "hybrid post-quantum recipient support",
+        "plugin architecture",
+        "Sigsum release-verification workflow",
+        "C2SP interoperability specification"
+      ],
+      "verification": [
+        "README and BSD-3-Clause-style root LICENSE inspected",
+        "age.go, cmd directory, go.mod, test files and CI workflows inspected",
+        "v1.3.2 upstream release published 2026-08-29 inspected",
+        "No independent build, interoperability test or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "Plugin, dependency and implementation licenses must be reviewed. Catalog inclusion is not a security audit; v1.3.2 rejects previously accepted malformed or oversized inputs."
     }
   ],
   "deferred_or_rejected": [
