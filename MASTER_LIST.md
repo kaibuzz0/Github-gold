@@ -565,6 +565,46 @@ Suggested tiers:
 - **Caveats / risks:** Catalog inclusion is not a cryptographic audit. Plugins and dependencies require separate review. v1.3.2 rejects some formerly accepted malformed or oversized inputs.
 - **Research notes:** Promoted from READY queue on 2026-10-14. No upstream code copied.
 
+### Tailscale
+
+- **Repository:** https://github.com/tailscale/tailscale
+- **Author / Org:** Tailscale Inc. and contributors
+- **Category:** overlay networking / WireGuard / NAT traversal / embedded networking / private networks
+- **Evidence:** VERIFIED (upstream release, implementation, test and CI evidence; no independent runtime test).
+- **Tier / Score:** S / 29; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** WireGuard-based private overlay networking with NAT traversal and relay fallback; tsnet embeds an authenticated tailnet node into Go programs.
+- **Why it is valuable:** Reusable networking infrastructure with documented architecture, active maintenance and upstream test coverage.
+- **Useful code/components:** `tsnet/tsnet.go: embedded tailnet server`; `tsnet/example/: examples`; `wgengine/: userspace networking engine`; `wgengine/magicsock/: NAT traversal`; `wgengine/netstack/: gVisor userspace TCP/IP`; `tailcfg/: control protocol types`; `tailscaled and CLI`.
+- **Install / runtime:** Official client packages, or Go module tailscale.com/tsnet; tailnet enrollment required.
+- **Platforms:** Linux, Windows, macOS, selected BSD, Go embedded services.
+- **License:** BSD-3-Clause; review third-party notices and component licenses before extraction.
+- **Maintenance signals:** Upstream release v1.104.1 (2026-10-07); recent commits 2026-10-14; source tests and GitHub Actions workflows inspected.
+- **Verification performed:** README and BSD-3-Clause LICENSE inspected on 2026-10-14; tsnet README/source and tests, wgengine directory and CI workflows inspected; upstream stable release v1.104.1 published 2026-10-07; upstream commits 2026-10-14 inspected; no independent build or deployment.
+- **Source discovery:** GitHub-first; research/2026-08-21-overlay-networking.md
+- **Related projects:** juanfont/headscale; WireGuard/wireguard-go; tailscale/tailscale-android.
+- **Caveats / risks:** Hosted control plane and some proprietary GUI code are not included; check dependency notices, device enrollment and ACL configuration. No upstream code copied or independent security audit performed.
+- **Research notes:** Promoted from READY queue on 2026-10-14. Inspect exact upstream paths in the source tree before reuse.
+
+### Headscale
+
+- **Repository:** https://github.com/juanfont/headscale
+- **Author / Org:** Juan Font / Headscale contributors
+- **Category:** self-hosted networking / Tailscale control plane / WireGuard coordination
+- **Evidence:** VERIFIED (upstream release, implementation, test and CI evidence; no independent runtime test).
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Self-hosted coordination server for Tailscale-compatible clients, with enrollment, policy, node management and route distribution.
+- **Why it is valuable:** Reusable networking infrastructure with documented architecture, active maintenance and upstream test coverage.
+- **Useful code/components:** `hscontrol/: control server`; `hscontrol/api/: management API`; `integration/: integration tests`; `registration and pre-auth keys`; `OIDC authorization`; `ACL and policy evaluation`; `DERP and route coordination`.
+- **Install / runtime:** Deploy the Go server with release-tag-matched configuration; requires compatible clients.
+- **Platforms:** Linux server, Go source, Nix-supported hosts.
+- **License:** BSD-3-Clause; review third-party notices and component licenses before extraction.
+- **Maintenance signals:** Upstream release v0.29.5 (2026-10-13); recent commits 2026-10-13; source tests and GitHub Actions workflows inspected.
+- **Verification performed:** README and BSD-3-Clause LICENSE inspected on 2026-10-14; hscontrol and integration source trees and CI workflows inspected; upstream v0.29.5 published 2026-10-13 with policy and route fixes; 2026-10-13 commits inspected; no independent deployment or interoperability test.
+- **Source discovery:** Recursive Tailscale research; research/2026-08-21-self-hosted-control-plane.md
+- **Related projects:** tailscale/tailscale; WireGuard/wireguard-go.
+- **Caveats / risks:** Self-hosted tailnet coordination, not feature parity with hosted Tailscale. Follow configuration/docs matching the installed release tag; security-sensitive policies require review. No upstream code copied or independent security audit performed.
+- **Research notes:** Promoted from READY queue on 2026-10-14. Inspect exact upstream paths in the source tree before reuse.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

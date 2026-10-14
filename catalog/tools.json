@@ -1135,6 +1135,106 @@
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
       "copy_restriction_note": "Plugin, dependency and implementation licenses must be reviewed. Catalog inclusion is not a security audit; v1.3.2 rejects previously accepted malformed or oversized inputs."
+    },
+    {
+      "name": "Tailscale",
+      "repository": "https://github.com/tailscale/tailscale",
+      "owner": "tailscale",
+      "category": [
+        "overlay-networking",
+        "wireguard",
+        "nat-traversal",
+        "go-library",
+        "private-networking"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "BSD-3-Clause",
+      "license_copy_status": "permissive-with-attribution-review-dependency-licenses",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "selected BSD",
+        "Go embedded services"
+      ],
+      "useful_components": [
+        "tsnet/tsnet.go: embedded tailnet server",
+        "tsnet/example/: examples",
+        "wgengine/: userspace networking engine",
+        "wgengine/magicsock/: NAT traversal",
+        "wgengine/netstack/: gVisor userspace TCP/IP",
+        "tailcfg/: control protocol types",
+        "tailscaled and CLI"
+      ],
+      "verification": [
+        "README and BSD-3-Clause LICENSE inspected on 2026-10-14",
+        "tsnet README/source and tests, wgengine directory and CI workflows inspected",
+        "upstream stable release v1.104.1 published 2026-10-07",
+        "upstream commits 2026-10-14 inspected; no independent build or deployment"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "Hosted control plane and some proprietary GUI code are not included; check dependency notices, device enrollment and ACL configuration.",
+      "source": "GitHub-first; research/2026-08-21-overlay-networking.md"
+    },
+    {
+      "name": "Headscale",
+      "repository": "https://github.com/juanfont/headscale",
+      "owner": "juanfont",
+      "category": [
+        "self-hosting",
+        "overlay-networking",
+        "control-plane",
+        "wireguard-coordination",
+        "go-server"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "BSD-3-Clause",
+      "license_copy_status": "permissive-with-attribution-review-dependency-licenses",
+      "platforms": [
+        "Linux server",
+        "Go source",
+        "Nix-supported hosts"
+      ],
+      "useful_components": [
+        "hscontrol/: control server",
+        "hscontrol/api/: management API",
+        "integration/: integration tests",
+        "registration and pre-auth keys",
+        "OIDC authorization",
+        "ACL and policy evaluation",
+        "DERP and route coordination"
+      ],
+      "verification": [
+        "README and BSD-3-Clause LICENSE inspected on 2026-10-14",
+        "hscontrol and integration source trees and CI workflows inspected",
+        "upstream v0.29.5 published 2026-10-13 with policy and route fixes",
+        "2026-10-13 commits inspected; no independent deployment or interoperability test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "Self-hosted tailnet coordination, not feature parity with hosted Tailscale. Follow configuration/docs matching the installed release tag; security-sensitive policies require review.",
+      "source": "Recursive Tailscale research; research/2026-08-21-self-hosted-control-plane.md"
     }
   ],
   "deferred_or_rejected": [
