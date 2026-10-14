@@ -485,6 +485,46 @@ Suggested tiers:
 - **Caveats / risks:** Root project is MIT licensed; optional ecosystem repositories and bindings should be checked separately before code reuse.
 - **Research notes:** Promoted from READY queue; scoring remains provisional.
 
+### DuckDB
+
+- **Repository:** https://github.com/duckdb/duckdb
+- **Author / Org:** duckdb
+- **Category:** embedded analytics / SQL / data tooling / columnar processing
+- **Evidence:** VERIFIED (upstream implementation, documentation and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 29 (provisional)
+- **What it does:** Embeddable analytical SQL database with vectorized execution and local CSV/Parquet processing.
+- **Why it is valuable:** Reusable in-process analytics engine and C API for local-first data pipelines and scripts.
+- **Useful code/components:** embeddable analytical SQL engine; public version-targeted C API; CSV and Parquet readers; query planner and optimizer; vectorized execution engine; storage and transaction layers; extension architecture; CLI and language-client integration points; unit-test and benchmark infrastructure.
+- **Install / runtime:** Use a supported DuckDB CLI, language package, or documented native C/C++ interface; extension compatibility depends on versions.
+- **Platforms:** Linux, Windows, macOS, other supported native and language-binding targets.
+- **License:** MIT at upstream root; dependencies/extensions require separate review.
+- **Maintenance signals:** 2026-10-14 upstream commits inspect SQL expression export, window-buffer allocation, and asynchronous query handling.
+- **Verification performed:** README, root license and upstream commits inspected; no independent build, runtime, network, performance or security tests.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-embedded-analytics.md
+- **Related projects:** DuckDB extensions, Arrow, Parquet and embedded analytics tooling.
+- **Caveats / risks:** Optional extensions and third-party dependencies can have separate licensing; consumers should target documented public compatibility surfaces rather than private internals.
+- **Research notes:** Promoted from READY queue on 2026-10-14; score remains provisional. No third-party source copied.
+
+### go-libp2p
+
+- **Repository:** https://github.com/libp2p/go-libp2p
+- **Author / Org:** libp2p
+- **Category:** peer-to-peer networking / protocol stack / NAT traversal / distributed systems
+- **Evidence:** VERIFIED (upstream implementation, documentation and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 29 (provisional)
+- **What it does:** Composable Go implementation of the libp2p peer-to-peer networking stack.
+- **Why it is valuable:** Reusable transport, peer identity, discovery and NAT traversal layers for resilient distributed applications.
+- **Useful code/components:** host and network abstractions; transport composition; NAT traversal and hole punching; reachability and AutoNAT logic; peer identity and secure channel layers; stream multiplexing; protocol negotiation; connection management; examples; Grafana production dashboards.
+- **Install / runtime:** Go module embedded in Go applications; network behavior depends on transport, NAT and deployment environment.
+- **Platforms:** Go-supported systems, Linux, Windows, macOS.
+- **License:** MIT at upstream root; dependencies/extensions require separate review.
+- **Maintenance signals:** 2026-09-21 v0.50.0 release commit; 2026-09-19 oversized opaque HTTP auth input correction and QUIC/WebTransport dependency updates.
+- **Verification performed:** README, root license and upstream commits inspected; no independent build, runtime, network, performance or security tests.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-p2p-networking.md
+- **Related projects:** libp2p specifications, go-libp2p examples, QUIC, WebTransport and AutoNAT.
+- **Caveats / risks:** Root repository is MIT licensed, but dependencies, integrations, protocol implementations, and downstream projects may carry separate licenses and operational constraints.
+- **Research notes:** Promoted from READY queue on 2026-10-14; score remains provisional. No third-party source copied.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
