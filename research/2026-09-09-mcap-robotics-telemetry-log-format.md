@@ -346,3 +346,9 @@ Strong next research targets include:
 ## Next-action recommendation
 
 Keep MCAP at **VERIFIED / provisional S 29**. The strongest follow-up is a focused specification/conformance pass rather than another broad project summary: map the exact durability/indexing model, inspect malformed/truncated-file behavior encoded by tests, and identify reusable conformance fixtures without copying third-party test data.
+
+## Maintenance update — 2026-10-17
+
+Upstream released **MCAP CLI v0.4.0 on 2026-10-16** (tag `releases/mcap-cli/v0.4.0`; commit `4b0a12b0e419468a1d0eff24a78bd1ec2fc0aad0`). The release adds `mcap cat --format=ndjson`, `--format=csv` for a single topic, and global `--time-format` options. **Compatibility caveat:** the default timestamp representation changed; consumers that parse integer nanoseconds from CLI output should specify the desired format explicitly and test upgrades. These are upstream release/commit findings, not independent execution results. Existing VERIFIED / S 29 scoring is retained.
+
+Source: https://github.com/foxglove/mcap/releases/tag/releases/mcap-cli/v0.4.0

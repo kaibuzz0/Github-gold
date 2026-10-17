@@ -685,6 +685,48 @@ Suggested tiers:
 - **Caveats / risks:** Upstream lists complex Unicode scripts, expensive completion/prompt handling, and full-duplex concurrent output as areas needing further improvement. Optional dependencies and downstream integrations retain separate licenses. No third-party implementation code copied.
 - **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
 
+
+### MCAP
+
+- **Repository:** https://github.com/foxglove/mcap
+- **Author / Org:** Foxglove Technologies / foxglove
+- **Category:** Robotics / telemetry / indexed binary log formats / cross-language data interchange
+- **Evidence:** VERIFIED (upstream source, CI, conformance and release evidence; not independently executed)
+- **Tier / Score:** S / 29; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** Serialization-agnostic container format and multi-language libraries for timestamped messages, schemas, chunks, indexes, metadata and attachments.
+- **Why it is valuable:** Durable telemetry interchange with streaming and indexed readers, six language implementations, conformance tests and CLI utilities.
+- **Useful code/components:** `typescript/core/src/McapStreamReader.ts`; `typescript/core/src/McapIndexedReader.ts`; `typescript/core/src/McapWriter.ts`; `rust/mcap/src/read.rs`; `rust/mcap/src/write.rs`; `rust/cli/src/commands/`; `tests/conformance/`; `website/docs/spec/mcap.ksy`.
+- **Install / runtime:** Language-specific packages/toolchains (C++, Go, Python, Rust, TypeScript/JavaScript, Swift); packaged MCAP CLI binaries or Homebrew.
+- **Platforms:** Linux, macOS, Windows; runtime support varies by implementation.
+- **License:** MIT at repository root; review dependency notices for reused components.
+- **Maintenance signals:** MCAP CLI v0.4.0 released 2026-10-16; Rust CLI features include CSV/NDJSON export and timestamp formatting changes.
+- **Verification performed:** README, root LICENSE, implementation directories, CI/conformance directory, recent commits and release feed inspected 2026-10-17. No independent build, tests, benchmark or parser security audit.
+- **Source discovery:** GitHub-first; `research/2026-09-05-mcap-robotics-telemetry-container-conformance-toolkit.md` and `research/2026-09-09-mcap-robotics-telemetry-log-format.md`.
+- **Related projects:** ROS 1/ROS 2 integrations, Foxglove SDK, Kaitai Struct, MCAP conformance tools.
+- **Caveats / risks:** CLI v0.4.0 changes default timestamp output; automation expecting integer nanoseconds may break. Parsing untrusted files remains security-sensitive.
+- **Research notes:** Promoted from existing research dossiers on 2026-10-17; no third-party implementation code copied.
+
+### sherpa-onnx
+
+- **Repository:** https://github.com/k2-fsa/sherpa-onnx
+- **Author / Org:** k2-fsa
+- **Category:** Offline AI / speech recognition / speech synthesis / Android / Termux
+- **Evidence:** VERIFIED (upstream source, CI and release evidence; not independently executed)
+- **Tier / Score:** S / 29; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** Local inference toolkit for ASR, TTS, VAD, speaker diarization/identification, keyword spotting and other audio tasks.
+- **Why it is valuable:** Cross-platform offline speech stack with C++ core, C API, Python and Rust bindings, mobile integration and extensive build workflows.
+- **Useful code/components:** `sherpa-onnx/csrc/`; `sherpa-onnx/c-api/c-api.h`; `sherpa-onnx/c-api/c-api.cc`; `sherpa-onnx/python/`; `sherpa-onnx/rust/`; Android build workflows; VAD and streaming/offline recognizers.
+- **Install / runtime:** Model files and platform-specific inference binaries or build toolchain; native Android Termux/Python-in-Termux paths documented in v1.13.8.
+- **Platforms:** Android/Termux, Linux, Windows, macOS, iOS, WebAssembly; architecture/backend support varies.
+- **License:** Apache-2.0 at repository root; separately review model weights, dependencies and accelerator SDKs.
+- **Maintenance signals:** Stable v1.13.8 published 2026-09-10; C API exception-handling PR #4044 merged 2026-10-14; Rust zip dependency advisory fix committed 2026-10-17.
+- **Verification performed:** README, root LICENSE, C API and C++ source directories, multi-platform CI, release notes, security-fix commit and PR inspected 2026-10-17. No independent model execution, build, benchmark or audit.
+- **Source discovery:** GitHub-first and offline AI ecosystem; `research/2026-10-17-sherpa-onnx-termux-c-api-safety.md`.
+- **Related projects:** k2-fsa speech ecosystem; ONNX Runtime; Termux; Android audio applications.
+- **Caveats / risks:** The October C API and Rust dependency fixes postdate stable v1.13.8; do not assume stable builds contain them. Models and dependencies may have separate licenses and RAM/storage requirements.
+- **Research notes:** Promoted 2026-10-17; upstream build and release evidence does not equal an independent performance or security test.
+
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

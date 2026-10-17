@@ -1450,6 +1450,119 @@
       "research_priority": "high",
       "copy_restriction_note": "Upstream lists complex Unicode scripts, expensive completion/prompt handling, and full-duplex concurrent output as areas needing further improvement. Optional dependencies and downstream integrations retain separate licenses.",
       "source": "Recursive Nushell ecosystem research; research/2026-08-22-line-editor.md"
+    },
+    {
+      "name": "MCAP",
+      "repository": "https://github.com/foxglove/mcap",
+      "owner": "foxglove",
+      "category": [
+        "robotics",
+        "telemetry",
+        "binary-log-format",
+        "data-archival",
+        "cross-language-interoperability"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT",
+      "license_copy_status": "permissive-with-attribution-review-transitive-licenses",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "C++",
+        "Go",
+        "Python",
+        "Rust",
+        "TypeScript/JavaScript",
+        "Swift"
+      ],
+      "useful_components": [
+        "typescript/core/src/McapStreamReader.ts: sequential reader",
+        "typescript/core/src/McapIndexedReader.ts: indexed reader",
+        "typescript/core/src/McapWriter.ts: log writer",
+        "rust/mcap/src/read.rs and write.rs: Rust I/O",
+        "rust/cli/src/commands/: CLI transforms",
+        "tests/conformance/: cross-language fixtures and harness",
+        "website/docs/spec/mcap.ksy: Kaitai format definition"
+      ],
+      "verification": [
+        "2026-10-17: README and MIT LICENSE inspected upstream",
+        "Six-language README support matrix and source paths inspected",
+        "CI workflow and conformance directory inspected",
+        "MCAP CLI v0.4.0 released 2026-10-16; release and commit evidence inspected",
+        "No independent build, parsing, conformance execution, benchmark, or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "CLI v0.4.0 changes default timestamp rendering; scripts expecting nanoseconds may break. Multi-language dependencies carry separate notices; do not assume untrusted-file parsing is audited.",
+      "source": "GitHub-first; research/2026-09-05-mcap-robotics-telemetry-container-conformance-toolkit.md and research/2026-09-09-mcap-robotics-telemetry-log-format.md"
+    },
+    {
+      "name": "sherpa-onnx",
+      "repository": "https://github.com/k2-fsa/sherpa-onnx",
+      "owner": "k2-fsa",
+      "category": [
+        "offline-ai",
+        "speech-recognition",
+        "text-to-speech",
+        "voice-activity-detection",
+        "android",
+        "termux"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Apache-2.0",
+      "license_copy_status": "permissive-with-attribution-notice-review-model-and-dependency-licenses",
+      "platforms": [
+        "Android/Termux",
+        "Linux",
+        "Windows",
+        "macOS",
+        "iOS",
+        "WebAssembly",
+        "ARM64",
+        "x86_64"
+      ],
+      "useful_components": [
+        "sherpa-onnx/csrc/: C++ inference engines and audio processing",
+        "sherpa-onnx/c-api/c-api.h: portable C interface",
+        "sherpa-onnx/c-api/c-api.cc: C binding implementation",
+        "sherpa-onnx/python/: Python bindings and tests",
+        "sherpa-onnx/rust/: Rust bindings and build integration",
+        ".github/workflows/android.yaml: Android build workflow",
+        "VAD, offline ASR, TTS, speaker diarization and keyword spotting modules"
+      ],
+      "verification": [
+        "2026-10-17: upstream README, root Apache-2.0 LICENSE, C API and C++ source trees inspected",
+        "Android and multi-platform CI workflows observed",
+        "v1.13.8 published 2026-09-10; release notes explicitly document Termux and Python-in-Termux support",
+        "C API exception-handling PR #4044 merged 2026-10-14 after stable release",
+        "2026-10-17 commit #4059 updated Rust zip dependency for three RUSTSEC advisories; upstream reports cargo check, not independently reproduced",
+        "No independent build, Termux execution, model validation, benchmark, or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "Model weights, runtime dependencies and hardware accelerator SDKs may use different licenses. C API exception-handling and Rust zip advisory fixes were merged after v1.13.8; do not assume they are included in that stable tag.",
+      "source": "GitHub-first and recursive offline speech research; research/2026-10-17-sherpa-onnx-termux-c-api-safety.md"
     }
   ],
   "deferred_or_rejected": [
