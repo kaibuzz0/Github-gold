@@ -605,6 +605,86 @@ Suggested tiers:
 - **Caveats / risks:** Self-hosted tailnet coordination, not feature parity with hosted Tailscale. Follow configuration/docs matching the installed release tag; security-sensitive policies require review. No upstream code copied or independent security audit performed.
 - **Research notes:** Promoted from READY queue on 2026-10-14. Inspect exact upstream paths in the source tree before reuse.
 
+### wireguard-go
+
+- **Repository:** https://github.com/WireGuard/wireguard-go
+- **Author / Org:** WireGuard LLC / WireGuard contributors
+- **Category:** userspace VPN / encrypted networking / Go networking / TUN interface
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Go implementation of the WireGuard userspace VPN tunnel.
+- **Why it is valuable:** Portable userspace WireGuard implementation and reusable networking abstractions.
+- **Useful code/components:** device/: WireGuard protocol, handshake and packet pipeline; conn/: UDP endpoint and batching; tun/: cross-platform TUN integration; ipc/: control interface; replay/: anti-replay logic; ratelimiter/: handshake limiting; rwcancel/: cancellable descriptor I/O; tai64n/: timestamps.
+- **Install / runtime:** Go 1.23.1 (go.mod); kernel WireGuard is preferred on supported Linux systems.
+- **Platforms:** Linux, Windows, macOS, BSD and other Go-supported targets where TUN support exists.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** No GitHub releases; latest inspected commit 2026-10-06 corrects handshake-response state (2631ce99).
+- **Verification performed:** official upstream README inspected; root repository structure inspected; upstream licensing text inspected; recent commit history inspected; 2026-05-22 Linux vectorized-I/O/TUN header correctness fix observed; not independently built, fuzzed, benchmarked, deployed, cryptographically audited, or interoperability-tested by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** Recursive networking research; research/2026-08-21-wireguard-userspace.md
+- **Related projects:** tailscale/tailscale (userspace engine fork); WireGuard kernel implementation.
+- **Caveats / risks:** Upstream recommends the kernel WireGuard implementation on Linux when available. Catalog inclusion is not a cryptographic audit, and downstream forks such as Tailscale's may contain meaningful divergence. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
+### Nebula
+
+- **Repository:** https://github.com/slackhq/nebula
+- **Author / Org:** Slack Technologies / slackhq contributors
+- **Category:** overlay networking / peer-to-peer SDN / NAT traversal / private networking
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Peer-to-peer encrypted overlay network with lighthouse discovery, certificates, and firewall policies.
+- **Why it is valuable:** Self-hosted encrypted overlay network with explicit identity, policy and peer discovery.
+- **Useful code/components:** handshake/: authenticated Noise handshakes; lighthouse.go: peer discovery; hostmap.go: peer state; punchy.go: UDP hole punching; cert/: certificate identities; firewall.go: group-aware firewall; overlay/: TUN and platform adapters; e2e/: end-to-end tests.
+- **Install / runtime:** Go 1.27.2 (current go.mod); nebula and nebula-cert executables.
+- **Platforms:** Linux, Windows, macOS, BSD.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** Stable v1.11.2 published 2026-09-22; commits on 2026-10-16 add tunnel framing tests and certificate validation fixes.
+- **Verification performed:** repository metadata inspected; official README inspected; root license metadata inspected; recent maintenance commits inspected; 2026-08-21 native Go fips140 support observed; 2026-08-21 TUN offload work observed; 2026-08-20 fail-closed IPv6 parsing fix observed; 2026-08-20 32-bit CA command memory-safety fix observed; not independently deployed, built, tested, benchmarked, fuzzed, cryptographically audited, or FIPS-validated by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** GitHub-first and recursive networking research; research/2026-08-22-nebula-overlay-networking.md
+- **Related projects:** Defined Networking mobile clients; WireGuard and Tailscale as architectural comparisons.
+- **Caveats / risks:** Private-network infrastructure is security-sensitive; catalog inclusion is not an audit. Direct paths depend on NAT/firewall topology, CA key handling is critical, companion mobile code is separate, and FIPS build support is not blanket deployment compliance. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
+### Nushell
+
+- **Repository:** https://github.com/nushell/nushell
+- **Author / Org:** Nushell Project
+- **Category:** developer tooling / shell / structured data pipelines / cross-platform automation
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Cross-platform shell that treats pipeline data as typed values rather than only text.
+- **Why it is valuable:** Structured data pipelines and reusable shell/parser/plugin components.
+- **Useful code/components:** crates/nu-protocol/: typed values and pipelines; crates/nu-parser/: language parsing; crates/nu-engine/: execution engine; crates/nu-command/: built-in commands; crates/nu-plugin/: plugin APIs; structured file and process-stream integration.
+- **Install / runtime:** Prebuilt nu releases or Rust toolchain for source builds.
+- **Platforms:** Linux, Windows, macOS.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** Stable 0.116.1 published 2026-10-04; 2026-10-16 commits correct plugin-input lifetime, MCP visibility and number formatting.
+- **Verification performed:** official README inspected; root MIT license inspected; repository metadata inspected; CI/nightly and release surfaces inspected; 0.114.1 release dated 2026-07-11 observed upstream; August 2026 ecosystem maintenance observed; not independently built, benchmarked, or cross-platform tested by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** GitHub-first discovery; research/2026-08-22-structured-shell.md
+- **Related projects:** nushell/reedline; nushell/nushell.github.io.
+- **Caveats / risks:** Nushell semantics differ materially from POSIX shells and some commands/design details may evolve. Plugins, packages, integrations, and separately maintained ecosystem repositories require independent license checks. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
+### Reedline
+
+- **Repository:** https://github.com/nushell/reedline
+- **Author / Org:** Nushell Project
+- **Category:** developer tooling / interactive CLI / line editor / Rust library
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Rust readline-like line editor with completion, history, highlighting and multiple editing modes.
+- **Why it is valuable:** Reusable interactive terminal input engine independent of a full shell.
+- **Useful code/components:** src/engine.rs: editor engine; completion and menu interfaces; highlighter, hinter, validator traits; file and SQLite-backed history; Emacs, Vi and Helix keybinding modes; Unicode/grapheme-aware editing; examples/: integration samples.
+- **Install / runtime:** Rust >=1.95.0 (current Cargo.toml); crossterm and optional feature dependencies.
+- **Platforms:** Linux, Windows, macOS terminals.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** Stable v0.52.1 published 2026-10-04; 2026-10-10 commits add opt-in paste hooks and improve editor state handling.
+- **Verification performed:** official README inspected; root MIT license inspected; Cargo.toml and feature definitions inspected; current manifest version 0.50.0 observed; recent commits through 2026-08-21 inspected; correctness fixes and RustSec-driven dependency maintenance observed; not independently built, fuzzed, benchmarked, terminal-matrix tested, or security-audited by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** Recursive Nushell ecosystem research; research/2026-08-22-line-editor.md
+- **Related projects:** nushell/nushell; crossterm.
+- **Caveats / risks:** Upstream lists complex Unicode scripts, expensive completion/prompt handling, and full-duplex concurrent output as areas needing further improvement. Optional dependencies and downstream integrations retain separate licenses. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
