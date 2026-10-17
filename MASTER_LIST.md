@@ -445,6 +445,288 @@ Suggested tiers:
 - **Caveats / risks:** Certificate automation is security-critical; deployments must configure storage, permissions, on-demand controls, and issuer policies carefully.
 - **Research notes:** Strong reusable component entry independent of Caddy itself.
 
+### whisper.cpp
+
+- **Repository:** https://github.com/ggml-org/whisper.cpp
+- **Author / Org:** ggml-org
+- **Category:** local AI / speech recognition / embedded inference
+- **Evidence:** VERIFIED (upstream code, release and CI evidence; not independently executed)
+- **Tier / Score:** S / 29 (provisional)
+- **What it does:** Local cross-platform speech recognition implementation in C/C++.
+- **Why it is valuable:** Embeddable C API and CPU/GPU backends for offline transcription.
+- **Useful code/components:** include/whisper.h C API; src/whisper.cpp inference core; CLI and streaming examples; VAD and quantization tooling; Android iOS WASM Java and Docker examples; GPU and accelerator backend integrations; talk-llama speech-to-LLM example.
+- **Install / runtime:** Build with CMake; obtain separately licensed model weights; run whisper-cli or link the C API.
+- **Platforms:** Linux, Windows, macOS, Android, iOS, WebAssembly.
+- **License:** MIT for the inspected root repository; third-party code and assets may differ.
+- **Maintenance signals:** Upstream stable release v1.9.5 published 2026-10-06; CI workflows cover multiple platforms.
+- **Verification performed:** README, license, upstream release and CI definitions inspected. No independent build, runtime test, or benchmark.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-local-ai-crdt.md
+- **Related projects:** ggml-org/ggml and Whisper model ecosystem.
+- **Caveats / risks:** MIT source licensing is permissive, but model weights and third-party dependencies/backends may have separate terms.
+- **Research notes:** Promoted from READY queue; scoring remains provisional.
+
+### Loro
+
+- **Repository:** https://github.com/loro-dev/loro
+- **Author / Org:** loro-dev
+- **Category:** local-first / CRDT / collaborative state infrastructure
+- **Evidence:** VERIFIED (upstream code, release and CI evidence; not independently executed)
+- **Tier / Score:** S / 28 (provisional)
+- **What it does:** Conflict-free replicated data types for local-first collaborative application state.
+- **Why it is valuable:** Reusable mergeable text, rich-text, tree, list and map structures, with delta synchronization and history.
+- **Useful code/components:** Rust CRDT core; JavaScript/WASM loro-crdt package; Swift support; Fugue text and rich-text CRDTs; moveable tree and list CRDTs; delta synchronization APIs; shallow snapshots and time travel; Loro Inspector.
+- **Install / runtime:** Use the Rust crates, JavaScript/WASM package, or documented Swift integration.
+- **Platforms:** Rust, JavaScript/WebAssembly, Swift.
+- **License:** MIT for the inspected root repository; third-party code and assets may differ.
+- **Maintenance signals:** Upstream loro-crdt@1.16.4 published 2026-09-30; Rust CI and release workflows present.
+- **Verification performed:** README, license, upstream release and CI definitions inspected. No independent build, runtime test, or benchmark.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-local-ai-crdt.md
+- **Related projects:** loro-dev ecosystem, local-first applications, CRDT research.
+- **Caveats / risks:** Root project is MIT licensed; optional ecosystem repositories and bindings should be checked separately before code reuse.
+- **Research notes:** Promoted from READY queue; scoring remains provisional.
+
+### DuckDB
+
+- **Repository:** https://github.com/duckdb/duckdb
+- **Author / Org:** duckdb
+- **Category:** embedded analytics / SQL / data tooling / columnar processing
+- **Evidence:** VERIFIED (upstream implementation, documentation and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 29 (provisional)
+- **What it does:** Embeddable analytical SQL database with vectorized execution and local CSV/Parquet processing.
+- **Why it is valuable:** Reusable in-process analytics engine and C API for local-first data pipelines and scripts.
+- **Useful code/components:** embeddable analytical SQL engine; public version-targeted C API; CSV and Parquet readers; query planner and optimizer; vectorized execution engine; storage and transaction layers; extension architecture; CLI and language-client integration points; unit-test and benchmark infrastructure.
+- **Install / runtime:** Use a supported DuckDB CLI, language package, or documented native C/C++ interface; extension compatibility depends on versions.
+- **Platforms:** Linux, Windows, macOS, other supported native and language-binding targets.
+- **License:** MIT at upstream root; dependencies/extensions require separate review.
+- **Maintenance signals:** 2026-10-14 upstream commits inspect SQL expression export, window-buffer allocation, and asynchronous query handling.
+- **Verification performed:** README, root license and upstream commits inspected; no independent build, runtime, network, performance or security tests.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-embedded-analytics.md
+- **Related projects:** DuckDB extensions, Arrow, Parquet and embedded analytics tooling.
+- **Caveats / risks:** Optional extensions and third-party dependencies can have separate licensing; consumers should target documented public compatibility surfaces rather than private internals.
+- **Research notes:** Promoted from READY queue on 2026-10-14; score remains provisional. No third-party source copied.
+
+### go-libp2p
+
+- **Repository:** https://github.com/libp2p/go-libp2p
+- **Author / Org:** libp2p
+- **Category:** peer-to-peer networking / protocol stack / NAT traversal / distributed systems
+- **Evidence:** VERIFIED (upstream implementation, documentation and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 29 (provisional)
+- **What it does:** Composable Go implementation of the libp2p peer-to-peer networking stack.
+- **Why it is valuable:** Reusable transport, peer identity, discovery and NAT traversal layers for resilient distributed applications.
+- **Useful code/components:** host and network abstractions; transport composition; NAT traversal and hole punching; reachability and AutoNAT logic; peer identity and secure channel layers; stream multiplexing; protocol negotiation; connection management; examples; Grafana production dashboards.
+- **Install / runtime:** Go module embedded in Go applications; network behavior depends on transport, NAT and deployment environment.
+- **Platforms:** Go-supported systems, Linux, Windows, macOS.
+- **License:** MIT at upstream root; dependencies/extensions require separate review.
+- **Maintenance signals:** 2026-09-21 v0.50.0 release commit; 2026-09-19 oversized opaque HTTP auth input correction and QUIC/WebTransport dependency updates.
+- **Verification performed:** README, root license and upstream commits inspected; no independent build, runtime, network, performance or security tests.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-p2p-networking.md
+- **Related projects:** libp2p specifications, go-libp2p examples, QUIC, WebTransport and AutoNAT.
+- **Caveats / risks:** Root repository is MIT licensed, but dependencies, integrations, protocol implementations, and downstream projects may carry separate licenses and operational constraints.
+- **Research notes:** Promoted from READY queue on 2026-10-14; score remains provisional. No third-party source copied.
+
+### uv
+
+- **Repository:** https://github.com/astral-sh/uv
+- **Author / Org:** Astral
+- **Category:** Python tooling / dependency management / Rust CLI
+- **Evidence:** VERIFIED (upstream evidence; not independently executed)
+- **Tier / Score:** S / 29 (provisional; Utility + Working Evidence + Reusability + Novelty + Documentation + Maintenance = 5+5+5+4+5+5)
+- **What it does:** Fast Rust-based Python package and project manager supporting lockfiles, interpreters, workspaces, tools, scripts, caching and pip-compatible commands.
+- **Why it is valuable:** A reusable dependency resolver, package installation stack and environment manager with extensive upstream tests and cross-platform distribution.
+- **Useful code/components:** `crates/uv-resolver/src/pubgrub/` dependency solver; `crates/uv-lock/` lockfiles; `crates/uv-cache/` cache; `crates/uv-install-wheel/` wheel installation; `crates/uv-python-discovery/` interpreter discovery; `crates/uv-virtualenv/` environments; `crates/uv-build-backend/` builds.
+- **Install / runtime:** Standalone installers or PyPI; Rust toolchain for source builds; some operations access package indexes or download interpreters.
+- **Platforms:** Linux, macOS, Windows.
+- **License:** Apache-2.0 OR MIT; inspect dependency and component terms before copying.
+- **Maintenance signals:** Upstream v0.13.1 published 2026-10-14; same-day commits; CI, integration, smoke and release workflows.
+- **Verification performed:** README, MIT and Apache-2.0 root licenses inspected; uv-resolver source tree and GitHub Actions test workflows inspected; v0.13.1 upstream release published 2026-10-14 inspected; No independent build, install or benchmark.
+- **Source discovery:** GitHub-first; research/2026-08-21-python-tooling.md
+- **Related projects:** Astral Ruff, ty; Python packaging standards.
+- **Caveats / risks:** Upstream 10–100x speed claims not independently benchmarked. Downloaded interpreters, packages and third-party dependencies have separate licenses and supply-chain risks.
+- **Research notes:** Promoted from READY queue on 2026-10-14. No upstream code copied.
+
+### age
+
+- **Repository:** https://github.com/FiloSottile/age
+- **Author / Org:** Filippo Valsorda and contributors
+- **Category:** File encryption / Go cryptography / CLI / interoperability
+- **Evidence:** VERIFIED (upstream evidence; not independently executed)
+- **Tier / Score:** S / 27 (provisional; Utility + Working Evidence + Reusability + Novelty + Documentation + Maintenance = 5+4+5+4+5+4)
+- **What it does:** Interoperable encrypted-file format, Go library and command-line tools supporting recipients, identities, passphrases, plugins and hybrid post-quantum options.
+- **Why it is valuable:** Small composable encryption interfaces, documented format and independent implementations enable secure file-exchange applications.
+- **Useful code/components:** `age.go` Go API; `x25519.go` key recipients; `scrypt.go` passphrases; `pq.go` hybrid post-quantum support; `plugin/` extensions; `cmd/age/`, `cmd/age-keygen/`, `cmd/age-inspect/` tools; `age_test.go` tests.
+- **Install / runtime:** Prebuilt CLI or Go module `filippo.io/age`; source go.mod specifies Go 1.25 and toolchain Go 1.27.
+- **Platforms:** Linux, macOS, Windows, BSD.
+- **License:** BSD 3-Clause-style; inspect dependency and component terms before copying.
+- **Maintenance signals:** Upstream v1.3.2 published 2026-08-29; test, build and interoperability workflows; release parser hardening.
+- **Verification performed:** README and BSD-3-Clause-style root LICENSE inspected; age.go, cmd directory, go.mod, test files and CI workflows inspected; v1.3.2 upstream release published 2026-08-29 inspected; No independent build, interoperability test or security audit.
+- **Source discovery:** GitHub-first; research/2026-08-21-file-encryption.md
+- **Related projects:** str4d/rage; FiloSottile/typage; str4d/age-plugin-yubikey; age C2SP format.
+- **Caveats / risks:** Catalog inclusion is not a cryptographic audit. Plugins and dependencies require separate review. v1.3.2 rejects some formerly accepted malformed or oversized inputs.
+- **Research notes:** Promoted from READY queue on 2026-10-14. No upstream code copied.
+
+### Tailscale
+
+- **Repository:** https://github.com/tailscale/tailscale
+- **Author / Org:** Tailscale Inc. and contributors
+- **Category:** overlay networking / WireGuard / NAT traversal / embedded networking / private networks
+- **Evidence:** VERIFIED (upstream release, implementation, test and CI evidence; no independent runtime test).
+- **Tier / Score:** S / 29; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** WireGuard-based private overlay networking with NAT traversal and relay fallback; tsnet embeds an authenticated tailnet node into Go programs.
+- **Why it is valuable:** Reusable networking infrastructure with documented architecture, active maintenance and upstream test coverage.
+- **Useful code/components:** `tsnet/tsnet.go: embedded tailnet server`; `tsnet/example/: examples`; `wgengine/: userspace networking engine`; `wgengine/magicsock/: NAT traversal`; `wgengine/netstack/: gVisor userspace TCP/IP`; `tailcfg/: control protocol types`; `tailscaled and CLI`.
+- **Install / runtime:** Official client packages, or Go module tailscale.com/tsnet; tailnet enrollment required.
+- **Platforms:** Linux, Windows, macOS, selected BSD, Go embedded services.
+- **License:** BSD-3-Clause; review third-party notices and component licenses before extraction.
+- **Maintenance signals:** Upstream release v1.104.1 (2026-10-07); recent commits 2026-10-14; source tests and GitHub Actions workflows inspected.
+- **Verification performed:** README and BSD-3-Clause LICENSE inspected on 2026-10-14; tsnet README/source and tests, wgengine directory and CI workflows inspected; upstream stable release v1.104.1 published 2026-10-07; upstream commits 2026-10-14 inspected; no independent build or deployment.
+- **Source discovery:** GitHub-first; research/2026-08-21-overlay-networking.md
+- **Related projects:** juanfont/headscale; WireGuard/wireguard-go; tailscale/tailscale-android.
+- **Caveats / risks:** Hosted control plane and some proprietary GUI code are not included; check dependency notices, device enrollment and ACL configuration. No upstream code copied or independent security audit performed.
+- **Research notes:** Promoted from READY queue on 2026-10-14. Inspect exact upstream paths in the source tree before reuse.
+
+### Headscale
+
+- **Repository:** https://github.com/juanfont/headscale
+- **Author / Org:** Juan Font / Headscale contributors
+- **Category:** self-hosted networking / Tailscale control plane / WireGuard coordination
+- **Evidence:** VERIFIED (upstream release, implementation, test and CI evidence; no independent runtime test).
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Self-hosted coordination server for Tailscale-compatible clients, with enrollment, policy, node management and route distribution.
+- **Why it is valuable:** Reusable networking infrastructure with documented architecture, active maintenance and upstream test coverage.
+- **Useful code/components:** `hscontrol/: control server`; `hscontrol/api/: management API`; `integration/: integration tests`; `registration and pre-auth keys`; `OIDC authorization`; `ACL and policy evaluation`; `DERP and route coordination`.
+- **Install / runtime:** Deploy the Go server with release-tag-matched configuration; requires compatible clients.
+- **Platforms:** Linux server, Go source, Nix-supported hosts.
+- **License:** BSD-3-Clause; review third-party notices and component licenses before extraction.
+- **Maintenance signals:** Upstream release v0.29.5 (2026-10-13); recent commits 2026-10-13; source tests and GitHub Actions workflows inspected.
+- **Verification performed:** README and BSD-3-Clause LICENSE inspected on 2026-10-14; hscontrol and integration source trees and CI workflows inspected; upstream v0.29.5 published 2026-10-13 with policy and route fixes; 2026-10-13 commits inspected; no independent deployment or interoperability test.
+- **Source discovery:** Recursive Tailscale research; research/2026-08-21-self-hosted-control-plane.md
+- **Related projects:** tailscale/tailscale; WireGuard/wireguard-go.
+- **Caveats / risks:** Self-hosted tailnet coordination, not feature parity with hosted Tailscale. Follow configuration/docs matching the installed release tag; security-sensitive policies require review. No upstream code copied or independent security audit performed.
+- **Research notes:** Promoted from READY queue on 2026-10-14. Inspect exact upstream paths in the source tree before reuse.
+
+### wireguard-go
+
+- **Repository:** https://github.com/WireGuard/wireguard-go
+- **Author / Org:** WireGuard LLC / WireGuard contributors
+- **Category:** userspace VPN / encrypted networking / Go networking / TUN interface
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Go implementation of the WireGuard userspace VPN tunnel.
+- **Why it is valuable:** Portable userspace WireGuard implementation and reusable networking abstractions.
+- **Useful code/components:** device/: WireGuard protocol, handshake and packet pipeline; conn/: UDP endpoint and batching; tun/: cross-platform TUN integration; ipc/: control interface; replay/: anti-replay logic; ratelimiter/: handshake limiting; rwcancel/: cancellable descriptor I/O; tai64n/: timestamps.
+- **Install / runtime:** Go 1.23.1 (go.mod); kernel WireGuard is preferred on supported Linux systems.
+- **Platforms:** Linux, Windows, macOS, BSD and other Go-supported targets where TUN support exists.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** No GitHub releases; latest inspected commit 2026-10-06 corrects handshake-response state (2631ce99).
+- **Verification performed:** official upstream README inspected; root repository structure inspected; upstream licensing text inspected; recent commit history inspected; 2026-05-22 Linux vectorized-I/O/TUN header correctness fix observed; not independently built, fuzzed, benchmarked, deployed, cryptographically audited, or interoperability-tested by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** Recursive networking research; research/2026-08-21-wireguard-userspace.md
+- **Related projects:** tailscale/tailscale (userspace engine fork); WireGuard kernel implementation.
+- **Caveats / risks:** Upstream recommends the kernel WireGuard implementation on Linux when available. Catalog inclusion is not a cryptographic audit, and downstream forks such as Tailscale's may contain meaningful divergence. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
+### Nebula
+
+- **Repository:** https://github.com/slackhq/nebula
+- **Author / Org:** Slack Technologies / slackhq contributors
+- **Category:** overlay networking / peer-to-peer SDN / NAT traversal / private networking
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Peer-to-peer encrypted overlay network with lighthouse discovery, certificates, and firewall policies.
+- **Why it is valuable:** Self-hosted encrypted overlay network with explicit identity, policy and peer discovery.
+- **Useful code/components:** handshake/: authenticated Noise handshakes; lighthouse.go: peer discovery; hostmap.go: peer state; punchy.go: UDP hole punching; cert/: certificate identities; firewall.go: group-aware firewall; overlay/: TUN and platform adapters; e2e/: end-to-end tests.
+- **Install / runtime:** Go 1.27.2 (current go.mod); nebula and nebula-cert executables.
+- **Platforms:** Linux, Windows, macOS, BSD.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** Stable v1.11.2 published 2026-09-22; commits on 2026-10-16 add tunnel framing tests and certificate validation fixes.
+- **Verification performed:** repository metadata inspected; official README inspected; root license metadata inspected; recent maintenance commits inspected; 2026-08-21 native Go fips140 support observed; 2026-08-21 TUN offload work observed; 2026-08-20 fail-closed IPv6 parsing fix observed; 2026-08-20 32-bit CA command memory-safety fix observed; not independently deployed, built, tested, benchmarked, fuzzed, cryptographically audited, or FIPS-validated by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** GitHub-first and recursive networking research; research/2026-08-22-nebula-overlay-networking.md
+- **Related projects:** Defined Networking mobile clients; WireGuard and Tailscale as architectural comparisons.
+- **Caveats / risks:** Private-network infrastructure is security-sensitive; catalog inclusion is not an audit. Direct paths depend on NAT/firewall topology, CA key handling is critical, companion mobile code is separate, and FIPS build support is not blanket deployment compliance. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
+### Nushell
+
+- **Repository:** https://github.com/nushell/nushell
+- **Author / Org:** Nushell Project
+- **Category:** developer tooling / shell / structured data pipelines / cross-platform automation
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Cross-platform shell that treats pipeline data as typed values rather than only text.
+- **Why it is valuable:** Structured data pipelines and reusable shell/parser/plugin components.
+- **Useful code/components:** crates/nu-protocol/: typed values and pipelines; crates/nu-parser/: language parsing; crates/nu-engine/: execution engine; crates/nu-command/: built-in commands; crates/nu-plugin/: plugin APIs; structured file and process-stream integration.
+- **Install / runtime:** Prebuilt nu releases or Rust toolchain for source builds.
+- **Platforms:** Linux, Windows, macOS.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** Stable 0.116.1 published 2026-10-04; 2026-10-16 commits correct plugin-input lifetime, MCP visibility and number formatting.
+- **Verification performed:** official README inspected; root MIT license inspected; repository metadata inspected; CI/nightly and release surfaces inspected; 0.114.1 release dated 2026-07-11 observed upstream; August 2026 ecosystem maintenance observed; not independently built, benchmarked, or cross-platform tested by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** GitHub-first discovery; research/2026-08-22-structured-shell.md
+- **Related projects:** nushell/reedline; nushell/nushell.github.io.
+- **Caveats / risks:** Nushell semantics differ materially from POSIX shells and some commands/design details may evolve. Plugins, packages, integrations, and separately maintained ecosystem repositories require independent license checks. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
+### Reedline
+
+- **Repository:** https://github.com/nushell/reedline
+- **Author / Org:** Nushell Project
+- **Category:** developer tooling / interactive CLI / line editor / Rust library
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Rust readline-like line editor with completion, history, highlighting and multiple editing modes.
+- **Why it is valuable:** Reusable interactive terminal input engine independent of a full shell.
+- **Useful code/components:** src/engine.rs: editor engine; completion and menu interfaces; highlighter, hinter, validator traits; file and SQLite-backed history; Emacs, Vi and Helix keybinding modes; Unicode/grapheme-aware editing; examples/: integration samples.
+- **Install / runtime:** Rust >=1.95.0 (current Cargo.toml); crossterm and optional feature dependencies.
+- **Platforms:** Linux, Windows, macOS terminals.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** Stable v0.52.1 published 2026-10-04; 2026-10-10 commits add opt-in paste hooks and improve editor state handling.
+- **Verification performed:** official README inspected; root MIT license inspected; Cargo.toml and feature definitions inspected; current manifest version 0.50.0 observed; recent commits through 2026-08-21 inspected; correctness fixes and RustSec-driven dependency maintenance observed; not independently built, fuzzed, benchmarked, terminal-matrix tested, or security-audited by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** Recursive Nushell ecosystem research; research/2026-08-22-line-editor.md
+- **Related projects:** nushell/nushell; crossterm.
+- **Caveats / risks:** Upstream lists complex Unicode scripts, expensive completion/prompt handling, and full-duplex concurrent output as areas needing further improvement. Optional dependencies and downstream integrations retain separate licenses. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
+
+### MCAP
+
+- **Repository:** https://github.com/foxglove/mcap
+- **Author / Org:** Foxglove Technologies / foxglove
+- **Category:** Robotics / telemetry / indexed binary log formats / cross-language data interchange
+- **Evidence:** VERIFIED (upstream source, CI, conformance and release evidence; not independently executed)
+- **Tier / Score:** S / 29; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** Serialization-agnostic container format and multi-language libraries for timestamped messages, schemas, chunks, indexes, metadata and attachments.
+- **Why it is valuable:** Durable telemetry interchange with streaming and indexed readers, six language implementations, conformance tests and CLI utilities.
+- **Useful code/components:** `typescript/core/src/McapStreamReader.ts`; `typescript/core/src/McapIndexedReader.ts`; `typescript/core/src/McapWriter.ts`; `rust/mcap/src/read.rs`; `rust/mcap/src/write.rs`; `rust/cli/src/commands/`; `tests/conformance/`; `website/docs/spec/mcap.ksy`.
+- **Install / runtime:** Language-specific packages/toolchains (C++, Go, Python, Rust, TypeScript/JavaScript, Swift); packaged MCAP CLI binaries or Homebrew.
+- **Platforms:** Linux, macOS, Windows; runtime support varies by implementation.
+- **License:** MIT at repository root; review dependency notices for reused components.
+- **Maintenance signals:** MCAP CLI v0.4.0 released 2026-10-16; Rust CLI features include CSV/NDJSON export and timestamp formatting changes.
+- **Verification performed:** README, root LICENSE, implementation directories, CI/conformance directory, recent commits and release feed inspected 2026-10-17. No independent build, tests, benchmark or parser security audit.
+- **Source discovery:** GitHub-first; `research/2026-09-05-mcap-robotics-telemetry-container-conformance-toolkit.md` and `research/2026-09-09-mcap-robotics-telemetry-log-format.md`.
+- **Related projects:** ROS 1/ROS 2 integrations, Foxglove SDK, Kaitai Struct, MCAP conformance tools.
+- **Caveats / risks:** CLI v0.4.0 changes default timestamp output; automation expecting integer nanoseconds may break. Parsing untrusted files remains security-sensitive.
+- **Research notes:** Promoted from existing research dossiers on 2026-10-17; no third-party implementation code copied.
+
+### sherpa-onnx
+
+- **Repository:** https://github.com/k2-fsa/sherpa-onnx
+- **Author / Org:** k2-fsa
+- **Category:** Offline AI / speech recognition / speech synthesis / Android / Termux
+- **Evidence:** VERIFIED (upstream source, CI and release evidence; not independently executed)
+- **Tier / Score:** S / 29; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** Local inference toolkit for ASR, TTS, VAD, speaker diarization/identification, keyword spotting and other audio tasks.
+- **Why it is valuable:** Cross-platform offline speech stack with C++ core, C API, Python and Rust bindings, mobile integration and extensive build workflows.
+- **Useful code/components:** `sherpa-onnx/csrc/`; `sherpa-onnx/c-api/c-api.h`; `sherpa-onnx/c-api/c-api.cc`; `sherpa-onnx/python/`; `sherpa-onnx/rust/`; Android build workflows; VAD and streaming/offline recognizers.
+- **Install / runtime:** Model files and platform-specific inference binaries or build toolchain; native Android Termux/Python-in-Termux paths documented in v1.13.8.
+- **Platforms:** Android/Termux, Linux, Windows, macOS, iOS, WebAssembly; architecture/backend support varies.
+- **License:** Apache-2.0 at repository root; separately review model weights, dependencies and accelerator SDKs.
+- **Maintenance signals:** Stable v1.13.8 published 2026-09-10; C API exception-handling PR #4044 merged 2026-10-14; Rust zip dependency advisory fix committed 2026-10-17.
+- **Verification performed:** README, root LICENSE, C API and C++ source directories, multi-platform CI, release notes, security-fix commit and PR inspected 2026-10-17. No independent model execution, build, benchmark or audit.
+- **Source discovery:** GitHub-first and offline AI ecosystem; `research/2026-10-17-sherpa-onnx-termux-c-api-safety.md`.
+- **Related projects:** k2-fsa speech ecosystem; ONNX Runtime; Termux; Android audio applications.
+- **Caveats / risks:** The October C API and Rust dependency fixes postdate stable v1.13.8; do not assume stable builds contain them. Models and dependencies may have separate licenses and RAM/storage requirements.
+- **Research notes:** Promoted 2026-10-17; upstream build and release evidence does not equal an independent performance or security test.
+
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
