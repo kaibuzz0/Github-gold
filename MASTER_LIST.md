@@ -727,6 +727,27 @@ Suggested tiers:
 - **Research notes:** Promoted 2026-10-17; upstream build and release evidence does not equal an independent performance or security test.
 
 
+### pyOCD
+
+- **Repository:** https://github.com/pyocd/pyOCD
+- **Author / Org:** pyocd contributors
+- **Category:** Embedded debugging / Arm Cortex-M / firmware programming / Python automation / debug probes
+- **Evidence:** VERIFIED (upstream source, tests, CI configuration and release evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** Python CLI and library for programming, inspecting, and debugging Arm Cortex-M devices through supported probes.
+- **Why it is valuable:** Reusable CMSIS-DAP, ST-Link, J-Link, GDB server, CMSIS-Pack target support, flash loading, RTOS-aware debugging, and SWV tracing.
+- **Useful code/components:** `pyocd/probe/cmsis_dap_probe.py`; `pyocd/probe/stlink_probe.py`; `pyocd/probe/jlink_probe.py`; `pyocd/gdbserver/gdbserver.py`; `pyocd/flash/loader.py`; `pyocd/target/pack/`; `pyocd/rtos/`; `pyocd/trace/swv.py`; `test/unit/`.
+- **Install / runtime:** Python 3.9+, libusb or suitable USB backend, supported probe and Cortex-M target for hardware operations; PyPI package available.
+- **Platforms:** Linux, Windows, macOS, FreeBSD; MCU support depends on probe and target.
+- **License:** Apache-2.0 at root; verify separate documentation, vendor device-pack, and dependency terms.
+- **Maintenance signals:** v0.45.1 released 2026-07-21; v0.45 series adds debug sequences and RTT/SWV file capture; CI declares three OSes and Python 3.9–3.14 with pytest, lint and package checks.
+- **Verification performed:** README, license, packaging, security and remote-probe guides, CI workflow, and official releases inspected 2026-10-18. No independent install, test execution, flashing, benchmark or security audit.
+- **Source discovery:** GitHub-first, recursive follow-up to existing probe-rs dossier.
+- **Related projects:** probe-rs/probe-rs; CMSIS-DAP; Open-CMSIS-Pack; DAPLink.
+- **Caveats / risks:** Auto-unlock can mass-erase protected targets; exposing remote probe access permits device control. Upstream describes beta quality and possible 1.0 API changes.
+- **Research notes:** `research/2026-10-18-pyocd-cortexm-debugging-flashing-evidence.md`. Score reflects upstream evidence, not independently reproduced hardware tests. No third-party code copied.
+
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

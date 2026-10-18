@@ -1563,6 +1563,59 @@
       "research_priority": "high",
       "copy_restriction_note": "Model weights, runtime dependencies and hardware accelerator SDKs may use different licenses. C API exception-handling and Rust zip advisory fixes were merged after v1.13.8; do not assume they are included in that stable tag.",
       "source": "GitHub-first and recursive offline speech research; research/2026-10-17-sherpa-onnx-termux-c-api-safety.md"
+    },
+    {
+      "name": "pyOCD",
+      "repository": "https://github.com/pyocd/pyOCD",
+      "owner": "pyocd",
+      "category": [
+        "embedded-debugging",
+        "arm-cortex-m",
+        "firmware-flashing",
+        "debug-probes",
+        "python-developer-tools"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Apache-2.0",
+      "license_copy_status": "permissive-with-attribution-review-third-party-packs-and-libraries",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "FreeBSD",
+        "Arm Cortex-M target hardware"
+      ],
+      "useful_components": [
+        "pyocd/probe/cmsis_dap_probe.py: CMSIS-DAP adapter",
+        "pyocd/probe/stlink_probe.py: ST-Link adapter",
+        "pyocd/probe/jlink_probe.py: J-Link adapter",
+        "pyocd/gdbserver/gdbserver.py: GDB remote protocol server",
+        "pyocd/flash/loader.py: flash programming",
+        "pyocd/target/pack/: CMSIS Device Family Pack integration",
+        "pyocd/rtos/: RTOS thread awareness",
+        "pyocd/trace/swv.py: SWV trace capture",
+        "test/unit/: upstream unit test suite"
+      ],
+      "verification": [
+        "2026-10-18: upstream README, root Apache-2.0 LICENSE, and security and remote-probe documentation inspected",
+        "Upstream basic_test.yaml CI workflow and pyproject.toml pytest configuration inspected",
+        "Official GitHub v0.45.1 release dated 2026-07-21 confirmed",
+        "Upstream implementation component paths documented; no independent installation, build, tests, hardware flashing, benchmarks, or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "Review third-party device packs and dependencies before copying. Auto-unlock may erase protected targets; remote-probe network exposure requires access control.",
+      "source": "GitHub-first; research/2026-10-18-pyocd-cortexm-debugging-flashing-evidence.md; related research/2026-10-08-probe-rs-embedded-debugging-flashing-toolkit.md"
     }
   ],
   "deferred_or_rejected": [
