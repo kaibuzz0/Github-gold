@@ -748,6 +748,48 @@ Suggested tiers:
 - **Research notes:** `research/2026-10-18-pyocd-cortexm-debugging-flashing-evidence.md`. Score reflects upstream evidence, not independently reproduced hardware tests. No third-party code copied.
 
 
+
+### FlatGeobuf
+
+- **Repository:** https://github.com/flatgeobuf/flatgeobuf
+- **Author / Org:** Björn Harrtell and FlatGeobuf contributors
+- **Category:** Geospatial binary features / packed Hilbert R-tree / HTTP byte ranges
+- **Evidence:** VERIFIED (upstream source, tests and CI definitions; not independently executed)
+- **Tier / Score:** S / 29 — Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** Static FlatBuffers-based geographic feature format with optional packed R-tree, bounding-box filtering, streaming and byte-range access.
+- **Why it is valuable:** Enables selective retrieval of large vector datasets for offline-first maps and geospatial tools without requiring a database server.
+- **Useful code/components:** `src/ts/http-reader.ts`, `src/ts/packedrtree.ts`, `src/ts/packedrtree.spec.ts`, `src/ts/seekable-zstd.ts`, `src/ts/geojson.ts`, `src/fbs/header.fbs`, `src/fbs/feature.fbs`, `src/rust/src/`, `src/go/`.
+- **Install / runtime:** Language-specific packages; TypeScript CI uses Node 22/24 and pnpm 12; Rust crate manifest requires Rust 1.85+. HTTP filtering requires Range and CORS support.
+- **Platforms:** Browser/Node, Rust, C++, Go, Java, .NET, local files and servers.
+- **License:** Root BSD-2-Clause; package.json BSD-3-Clause; `src/ts/LICENSE` ISC; Rust manifest BSD-2-Clause. Review component notices before reuse.
+- **Maintenance signals:** 2026-10-07 TypeScript R-tree boundary/duplicate regression fix; cross-language CI configuration.
+- **Verification performed:** Inspected upstream source, test, license files and CI 2026-10-18. No independent execution or audit.
+- **Source discovery:** GitHub-first; `research/2026-10-18-spatial-stack-interoperability-maintenance.md`.
+- **Related projects:** DuckDB Spatial, PMTiles, MapLibre, GDAL, geozero.
+- **Caveats / risks:** Static feature format, not a tile renderer or in-place random-write database; mixed license declarations; range-request latency and version-specific APIs.
+- **Research notes:** No upstream implementation code copied.
+
+### DuckDB Spatial
+
+- **Repository:** https://github.com/duckdb/duckdb-spatial
+- **Author / Org:** DuckDB Foundation and contributors
+- **Category:** Geospatial SQL / R-tree / GDAL / vector tiles / offline analytics
+- **Evidence:** VERIFIED (upstream implementation and regression-test source; not independently executed)
+- **Tier / Score:** S / 27 — Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 4, Maintenance 5.
+- **What it does:** DuckDB extension providing geometry types, spatial SQL, R-tree indexing, geographic file I/O, CRS transforms, OSM PBF processing and Mapbox Vector Tile output.
+- **Why it is valuable:** Composable local geospatial analytics, conversion and map-data preparation with SQL rather than a separate geospatial server.
+- **Useful code/components:** `src/spatial/index/rtree/`, `test/sql/index/rtree_basic.test`, `src/spatial/modules/gdal/`, `src/spatial/modules/mvt/`, `src/spatial/modules/osm/`, `src/spatial/modules/proj/`, `src/spatial/modules/geos/`, `test/sql/mvt/st_asmvt.test`.
+- **Install / runtime:** Compatible DuckDB binary and spatial extension (`INSTALL spatial; LOAD spatial;`); source builds use CMake, C++ toolchain, OpenSSL and bundled dependencies.
+- **Platforms:** Platforms with matching DuckDB extension builds; pin binary and extension versions.
+- **License:** MIT root; third-party GDAL, GEOS, PROJ and bundled notices must be reviewed separately.
+- **Maintenance signals:** 2026-10-18 upstream GDAL JSON patch correction; SQL regression tests and distribution CI.
+- **Verification performed:** Inspected README, source/test paths, LICENSE and CI on 2026-10-18; no local SQL execution, build or benchmark.
+- **Source discovery:** GitHub-first; `research/2026-10-18-spatial-stack-interoperability-maintenance.md`.
+- **Related projects:** DuckDB, FlatGeobuf, PMTiles, MapLibre, GDAL.
+- **Caveats / risks:** README still says spatial indexing unsupported although R-tree code/tests exist; feature support is version-dependent; geometry storage described upstream as work in progress.
+- **Research notes:** `RTREE_INDEX_SCAN` appears in test source, not a locally observed successful run. No third-party implementation code copied.
+
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

@@ -1616,6 +1616,114 @@
       "research_priority": "high",
       "copy_restriction_note": "Review third-party device packs and dependencies before copying. Auto-unlock may erase protected targets; remote-probe network exposure requires access control.",
       "source": "GitHub-first; research/2026-10-18-pyocd-cortexm-debugging-flashing-evidence.md; related research/2026-10-08-probe-rs-embedded-debugging-flashing-toolkit.md"
+    },
+    {
+      "name": "FlatGeobuf",
+      "repository": "https://github.com/flatgeobuf/flatgeobuf",
+      "owner": "flatgeobuf",
+      "category": [
+        "geospatial",
+        "vector-features",
+        "spatial-indexing",
+        "http-range",
+        "offline-data"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "BSD-2-Clause (root); package and component license declarations differ",
+      "license_copy_status": "catalog-only-until-component-license-review",
+      "platforms": [
+        "JavaScript/TypeScript",
+        "Rust",
+        "C++",
+        "Go",
+        "Java",
+        ".NET",
+        "browser",
+        "server",
+        "offline-file-processing"
+      ],
+      "useful_components": [
+        "src/ts/http-reader.ts: HTTP byte-range reader",
+        "src/ts/packedrtree.ts: packed Hilbert R-tree search",
+        "src/ts/packedrtree.spec.ts: index regression tests",
+        "src/ts/seekable-zstd.ts: seekable Zstandard reader",
+        "src/ts/geojson.ts: GeoJSON adapter",
+        "src/fbs/header.fbs and src/fbs/feature.fbs: binary schemas",
+        "src/rust/src/: Rust implementation",
+        "src/go/: Go implementation"
+      ],
+      "verification": [
+        "2026-10-18: upstream README, root LICENSE, package.json, src/ts/LICENSE, Rust Cargo.toml inspected",
+        "Source paths and test.yml CI matrix inspected; upstream test configuration, not independently executed",
+        "2026-10-07 commit 543346d addresses TS index-search boundary and duplicate handling with regression tests",
+        "No independent build, parsing, benchmark, deployment, or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "Root LICENSE is BSD-2-Clause, package.json declares BSD-3-Clause, src/ts/LICENSE is ISC, Rust manifest declares BSD-2-Clause. Review relevant file notices before copying. Remote filtering requires HTTP Range and suitable CORS.",
+      "source": "GitHub-first upstream review 2026-10-18; research/2026-10-18-spatial-stack-interoperability-maintenance.md"
+    },
+    {
+      "name": "DuckDB Spatial",
+      "repository": "https://github.com/duckdb/duckdb-spatial",
+      "owner": "duckdb",
+      "category": [
+        "geospatial-sql",
+        "embedded-analytics",
+        "spatial-indexing",
+        "offline-mapping",
+        "vector-tiles"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 5
+      },
+      "license": "MIT (root); bundled/transitive dependencies require separate review",
+      "license_copy_status": "permissive-root-license-review-third-party-notices",
+      "platforms": [
+        "DuckDB SQL extension",
+        "Linux",
+        "macOS",
+        "Windows",
+        "matching DuckDB extension builds"
+      ],
+      "useful_components": [
+        "src/spatial/index/rtree/: R-tree index and scan machinery",
+        "test/sql/index/rtree_basic.test: RTREE_INDEX_SCAN regression",
+        "src/spatial/modules/gdal/: geospatial file I/O including FlatGeobuf",
+        "src/spatial/modules/mvt/: vector tile output",
+        "src/spatial/modules/osm/: OSM PBF ingestion",
+        "src/spatial/modules/proj/: coordinate transforms",
+        "src/spatial/modules/geos/: geometry operations",
+        "test/sql/mvt/st_asmvt.test: vector-tile tests"
+      ],
+      "verification": [
+        "2026-10-18: upstream README, root LICENSE, R-tree SQL tests, MVT tests, module tree and CI workflow inspected",
+        "R-tree SQL test source creates RTREE index and expects RTREE_INDEX_SCAN; test was not run independently",
+        "2026-10-18 upstream commit 4e066c1 corrects malformed GDAL JSON patch",
+        "No independent build, SQL execution, benchmark, or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "README still says spatial indexing unsupported although R-tree source/tests exist; verify pinned extension version. GDAL/GEOS/PROJ and other dependencies have separate license obligations.",
+      "source": "GitHub-first upstream review 2026-10-18; research/2026-10-18-spatial-stack-interoperability-maintenance.md"
     }
   ],
   "deferred_or_rejected": [
