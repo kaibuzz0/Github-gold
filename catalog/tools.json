@@ -1724,6 +1724,64 @@
       "research_priority": "high",
       "copy_restriction_note": "README still says spatial indexing unsupported although R-tree source/tests exist; verify pinned extension version. GDAL/GEOS/PROJ and other dependencies have separate license obligations.",
       "source": "GitHub-first upstream review 2026-10-18; research/2026-10-18-spatial-stack-interoperability-maintenance.md"
+    },
+    {
+      "name": "TinyUSB",
+      "repository": "https://github.com/hathach/tinyusb",
+      "owner": "hathach",
+      "category": [
+        "embedded-usb",
+        "usb-host",
+        "usb-device",
+        "microcontroller-firmware",
+        "protocol-drivers"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT (root); third-party dependencies and vendor SDKs separately licensed",
+      "license_copy_status": "permissive-root-license-review-vendor-and-third-party-notices",
+      "platforms": [
+        "C embedded firmware",
+        "50+ MCU families per upstream",
+        "bare metal",
+        "FreeRTOS",
+        "RT-Thread",
+        "Mynewt",
+        "supported host/device controllers"
+      ],
+      "useful_components": [
+        "src/host/usbh.c: host enumeration, control transfers and driver callbacks",
+        "src/device/: device enumeration, descriptors and endpoint management",
+        "src/class/: CDC, HID, MSC, MIDI, audio and other USB class drivers (varying maturity)",
+        "src/portable/: MCU USB controller backends",
+        "src/portable/raspberrypi/rp2040/hcd_rp2040.c: RP2040/RP2350 host controller handling",
+        "src/osal/: bare-metal and RTOS synchronization abstraction",
+        "examples/: board-specific buildable firmware examples",
+        "test/unit-test/project.yml: Ceedling unit test configuration",
+        "test/fuzz/: protocol fuzz harnesses",
+        "test/hil/: hardware-in-loop test infrastructure"
+      ],
+      "verification": [
+        "2026-10-18: upstream README.rst and root MIT LICENSE inspected; source host state machine and USB class directory inspected",
+        "Official upstream 0.21.0 release published 2026-06-30; repository active through 2026-10-18",
+        "2026-10-18: test/unit-test/project.yml defines Ceedling test:all; pre-commit workflow installs Ceedling but comments out execution of test:all",
+        "2026-10-18: pre-commit workflow configures CMake/CTest and time-limited fuzz harnesses; workflow definition inspected, not independently executed",
+        "2026-10-18 commit 687ab47 adjusts HIL USB kernel recovery and board-lock tooling; not evidence of USB stack runtime correctness",
+        "No independent build, Ceedling tests, fuzz execution, USB enumeration, board flashing, hardware validation or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "MIT notice preservation applies to covered code; review lib/, hw/ vendor files and LICENSES separately. Upstream 'memory-safe' means no dynamic allocation, not a formal guarantee against C memory bugs. DFU mode, video and PD3 support have upstream WIP limitations; host/device support differs by MCU.",
+      "source": "GitHub-first; research/2026-10-08-tinyusb-embedded-usb-host-device-stack.md; upstream release 0.21.0 and 2026-10-18 maintenance inspection"
     }
   ],
   "deferred_or_rejected": [

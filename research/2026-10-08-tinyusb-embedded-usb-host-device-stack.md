@@ -57,3 +57,13 @@ Upstream [getting started](https://github.com/hathach/tinyusb/blob/master/docs/g
 5. Inspect downstream Pico SDK, ESP-IDF and Adafruit integrations for useful patches and separate licensing.
 
 **Catalog workflow:** Dossier-first addition to draft PR #7. Promote into `MASTER_LIST.md` and `catalog/tools.json` together after score/schema review and deduplication.
+
+
+## Evidence refresh — 2026-10-18
+
+- Confirmed upstream official [0.21.0 release](https://github.com/hathach/tinyusb/releases/tag/0.21.0), published **2026-06-30**, and new upstream commits through **2026-10-18**.
+- Inspected current [README.rst](https://github.com/hathach/tinyusb/blob/master/README.rst), [MIT license](https://github.com/hathach/tinyusb/blob/master/LICENSE), [host stack source](https://github.com/hathach/tinyusb/blob/master/src/host/usbh.c), [class directory](https://github.com/hathach/tinyusb/tree/master/src/class), [Ceedling project](https://github.com/hathach/tinyusb/blob/master/test/unit-test/project.yml), and [pre-commit workflow](https://github.com/hathach/tinyusb/blob/master/.github/workflows/pre-commit.yml).
+- **Important CI caveat:** The workflow installs Ceedling 1.0.1 but comments out `ceedling test:all`. The workflow defines CMake/CTest and short fuzz-harness execution; inspecting this definition does not establish that any particular run passed.
+- [2026-10-18 commit 687ab47](https://github.com/hathach/tinyusb/commit/687ab4723e7b51787cf29e67a1144fdc3845b5e5) changes HIL USB-kernel recovery and board-lock tooling. This is maintenance evidence for test infrastructure, **not** an independently validated USB stack defect fix.
+- Root MIT license requires preservation of copyright/license notices. Check `lib/`, `hw/` and vendored SDK licensing separately before extracting code.
+- Promoted to canonical catalog as **VERIFIED (upstream evidence), S/27**, with six-factor breakdown. No GitHub Gold build, unit test, fuzz run, hardware test or security audit was performed.

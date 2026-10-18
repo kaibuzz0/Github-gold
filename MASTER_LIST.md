@@ -790,6 +790,27 @@ Suggested tiers:
 - **Research notes:** `RTREE_INDEX_SCAN` appears in test source, not a locally observed successful run. No third-party implementation code copied.
 
 
+### TinyUSB
+
+- **Repository:** https://github.com/hathach/tinyusb
+- **Author / Org:** Ha Thach and contributors
+- **Category:** Embedded USB / MCU host-device stacks / firmware / protocol drivers
+- **Evidence:** VERIFIED (upstream source, tests and CI configuration; not independently run)
+- **Tier / Score:** S / 27 — Utility 5, Working Evidence 4, Reusability 5, Novelty 3, Documentation 5, Maintenance 5.
+- **What it does:** Portable C USB host/device stack for embedded controllers with USB class drivers, board examples, and bare-metal/RTOS integrations.
+- **Why it is valuable:** Reusable USB enumeration, endpoint handling, class-driver and controller-backend implementations across many microcontroller families.
+- **Useful code/components:** `src/host/usbh.c`; `src/device/`; `src/class/`; `src/portable/`; `src/portable/raspberrypi/rp2040/hcd_rp2040.c`; `src/osal/`; `examples/`; `test/unit-test/project.yml`; `test/fuzz/`; `test/hil/`.
+- **Install / runtime:** Integrate with supported board SDK/toolchain, `tusb_config.h`, descriptor callbacks and host/device task processing; consult official board-specific examples. Host/device roles vary by MCU.
+- **Platforms:** Embedded C, 50+ MCU families claimed upstream, bare metal, FreeRTOS, RT-Thread and Mynewt; verify exact controller support.
+- **License:** MIT root; inspect separately licensed vendor SDKs and `lib/` dependencies before extracting code.
+- **Maintenance signals:** Official 0.21.0 release published 2026-06-30; upstream commits through 2026-10-18; test and fuzz infrastructure.
+- **Verification performed:** Inspected README.rst, LICENSE, host source, class directories, Ceedling configuration and pre-commit workflow 2026-10-18. Unit-test invocation is commented out in that workflow; fuzz harnesses are configured but not run by GitHub Gold.
+- **Source discovery:** GitHub-first; `research/2026-10-08-tinyusb-embedded-usb-host-device-stack.md`.
+- **Related projects:** Raspberry Pi Pico SDK, ESP-IDF, FreeRTOS, Adafruit TinyUSB integrations.
+- **Caveats / risks:** Static allocation is not a formal memory-safety guarantee for C. USB host/device availability differs by target; DFU mode, video and PD3 are partly WIP. October 18 HIL recovery tooling changes do not prove stack correctness.
+- **Research notes:** No third-party code copied; no independent firmware build, test execution, fuzzing, hardware enumeration, or security audit.
+
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
