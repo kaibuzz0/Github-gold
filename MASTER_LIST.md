@@ -811,6 +811,27 @@ Suggested tiers:
 - **Research notes:** No third-party code copied; no independent firmware build, test execution, fuzzing, hardware enumeration, or security audit.
 
 
+### LighthouseReckoning
+
+- **Repository:** https://github.com/TidalImpact/LighthouseReckoning
+- **Author / Org:** Fynn Jannis Schulz / TidalImpact
+- **Category:** LoRa / embedded routing / off-grid sensor telemetry
+- **Evidence:** VERIFIED — upstream source, field-test and release evidence, not independently executed
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 5)
+- **What it does:** Small RadioLib-based C++ library routing LoRa sensor data through confirmed hops toward one Home node.
+- **Why it is valuable:** Compact packet protocol, many-to-one routing, retries, raw field-test logs, sleep-aware scheduling, and tunable RAM use.
+- **Useful code/components:** `src/LHR_Routing.*` (routes); `src/LHR_Tx.*` and `LHR_Rx.*` (retries/receive); `src/LHR_Packet.h` (framing); `src/LHR_DutyCycle.*` (airtime); `src/LHR_Encryption*.*` (per-hop crypto); `src/LighthouseReckoning.cpp` (sleep scheduling and local queue); `src/LHR_RamConfig.h` (~248-byte buffer toggle); `examples/`; `fieldtests/2026-08-09_forced-chain-test/`.
+- **Install / runtime:** Arduino or PlatformIO plus RadioLib and suitable LoRa hardware; configure regional radio limits.
+- **Platforms:** RP2040 and ESP32 upstream tested; SX126x CAD/interrupt behavior validated; other RadioLib chips need verification.
+- **License:** MIT root; review RadioLib and vendor SDK licensing separately.
+- **Maintenance signals:** v1.3.0 released 2026-10-16; adds `getNextUpdateInMs()`, one local-data queue slot, RAM toggle and ESP32 encryption detection fix. Upstream compile workflow excludes new SleepyNode sketches.
+- **Verification performed:** Inspected source, release, README, changelog, license, CI configuration and upstream 1h53m forced-chain field test with raw log. No independent build, RF test, log parsing or security audit.
+- **Source discovery:** GitHub-first; `research/2026-09-30-lighthouse-reckoning-lora-mesh-routing.md` and `research/2026-10-18-lighthouse-reckoning-v13-maintenance.md`.
+- **Related projects:** jgromes/RadioLib; Meshtastic; MeshCore; Reticulum.
+- **Caveats / risks:** Single-sink only; no end-to-end ACK. Shared-key AES-128-CCM is hop-by-hop with no replay protection. One queued local packet and one global retry cycle. Forced chain was physically close, not a long-range RF test.
+- **Research notes:** Independently parse raw log and test v1.3 sleep/queue behavior on hardware before stronger claims.
+
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

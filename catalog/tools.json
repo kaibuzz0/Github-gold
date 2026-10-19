@@ -1782,6 +1782,59 @@
       "research_priority": "high",
       "copy_restriction_note": "MIT notice preservation applies to covered code; review lib/, hw/ vendor files and LICENSES separately. Upstream 'memory-safe' means no dynamic allocation, not a formal guarantee against C memory bugs. DFU mode, video and PD3 support have upstream WIP limitations; host/device support differs by MCU.",
       "source": "GitHub-first; research/2026-10-08-tinyusb-embedded-usb-host-device-stack.md; upstream release 0.21.0 and 2026-10-18 maintenance inspection"
+    },
+    {
+      "name": "LighthouseReckoning",
+      "repository": "https://github.com/TidalImpact/LighthouseReckoning",
+      "owner": "TidalImpact",
+      "category": [
+        "lora",
+        "mesh-networking",
+        "embedded-firmware",
+        "off-grid-sensor-telemetry"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT (root; dependencies separately licensed)",
+      "license_copy_status": "permissive-with-attribution-review-radiolib-and-sdk",
+      "platforms": [
+        "Arduino",
+        "RP2040",
+        "ESP32",
+        "SX126x radios upstream-validated"
+      ],
+      "useful_components": [
+        "src/LHR_Routing.cpp: hop-count and neighbor routing",
+        "src/LHR_Tx.cpp: non-blocking hop confirmations, retries, recovery",
+        "src/LHR_Rx.cpp: packet receive/dispatch",
+        "src/LHR_Packet.h: compact DATA/NDAT/RFCN/DATA_RES framing",
+        "src/LHR_DutyCycle.cpp: duty-cycle budgeting",
+        "src/LHR_Encryption.cpp and LHR_EncryptionStore.cpp: AES-128-CCM and nonce persistence",
+        "src/LighthouseReckoning.cpp: getNextUpdateInMs() sleep-aware scheduling and local single-slot queue",
+        "src/LHR_RamConfig.h: ~248-byte own-data buffer toggle",
+        "examples/ESP32 and examples/RP2040: radio examples and SleepyNode sketches",
+        "fieldtests/2026-08-09_forced-chain-test/: upstream raw log and test analysis"
+      ],
+      "verification": [
+        "2026-10-18: inspected upstream README, source, changelog, MIT license, library metadata, release and compile workflow",
+        "Upstream v1.3.0 published 2026-10-16; adds sleep scheduling and single-slot own-data queue",
+        "Upstream 2026-08-09 1h53m short-range forced multi-hop chain reports expected TTL and three estimated losses; not long-range RF validation",
+        "Upstream CI compiles selected ESP32/RP2040 examples but does not list new SleepyNode sketches; no CI run verified",
+        "No independent build, flash, RF test, log parsing, cryptographic audit or v1.3.0 hardware verification"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "No source copied. AES-128-CCM uses a shared network key and hop-by-hop decryption; replay protection is absent. One local queue slot and global retry cycle. Other RadioLib radios not equivalently tested.",
+      "source": "GitHub-first; research/2026-09-30-lighthouse-reckoning-lora-mesh-routing.md and research/2026-10-18-lighthouse-reckoning-v13-maintenance.md"
     }
   ],
   "deferred_or_rejected": [
