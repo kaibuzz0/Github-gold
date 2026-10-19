@@ -852,6 +852,46 @@ Suggested tiers:
 - **Caveats / risks:** Upstream LoRaWAN Class A/C and pre-certification claims are not independent verification. Radio/board compatibility and regulatory duty cycle/power limits vary. v7.7 introduced configuration-struct `begin` APIs; positional overloads are deprecated ahead of 8.0.0. AVR ATmega328 boards are discouraged upstream due to memory constraints.
 - **Research notes:** Source and CI evidence support cataloging, not hardware or security certification. No upstream code copied.
 
+### Termux:API Android App
+
+- **Repository:** https://github.com/termux/termux-api
+- **Author / Org:** Termux
+- **Category:** Android / Termux / device APIs / local automation / IPC
+- **Evidence:** VERIFIED — upstream implementation and APK build workflow; not independently executed
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 4, Maintenance 5)
+- **What it does:** Android plugin exposing permission-gated device capabilities to Termux shell commands.
+- **Why it is valuable:** Reusable mobile API dispatcher, permission boundary and response transport for scriptable Android automation.
+- **Useful code/components:** `TermuxApiReceiver.java` (dispatch), `ResultReturner.java` (response lifecycle), `apis/LocationAPI.java`, `apis/SensorAPI.java`, `apis/UsbAPI.java`, `AndroidManifest.xml`.
+- **Install / runtime:** Android Termux app and companion Termux:API plugin must have compatible signing keys; install CLI helper separately.
+- **Platforms:** Android / Termux.
+- **License:** GPLv3 stated in upstream README; no standalone root license established during inspection.
+- **Maintenance signals:** September 2026 location and result-handling corrections; upstream Gradle APK build and artifact checks.
+- **Verification performed:** Inspected README, source, manifest, build workflow and upstream commits; no APK build, install, instrumentation, hardware or security test.
+- **Source discovery:** GitHub-first; `research/2026-09-08-termux-api-android-capability-cli-bridge.md` and `research/2026-10-19-termux-api-bridge-release-and-components.md`.
+- **Related projects:** termux/termux-api-package; termux/termux-app; termux/termux-packages; termux/termux-boot.
+- **Caveats / risks:** Broad Android permission surface; distribution signatures cannot be mixed freely; background-execution behavior varies by Android version and OEM. Review component-level notices before copying.
+- **Research notes:** Source/CI evidence is not independent execution. No third-party source copied.
+
+### Termux API CLI Package
+
+- **Repository:** https://github.com/termux/termux-api-package
+- **Author / Org:** Termux
+- **Category:** Android / Termux / CLI / Unix-domain IPC
+- **Evidence:** VERIFIED — upstream source, tagged release and downstream packaging; not independently executed
+- **Tier / Score:** A / 23 (Utility 5, Working Evidence 3, Reusability 5, Novelty 4, Documentation 2, Maintenance 4)
+- **What it does:** C runtime and CLI wrappers connecting Unix shell commands to Android-side Termux:API implementations.
+- **Why it is valuable:** Compact, reusable local IPC pattern with authenticated peer checks, stdin/stdout transport and descriptor passing.
+- **Useful code/components:** `termux-api.c` (Unix sockets, `SO_PEERCRED`, `SCM_RIGHTS`, Android 14+ fallback), `termux-api.h`, `CMakeLists.txt`, `scripts/`, `termux-callback.in`.
+- **Install / runtime:** Termux `termux-api` package, compatible Android plugin, Bash, util-linux and termux-am.
+- **Platforms:** Android / Termux.
+- **License:** MIT root LICENSE; companion Android app separately GPLv3.
+- **Maintenance signals:** Upstream v0.60.0 released 2026-09-16; official Termux packaging pins v0.60.0 with a SHA-256 source checksum.
+- **Verification performed:** Inspected source, CMake, license, tag and downstream package recipe; no compilation, installation, socket fuzzing, device test or independent runtime verification.
+- **Source discovery:** GitHub-first; `research/2026-09-08-termux-api-package-shell-android-bridge-runtime.md` and `research/2026-10-19-termux-api-bridge-release-and-components.md`.
+- **Related projects:** termux/termux-api; termux/termux-packages; termux/termux-app.
+- **Caveats / risks:** No repository-local CI/test matrix established; Android background restrictions and IPC lifecycle require device testing. Preserve MIT notice and review companion licensing.
+- **Research notes:** Updates earlier v0.59.1 maintenance snapshot; Gold score raised from 22 to 23 based on current release evidence. No upstream code copied.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

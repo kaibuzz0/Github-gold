@@ -1893,6 +1893,96 @@
       "research_priority": "high",
       "copy_restriction_note": "Preserve MIT copyright/permission notice for copied source; review dependencies and SDK terms. LoRaWAN Class A/C claims and Class A pre-certification are upstream assertions, not independently verified. 8.0.0 will remove deprecated positional begin() overloads; regional RF rules apply.",
       "source": "GitHub-first recursive research from LighthouseReckoning dependency; research/2026-10-18-radiolib-radio-drivers-protocols.md"
+    },
+    {
+      "name": "Termux:API Android App",
+      "repository": "https://github.com/termux/termux-api",
+      "owner": "termux",
+      "category": [
+        "android",
+        "termux",
+        "mobile-automation",
+        "android-api",
+        "local-ipc"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 5
+      },
+      "license": "GPLv3 (upstream README; no standalone root license established)",
+      "license_copy_status": "review-file-level-gpl-and-dependencies-before-copy",
+      "platforms": [
+        "Android",
+        "Termux"
+      ],
+      "useful_components": [
+        "app/src/main/java/com/termux/api/TermuxApiReceiver.java: dispatch and permission checks",
+        "app/src/main/java/com/termux/api/util/ResultReturner.java: response lifecycle",
+        "app/src/main/java/com/termux/api/apis/LocationAPI.java: location integration",
+        "app/src/main/java/com/termux/api/apis/SensorAPI.java: sensor access",
+        "app/src/main/java/com/termux/api/apis/UsbAPI.java: USB integration",
+        "app/src/main/AndroidManifest.xml: permission and component declarations"
+      ],
+      "verification": [
+        "2026-10-19: upstream README, Android sources, manifest, Gradle APK workflow and September 2026 fixes reviewed",
+        "Build workflow produces and hashes APK artifacts; no independent APK build, installation, instrumentation or hardware tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "GPLv3 upstream README; review per-file and dependency notices before reuse. Same-signing requirement and Android permissions affect deployment. No third-party source copied.",
+      "source": "GitHub-first research; research/2026-09-08-termux-api-android-capability-cli-bridge.md; research/2026-10-19-termux-api-bridge-release-and-components.md"
+    },
+    {
+      "name": "Termux API CLI Package",
+      "repository": "https://github.com/termux/termux-api-package",
+      "owner": "termux",
+      "category": [
+        "android",
+        "termux",
+        "cli",
+        "unix-sockets",
+        "native-ipc"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "A",
+      "score": 23,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 2,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE; companion Android plugin separately GPLv3)",
+      "license_copy_status": "mit-attribution-and-companion-license-review",
+      "platforms": [
+        "Android",
+        "Termux"
+      ],
+      "useful_components": [
+        "termux-api.c: Unix socket transport, peer-UID checks, descriptor passing, Android 14+ fallback",
+        "termux-api.h: C API",
+        "CMakeLists.txt: native library and executable build",
+        "scripts/: CLI wrappers",
+        "termux-callback.in: callback integration"
+      ],
+      "verification": [
+        "2026-10-19: upstream C sources, MIT license, CMake, scripts and v0.60.0 release reviewed",
+        "2026-10-19: official Termux package recipe pins v0.60.0 and SHA-256 source checksum",
+        "No independent native build, device execution, fuzzing or repository-local test matrix established"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "Preserve MIT notice and review dependency and companion app GPLv3 requirements. No source copied.",
+      "source": "GitHub-first research; research/2026-09-08-termux-api-package-shell-android-bridge-runtime.md; research/2026-10-19-termux-api-bridge-release-and-components.md"
     }
   ],
   "deferred_or_rejected": [
