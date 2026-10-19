@@ -832,6 +832,26 @@ Suggested tiers:
 - **Research notes:** Independently parse raw log and test v1.3 sleep/queue behavior on hardware before stronger claims.
 
 
+### RadioLib
+
+- **Repository:** https://github.com/jgromes/RadioLib
+- **Author / Org:** Jan Gromeš / jgromes
+- **Category:** Embedded radio / LoRa / LoRaWAN / radio drivers / digital modes
+- **Evidence:** VERIFIED — upstream source, release and CI evidence; no independent execution
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 5)
+- **What it does:** C++ radio abstraction and protocol library spanning LoRa, FSK/OOK, LoRaWAN and amateur-radio digital modes.
+- **Why it is valuable:** Reusable transceiver drivers, hardware abstraction, cross-platform examples and radio-protocol implementations underpin multiple embedded and off-grid projects, including LighthouseReckoning.
+- **Useful code/components:** `src/Hal.h` and `src/hal/` (GPIO/SPI/time abstraction); `src/modules/SX126x/SX126x.cpp` and `src/modules/` (radio chip drivers); `src/protocols/LoRaWAN/LoRaWAN.cpp` (LoRaWAN); `src/protocols/AX25/`, `APRS/`, `RTTY/`, `SSTV/`, `Pager/` (digital modes); `src/utils/`; `examples/NonArduino/`; `extras/test/unit/` and `extras/test/fuzz/`; `extras/SX126x_Spectrum_Scan/`.
+- **Install / runtime:** Arduino Library Manager, PlatformIO or ESP-IDF component; CMake/non-Arduino integration documented upstream. Requires compatible radio chip, GPIO/SPI wiring and board-specific platform setup.
+- **Platforms:** Arduino AVR (constrained), ESP32/ESP8266, RP2040, STM32, nRF52, Teensy and selected non-Arduino C++ targets; exact support varies by chip and mode.
+- **License:** MIT (`license.txt`); preserve notice and check SDK, dependencies and hardware support files individually.
+- **Maintenance signals:** Upstream 7.8.1 release 2026-09-28; master commit 9825002 dated 2026-10-18; compile matrix, unit, fuzz, static analysis and CodeQL workflows.
+- **Verification performed:** Inspected README, license, metadata, HAL, SX126x and LoRaWAN sources, CI/test workflows, releases and recent commits. Observed CI/unit/fuzz/CodeQL success on a PR revision with Cppcheck failure on that same revision; did not run tests.
+- **Source discovery:** GitHub-first, recursively followed from LighthouseReckoning; `research/2026-10-18-radiolib-radio-drivers-protocols.md`.
+- **Related projects:** TidalImpact/LighthouseReckoning, Meshtastic, RadioShield, Semtech SX126x/LR11x0 radio ecosystems.
+- **Caveats / risks:** Upstream LoRaWAN Class A/C and pre-certification claims are not independent verification. Radio/board compatibility and regulatory duty cycle/power limits vary. v7.7 introduced configuration-struct `begin` APIs; positional overloads are deprecated ahead of 8.0.0. AVR ATmega328 boards are discouraged upstream due to memory constraints.
+- **Research notes:** Source and CI evidence support cataloging, not hardware or security certification. No upstream code copied.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

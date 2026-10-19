@@ -1835,6 +1835,64 @@
       "research_priority": "high",
       "copy_restriction_note": "No source copied. AES-128-CCM uses a shared network key and hop-by-hop decryption; replay protection is absent. One local queue slot and global retry cycle. Other RadioLib radios not equivalently tested.",
       "source": "GitHub-first; research/2026-09-30-lighthouse-reckoning-lora-mesh-routing.md and research/2026-10-18-lighthouse-reckoning-v13-maintenance.md"
+    },
+    {
+      "name": "RadioLib",
+      "repository": "https://github.com/jgromes/RadioLib",
+      "owner": "jgromes",
+      "category": [
+        "lora",
+        "embedded-radio",
+        "radio-drivers",
+        "lorawan",
+        "digital-modes",
+        "hardware-abstraction"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT (root license.txt; dependency, SDK and radio module terms separately apply)",
+      "license_copy_status": "permissive-with-notice-review-third-party-dependencies",
+      "platforms": [
+        "Arduino",
+        "ESP32",
+        "ESP8266",
+        "RP2040",
+        "STM32",
+        "nRF52",
+        "Teensy",
+        "supported non-Arduino C++ environments"
+      ],
+      "useful_components": [
+        "src/Hal.h and src/hal/: portable GPIO/SPI/time/interrupt abstraction and platform backends",
+        "src/modules/SX126x/SX126x.cpp: LoRa/GFSK radio driver and IRQ handling",
+        "src/modules/: CC1101, SX127x, SX128x, LR11x0, LR2021, RF69 and other chip families",
+        "src/protocols/LoRaWAN/LoRaWAN.cpp: LoRaWAN MAC/channel/crypto integration",
+        "src/protocols/AX25/, APRS/, RTTY/, SSTV/, Pager/: reusable digital modes",
+        "src/utils/: shared support and cryptographic utilities",
+        "examples/NonArduino/: non-Arduino integration examples",
+        "extras/test/unit/ and extras/test/fuzz/: unit and fuzz test harnesses",
+        "extras/SX126x_Spectrum_Scan/ and extras/ADSB_Monitor/: application utilities"
+      ],
+      "verification": [
+        "2026-10-18: inspected upstream README.md, license.txt, library.properties, src/RadioLib.h, src/Hal.h, SX126x driver and LoRaWAN implementation",
+        "2026-10-18: inspected upstream CI, unit-test, fuzz and CodeQL workflow definitions; upstream unit-test workflow invokes ./test.sh and ./coverage.sh",
+        "Official upstream 7.8.1 release published 2026-09-28; fixes LR2021 DCDC register handling and RF69 recursion",
+        "Upstream master commit 9825002 dated 2026-10-18 fixes cppcheck false positive; observed CI/unit/fuzz/CodeQL successes on a separate PR commit, while its Cppcheck check failed",
+        "No independent compilation, unit test, fuzzing, radio hardware validation, LoRaWAN certification test or cryptographic audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "Preserve MIT copyright/permission notice for copied source; review dependencies and SDK terms. LoRaWAN Class A/C claims and Class A pre-certification are upstream assertions, not independently verified. 8.0.0 will remove deprecated positional begin() overloads; regional RF rules apply.",
+      "source": "GitHub-first recursive research from LighthouseReckoning dependency; research/2026-10-18-radiolib-radio-drivers-protocols.md"
     }
   ],
   "deferred_or_rejected": [
