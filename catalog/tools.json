@@ -2180,6 +2180,57 @@
       "research_priority": "high",
       "copy_restriction_note": "No source copied. External browsers, yt-dlp, wget, plugins and captured content have separate licenses/rights; untrusted replay and cookies require isolation.",
       "source": "GitHub-first; research/2026-09-02-archivebox-self-hosted-web-preservation-runtime.md; 2026-10-20 release correction"
+    },
+    {
+      "name": "abx-dl",
+      "repository": "https://github.com/ArchiveBox/abx-dl",
+      "owner": "ArchiveBox",
+      "category": [
+        "web-archiving",
+        "capture-runtime",
+        "python-cli",
+        "plugin-orchestration",
+        "digital-preservation",
+        "event-driven-automation"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE; Copyright 2024 Nick Sweeting)",
+      "license_copy_status": "mit-attribution-required; plugin-binaries-and-captured-content-have-separate-rights",
+      "platforms": [
+        "Python >=3.12,<3.15",
+        "Linux",
+        "macOS",
+        "Docker linux/amd64 and linux/arm64"
+      ],
+      "useful_components": [
+        "abx_dl/catalog.py: PluginCatalog discovery and PluginConfigResolver",
+        "abx_dl/orchestrator.py: download(), parse_input(), event-bus composition",
+        "abx_dl/execution.py: execute_hook(), process-group lifecycle and timeout handling",
+        "abx_dl/events.py: typed crawl/snapshot/process events",
+        "abx_dl/services/: process, snapshot, crawl, binary and result services",
+        "abx_dl/output_files.py: OutputManifest and bounded output-file scanning",
+        "abx_dl/cli.py: command-line interface and plugin selection",
+        "tests/test_executor.py, tests/test_install_phase.py, tests/test_output_files.py: test coverage"
+      ],
+      "verification": [
+        "2026-10-20: upstream README, MIT LICENSE, pyproject.toml, source modules, tests, workflows, release and recent commit inspected",
+        "v1.13.242 released 2026-10-20 15:34 UTC; GitHub CI run 39448373304 succeeded on commit 367d06dc (18 successful jobs, 1 skipped); includes Python tests, plugin tests and amd64/arm64 Docker build-and-test jobs",
+        "No independent install, capture, container build, test execution, fuzzing or security audit by GitHub Gold"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "No third-party code copied. Root MIT license does not relicense abx-plugins, abxpkg, abxbus, browsers, downloaders, other plugins, or captured material; inspect per-component rights.",
+      "source": "GitHub-first recursive lead from ArchiveBox; research/2026-10-20-abx-dl-framework-independent-capture-runtime.md"
     }
   ],
   "deferred_or_rejected": [

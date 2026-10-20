@@ -975,6 +975,27 @@ Suggested tiers:
 - **Research notes:** No third-party source copied. Distinguish non-prerelease v0.9.73 from newer development release candidates.
 
 
+### abx-dl
+
+- **Repository:** https://github.com/ArchiveBox/abx-dl
+- **Author / Org:** ArchiveBox / Nick Sweeting
+- **Category:** Web archiving / standalone capture runtime / Python CLI / plugin orchestration / digital preservation
+- **Evidence:** VERIFIED — upstream release, implementation, tests and passing CI; not independently deployed
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
+- **What it does:** Framework-independent URL downloader and plugin runner that captures pages, metadata, media and derived artifacts via the ArchiveBox plugin ecosystem.
+- **Why it is valuable:** Reusable capture orchestration without a Django database, explicit event phases, plugin dependency resolution, typed events and durable JSONL output.
+- **Useful code/components:** `abx_dl/catalog.py` (`PluginCatalog`, `PluginConfigResolver`); `abx_dl/orchestrator.py` (`download`, `parse_input`); `abx_dl/execution.py` (`execute_hook`, process-group cleanup); `abx_dl/events.py`; `abx_dl/services/`; `abx_dl/output_files.py` (`OutputManifest`); `abx_dl/cli.py`; `tests/`.
+- **Install / runtime:** `uvx abx-dl` or `uv tool install abx-dl`; Python >=3.12,<3.15; `abx-plugins`, `abxpkg`, `abxbus`; optional external browser/downloader binaries and Docker.
+- **Platforms:** Python on Linux/macOS; upstream Docker linux/amd64 and linux/arm64; other OS behavior not independently established.
+- **License:** MIT root LICENSE (Nick Sweeting 2024); dependencies, plugin implementations, external binaries and captured content retain their own rights.
+- **Maintenance signals:** v1.13.242 published 2026-10-20 15:34 UTC; upstream CI run `39448373304` succeeded at commit `367d06dc` with 18 successful jobs and one skipped, including Python tests, all-plugin tests and Docker builds on amd64/arm64.
+- **Verification performed:** README, manifest, license, code, test cases, release and CI job conclusions inspected. No local install, test execution, live capture, container build or security audit.
+- **Source discovery:** GitHub-first recursive lead from ArchiveBox; `research/2026-10-20-abx-dl-framework-independent-capture-runtime.md`.
+- **Related projects:** ArchiveBox/ArchiveBox (already cataloged); ArchiveBox/abx-plugins, ArchiveBox/abxpkg, ArchiveBox/abxbus (recursive leads).
+- **Caveats / risks:** Automatic dependency installation, third-party plugin execution and untrusted URL handling expand the attack surface; use `--no-install` where appropriate; browser cookies and downloaded files require isolation. Fast release cadence warrants version pinning.
+- **Research notes:** The runtime is separate from ArchiveBox's Django UI/database. Upstream CI is not independent GitHub Gold testing. No third-party code copied.
+
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
