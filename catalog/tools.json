@@ -2081,6 +2081,105 @@
       "research_priority": "medium",
       "copy_restriction_note": "No upstream code copied. Requires compatible Termux signatures and review of Android shortcut execution permissions.",
       "source": "GitHub-first follow-up from Termux:API; upstream sources and releases reviewed 2026-10-20"
+    },
+    {
+      "name": "Glasgow Interface Explorer",
+      "repository": "https://github.com/GlasgowEmbedded/glasgow",
+      "owner": "GlasgowEmbedded",
+      "category": [
+        "embedded-hardware",
+        "fpga-gateware",
+        "protocol-analysis",
+        "electronics-instrumentation",
+        "python"
+      ],
+      "evidence": "PROMISING",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "0BSD OR Apache-2.0 (software; per-file exceptions possible)",
+      "license_copy_status": "review-hardware-firmware-vendor-submodule-licenses",
+      "platforms": [
+        "Python 3.13–3.15 host",
+        "Glasgow FPGA hardware",
+        "Amaranth HDL"
+      ],
+      "useful_components": [
+        "software/glasgow/gateware/: SPI/I2C/UART/JTAG/SWD/QSPI gateware",
+        "software/glasgow/protocol/sfdp.py: JEDEC SFDP parser",
+        "software/glasgow/protocol/: ONFI, SVF, BSDL, GDB remote and YMODEM",
+        "software/glasgow/applet/interface/: interface applets",
+        "software/tests/gateware/: simulation tests",
+        "hardware/boards/glasgow/: board designs",
+        "firmware/: USB firmware"
+      ],
+      "verification": [
+        "2026-10-20: upstream manifest, licenses, source/test trees, CI workflow and commits inspected",
+        "2026-10-20: upstream main CI run 39421095221 completed successfully at 640848a9",
+        "No local Python test, gateware synthesis, flashing, hardware measurements or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "No source copied; per-file hardware, firmware and submodule licenses need review. Package is alpha; no GitHub Releases observed.",
+      "source": "GitHub-first; research/2026-10-08-glasgow-interface-explorer.md; 2026-10-20 upstream CI review"
+    },
+    {
+      "name": "ArchiveBox",
+      "repository": "https://github.com/ArchiveBox/ArchiveBox",
+      "owner": "ArchiveBox",
+      "category": [
+        "web-archiving",
+        "digital-preservation",
+        "self-hosting",
+        "capture-orchestration",
+        "offline-archives"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE, Nick Sweeting 2026)",
+      "license_copy_status": "mit-attribution-external-tool-plugin-licenses-separate",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Docker",
+        "Python 3.13+",
+        "self-hosted web/CLI"
+      ],
+      "useful_components": [
+        "archivebox/cli/: command-line capture",
+        "archivebox/api/: API",
+        "archivebox/crawls/: crawl lifecycle",
+        "archivebox/personas/: browser sessions",
+        "archivebox/mcp/: integration",
+        "archivebox/plugins/: plugin integration",
+        "archivebox/tests/: tests",
+        "ArchiveBox/abx-dl: separate capture runtime (related upstream)"
+      ],
+      "verification": [
+        "2026-10-20: README, license, Python manifest, source tree, release notes, CI metadata and commits inspected",
+        "v0.9.73 non-prerelease published 2026-10-06; dev 0.9.74rc327 on 2026-10-20",
+        "2026-10-20: upstream CI succeeded on commit 11e6dd31; no local install, live capture or security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "No source copied. External browsers, yt-dlp, wget, plugins and captured content have separate licenses/rights; untrusted replay and cookies require isolation.",
+      "source": "GitHub-first; research/2026-09-02-archivebox-self-hosted-web-preservation-runtime.md; 2026-10-20 release correction"
     }
   ],
   "deferred_or_rejected": [

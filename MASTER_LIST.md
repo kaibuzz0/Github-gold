@@ -934,6 +934,47 @@ Suggested tiers:
 - **Research notes:** No upstream code copied.
 
 
+### Glasgow Interface Explorer
+
+- **Repository:** https://github.com/GlasgowEmbedded/glasgow
+- **Author / Org:** GlasgowEmbedded contributors
+- **Category:** Open hardware / FPGA gateware / protocol instrumentation / Python
+- **Evidence:** PROMISING — inspected implementation, tests and passing upstream CI; no device execution
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 4, Reusability 5, Novelty 5, Documentation 4, Maintenance 4)
+- **What it does:** USB-connected programmable interface explorer with Python host, FPGA gateware, firmware and protocol applets.
+- **Why it is valuable:** Reusable protocol parsers, Amaranth gateware blocks and hardware-debugging workflows.
+- **Useful code/components:** `software/glasgow/gateware/` (SPI, I2C, UART, JTAG, SWD, QSPI); `software/glasgow/protocol/sfdp.py` (JEDEC SFDP); `software/glasgow/applet/interface/`; `software/tests/gateware/`; `hardware/boards/glasgow/`; `firmware/`.
+- **Install / runtime:** Python >=3.13,<3.16, PDM, Amaranth, libusb, optional YoWASP; Glasgow board needed for physical measurements.
+- **Platforms:** Python host and Glasgow hardware.
+- **License:** 0BSD OR Apache-2.0 for software; inspect firmware, hardware, vendor and submodule notices separately.
+- **Maintenance signals:** 2026-10-20 commit `640848a9`; main-branch CI run `39421095221` succeeded; no GitHub Releases found; package declares alpha.
+- **Verification performed:** Source, manifest, licenses, test tree, CI workflow and successful CI run inspected. No independent synthesis, tests or hardware measurements.
+- **Source discovery:** GitHub-first; `research/2026-10-08-glasgow-interface-explorer.md`, refreshed 2026-10-20.
+- **Related projects:** Amaranth HDL, YoWASP, libusb, flashrom (comparative lead).
+- **Caveats / risks:** Hardware electrical limits; alpha applets; SFDP parser limited to base JESD216/JESD216A; lint omitted from required CI aggregate.
+- **Research notes:** No source copied; upstream CI success is not physical device verification.
+
+### ArchiveBox
+
+- **Repository:** https://github.com/ArchiveBox/ArchiveBox
+- **Author / Org:** ArchiveBox / Nick Sweeting
+- **Category:** Web archiving / digital preservation / self-hosting / capture orchestration
+- **Evidence:** VERIFIED — upstream release, source, tests and passing CI; not independently deployed
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
+- **What it does:** Self-hosted capture platform preserving URLs as HTML, screenshots, PDF, WARC, media and metadata through CLI, web UI and API.
+- **Why it is valuable:** Local ownership of durable archives and reusable heterogeneous capture pipelines.
+- **Useful code/components:** `archivebox/cli/`, `archivebox/api/`, `archivebox/crawls/`, `archivebox/personas/`, `archivebox/mcp/`, `archivebox/plugins/`, `archivebox/tests/`; companion `ArchiveBox/abx-dl`.
+- **Install / runtime:** Docker Compose or Python >=3.13 / uv; external Chromium, wget, yt-dlp and other tools.
+- **Platforms:** Linux, macOS, Docker, self-hosted web/CLI.
+- **License:** MIT root; third-party capture tools/plugins and archived content have separate licensing.
+- **Maintenance signals:** Non-prerelease v0.9.73 published 2026-10-06; dev at 0.9.74rc327 on 2026-10-20; upstream CI success at `11e6dd31`.
+- **Verification performed:** README, license, manifest, module tree, release notes, commits and successful CI metadata inspected. No independent capture or security testing.
+- **Source discovery:** GitHub-first; `research/2026-09-02-archivebox-self-hosted-web-preservation-runtime.md`, refreshed 2026-10-20.
+- **Related projects:** ArchiveBox/abx-dl, browser extension, Chromium, wget, yt-dlp, WARC.
+- **Caveats / risks:** Prior v0.7.4 stable snapshot is outdated; untrusted page replay, downloads and authenticated browser cookies need isolation.
+- **Research notes:** No third-party source copied. Distinguish non-prerelease v0.9.73 from newer development release candidates.
+
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
