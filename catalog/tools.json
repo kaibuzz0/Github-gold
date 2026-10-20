@@ -1983,6 +1983,104 @@
       "research_priority": "high",
       "copy_restriction_note": "Preserve MIT notice and review dependency and companion app GPLv3 requirements. No source copied.",
       "source": "GitHub-first research; research/2026-09-08-termux-api-package-shell-android-bridge-runtime.md; research/2026-10-19-termux-api-bridge-release-and-components.md"
+    },
+    {
+      "name": "MeshCore",
+      "repository": "https://github.com/meshcore-dev/MeshCore",
+      "owner": "meshcore-dev",
+      "category": [
+        "lora",
+        "mesh-networking",
+        "embedded-firmware",
+        "packet-routing",
+        "off-grid-communications"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 5
+      },
+      "license": "MIT (root license.txt; review dependencies separately)",
+      "license_copy_status": "mit-attribution-review-dependencies",
+      "platforms": [
+        "ESP32",
+        "nRF52",
+        "RP2040",
+        "selected STM32",
+        "PlatformIO"
+      ],
+      "useful_components": [
+        "src/ and include/: routing and packet core",
+        "examples/companion_radio/: host-radio bridge",
+        "examples/kiss_modem/ and docs/kiss_modem_protocol.md: KISS serial interface",
+        "examples/simple_repeater/ and simple_room_server/: forwarding and room server",
+        "examples/simple_secure_chat/ and simple_sensor/: application examples",
+        "test/test_routing_policy/, test/test_kiss_modem/, test/test_mesh_tables/: native tests",
+        ".github/workflows/run-unit-tests.yml and pr-build-check.yml: CI configuration"
+      ],
+      "verification": [
+        "2026-10-20: inspected README, license, source tree, examples, tests, workflows and releases",
+        "Upstream v1.18.0 companion, repeater and room-server releases published 2026-10-15 with numerous board artifacts",
+        "Upstream native unit tests and board builds passed on a 2026-10-19 feature branch; many other PR runs require action",
+        "No independent compilation, tests, flashing, RF measurements or security assessment"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "No upstream code copied. Review firmware security configuration, dependencies, board support and regional RF restrictions.",
+      "source": "GitHub-first; research/2026-09-20-meshcore-lightweight-packet-radio-mesh.md; upstream v1.18.0 release and CI review on 2026-10-20"
+    },
+    {
+      "name": "Termux:Widget",
+      "repository": "https://github.com/termux/termux-widget",
+      "owner": "termux",
+      "category": [
+        "android",
+        "termux",
+        "launcher-widgets",
+        "shortcuts",
+        "mobile-automation"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 24,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 3
+      },
+      "license": "GPLv3-only (root LICENSE.md)",
+      "license_copy_status": "review-gplv3-and-dependencies",
+      "platforms": [
+        "Android",
+        "Termux"
+      ],
+      "useful_components": [
+        "app/src/main/java/com/termux/widget/utils/ShortcutUtils.java: script discovery",
+        "app/src/main/java/com/termux/widget/ShortcutFile.java: shortcut intents",
+        "app/src/main/java/com/termux/widget/TermuxWidgetProvider.java: execution dispatch",
+        "app/src/main/java/com/termux/widget/TermuxLaunchShortcutActivity.java: launcher bridge",
+        "app/src/main/java/com/termux/widget/TermuxWidgetService.java: widget list service",
+        "app/src/main/AndroidManifest.xml: Android component declarations"
+      ],
+      "verification": [
+        "2026-10-20: inspected upstream README, GPLv3-only license, manifest, source, workflow and releases",
+        "Upstream v0.15.0 released 2025-09-02; 2026-01-21 build fix",
+        "Upstream scheduled default-branch build succeeded 2026-09-01",
+        "No independent APK build, Android execution or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "medium",
+      "copy_restriction_note": "No upstream code copied. Requires compatible Termux signatures and review of Android shortcut execution permissions.",
+      "source": "GitHub-first follow-up from Termux:API; upstream sources and releases reviewed 2026-10-20"
     }
   ],
   "deferred_or_rejected": [

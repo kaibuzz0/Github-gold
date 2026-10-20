@@ -892,6 +892,48 @@ Suggested tiers:
 - **Caveats / risks:** No repository-local CI/test matrix established; Android background restrictions and IPC lifecycle require device testing. Preserve MIT notice and review companion licensing.
 - **Research notes:** Updates earlier v0.59.1 maintenance snapshot; Gold score raised from 22 to 23 based on current release evidence. No upstream code copied.
 
+
+### MeshCore
+
+- **Repository:** https://github.com/meshcore-dev/MeshCore
+- **Author / Org:** meshcore-dev; MIT notice credits Scott Powell / rippleradios.com
+- **Category:** LoRa / off-grid mesh / embedded C++ firmware
+- **Evidence:** VERIFIED — upstream source, release and test evidence; no independent execution
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 4, Maintenance 5)
+- **What it does:** Lightweight multi-hop packet-routing stack with companion-radio, repeater, room-server and sensor firmware.
+- **Why it is valuable:** Reusable routing and serial interoperability components, published firmware artifacts and native tests.
+- **Useful code/components:** `src/`, `include/`; `examples/companion_radio/`, `kiss_modem/`, `simple_repeater/`, `simple_room_server/`, `simple_secure_chat/`, `simple_sensor/`; `docs/kiss_modem_protocol.md`, `docs/companion_protocol.md`; `test/test_routing_policy/`, `test/test_kiss_modem/`, `test/test_mesh_tables/`.
+- **Install / runtime:** PlatformIO/C++ or upstream firmware artifacts; compatible radio board.
+- **Platforms:** Selected ESP32, nRF52, RP2040 and STM32 devices.
+- **License:** MIT root; retain attribution and review third-party dependencies.
+- **Maintenance signals:** Companion/repeater/room-server v1.18.0 releases dated 2026-10-15; native tests and board-build workflows, with successful feature-branch checks on 2026-10-19.
+- **Verification performed:** Inspected source layout, README, license, workflows, test directories, release artifacts and commits; no independent build, RF test or security audit. Several newer PR checks required action.
+- **Source discovery:** GitHub-first; `research/2026-09-20-meshcore-lightweight-packet-radio-mesh.md`; 2026-10-20 upstream release refresh.
+- **Related projects:** Meshtastic, Reticulum, RadioLib, meshcore-dev/meshcore.js.
+- **Caveats / risks:** Check firmware security configuration, licensing of dependencies, board support and regional RF rules; release artifacts alone do not establish field reliability.
+- **Research notes:** No upstream code copied.
+
+### Termux:Widget
+
+- **Repository:** https://github.com/termux/termux-widget
+- **Author / Org:** Termux
+- **Category:** Android / Termux / launcher widgets / script shortcuts
+- **Evidence:** PROMISING — source and build evidence; not independently executed
+- **Tier / Score:** A / 24 (Utility 5, Working Evidence 3, Reusability 5, Novelty 3, Documentation 5, Maintenance 3)
+- **What it does:** Launches user-controlled Termux scripts through Android widgets and launcher shortcuts.
+- **Why it is valuable:** Reusable script discovery, shortcut creation and Android-to-Termux execution patterns.
+- **Useful code/components:** `ShortcutUtils.java`, `ShortcutFile.java`, `TermuxWidgetProvider.java`, `TermuxLaunchShortcutActivity.java`, `TermuxWidgetService.java`, `AndroidManifest.xml`.
+- **Install / runtime:** Termux and plugin signed with compatible keys; scripts in `~/.shortcuts/` and tasks in `~/.shortcuts/tasks/`.
+- **Platforms:** Android / Termux.
+- **License:** GPLv3-only (`LICENSE.md`); review dependencies.
+- **Maintenance signals:** v0.15.0 released 2025-09-02; January 2026 build fix; upstream scheduled APK build passed 2026-09-01.
+- **Verification performed:** Inspected README, source, manifest, license, release and workflow; no independent build, installation or security audit.
+- **Source discovery:** GitHub-first from Termux:API; primary-source review 2026-10-20.
+- **Related projects:** termux/termux-app, termux/termux-api, termux/termux-boot.
+- **Caveats / risks:** Launcher permissions and shortcut handling need device-level validation; background execution and signing compatibility vary.
+- **Research notes:** No upstream code copied.
+
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
