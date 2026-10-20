@@ -2231,6 +2231,59 @@
       "research_priority": "high",
       "copy_restriction_note": "No third-party code copied. Root MIT license does not relicense abx-plugins, abxpkg, abxbus, browsers, downloaders, other plugins, or captured material; inspect per-component rights.",
       "source": "GitHub-first recursive lead from ArchiveBox; research/2026-10-20-abx-dl-framework-independent-capture-runtime.md"
+    },
+    {
+      "name": "abxbus",
+      "repository": "https://github.com/ArchiveBox/abxbus",
+      "owner": "ArchiveBox",
+      "category": [
+        "event-driven-automation",
+        "async-runtime",
+        "cross-language-ipc",
+        "python",
+        "typescript",
+        "rust",
+        "go"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE; ArchiveBox contributors 2026)",
+      "license_copy_status": "mit-attribution-required; review dependencies separately",
+      "platforms": [
+        "Python >=3.11",
+        "TypeScript Node/browser",
+        "Rust",
+        "Go >=1.25"
+      ],
+      "useful_components": [
+        "abxbus/event_bus.py: dispatch, context propagation and middleware",
+        "abxbus/base_event.py: typed event/result schemas",
+        "abxbus/lock_manager.py: reentrant async locks",
+        "abxbus/event_history.py: bounded history and ancestry",
+        "abxbus/bridge_jsonl.py: append/poll bridge",
+        "abxbus/bridge_redis.py, bridge_nats.py, bridge_postgres.py, bridge_sqlite.py: optional transports",
+        "abxbus-ts/src/EventBus.ts, abxbus-rust/src/event_bus.rs, abxbus-go/event_bus.go: multi-language runtimes",
+        "tests/test_cross_runtime_roundtrip.py and language-specific test suites"
+      ],
+      "verification": [
+        "2026-10-20: inspected upstream README, MIT LICENSE, Python/TS/Rust/Go manifests, event bus/bridge/lock/history implementations and tests",
+        "v2.5.77 released 2026-10-09; main CI 37981912198 succeeded with 120/120 jobs successful across Python, TS, Rust, Go and artifact smoke tests; docs workflow 39406555390 succeeded 2026-10-20",
+        "2026-10-12 experimental rust-core-ffi PR CI 38198182954 failed; not a main-branch failure",
+        "No independent build, install, test execution, performance measurement or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "No source copied. In-memory events and JSONL polling are not a durable exactly-once message queue; inspect optional bridge security and licenses.",
+      "source": "GitHub-first via ArchiveBox/abx-dl; research/2026-10-20-abxbus-cross-runtime-event-bus.md"
     }
   ],
   "deferred_or_rejected": [

@@ -996,6 +996,26 @@ Suggested tiers:
 - **Research notes:** The runtime is separate from ArchiveBox's Django UI/database. Upstream CI is not independent GitHub Gold testing. No third-party code copied.
 
 
+### abxbus
+
+- **Repository:** https://github.com/ArchiveBox/abxbus
+- **Author / Org:** ArchiveBox / Nick Sweeting and contributors
+- **Category:** Async event bus / cross-language automation / event-driven runtimes
+- **Evidence:** VERIFIED — upstream release, source, tests and successful main CI; not independently executed
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
+- **What it does:** Typed asynchronous event dispatch with nested event tracking, timeouts, concurrency controls and Python, TypeScript, Rust and Go implementations.
+- **Why it is valuable:** Reusable event orchestration, structured results, cross-runtime contracts and optional IPC bridges independent of ArchiveBox.
+- **Useful code/components:** `abxbus/event_bus.py`, `base_event.py`, `lock_manager.py`, `event_history.py`, `bridge_jsonl.py`, optional `bridge_{redis,nats,postgres,sqlite}.py`, `abxbus-ts/src/EventBus.ts`, `abxbus-rust/src/event_bus.rs`, `abxbus-go/event_bus.go`, cross-runtime tests.
+- **Install / runtime:** Python >=3.11 (pip/uv); TypeScript Node/browser; Rust crate; Go >=1.25; optional backend extras.
+- **Platforms:** Python, TypeScript Node/browser, Rust, Go.
+- **License:** MIT root; review individual dependencies and optional transports.
+- **Maintenance signals:** v2.5.77 released 2026-10-09; main CI run 37981912198 passed 120/120 jobs; docs CI passed 2026-10-20.
+- **Verification performed:** README, license, source, tests, manifests, release and CI inspected. No independent build or execution.
+- **Source discovery:** GitHub-first recursive lead from ArchiveBox/abx-dl.
+- **Related projects:** ArchiveBox/abx-dl, ArchiveBox/abx-plugins, ArchiveBox/abxpkg, browser-use/bubus (historical origin).
+- **Caveats / risks:** In-memory events are not durable by default; JSONL polling is not a transactional queue. Bridge reliability and cancellation require integration tests. Experimental `rust-core-ffi` branch CI failed 2026-10-12, distinct from passing main.
+- **Research notes:** `research/2026-10-20-abxbus-cross-runtime-event-bus.md`. No upstream source copied.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
