@@ -311,19 +311,19 @@ Suggested tiers:
 - **Author / Org:** Organic Maps
 - **Category:** offline maps / navigation / OpenStreetMap / privacy / mobile
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 5, Documentation 5, Maintenance 4)
 - **What it does:** Privacy-focused offline navigation using downloadable OpenStreetMap-derived maps, routing, search, bookmarks/tracks, and elevation-related data.
 - **Why it is valuable:** Strong offline-first architecture spanning map generation, compact local map storage, rendering, routing, geocoding/search, and mobile navigation without a required cloud backend.
-- **Useful code/components:** offline map storage/rendering; routing engine; offline geocoding/search; OpenStreetMap ingestion; map update pipeline; KML/KMZ/GPX/GeoJSON import-export; elevation and contour support.
+- **Useful code/components:** `libs/routing/`, `libs/search/`, `libs/storage/`, `libs/mwm_diff/`, `libs/kml/`, `generator/`, `android/`, `iphone/`
 - **Install / runtime:** Native Android/iOS applications with repository build tooling and map-generation infrastructure.
 - **Platforms:** Android, iOS, desktop/build tooling.
 - **License:** Apache-2.0 for code; binary map/data artifacts use a separate license.
-- **Maintenance signals:** Same-day development activity was inspected during the research pass.
-- **Verification performed:** README, commit history, and code/data license boundary inspected. No navigation field test performed by GitHub Gold.
+- **Maintenance signals:** Android release 2026.09.29-32-android (2026-09-29); master Android/iOS navigation updates 2026-10-21; main Android Check, Android Beta, iOS Check, CMake and translation workflows succeeded 2026-10-21. One feature-branch Android Check failed; this is not a main-branch failure.
+- **Verification performed:** 2026-10-21 upstream release, code tree, license and CI reviewed. Source is Apache-2.0; binary map/data use separate DATA_LICENSE.txt including ODbL/CC BY-SA upstream terms. No on-device navigation, route accuracy, or map-generation test.
 - **Source discovery:** Offline/resilient systems pass.
 - **Related projects:** OpenStreetMap ecosystem; map-generation and routing tooling.
 - **Caveats / risks:** Treat code and generated map/data licensing separately; do not assume Apache-2.0 covers binary map artifacts.
-- **Research notes:** Excellent reference for fully offline mobile mapping and routing pipelines.
+- **Research notes:** `research/2026-10-21-organicmaps-kopia-age-maintenance.md`. Source is Apache-2.0; binary map/data use separate DATA_LICENSE.txt including ODbL/CC BY-SA upstream terms. No on-device navigation, route accuracy, or map-generation test.
 
 ### Kopia
 
@@ -331,19 +331,19 @@ Suggested tiers:
 - **Author / Org:** Kopia
 - **Category:** backup / encrypted snapshots / deduplication / storage abstraction / self-hosting
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
 - **What it does:** Encrypted, compressed, deduplicated snapshot backup system with local, cloud, network, and repository-server modes plus CLI and GUI clients.
 - **Why it is valuable:** Combines content-addressed encrypted repositories, multiple storage backends, snapshot policy, error correction, and a server mode in a composable Go codebase.
-- **Useful code/components:** encrypted snapshot repository; deduplication; compression; error correction; repository server; S3/Azure/B2/GCS/WebDAV/SFTP/local backends; rclone integration; CLI and GUI.
+- **Useful code/components:** `repo/content/`, `repo/blob/`, `repo/encryption/`, `repo/compression/`, `repo/ecc/`, `repo/splitter/`, `snapshot/`, `cli/`, `repo/api_server_repository.go`
 - **Install / runtime:** Native binaries/packages and container/server workflows documented upstream.
 - **Platforms:** Linux, Windows, macOS and Go/Electron-supported environments.
 - **License:** Apache-2.0.
-- **Maintenance signals:** Recent maintenance included dependency and CodeQL updates during the August 2026 research pass.
-- **Verification performed:** README, root Apache-2.0 license, and recent commits inspected. No backup/restore cycle executed by GitHub Gold.
+- **Maintenance signals:** v0.23.1 (2026-06-16) fixes a rare epoch-compaction index race that may cause data loss (#5371); upstream recommends upgrade. 2026-10-21 master stress/endurance workflows succeeded. Providers - Core workflow failed: Azure PIT tests got nil version IDs; S3 MinIO integration tests could not pull minio/minio Docker image.
+- **Verification performed:** 2026-10-21 upstream release, code tree, license and CI reviewed. Root license Apache-2.0. No independently performed backup/restore or regression test. Provider CI is not all green; check Azure versioning and MinIO test infrastructure.
 - **Source discovery:** Offline/resilient systems pass.
 - **Related projects:** rclone; cloud/object-storage backends; snapshot/backup ecosystems.
 - **Caveats / risks:** Operational confidence requires restore testing and repository verification; dependency/backend behavior varies by deployment.
-- **Research notes:** Strong complement to restic, especially for repository-server and policy architecture study.
+- **Research notes:** `research/2026-10-21-organicmaps-kopia-age-maintenance.md`. Root license Apache-2.0. No independently performed backup/restore or regression test. Provider CI is not all green; check Azure versioning and MinIO test infrastructure.
 
 ### Reticulum Network Stack
 
@@ -551,19 +551,19 @@ Suggested tiers:
 - **Author / Org:** Filippo Valsorda and contributors
 - **Category:** File encryption / Go cryptography / CLI / interoperability
 - **Evidence:** VERIFIED (upstream evidence; not independently executed)
-- **Tier / Score:** S / 27 (provisional; Utility + Working Evidence + Reusability + Novelty + Documentation + Maintenance = 5+4+5+4+5+4)
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
 - **What it does:** Interoperable encrypted-file format, Go library and command-line tools supporting recipients, identities, passphrases, plugins and hybrid post-quantum options.
 - **Why it is valuable:** Small composable encryption interfaces, documented format and independent implementations enable secure file-exchange applications.
-- **Useful code/components:** `age.go` Go API; `x25519.go` key recipients; `scrypt.go` passphrases; `pq.go` hybrid post-quantum support; `plugin/` extensions; `cmd/age/`, `cmd/age-keygen/`, `cmd/age-inspect/` tools; `age_test.go` tests.
+- **Useful code/components:** `age.go`, `x25519.go`, `scrypt.go`, `pq.go`, `plugin/`, `cmd/age/`, `cmd/age-keygen/`, `cmd/age-inspect/`, `age_test.go`
 - **Install / runtime:** Prebuilt CLI or Go module `filippo.io/age`; source go.mod specifies Go 1.25 and toolchain Go 1.27.
 - **Platforms:** Linux, macOS, Windows, BSD.
 - **License:** BSD 3-Clause-style; inspect dependency and component terms before copying.
-- **Maintenance signals:** Upstream v1.3.2 published 2026-08-29; test, build and interoperability workflows; release parser hardening.
-- **Verification performed:** README and BSD-3-Clause-style root LICENSE inspected; age.go, cmd directory, go.mod, test files and CI workflows inspected; v1.3.2 upstream release published 2026-08-29 inspected; No independent build, interoperability test or security audit.
+- **Maintenance signals:** v1.3.2 (2026-08-29) adds parser/input hardening and new binary/platform coverage. Main Go tests passed 2026-10-21; earlier main tests failed October 10–12, with later successful runs. Feature-branch checks are not counted as main evidence.
+- **Verification performed:** 2026-10-21 upstream release, code tree, license and CI reviewed. Root BSD 3-Clause-style license requires notices; plugin/dependency terms vary. No independent cryptographic audit, interoperability, fuzzing, CLI encryption or decryption test.
 - **Source discovery:** GitHub-first; research/2026-08-21-file-encryption.md
 - **Related projects:** str4d/rage; FiloSottile/typage; str4d/age-plugin-yubikey; age C2SP format.
 - **Caveats / risks:** Catalog inclusion is not a cryptographic audit. Plugins and dependencies require separate review. v1.3.2 rejects some formerly accepted malformed or oversized inputs.
-- **Research notes:** Promoted from READY queue on 2026-10-14. No upstream code copied.
+- **Research notes:** `research/2026-10-21-organicmaps-kopia-age-maintenance.md`. Root BSD 3-Clause-style license requires notices; plugin/dependency terms vary. No independent cryptographic audit, interoperability, fuzzing, CLI encryption or decryption test.
 
 ### Tailscale
 
