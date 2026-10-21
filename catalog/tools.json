@@ -262,10 +262,21 @@
         "README inspected",
         "root Apache-2.0 LICENSE inspected",
         "build documentation inspected",
-        "recent commits inspected"
+        "recent commits inspected",
+        "Upstream stable v1.18.2 published 2026-08-21; prior master-list 2026-08-17 observation was not the release publication date",
+        "Upstream main CI run 38703786899 on 2026-10-15: test, packaging, rust, format all succeeded",
+        "App Flutter network/server providers, Rust CLI/server, package core and Apache-2.0 LICENSE inspected 2026-10-20; no independent transfer/security test"
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      }
     },
     {
       "name": "scrcpy",
@@ -555,10 +566,21 @@
         "README inspected",
         "BSD-2-Clause license declaration inspected",
         "backend and design documentation inspected",
-        "recent dependency-maintenance commits inspected"
+        "recent dependency-maintenance commits inspected",
+        "Stable v0.19.1 published 2026-07-05; source trees internal/repository, internal/backend, internal/archiver and internal/restorer inspected 2026-10-20",
+        "Upstream master test run 39135808574 failed 2026-10-18: Swift cloud-backend authentication TLS certificate expired 2026-10-01 (from job 117699961719 logs); do not mark aggregate CI green",
+        "Same run: Linux Go 1.26, macOS Go 1.27, cross-compilation, lint and Docker succeeded; no independent backup/restore or crypto audit"
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      }
     },
     {
       "name": "Organic Maps",

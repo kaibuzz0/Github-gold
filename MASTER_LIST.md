@@ -151,15 +151,15 @@ Suggested tiers:
 - **Author / Org:** LocalSend
 - **Category:** local-first / offline file transfer / cross-platform / privacy
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
 - **What it does:** Cross-platform LAN file/message transfer without cloud infrastructure or internet access.
 - **Why it is valuable:** Mature serverless local workflow spanning Android, iOS, macOS, Windows, Linux, and Fire OS with a documented protocol.
 - **Useful code/components:** peer discovery; HTTPS certificate generation; REST transfer flow; file/message transfer; portable configuration; packaging; companion protocol spec.
 - **Install / runtime:** Distributed through major package channels; source build uses Flutter/Rust and platform tooling.
 - **Platforms:** Android, iOS, macOS, Windows, Linux, Fire OS.
 - **License:** Apache-2.0.
-- **Maintenance signals:** Same-day activity observed 2026-08-19; release 1.18.2 observed 2026-08-17.
-- **Verification performed:** README, license, build docs, protocol description, and recent history inspected. No transfer test performed by GitHub Gold.
+- **Maintenance signals:** Stable v1.18.2 published 2026-08-21 (correcting earlier 2026-08-17 date); main-branch CI 38703786899 passed all four jobs on 2026-10-15 (test, packaging, rust, format).
+- **Verification performed:** README, Apache-2.0 license, Flutter/Rust project trees, network providers, release assets and upstream CI inspected 2026-10-20. Upstream v1.17.0 notes a path-traversal fix; v1.18.2 includes compatibility/security fixes. No transfer test or independent security audit performed.
 - **Source discovery:** Local-first/offline software pass.
 - **Related projects:** localsend/protocol; localsend/web; community protocol implementations.
 - **Caveats / risks:** LAN firewall/router/AP isolation can affect discovery and transfer.
@@ -291,15 +291,15 @@ Suggested tiers:
 - **Author / Org:** restic
 - **Category:** backup / encrypted storage / deduplication / snapshots / data integrity
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5)
 - **What it does:** Fast, efficient, encrypted backup software designed around verifiability, untrusted storage backends, deduplication, snapshots, restore, and reproducible builds.
 - **Why it is valuable:** Provides a compact reference architecture for secure content-addressed backup repositories, incremental snapshots, repository verification, and portable storage-backend integration.
 - **Useful code/components:** encrypted repository format; deduplication; snapshots; restore; FUSE browsing; repository verification; SFTP/REST/S3/B2/Azure/GCS backends; rclone integration; reproducible build pipeline.
 - **Install / runtime:** Native binaries/packages across major desktop/server OSes; documented CLI workflow and backend setup.
 - **Platforms:** Linux, Windows, macOS, FreeBSD, OpenBSD.
 - **License:** BSD-2-Clause.
-- **Maintenance signals:** Dependency and CI maintenance observed through 2026-08-01; README exposes active test workflow and reproducible-build documentation.
-- **Verification performed:** README, license declaration, backend list, design principles, reproducible-build notes, and recent maintenance commits inspected. No backup/restore cycle executed by GitHub Gold.
+- **Maintenance signals:** Stable v0.19.1 published 2026-07-05; master CI on 2026-10-18 failed in the Swift cloud-backend test because the remote authentication endpoint's TLS certificate expired 2026-10-01. Linux Go 1.26, macOS Go 1.27, cross-compiles, lint and Docker jobs passed; the red aggregate must not be reported as passing.
+- **Verification performed:** README, BSD-2-Clause license, internal/repository, internal/archiver, internal/restorer and backend trees, release and failing CI job logs inspected 2026-10-20. Failure appears external to core backup logic but is not resolved. No independent backup/restore or repository integrity test executed.
 - **Source discovery:** Independent resilient-data/backup pass.
 - **Related projects:** restic/rest-server; restic/builder; rclone; S3-compatible storage systems.
 - **Caveats / risks:** Password loss makes encrypted repositories unrecoverable by design; backup quality depends on actually testing restores and repository checks.
