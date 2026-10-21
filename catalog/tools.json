@@ -116,10 +116,21 @@
       ],
       "verification": [
         "official README inspected",
-        "COPYING inspected"
+        "COPYING inspected",
+        "2026-10-21 inspected README, COPYING, scripts/pkg.in, scripts/termux-change-repo.in, source layout, release, commit and CI workflow; no independent Android device testing."
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "maintenance_signals": "Stable v1.48.0 released 2025-11-29; latest inspected master commit 05c857ee (2026-10-16) adds South American mirror. Upstream build CI 38838597990 passed its single Autotools build/install job (2026-10-16); mirror-update workflow success is not software test evidence.",
+      "research_notes": "research/2026-10-21-termux-esptool-reticulum-maintenance.md"
     },
     {
       "name": "termux-adb",
@@ -757,7 +768,7 @@
       ],
       "evidence": "VERIFIED",
       "tier": "A",
-      "score": 25,
+      "score": 24,
       "license": "Custom Reticulum License; protocol stated upstream as public domain",
       "license_copy_status": "custom-restricted-license-review-required-before-code-reuse",
       "platforms": [
@@ -791,11 +802,22 @@
         "README inspected",
         "custom LICENSE inspected",
         "installation and interface documentation inspected",
-        "recent commits inspected"
+        "recent commits inspected",
+        "2026-10-21 inspected README, custom LICENSE, MIRROR.md, setup.py, interface and test trees, release and CI; no independent live network, radio or cryptographic tests."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "copy_restriction_note": "Custom license contains restrictions beyond standard permissive/copyleft OSS; review exact terms before any code reuse."
+      "copy_restriction_note": "Custom Reticulum License prohibits harmful systems and AI/ML training datasets; not OSI-standard. Do not copy/adapt without legal review or permission. Public-domain protocol claim does not replace source license; upstream support withdrawn.",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 3,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 2
+      },
+      "maintenance_signals": "Stable 1.5.5 released 2026-09-29; latest inspected master mirror commit e40191b (2026-09-30). Upstream CI 36723645574 passed `make test` (one job); tag-only packaging skipped. `MIRROR.md` says this is a public mirror, development elsewhere, no public support/issue responses and no predictable update schedule; maintenance score lowered.",
+      "research_notes": "research/2026-10-21-termux-esptool-reticulum-maintenance.md"
     },
     {
       "name": "Espressif esptool",
@@ -830,10 +852,21 @@
         "official README inspected",
         "GPL license inspected",
         "recent commits inspected",
-        "CI signals inspected"
+        "CI signals inspected",
+        "2026-10-21 inspected README, LICENSE, pyproject.toml, loader/image source, commits, release and CI; no independent flash, provisioning or runtime test."
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "maintenance_signals": "Stable v5.6.0 released 2026-10-15. Master commit 93477ace (2026-10-20) adds --encrypt-files alignment validation, not necessarily in v5.6.0. Upstream CI 39435542641 passed 7/7 host test/stub-check jobs (Python 3.10-3.15); build CI 39435542027 passed six platform builds, release step skipped.",
+      "research_notes": "research/2026-10-21-termux-esptool-reticulum-maintenance.md"
     },
     {
       "name": "App Manager",

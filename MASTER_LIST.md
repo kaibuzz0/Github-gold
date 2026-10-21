@@ -71,19 +71,19 @@ Suggested tiers:
 - **Author / Org:** Termux
 - **Category:** Android / Termux / shell utilities / package infrastructure
 - **Evidence:** VERIFIED
-- **Tier / Score:** A / 25
+- **Tier / Score:** A / 25 (Utility 5, Working Evidence 4, Reusability 5, Novelty 3, Documentation 4, Maintenance 4)
 - **What it does:** Official scripts and small programs shipped in Termux's core `termux-tools` package.
 - **Why it is valuable:** Upstream infrastructure and a strong reference for Android shell patterns, package tooling, mirror selection, environment setup, and compact utilities.
-- **Useful code/components:** `scripts/`; `src/`; mirror selection infrastructure; properties initialization; login/environment helpers.
+- **Useful code/components:** `scripts/pkg.in`, `scripts/termux-change-repo.in`, `scripts/termux-backup.in`, `scripts/termux-restore.in`, `scripts/termux-fix-shebang.in`, `src/cmd.c`, `mirrors/`
 - **Install / runtime:** Distributed through Termux package infrastructure; source includes build files.
 - **Platforms:** Android / Termux.
 - **License:** GPL-3.0.
-- **Maintenance signals:** Official Termux organization with active repository/issue surface.
-- **Verification performed:** Official README and COPYING inspected. No Android execution performed by GitHub Gold.
+- **Maintenance signals:** Stable v1.48.0 released 2025-11-29; latest inspected master commit 05c857ee (2026-10-16) adds South American mirror. Upstream build CI 38838597990 passed its single Autotools build/install job (2026-10-16); mirror-update workflow success is not software test evidence.
+- **Verification performed:** 2026-10-21 inspected README, COPYING, scripts/pkg.in, scripts/termux-change-repo.in, source layout, release, commit and CI workflow; no independent Android device testing.
 - **Source discovery:** Termux ecosystem pass.
 - **Related projects:** termux/termux-app; termux/termux-packages; termux/termux-api.
-- **Caveats / risks:** GPL obligations apply to covered copied/modified code.
-- **Research notes:** High-value source for future mapping of small battle-tested Android utilities.
+- **Caveats / risks:** GPL-3.0 obligations apply to copied code; Linux CI build does not verify Android runtime.
+- **Research notes:** See `research/2026-10-21-termux-esptool-reticulum-maintenance.md` for source evidence and verification boundaries.
 
 ### termux-adb
 
@@ -351,19 +351,19 @@ Suggested tiers:
 - **Author / Org:** markqvist
 - **Category:** off-grid networking / delay-tolerant networking / cryptographic routing / heterogeneous transports
 - **Evidence:** VERIFIED
-- **Tier / Score:** A / 25
+- **Tier / Score:** A / 24 (Utility 5, Working Evidence 4, Reusability 3, Novelty 5, Documentation 5, Maintenance 2)
 - **What it does:** Networking stack designed to carry encrypted communication across very-low-bandwidth and heterogeneous transports including LoRa/RNode, packet radio, serial links, TCP/UDP/IP, pipes, and custom interfaces.
 - **Why it is valuable:** Provides a transport-agnostic path-discovery and cryptographic-routing model for disconnected, intermittent, and unconventional networks rather than assuming conventional internet infrastructure.
-- **Useful code/components:** interface abstraction; path discovery/routing; cryptographic identities; link establishment; request-response API; channels/buffers; low-bandwidth transport; `rnsd`; `rnstatus`; `rnpath`; `rnprobe`; `rncp`; `rnid`; `rnsh`; `rnx`; `rngit`; `git-remote-rns`.
+- **Useful code/components:** `RNS/Interfaces/` (RNode, KISS, TCP, UDP, serial, backbone), `RNS/Transport.py`, `RNS/Link.py`, `RNS/Identity.py`, `RNS/Channel.py`, `RNS/Buffer.py`, `RNS/Resource.py`, `tests/`, `Examples/`
 - **Install / runtime:** Python 3 systems plus supported radio/network interfaces.
 - **Platforms:** Python systems, LoRa/RNode, packet radio, serial, TCP/UDP/IP, custom interfaces.
 - **License:** Custom Reticulum License; protocol is stated upstream as public domain.
-- **Maintenance signals:** Recent commits and current installation/interface documentation were inspected.
-- **Verification performed:** README, custom license, installation/interface documentation, and recent commits inspected. No live Reticulum network was run by GitHub Gold.
+- **Maintenance signals:** Stable 1.5.5 released 2026-09-29; latest inspected master mirror commit e40191b (2026-09-30). Upstream CI 36723645574 passed `make test` (one job); tag-only packaging skipped. `MIRROR.md` says this is a public mirror, development elsewhere, no public support/issue responses and no predictable update schedule; maintenance score lowered.
+- **Verification performed:** 2026-10-21 inspected README, custom LICENSE, MIRROR.md, setup.py, interface and test trees, release and CI; no independent live network, radio or cryptographic tests.
 - **Source discovery:** Offline/resilient systems pass.
 - **Related projects:** LXMF, Sideband, RNode and broader Reticulum ecosystem projects.
-- **Caveats / risks:** The custom license includes restrictions beyond standard permissive/copyleft open-source licenses. Review exact terms before any code reuse; protocol-level study is safer than assuming source-code reuse rights.
-- **Research notes:** High-value architecture reference for off-grid communication even where code reuse is constrained.
+- **Caveats / risks:** Custom Reticulum License prohibits harmful systems and AI/ML training datasets; not OSI-standard. Do not copy/adapt without legal review or permission. Public-domain protocol claim does not replace source license; upstream support withdrawn.
+- **Research notes:** See `research/2026-10-21-termux-esptool-reticulum-maintenance.md` for source evidence and verification boundaries.
 
 ### Espressif esptool
 
@@ -371,19 +371,19 @@ Suggested tiers:
 - **Author / Org:** Espressif
 - **Category:** embedded tooling / ESP32 / flashing / provisioning / serial protocol
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
 - **What it does:** Official Python tooling for communicating with Espressif ROM bootloaders and flasher stubs to identify chips, read/write/erase flash, inspect images, and perform provisioning-related operations.
 - **Why it is valuable:** Mature host-side reference implementation for Espressif serial bootloader protocols and cross-platform flashing workflows.
-- **Useful code/components:** serial bootloader protocol; chip detection; flash read/write/erase; image parsing/validation; provisioning operations; flasher stub loading; cross-platform CLI.
-- **Install / runtime:** Python-supported host systems connected to Espressif SoCs through supported serial/USB bridges.
+- **Useful code/components:** `esptool/loader.py`, `esptool/bin_image.py`, `esptool/cmds.py`, `esptool/targets/`, `espefuse/`, `espsecure/`; companion `espressif/esp-flasher-stub`
+- **Install / runtime:** Python >=3.10 on Linux/macOS/Windows, pyserial and cryptography dependencies; compatible Espressif device via USB/serial.
 - **Platforms:** Python hosts; Espressif SoCs.
 - **License:** GPL-2.0-or-later.
-- **Maintenance signals:** Recent research observed flasher-stub integration, new chip support, and active CI.
-- **Verification performed:** Official README, GPL license, CI signals, and recent commits inspected. No physical flashing test performed by GitHub Gold.
+- **Maintenance signals:** Stable v5.6.0 released 2026-10-15. Master commit 93477ace (2026-10-20) adds --encrypt-files alignment validation, not necessarily in v5.6.0. Upstream CI 39435542641 passed 7/7 host test/stub-check jobs (Python 3.10-3.15); build CI 39435542027 passed six platform builds, release step skipped.
+- **Verification performed:** 2026-10-21 inspected README, LICENSE, pyproject.toml, loader/image source, commits, release and CI; no independent flash, provisioning or runtime test.
 - **Source discovery:** Embedded/Android tooling pass.
 - **Related projects:** ESP-IDF; Espressif flasher stubs and provisioning tooling.
-- **Caveats / risks:** GPL copyleft obligations apply to covered reused code; flashing/provisioning operations can alter or erase target devices.
-- **Research notes:** Especially valuable at the protocol/image-tooling layer, not just as a command-line utility.
+- **Caveats / risks:** GPL-2.0-or-later; check bundled stub/dependency licenses. Host CI is not hardware validation; eFuse/provisioning can be irreversible.
+- **Research notes:** See `research/2026-10-21-termux-esptool-reticulum-maintenance.md` for source evidence and verification boundaries.
 
 ### App Manager
 
