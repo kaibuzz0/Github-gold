@@ -131,19 +131,19 @@ Suggested tiers:
 - **Author / Org:** OpenDroneID
 - **Category:** C library / Remote ID / protocol encoding / embedded interoperability
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 5, Documentation 4, Maintenance 4)
 - **What it does:** Core C library for packing and unpacking Open Drone ID messages defined by ASTM F3411 and ASD-STAN specifications, with MAVLink conversion and Wi-Fi reference code.
 - **Why it is valuable:** Standards-focused, portable core with compact APIs, tests, memory-reduction options, adapters, and reference broadcast code.
 - **Useful code/components:** `libopendroneid`; Basic ID/Location/Auth/Self ID/System/Operator ID encoders and decoders; `libmav2odid`; Wi-Fi reference code; unit tests; low-memory compile options.
 - **Install / runtime:** CMake build on Linux; upstream documents sample and test builds.
 - **Platforms:** Portable C / Linux / embedded downstream integrations.
 - **License:** Apache-2.0.
-- **Maintenance signals:** August 2026 protocol-validation/documentation work; README documents CI and tests.
-- **Verification performed:** README, license, public API, build/test docs, and recent history inspected. Tests not executed by GitHub Gold.
+- **Maintenance signals:** v2.0 (2022-04-06); master CMake 37671876169 succeeded 1/1 job (2026-10-07). 2026-10-07 master merged a MAVLink Basic ID cycling index fix with regression test; newer than the latest tagged release.
+- **Verification performed:** 2026-10-21 inspected README, license, source/build layout, release metadata and upstream CI. Do not assume master fixes are in v2.0; no independent packet, hardware or regulatory-conformance test.
 - **Source discovery:** OpenDroneID ecosystem follow-up.
 - **Related projects:** opendroneid/receiver-android; opendroneid/wireshark-dissector; opendroneid/transmitter-linux; ArduPilot/ArduRemoteID; peinser/esp-remoteid.
 - **Caveats / risks:** Standards and jurisdictional requirements can change.
-- **Research notes:** Strong component-level Gold; prefer standards-core reuse with required notices over reimplementation.
+- **Research notes:** research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md. Do not assume master fixes are in v2.0; no independent packet, hardware or regulatory-conformance test.
 
 ### LocalSend
 
@@ -191,19 +191,19 @@ Suggested tiers:
 - **Author / Org:** openZIM
 - **Category:** offline knowledge / archival / ZIM / CLI tools / content packaging
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
 - **What it does:** Provides command-line tooling for creating, validating, inspecting, extracting, and splitting ZIM offline-content archives used by the Kiwix/openZIM ecosystem.
 - **Why it is valuable:** It is infrastructure for turning web-style content into portable offline archives and validating those archives rather than merely a reader application.
 - **Useful code/components:** `zimcheck` validation; `zimdump` inspection/extraction; `zimsplit` chunking; `zimwriterfs` HTML-directory-to-ZIM packaging; Meson build; automated tests; official container image.
 - **Install / runtime:** Meson/Ninja build with libzim and documented dependencies; official container image also available.
 - **Platforms:** Linux and other supported Unix-like build environments; containerized deployment.
 - **License:** GPL-3.0-or-later.
-- **Maintenance signals:** Version 3.8.0 release merged 2026-08-13; additional code modernization merged 2026-08-15; README exposes CI/codecov/release signals.
-- **Verification performed:** README, build/test instructions, license declaration, and recent release/commit history inspected. GitHub Gold did not execute the tools.
+- **Maintenance signals:** 3.8.0 (2026-08-13); main CI 39216346633 succeeded 5/5 cross-platform jobs (2026-10-19). Version 3.8.0 improved zimcheck link/metadata validation, zimsplit sizing and zimwriterfs URL parsing.
+- **Verification performed:** 2026-10-21 inspected README, license, source/build layout, release metadata and upstream CI. GPL-3.0-or-later and third-party dependencies need license review; no independent archive build/validation.
 - **Source discovery:** Independent offline-knowledge/archival pass.
 - **Related projects:** openzim/libzim; Kiwix readers; kiwix/kiwix-android; kiwix/kiwix-desktop; kiwix/kiwix-js.
 - **Caveats / risks:** GPL copyleft obligations apply to covered reused code; `zimwriterfs` has multiple third-party dependencies that require separate license review.
-- **Research notes:** High-value foundation for portable offline libraries, disaster/off-grid reference collections, and archival pipelines.
+- **Research notes:** research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md. GPL-3.0-or-later and third-party dependencies need license review; no independent archive build/validation.
 
 ### ntfy
 
@@ -271,19 +271,19 @@ Suggested tiers:
 - **Author / Org:** rclone
 - **Category:** data movement / cloud storage / synchronization / filesystem abstraction
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 27
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 4, Maintenance 4)
 - **What it does:** A cross-platform command-line data-movement engine supporting a very large set of cloud, object-storage, network, and local backends plus virtual backends layered on top of them.
 - **Why it is valuable:** The backend abstraction is unusually reusable: one command surface spans S3, WebDAV, SFTP, SMB, cloud drives, object stores, local filesystems, encryption, chunking, unions, FUSE mounts, and serving protocols.
 - **Useful code/components:** storage-backend interface; `copy`, `sync`, `bisync`, and `check`; Crypt; Chunker; Union/Combine; FUSE mount; hash verification; HTTP/WebDAV/FTP/SFTP/DLNA serving; remote-control API and GUI.
 - **Install / runtime:** Native binaries/packages, Docker, or source builds; broad Go-supported platform coverage.
 - **Platforms:** Linux, Windows, macOS, BSD and other Go targets.
 - **License:** MIT.
-- **Maintenance signals:** Same-day activity observed 2026-08-19 and 2026-08-18, including GUI maintenance, transform fixes, and security-advisory documentation.
-- **Verification performed:** README, MIT license declaration, CI/build signals, recent commits, and security-advisory documentation inspected. GitHub Gold did not execute transfers.
+- **Maintenance signals:** v1.75.2 (2026-10-09); master build 39406871189 succeeded 9/9 jobs (2026-10-20). 2026-10-20 master fixes corrected S3 Last-Modified caching and rejected overflowing duration arguments.
+- **Verification performed:** 2026-10-21 inspected README, license, source/build layout, release metadata and upstream CI. Review security advisories and patched versions before exposing serving protocols; no transfer or mount test performed.
 - **Source discovery:** Independent resilient-data/data-movement pass.
 - **Related projects:** restic (rclone backend integration); cloud/object-store ecosystems; FUSE.
 - **Caveats / risks:** Recent v1.75.0 advisories document multiple assigned CVEs involving `serve restic` path traversal, proxy CONNECT memory exhaustion, FTP/SFTP command injection, and local filename handling. Use patched releases and review exposed serving/backend features.
-- **Research notes:** Gold is primarily the backend abstraction and composable virtual-filesystem layers, not merely the CLI surface.
+- **Research notes:** research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md. Review security advisories and patched versions before exposing serving protocols; no transfer or mount test performed.
 
 ### restic
 

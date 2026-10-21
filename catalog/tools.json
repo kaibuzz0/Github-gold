@@ -202,6 +202,14 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 4,
+        "maintenance": 4
+      },
       "license": "Apache-2.0",
       "license_copy_status": "permissive-with-attribution-and-notice-review",
       "platforms": [
@@ -221,10 +229,12 @@
         "README inspected",
         "root Apache-2.0 LICENSE inspected",
         "build and test documentation inspected",
-        "recent commits inspected"
+        "recent commits inspected",
+        "2026-10-21: inspected upstream README, license, source/build layout, release v2.0 (2022-04-06), and master CMake 37671876169 succeeded 1/1 job (2026-10-07); Do not assume master fixes are in v2.0; no independent packet, hardware or regulatory-conformance test."
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "research_notes": "research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md"
     },
     {
       "name": "LocalSend",
@@ -345,6 +355,14 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
       "license": "GPL-3.0-or-later",
       "license_copy_status": "allowed-with-copyleft-obligations",
       "platforms": [
@@ -365,10 +383,12 @@
         "README inspected",
         "build/test instructions inspected",
         "license declaration inspected",
-        "recent commits and 3.8.0 release inspected"
+        "recent commits and 3.8.0 release inspected",
+        "2026-10-21: inspected upstream README, license, source/build layout, release 3.8.0 (2026-08-13), and main CI 39216346633 succeeded 5/5 cross-platform jobs (2026-10-19); GPL-3.0-or-later and third-party dependencies need license review; no independent archive build/validation."
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "research_notes": "research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md"
     },
     {
       "name": "ntfy",
@@ -532,6 +552,14 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 4
+      },
       "license": "MIT",
       "license_copy_status": "permissive-with-attribution",
       "platforms": [
@@ -556,11 +584,13 @@
         "README inspected",
         "MIT license declaration inspected",
         "build/CI signals inspected",
-        "recent commits and security-advisory documentation inspected"
+        "recent commits and security-advisory documentation inspected",
+        "2026-10-21: inspected upstream README, license, source/build layout, release v1.75.2 (2026-10-09), and master build 39406871189 succeeded 9/9 jobs (2026-10-20); Review security advisories and patched versions before exposing serving protocols; no transfer or mount test performed."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "copy_restriction_note": "Recent v1.75.0 advisories include multiple assigned CVEs; evaluate deployed version and exposed serve/backend features before operational reuse."
+      "copy_restriction_note": "Recent v1.75.0 advisories include multiple assigned CVEs; evaluate deployed version and exposed serve/backend features before operational reuse.",
+      "research_notes": "research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md"
     },
     {
       "name": "restic",
