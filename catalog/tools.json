@@ -315,10 +315,21 @@
         "README inspected",
         "developer architecture documentation inspected",
         "root Apache-2.0 LICENSE inspected",
-        "recent commits inspected"
+        "recent commits inspected",
+        "2026-10-21 upstream release, code layout and CI evidence reviewed; no independent execution"
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "maintenance_signals": "Stable v5.0.1 published 2026-10-08 (supersedes July v4.1); fixes VA-API/GPU selection, NVIDIA chroma-plane compatibility, Windows H.265 decoding and EGL handling. Release CI 37737030700: all 17 jobs succeeded, including server/client tests and cross-platform builds/packages.",
+      "research_notes": "research/2026-10-21-scrcpy-syncthing-ntfy-maintenance.md"
     },
     {
       "name": "ZIM Tools",
@@ -394,11 +405,22 @@
         "README inspected",
         "root Apache-2.0 LICENSE inspected",
         "repository root inspected",
-        "recent commits inspected"
+        "recent commits inspected",
+        "2026-10-21 upstream release, code layout and CI evidence reviewed; no independent execution"
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "copy_restriction_note": "A secondary GPLv2 license file exists in the repository; inspect component-level licensing before extracting code."
+      "copy_restriction_note": "A secondary GPLv2 license file exists in the repository; inspect component-level licensing before extracting code.",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "maintenance_signals": "Stable v2.32.0 published 2026-10-18; RFC 10036 `Incremental: ?1` header for streaming subscribers, experimental passive-cluster housekeeping and database-version guards. Main-branch test workflow 39182637748 passed 2026-10-19; clustering remains experimental.",
+      "research_notes": "research/2026-10-21-scrcpy-syncthing-ntfy-maintenance.md"
     },
     {
       "name": "OpenObserve",
@@ -480,10 +502,21 @@
         "README inspected",
         "license declaration inspected",
         "build instructions inspected",
-        "recent commits inspected"
+        "recent commits inspected",
+        "2026-10-21 upstream release, code layout and CI evidence reviewed; no independent execution"
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "maintenance_signals": "Stable v2.1.7 published 2026-10-21 with receive-only reconciliation, SQLite and malformed-protocol-input fixes plus incoming-message validation. Main-branch CI 39487469482 on 2026-10-20 passed Linux/macOS/Windows build/tests and govulncheck; several lint/signing/release jobs were skipped.",
+      "research_notes": "research/2026-10-21-scrcpy-syncthing-ntfy-maintenance.md"
     },
     {
       "name": "rclone",

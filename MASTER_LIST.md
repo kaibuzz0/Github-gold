@@ -171,19 +171,19 @@ Suggested tiers:
 - **Author / Org:** Genymobile / Romain Vimont
 - **Category:** Android / device control / screen mirroring / USB / media streaming
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 5, Documentation 5, Maintenance 4)
 - **What it does:** Mirrors and controls Android devices from desktop hosts over USB or TCP/IP without root or a permanently installed Android app.
 - **Why it is valuable:** Highly developed native Android interoperability architecture with low-latency streaming and a temporary server/client model.
-- **Useful code/components:** temporary `app_process` server; ADB tunnels; video/audio/control sockets; MediaCodec; SDL/FFmpeg host pipeline; control/clipboard protocol; hidden-API wrappers; UHID/OTG; V4L2 sink.
+- **Useful code/components:** `server/` temporary Android app_process server; `app/` desktop client; ADB tunnels; video/audio/control sockets; MediaCodec capture/encoding; SDL/FFmpeg rendering and v5 GPU decoding; clipboard/control protocol; hidden API wrappers; UHID/OTG; V4L2.
 - **Install / runtime:** Official binaries/packages on Linux, Windows, and macOS; normal control uses USB debugging.
 - **Platforms:** Android target; Linux, Windows, macOS hosts.
 - **License:** Apache-2.0.
-- **Maintenance signals:** Version 4.1 released July 2026; active and unarchived.
-- **Verification performed:** README, developer architecture docs, license, and recent history inspected. No mirroring session executed by GitHub Gold.
+- **Maintenance signals:** Stable v5.0.1 published 2026-10-08 (supersedes July v4.1); fixes VA-API/GPU selection, NVIDIA chroma-plane compatibility, Windows H.265 decoding and EGL handling. Release CI 37737030700: all 17 jobs succeeded, including server/client tests and cross-platform builds/packages.
+- **Verification performed:** README, Apache-2.0 LICENSE, release notes, source layout and CI job conclusions inspected 2026-10-21. Upstream CI only; no independent build, device connection, screen mirroring or GPU test.
 - **Source discovery:** Android interoperability pass.
 - **Related projects:** ADB/platform-tools; SDL; FFmpeg.
 - **Caveats / risks:** Internal protocol is version-coupled; hidden APIs vary across Android versions.
-- **Research notes:** One of the strongest Android host/device architecture references in the catalog.
+- **Research notes:** `research/2026-10-21-scrcpy-syncthing-ntfy-maintenance.md`. Hardware decoding varies by GPU/driver; server/client protocol is version-coupled.
 
 ### ZIM Tools
 
@@ -211,19 +211,19 @@ Suggested tiers:
 - **Author / Org:** Philipp C. Heckel / binwiederhier
 - **Category:** self-hosting / notifications / HTTP API / pub-sub / automation
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 27
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
 - **What it does:** Simple HTTP-based publish/subscribe notification service that accepts PUT/POST messages and can be self-hosted, with web and mobile clients in the ecosystem.
 - **Why it is valuable:** Extremely composable automation primitive: shell scripts, CI jobs, servers, sensors, and personal tools can publish notifications through a minimal HTTP interface without building a custom push stack.
-- **Useful code/components:** HTTP PUT/POST publish API; topic pub-sub model; self-hosted server; CLI/automation integrations; web client; Docker/release build machinery.
+- **Useful code/components:** `server/` HTTP publish/subscription; `server/server_auth.go` authorization; `server/server_cluster.go` experimental cluster; `server/server_webpush.go` Web Push; `client/`; `db/`; `web/`; topic handlers and server test suite; minimal PUT/POST pub-sub API.
 - **Install / runtime:** Self-hosted server packages/containers or the hosted service; Android/iOS clients are maintained in related repositories.
 - **Platforms:** Linux/server, Docker, web; mobile clients via related repositories.
 - **License:** Root `LICENSE` is Apache-2.0; repository also contains a secondary GPLv2 license file, so component-level licensing must be checked before code extraction.
-- **Maintenance signals:** Recent commits observed through 2026-08-04; README exposes release, tests, Go report, and coverage signals.
-- **Verification performed:** README, root license, repository root, and recent commit history inspected. No server/client session executed by GitHub Gold.
+- **Maintenance signals:** Stable v2.32.0 published 2026-10-18; RFC 10036 `Incremental: ?1` header for streaming subscribers, experimental passive-cluster housekeeping and database-version guards. Main-branch test workflow 39182637748 passed 2026-10-19; clustering remains experimental.
+- **Verification performed:** README, Apache-2.0 LICENSE, secondary LICENSE.GPLv2, server/test tree, release notes and upstream main-branch test job inspected 2026-10-21. No independent deployment, streaming, or failover test.
 - **Source discovery:** Independent self-hosting/automation pass.
 - **Related projects:** binwiederhier/ntfy-android; binwiederhier/ntfy-ios; community integrations.
 - **Caveats / risks:** Authentication, topic privacy, TLS, and internet exposure must be configured appropriately when self-hosting. Review the secondary license and component notices before copying code.
-- **Research notes:** Strong candidate for alerting/automation glue in user-controlled systems because the publish surface is intentionally small.
+- **Research notes:** `research/2026-10-21-scrcpy-syncthing-ntfy-maintenance.md`. Review component licensing and streaming reverse-proxy buffering; experimental clustering not production-verified.
 
 ### OpenObserve
 
@@ -251,19 +251,19 @@ Suggested tiers:
 - **Author / Org:** Syncthing
 - **Category:** local-first / continuous synchronization / peer-to-peer / data replication
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 5, Documentation 5, Maintenance 4)
 - **What it does:** Continuously synchronizes folders between two or more computers while prioritizing data safety, security, automation, and user control.
 - **Why it is valuable:** Mature decentralized replication architecture with a documented wire protocol, automatic device discovery, relay infrastructure, conflict handling, signed releases, and straightforward source builds.
-- **Useful code/components:** Block Exchange Protocol; folder reconciliation; device discovery; relaying; conflict handling; filesystem watcher integration; versioning; signed automatic upgrades; API/web GUI.
+- **Useful code/components:** `lib/protocol/` Block Exchange Protocol; `lib/model/` reconciliation; `lib/discover/` discovery; `lib/relay/` relay; `lib/scanner/` block scanner; `lib/versioner/` versioning; `lib/api/` REST API; `lib/fs/` filesystem abstraction; conflict and watcher integrations.
 - **Install / runtime:** Native releases, packages, or Docker; source builds with `go run build.go`.
 - **Platforms:** Linux, Windows, macOS, BSD and other supported Go targets.
 - **License:** MPL-2.0.
-- **Maintenance signals:** Same-day commit observed 2026-08-19 updating the Go toolchain, plus 2026-08-18 discovery-server/infrastructure fixes and Docker-signing work.
-- **Verification performed:** README, license declaration, build instructions, signed-release notes, and recent commits inspected. No live synchronization test performed by GitHub Gold.
+- **Maintenance signals:** Stable v2.1.7 published 2026-10-21 with receive-only reconciliation, SQLite and malformed-protocol-input fixes plus incoming-message validation. Main-branch CI 39487469482 on 2026-10-20 passed Linux/macOS/Windows build/tests and govulncheck; several lint/signing/release jobs were skipped.
+- **Verification performed:** README, MPL-2.0 LICENSE, `lib/` tree, v2.1.7 release notes and main-branch CI job conclusions inspected 2026-10-21. No independent sync, filesystem fault or security test.
 - **Source discovery:** Independent resilient-data/local-first pass.
 - **Related projects:** syncthing/docs; GUI wrappers; discovery and relay infrastructure.
 - **Caveats / risks:** MPL-2.0 is file-level copyleft; modifications to covered files require license compliance. Operational deployments should review discovery/relay exposure and versioning behavior.
-- **Research notes:** Excellent complement to LocalSend: continuous state replication rather than ad-hoc transfer.
+- **Research notes:** `research/2026-10-21-scrcpy-syncthing-ntfy-maintenance.md`. Validate deletion and receive-only semantics for critical data.
 
 ### rclone
 
