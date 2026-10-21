@@ -1016,6 +1016,26 @@ Suggested tiers:
 - **Caveats / risks:** In-memory events are not durable by default; JSONL polling is not a transactional queue. Bridge reliability and cancellation require integration tests. Experimental `rust-core-ffi` branch CI failed 2026-10-12, distinct from passing main.
 - **Research notes:** `research/2026-10-20-abxbus-cross-runtime-event-bus.md`. No upstream source copied.
 
+### abxpkg
+
+- **Repository:** https://github.com/ArchiveBox/abxpkg
+- **Author / Org:** ArchiveBox / Nick Sweeting
+- **Category:** Dependency management / package providers / Python CLI / binary-installation automation
+- **Evidence:** VERIFIED — upstream release, source, tests and passing CI; not independently installed
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
+- **What it does:** Python API and CLI that discovers, loads, installs, updates and executes binaries through multiple package-manager backends (env, apt, brew, pip, uv, npm, Docker and others).
+- **Why it is valuable:** Reusable provider adapters, typed dependency declarations, version validation, cache/environment projection and package-installation lifecycle management across heterogeneous tools.
+- **Useful code/components:** `abxpkg/binary.py` (Binary model); `abxpkg/binprovider.py` (provider abstraction and locks); `abxpkg/binprovider_{apt,brew,pip,uv,npm,docker,playwright,puppeteer,nix}.py` (adapters); `abxpkg/config.py` (cache identity); `abxpkg/semver.py`; `abxpkg/binary_service.py`; `abxpkg/cli.py`; `tests/test_security_controls.py`, `tests/test_provider_install_locks.py`.
+- **Install / runtime:** `pip install abxpkg` or `uv tool install abxpkg`; Python >=3.12,<3.15; selected external package managers and optional privileges must exist for corresponding providers.
+- **Platforms:** Linux/macOS; optional Docker and host package managers; Windows not established.
+- **License:** MIT root LICENSE (Nick Sweeting 2024); installed third-party packages, providers and dependencies retain their own terms.
+- **Maintenance signals:** Non-prerelease v1.13.58 published 2026-10-20; main Linux CI 39413598967 passed 30/30 jobs; scheduled macOS CI 39501442167 succeeded on its executed test jobs.
+- **Verification performed:** README, license, manifest, provider modules, tests, workflow, release and job logs inspected. Earlier macOS CI 39444656035 failed one Deno test because Deno was missing; later scheduled Deno test passed. No independent installation, runtime test or supply-chain audit.
+- **Source discovery:** GitHub-first recursive lead from ArchiveBox/abx-dl; `research/2026-10-20-abxpkg-provider-runtime-ci-failure-analysis.md`.
+- **Related projects:** ArchiveBox/ArchiveBox, ArchiveBox/abx-dl, ArchiveBox/abx-plugins, ArchiveBox/abxbus.
+- **Caveats / risks:** Runtime installers execute third-party code and may need elevated privileges; provider-specific `min_release_age` and `postinstall_scripts` controls **warn and continue** where unsupported, rather than fail closed. Pin, isolate and verify packages before deployment.
+- **Research notes:** No upstream code copied. Upstream passing CI is not independent verification. Distinguish this package-provider runtime from abx-dl's capture orchestration.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

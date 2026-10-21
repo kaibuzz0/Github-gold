@@ -2284,6 +2284,59 @@
       "research_priority": "high",
       "copy_restriction_note": "No source copied. In-memory events and JSONL polling are not a durable exactly-once message queue; inspect optional bridge security and licenses.",
       "source": "GitHub-first via ArchiveBox/abx-dl; research/2026-10-20-abxbus-cross-runtime-event-bus.md"
+    },
+    {
+      "name": "abxpkg",
+      "repository": "https://github.com/ArchiveBox/abxpkg",
+      "owner": "ArchiveBox",
+      "category": [
+        "dependency-management",
+        "package-provider-abstraction",
+        "python-cli",
+        "binary-installation",
+        "automation-infrastructure",
+        "supply-chain-controls"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE; Copyright 2024 Nick Sweeting)",
+      "license_copy_status": "mit-attribution-required; installed-packages-and-provider-tools-retain-separate-licenses",
+      "platforms": [
+        "Python >=3.12,<3.15",
+        "Linux",
+        "macOS",
+        "Docker via optional provider",
+        "CLI and Python API"
+      ],
+      "useful_components": [
+        "abxpkg/binary.py: typed Binary model, provider selection, version constraints",
+        "abxpkg/binprovider.py: BinProvider interface, mutation locks, installation lifecycle",
+        "abxpkg/binprovider_{apt,brew,pip,uv,npm,docker,playwright,puppeteer,nix}.py: concrete adapters",
+        "abxpkg/config.py: derived cache and environment projection/fingerprinting",
+        "abxpkg/semver.py: version parsing and bounds",
+        "abxpkg/binary_service.py: reusable binary resolution service",
+        "abxpkg/cli.py: install/load/run/activate command-line entrypoints",
+        "tests/test_security_controls.py, tests/test_provider_install_locks.py, tests/test_installer_binary_contracts.py: test coverage"
+      ],
+      "verification": [
+        "2026-10-20: upstream README, MIT LICENSE, pyproject.toml, provider/CLI/cache modules, tests, release and workflow inspected",
+        "v1.13.58 non-prerelease published 2026-10-20 11:27 UTC; main Linux Run Tests 39413598967 passed 30/30 jobs; scheduled macOS Run Tests 39501442167 completed successfully with executed test jobs passing",
+        "Earlier macOS run 39444656035 failed one Deno provider test because deno was unavailable on that runner; subsequent scheduled run 39501442167 passed the Deno provider job",
+        "Security controls vary by provider: unsupported min-release-age/postinstall restrictions warn and continue; no independent installation, package verification, security audit or supply-chain testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "No third-party source copied. Provider actions can execute/install arbitrary packages, may require privileges, and can ignore unsupported safety controls with warnings; pin and verify packages, isolate execution and review each package's license.",
+      "source": "GitHub-first recursive lead from ArchiveBox/abx-dl; research/2026-10-20-abxpkg-provider-runtime-ci-failure-analysis.md"
     }
   ],
   "deferred_or_rejected": [
