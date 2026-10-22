@@ -1079,6 +1079,46 @@ Suggested tiers:
 - **Caveats / risks:** Trust anchors, anti-rollback, debug lock and flash geometry require board-specific validation. Feature-branch CI failures should not be conflated with main.
 - **Research notes:** No third-party implementation code copied.
 
+### PMTiles
+
+- **Repository:** https://github.com/protomaps/PMTiles
+- **Author / Org:** Protomaps
+- **Category:** Offline mapping / geospatial / single-file tile archives / serverless maps
+- **Evidence:** VERIFIED — upstream source/CI, not independent execution
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 3)
+- **What it does:** Open Version 3 tile archive format and cross-runtime readers. The 127-byte header and root index within 16 KiB support efficient HTTP byte-range access.
+- **Why it is valuable:** Enables offline or static-object-hosted maps without a dedicated tile database; provides formal spec and reusable JavaScript, Python, C++, OpenLayers and serverless implementations.
+- **Useful code/components:** `spec/v3/spec.md`; `js/src/index.ts`; `js/src/adapters.ts`; `python/pmtiles`; `python/rio-pmtiles`; `cpp/`; `openlayers/`; `serverless/aws/`; `serverless/cloudflare/`.
+- **Install / runtime:** Use npm/PyPI reference readers or companion go-pmtiles CLI; remote archives need HTTP Range and suitable CORS.
+- **Platforms:** Browser/Node.js, Python, C++, OpenLayers, AWS Lambda, Cloudflare Workers.
+- **License:** BSD-3-Clause implementation code; spec public domain/CC0; sample and generated map data separate.
+- **Maintenance signals:** Latest inspected main commit 2026-09-16 (Python pmtiles 3.8.1); 2026-10-19 PR CI run 39281511827 passed build_app and test. No root GitHub Releases; packages published separately.
+- **Verification performed:** README, LICENSE, V3 spec, CI and source structure inspected; upstream PR tests passed. No independent archive, range-read, browser or security tests.
+- **Source discovery:** GitHub-first offline-mapping ecosystem; `research/2026-09-05-protomaps-pmtiles-single-file-offline-map-archive.md` and `research/2026-10-22-pmtiles-go-pmtiles-promotion.md`.
+- **Related projects:** protomaps/go-pmtiles; MapLibre; Planetiler; Protomaps Basemaps.
+- **Caveats / risks:** Range/CORS and untrusted archive parsing require validation. Large-object corruption or replacement affects a whole map. Map-data licenses independent. CI uses mutable Action tags.
+- **Research notes:** No third-party implementation code or map data copied.
+
+### go-pmtiles
+
+- **Repository:** https://github.com/protomaps/go-pmtiles
+- **Author / Org:** Protomaps
+- **Category:** Offline mapping / Go CLI / archive conversion, verification, HTTP serving and cloud storage
+- **Evidence:** VERIFIED — upstream source/CI, not independent execution
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 5)
+- **What it does:** Go CLI and package for inspecting, converting, extracting, clustering, verifying, serving and uploading PMTiles archives, with experimental differential sync.
+- **Why it is valuable:** Practical local-to-cloud archive lifecycle for portable/offline maps and reproducible geospatial delivery.
+- **Useful code/components:** `main.go` CLI; `pmtiles/verify.go` structural checks; `pmtiles/extract.go`, `region.go` geographic extraction; `pmtiles/server.go` HTTP; `pmtiles/bucket.go` storage abstraction; `pmtiles/directory.go` indexing; `pmtiles/sync.go` experimental range sync.
+- **Install / runtime:** Download upstream binaries or build with Go; `go test ./pmtiles` is documented. Remote object stores need credentials and compatible range handling.
+- **Platforms:** Linux, Windows, macOS binaries; Go library; S3, GCS, Azure and local storage.
+- **License:** BSD-3-Clause; map archive contents independently licensed.
+- **Maintenance signals:** Stable v1.31.2 published 2026-07-22, fixing Content-Length for tile responses. 2026-10-06 PR CI run 37488026517 passed Linux/Windows tests and lint; separate publish Docker workflow 37488026722 failed.
+- **Verification performed:** Inspected README, LICENSE, main.go, verify.go, sync.go, tests and CI; no independent archive, server, object-storage or sync execution.
+- **Source discovery:** Recursive PMTiles research; `research/2026-09-06-go-pmtiles-operational-cli-range-sync-server.md` and `research/2026-10-22-pmtiles-go-pmtiles-promotion.md`.
+- **Related projects:** protomaps/PMTiles; Planetiler; MapLibre; Protomaps Basemaps.
+- **Caveats / risks:** `verify` is structural, not cryptographic or payload integrity; some anomalies are logged without failing. `serve` defaults to `0.0.0.0`. Differential sync is explicitly experimental.
+- **Research notes:** No third-party implementation code or map data copied.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

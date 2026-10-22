@@ -2704,6 +2704,111 @@
       "research_priority": "high",
       "source": "research/2026-10-22-sops-mcuboot-promotion-evidence.md",
       "copy_restriction_note": "Apache-2.0 plus NOTICE; review bundled crypto licenses. No source copied."
+    },
+    {
+      "name": "PMTiles",
+      "repository": "https://github.com/protomaps/PMTiles",
+      "owner": "protomaps",
+      "category": [
+        "offline-mapping",
+        "geospatial",
+        "tile-archives",
+        "http-range",
+        "serverless",
+        "libraries"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 3
+      },
+      "license": "BSD-3-Clause for reference implementations; specification public domain/CC0; map data separately licensed",
+      "license_copy_status": "bsd-3-clause-notice-required; data-rights-separate",
+      "platforms": [
+        "Browser/Node.js",
+        "Python",
+        "C++",
+        "OpenLayers",
+        "AWS Lambda",
+        "Cloudflare Workers"
+      ],
+      "useful_components": [
+        "spec/v3/spec.md: 127-byte header and root index in first 16 KiB",
+        "js/src/index.ts: reader, HTTP range source and caching",
+        "js/src/adapters.ts: mapping integrations",
+        "python/pmtiles: Python implementation",
+        "python/rio-pmtiles: Rasterio integration",
+        "cpp/: C++ implementation",
+        "openlayers/: OpenLayers integration",
+        "serverless/aws/ and serverless/cloudflare/: edge adapters"
+      ],
+      "verification": [
+        "2026-10-22 inspected README, LICENSE, spec, source structure and CI workflow",
+        "2026-10-19 PR CI run 39281511827: build_app and test jobs passed, including JS, Python, rio-pmtiles, C++ compilation and Cloudflare tests",
+        "2026-09-16 inspected latest main commit; no root GitHub Releases; no independent builds or archive/range/map tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "source": "GitHub-first offline-mapping ecosystem; research/2026-09-05-protomaps-pmtiles-single-file-offline-map-archive.md; research/2026-10-22-pmtiles-go-pmtiles-promotion.md",
+      "copy_restriction_note": "No source copied. Preserve BSD-3-Clause notices; map data and samples carry separate rights. HTTP range/CORS and untrusted archive metadata need validation."
+    },
+    {
+      "name": "go-pmtiles",
+      "repository": "https://github.com/protomaps/go-pmtiles",
+      "owner": "protomaps",
+      "category": [
+        "offline-mapping",
+        "geospatial",
+        "go-cli",
+        "archive-verification",
+        "http-serving",
+        "object-storage"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 4,
+        "maintenance": 5
+      },
+      "license": "BSD-3-Clause",
+      "license_copy_status": "bsd-3-clause-notice-required; map-data-rights-separate",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS binaries",
+        "Go",
+        "S3/GCS/Azure/local storage"
+      ],
+      "useful_components": [
+        "main.go: archive CLI including convert, extract, serve, verify, upload",
+        "pmtiles/verify.go: structural verification, not tile-content integrity",
+        "pmtiles/extract.go and region.go: geographic and zoom extraction",
+        "pmtiles/server.go: tile HTTP server",
+        "pmtiles/bucket.go: cloud/local storage abstraction",
+        "pmtiles/directory.go and tile_id.go: indexing and encoding",
+        "pmtiles/sync.go: explicitly experimental range-sync"
+      ],
+      "verification": [
+        "2026-10-22 inspected README, LICENSE, main.go, verify.go, sync.go, source/test tree and CI workflow",
+        "2026-10-06 PR test CI 37488026517 passed Ubuntu, Windows and fmt/vet/lint; separate Docker publish job 37488026722 failed",
+        "v1.31.2 stable release published 2026-07-22 with Content-Length fix; no independent CLI, archive, server or sync tests",
+        "verify.go logs some structural anomalies instead of returning errors; not full content validation"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "source": "Recursive GitHub-first PMTiles lead; research/2026-09-06-go-pmtiles-operational-cli-range-sync-server.md; research/2026-10-22-pmtiles-go-pmtiles-promotion.md",
+      "copy_restriction_note": "No source copied. Preserve BSD-3-Clause notices; map data separate. serve defaults to 0.0.0.0; sync commands explicitly experimental."
     }
   ],
   "deferred_or_rejected": [
