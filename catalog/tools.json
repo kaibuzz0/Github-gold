@@ -468,7 +468,8 @@
       ],
       "evidence": "VERIFIED",
       "tier": "S",
-      "score": 29,
+      "score": 27,
+      "score_breakdown": {"utility":5,"working_evidence":4,"reusability":4,"novelty":4,"documentation":5,"maintenance":5},
       "license": "AGPL-3.0",
       "license_copy_status": "network-copyleft-review-required-before-reuse",
       "platforms": [
@@ -494,7 +495,9 @@
         "upstream test evidence observed in commit messages"
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "maintenance_signals": "Upstream v1.1.2 (2026-10-20) reports fixes for PromQL alerts/queries, cache races and stale cluster peers; inspected OTLP adapter and test definitions. Performance claims not independently benchmarked; AGPL-3.0 and enterprise boundaries reduce easy reuse.",
+      "research_notes": "research/2026-10-22-openobserve-loro-libp2p-maintenance.md"
     },
     {
       "name": "Syncthing",
@@ -1083,6 +1086,7 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 28,
+      "score_breakdown": {"utility":5,"working_evidence":4,"reusability":5,"novelty":5,"documentation":5,"maintenance":4},
       "license": "MIT",
       "license_copy_status": "permissive-root-license; check optional bindings/dependencies",
       "platforms": [
@@ -1112,6 +1116,8 @@
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
+      "maintenance_signals": "loro-crdt@1.16.4 and experimental loro.js@0.3.0 published 2026-09-30. Inspected Rust sync API, Fugue spans and pure-TypeScript pending-update documentation; no cross-runtime tests run.",
+      "research_notes": "research/2026-10-22-openobserve-loro-libp2p-maintenance.md",
       "source_discovery": "GitHub-first discovery; research/2026-08-20-local-ai-crdt.md",
       "caveats": "Root project is MIT licensed; optional ecosystem repositories and bindings should be checked separately before code reuse."
     },
@@ -1187,6 +1193,7 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 29,
+      "score_breakdown": {"utility":5,"working_evidence":4,"reusability":5,"novelty":5,"documentation":5,"maintenance":5},
       "license": "MIT",
       "license_copy_status": "permissive-root-license; verify transport and dependency licenses",
       "platforms": [
@@ -1219,6 +1226,8 @@
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
+      "maintenance_signals": "v0.50.0 (2026-09-21) requires Go 1.26; upstream notes reachability stress test, hole-punch timeout fix and HTTP auth hardening. Inspected DCUtR, AutoNAT and AutoNAT v2 source; no independent NAT tests.",
+      "research_notes": "research/2026-10-22-openobserve-loro-libp2p-maintenance.md",
       "source_discovery": "GitHub-first discovery; research/2026-08-20-p2p-networking.md",
       "caveats": "Root repository is MIT licensed, but dependencies, integrations, protocol implementations, and downstream projects may carry separate licenses and operational constraints."
     },

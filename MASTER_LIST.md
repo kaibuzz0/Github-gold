@@ -231,19 +231,20 @@ Suggested tiers:
 - **Author / Org:** OpenObserve
 - **Category:** observability / logs / metrics / traces / OpenTelemetry / self-hosting
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 4 + Documentation 5 + Maintenance 5)
 - **What it does:** Rust-based observability platform unifying logs, metrics, traces, dashboards, alerts, pipelines, real-user monitoring, and related analytics with OpenTelemetry ingestion.
 - **Why it is valuable:** Demonstrates a modern self-hostable observability architecture around a single binary, columnar Parquet storage, object-store/S3 design, SQL/PromQL querying, and multi-signal workflows.
 - **Useful code/components:** single-binary Rust server; OpenTelemetry ingestion; Parquet storage; S3-native persistence architecture; SQL/PromQL paths; logs/metrics/traces UI; alerting; pipelines/stream processing; multi-tenancy.
+- **Inspected source paths:** `src/api/grpc/src/handler/grpc/request/otlp.rs`; `src/config/src/meta/otlp.rs`; `src/core/src/profiles/dictionary_compat.rs`.
 - **Install / runtime:** Upstream documents a single Docker command for local startup plus HA/cloud-native deployment paths.
 - **Platforms:** Linux, Docker, Kubernetes/cloud-native environments.
 - **License:** AGPL-3.0.
-- **Maintenance signals:** Heavy same-day activity observed on 2026-08-19, including search/queue fixes, compactor fixes, CI work, and test changes; upstream commit messages include specific build/test validation evidence.
+- **Maintenance signals:** v1.1.2 released 2026-10-20 with upstream-reported PromQL, disk-cache, cluster-peer and Kubernetes query fixes. Inspected OTLP gRPC response handling and OTLP request-type unit tests. No independent deployment or benchmark.
 - **Verification performed:** README, root AGPL-3.0 license, and same-day commit history inspected. GitHub Gold did not deploy or benchmark it; performance/cost claims in upstream README remain upstream claims, not independent verification.
 - **Source discovery:** Independent observability pass.
 - **Related projects:** OpenTelemetry ecosystem; Parquet/object-storage tooling; OpenObserve deployment integrations.
 - **Caveats / risks:** AGPL-3.0 has network-use source-sharing implications for modified covered software; do not casually vendor code into differently licensed projects. Some enterprise features are separate from the open-source edition.
-- **Research notes:** Excellent architecture-study candidate; particularly valuable for self-hosted telemetry ingestion, object-store design, and unified signal pipelines.
+- **Research notes:** Prior provisional 29 reduced to 27: performance/cost claims not independently reproduced; AGPL and enterprise feature boundaries complicate reuse. See `research/2026-10-22-openobserve-loro-libp2p-maintenance.md`.
 
 ### Syncthing
 
@@ -471,19 +472,20 @@ Suggested tiers:
 - **Author / Org:** loro-dev
 - **Category:** local-first / CRDT / collaborative state infrastructure
 - **Evidence:** VERIFIED (upstream code, release and CI evidence; not independently executed)
-- **Tier / Score:** S / 28 (provisional)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 4)
 - **What it does:** Conflict-free replicated data types for local-first collaborative application state.
 - **Why it is valuable:** Reusable mergeable text, rich-text, tree, list and map structures, with delta synchronization and history.
 - **Useful code/components:** Rust CRDT core; JavaScript/WASM loro-crdt package; Swift support; Fugue text and rich-text CRDTs; moveable tree and list CRDTs; delta synchronization APIs; shallow snapshots and time travel; Loro Inspector.
+- **Inspected source paths:** `crates/loro-internal/src/container/richtext/fugue_span.rs`; `crates/loro/README.md`; `loro-js/README.md`.
 - **Install / runtime:** Use the Rust crates, JavaScript/WASM package, or documented Swift integration.
 - **Platforms:** Rust, JavaScript/WebAssembly, Swift.
 - **License:** MIT for the inspected root repository; third-party code and assets may differ.
-- **Maintenance signals:** Upstream loro-crdt@1.16.4 published 2026-09-30; Rust CI and release workflows present.
+- **Maintenance signals:** Upstream loro-crdt@1.16.4 and experimental loro.js@0.3.0 released 2026-09-30. Source documents causally pending remote updates and convergence fixes; no independent cross-runtime tests.
 - **Verification performed:** README, license, upstream release and CI definitions inspected. No independent build, runtime test, or benchmark.
 - **Source discovery:** GitHub-first discovery; research/2026-08-20-local-ai-crdt.md
 - **Related projects:** loro-dev ecosystem, local-first applications, CRDT research.
 - **Caveats / risks:** Root project is MIT licensed; optional ecosystem repositories and bindings should be checked separately before code reuse.
-- **Research notes:** Promoted from READY queue; scoring remains provisional.
+- **Research notes:** The pure TypeScript runtime is explicitly experimental; pending remote updates require careful checkpoint handling. See `research/2026-10-22-openobserve-loro-libp2p-maintenance.md`.
 
 ### DuckDB
 
@@ -511,19 +513,20 @@ Suggested tiers:
 - **Author / Org:** libp2p
 - **Category:** peer-to-peer networking / protocol stack / NAT traversal / distributed systems
 - **Evidence:** VERIFIED (upstream implementation, documentation and maintenance evidence; not independently executed)
-- **Tier / Score:** S / 29 (provisional)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 5)
 - **What it does:** Composable Go implementation of the libp2p peer-to-peer networking stack.
 - **Why it is valuable:** Reusable transport, peer identity, discovery and NAT traversal layers for resilient distributed applications.
 - **Useful code/components:** host and network abstractions; transport composition; NAT traversal and hole punching; reachability and AutoNAT logic; peer identity and secure channel layers; stream multiplexing; protocol negotiation; connection management; examples; Grafana production dashboards.
+- **Inspected source paths:** `p2p/protocol/holepunch/svc.go`; `p2p/host/autonat/autonat.go`; `p2p/protocol/autonatv2/autonat.go`.
 - **Install / runtime:** Go module embedded in Go applications; network behavior depends on transport, NAT and deployment environment.
 - **Platforms:** Go-supported systems, Linux, Windows, macOS.
 - **License:** MIT at upstream root; dependencies/extensions require separate review.
-- **Maintenance signals:** 2026-09-21 v0.50.0 release commit; 2026-09-19 oversized opaque HTTP auth input correction and QUIC/WebTransport dependency updates.
+- **Maintenance signals:** v0.50.0 released 2026-09-21 with upstream-reported reachability stress tests, hole-punch timeout fix and HTTP authentication hardening. Requires Go 1.26. No independent network test.
 - **Verification performed:** README, root license and upstream commits inspected; no independent build, runtime, network, performance or security tests.
 - **Source discovery:** GitHub-first discovery; research/2026-08-20-p2p-networking.md
 - **Related projects:** libp2p specifications, go-libp2p examples, QUIC, WebTransport and AutoNAT.
 - **Caveats / risks:** Root repository is MIT licensed, but dependencies, integrations, protocol implementations, and downstream projects may carry separate licenses and operational constraints.
-- **Research notes:** Promoted from READY queue on 2026-10-14; score remains provisional. No third-party source copied.
+- **Research notes:** NAT/firewall environments and relay availability affect actual connectivity; review transport dependency licenses. See `research/2026-10-22-openobserve-loro-libp2p-maintenance.md`.
 
 ### uv
 
