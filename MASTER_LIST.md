@@ -411,19 +411,19 @@ Suggested tiers:
 - **Author / Org:** CaddyServer
 - **Category:** web server / reverse proxy / automatic HTTPS / self-hosting / server platform
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5)
 - **What it does:** Modular Go web server and reverse proxy with automatic HTTPS, dynamic configuration, HTTP/1.1/2/3, internal PKI support, and a broad plugin ecosystem.
 - **Why it is valuable:** Combines production-grade serving/proxying with an API-driven configuration model and reusable TLS automation, making it a strong self-hosting and infrastructure reference.
 - **Useful code/components:** automatic HTTPS; native JSON configuration; dynamic configuration API; config adapters; reverse proxy; HTTP/1.1 HTTP/2 HTTP/3; modular Go app/plugin architecture; local CA; cluster-aware TLS coordination; xcaddy custom builds.
 - **Install / runtime:** Native Go binaries/packages and containerized deployments.
 - **Platforms:** Linux, Windows, macOS, BSD and other Go-supported systems.
 - **License:** Apache-2.0.
-- **Maintenance signals:** August 2026 research observed recent security-sensitive and correctness fixes in proxy/server paths.
-- **Verification performed:** Official README, root Apache-2.0 license, build/test documentation, and recent security/maintenance commits inspected. No live deployment performed by GitHub Gold.
+- **Maintenance signals:** Stable v2.11.7 (2026-10-03) fixed v2.11.6 HTTP/2 proxy panic and streaming cutoffs. Main commit f355b868 (2026-10-21) improves forward-proxy-wrapped dial retries; not established in stable. Upstream Tests run 39594833694 passed 3 platform jobs (2 optional skipped).
+- **Verification performed:** 2026-10-21: README, Apache-2.0 LICENSE, reverseproxy.go, release notes, recent commits and upstream CI jobs inspected; no independent deployment or security testing.
 - **Source discovery:** TLS/self-hosting pass.
 - **Related projects:** caddyserver/certmagic; xcaddy; config adapters; libdns ecosystem.
-- **Caveats / risks:** Internet-facing deployments must track patched releases and carefully review exposed admin/config APIs and proxy behavior.
-- **Research notes:** High-value platform entry; deeper Gold lies in module/config/TLS architecture rather than a simple web-server feature list.
+- **Caveats / risks:** Review exposed admin/config API and proxy trust boundaries. v2.11.6 had regressions fixed in v2.11.7; main-branch changes are not necessarily released.
+- **Research notes:** research/2026-10-21-caddy-certmagic-duckdb-maintenance.md; upstream CI is not independent verification.
 
 ### CertMagic
 
@@ -431,19 +431,19 @@ Suggested tiers:
 - **Author / Org:** CaddyServer
 - **Category:** Go library / TLS automation / ACME / certificate management / reusable infrastructure
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5)
 - **What it does:** Go library for automated certificate issuance, renewal, caching, storage, OCSP, ACME challenges, on-demand issuance, and `tls.Config` integration.
 - **Why it is valuable:** Extracts Caddy's certificate-management capabilities into a reusable library that can be embedded into other Go applications.
 - **Useful code/components:** certificate issuance/renewal; ACME HTTP/TLS-ALPN/DNS challenges; multiple issuers; pluggable storage; distributed challenge locking; certificate cache; OCSP stapling; on-demand issuance controls; retry/backoff; event hooks; `tls.Config` integration; libdns interoperability.
 - **Install / runtime:** Go library embedded in Go applications and services.
 - **Platforms:** Go-supported systems including Linux, Windows, macOS, BSD, and Android targets where dependencies permit.
 - **License:** Apache-2.0.
-- **Maintenance signals:** Recent research observed fixes to certificate-renewal retry/error behavior and other security-sensitive maintenance.
-- **Verification performed:** Official README, Apache-2.0 license, API/feature documentation, and recent maintenance commits inspected. No certificate issuance flow executed by GitHub Gold.
+- **Maintenance signals:** Stable v0.25.6 (2026-09-30) upgraded ZeroSSL dependency for Authorization: ApiKey header. Latest master commit cfd20205 (2026-10-01) fixes README link. Upstream Tests run 36915271739 passed 6/6 Ubuntu/macOS/Windows Go 1.25/1.26 jobs.
+- **Verification performed:** 2026-10-21: README, Apache-2.0 LICENSE.txt, certmagic.go, release, recent commits and upstream CI jobs inspected; no independent ACME issuance or TLS audit.
 - **Source discovery:** TLS/self-hosting pass.
 - **Related projects:** Caddy; libdns providers; ACME issuers; storage backends.
-- **Caveats / risks:** Certificate automation is security-critical; deployments must configure storage, permissions, on-demand controls, and issuer policies carefully.
-- **Research notes:** Strong reusable component entry independent of Caddy itself.
+- **Caveats / risks:** ACME issuance depends on CA availability, challenge routing, permissions, storage locks and on-demand controls. Review external DNS/storage provider licenses.
+- **Research notes:** research/2026-10-21-caddy-certmagic-duckdb-maintenance.md; upstream CI is not independent verification.
 
 ### whisper.cpp
 
@@ -491,19 +491,19 @@ Suggested tiers:
 - **Author / Org:** duckdb
 - **Category:** embedded analytics / SQL / data tooling / columnar processing
 - **Evidence:** VERIFIED (upstream implementation, documentation and maintenance evidence; not independently executed)
-- **Tier / Score:** S / 29 (provisional)
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 4, Reusability 5, Novelty 5, Documentation 5, Maintenance 4)
 - **What it does:** Embeddable analytical SQL database with vectorized execution and local CSV/Parquet processing.
 - **Why it is valuable:** Reusable in-process analytics engine and C API for local-first data pipelines and scripts.
 - **Useful code/components:** embeddable analytical SQL engine; public version-targeted C API; CSV and Parquet readers; query planner and optimizer; vectorized execution engine; storage and transaction layers; extension architecture; CLI and language-client integration points; unit-test and benchmark infrastructure.
 - **Install / runtime:** Use a supported DuckDB CLI, language package, or documented native C/C++ interface; extension compatibility depends on versions.
 - **Platforms:** Linux, Windows, macOS, other supported native and language-binding targets.
 - **License:** MIT at upstream root; dependencies/extensions require separate review.
-- **Maintenance signals:** 2026-10-14 upstream commits inspect SQL expression export, window-buffer allocation, and asynchronous query handling.
-- **Verification performed:** README, root license and upstream commits inspected; no independent build, runtime, network, performance or security tests.
+- **Maintenance signals:** Stable v2.0.0 (2026-10-21) published 28 assets. Main commit c15a232a (2026-10-21) fixes window-aggregate memory-limit livelock but is not established in v2.0.0. On Tag 39602672912 failed staging download; SwiftRelease 39602672833 failed push; Oct 19 Main 39259831957 passed many core tests but failed parser benchmark and cloud-extension builds.
+- **Verification performed:** 2026-10-21: README, MIT LICENSE, generated C API header, v2.0.0 release, recent commit and selected upstream CI jobs inspected; no independent build, query, benchmark or extension test.
 - **Source discovery:** GitHub-first discovery; research/2026-08-20-embedded-analytics.md
 - **Related projects:** DuckDB extensions, Arrow, Parquet and embedded analytics tooling.
-- **Caveats / risks:** Optional extensions and third-party dependencies can have separate licensing; consumers should target documented public compatibility surfaces rather than private internals.
-- **Research notes:** Promoted from READY queue on 2026-10-14; score remains provisional. No third-party source copied.
+- **Caveats / risks:** Major-version API/extension compatibility needs review. Release/integration CI failures do not prove core SQL malfunction. Check optional extension licenses.
+- **Research notes:** research/2026-10-21-caddy-certmagic-duckdb-maintenance.md; upstream CI is not independent verification.
 
 ### go-libp2p
 

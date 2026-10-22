@@ -947,10 +947,22 @@
         "official README inspected",
         "root Apache-2.0 LICENSE inspected",
         "build/test documentation inspected",
-        "recent security and maintenance commits inspected"
+        "recent security and maintenance commits inspected",
+        "2026-10-21: README, Apache-2.0 LICENSE, reverseproxy.go, release notes, recent commits and upstream CI jobs inspected; no independent deployment or security testing."
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "maintenance_signals": "Stable v2.11.7 (2026-10-03) fixed v2.11.6 HTTP/2 proxy panic and streaming cutoffs. Main commit f355b868 (2026-10-21) improves forward-proxy-wrapped dial retries; not established in stable. Upstream Tests run 39594833694 passed 3 platform jobs (2 optional skipped).",
+      "caveats": "Review exposed admin/config API and proxy trust boundaries. v2.11.6 had regressions fixed in v2.11.7; main-branch changes are not necessarily released.",
+      "research_notes": "research/2026-10-21-caddy-certmagic-duckdb-maintenance.md"
     },
     {
       "name": "CertMagic",
@@ -994,10 +1006,22 @@
         "official README inspected",
         "Apache-2.0 LICENSE.txt inspected",
         "API/feature documentation inspected",
-        "recent maintenance and security-sensitive fixes inspected"
+        "recent maintenance and security-sensitive fixes inspected",
+        "2026-10-21: README, Apache-2.0 LICENSE.txt, certmagic.go, release, recent commits and upstream CI jobs inspected; no independent ACME issuance or TLS audit."
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "maintenance_signals": "Stable v0.25.6 (2026-09-30) upgraded ZeroSSL dependency for Authorization: ApiKey header. Latest master commit cfd20205 (2026-10-01) fixes README link. Upstream Tests run 36915271739 passed 6/6 Ubuntu/macOS/Windows Go 1.25/1.26 jobs.",
+      "caveats": "ACME issuance depends on CA availability, challenge routing, permissions, storage locks and on-demand controls. Review external DNS/storage provider licenses.",
+      "research_notes": "research/2026-10-21-caddy-certmagic-duckdb-maintenance.md"
     },
     {
       "name": "whisper.cpp",
@@ -1101,7 +1125,7 @@
       ],
       "evidence": "VERIFIED",
       "tier": "S",
-      "score": 29,
+      "score": 28,
       "license": "MIT",
       "license_copy_status": "permissive-root-license; verify extension and dependency licenses",
       "platforms": [
@@ -1130,12 +1154,23 @@
         "2026-08-20 nested-schema correctness commit inspected",
         "2026-08-20 ARM64 portability and test evidence inspected",
         "not independently built or benchmarked by GitHub Gold",
-        "2026-10-14 root MIT LICENSE and README rechecked; recent upstream commits inspected"
+        "2026-10-14 root MIT LICENSE and README rechecked; recent upstream commits inspected",
+        "2026-10-21: README, MIT LICENSE, generated C API header, v2.0.0 release, recent commit and selected upstream CI jobs inspected; no independent build, query, benchmark or extension test."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
       "source_discovery": "GitHub-first discovery; research/2026-08-20-embedded-analytics.md",
-      "caveats": "Optional extensions and third-party dependencies can have separate licensing; consumers should target documented public compatibility surfaces rather than private internals."
+      "caveats": "Major-version API/extension compatibility needs review. Release/integration CI failures do not prove core SQL malfunction. Check optional extension licenses.",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "maintenance_signals": "Stable v2.0.0 (2026-10-21) published 28 assets. Main commit c15a232a (2026-10-21) fixes window-aggregate memory-limit livelock but is not established in v2.0.0. On Tag 39602672912 failed staging download; SwiftRelease 39602672833 failed push; Oct 19 Main 39259831957 passed many core tests but failed parser benchmark and cloud-extension builds.",
+      "research_notes": "research/2026-10-21-caddy-certmagic-duckdb-maintenance.md"
     },
     {
       "name": "go-libp2p",
