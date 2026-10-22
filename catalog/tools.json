@@ -22,7 +22,14 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 28,
-      "score_breakdown": {"utility":5,"working_evidence":4,"reusability":5,"novelty":5,"documentation":5,"maintenance":4},
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 4
+      },
       "license": "GPL-3.0",
       "license_copy_status": "allowed-with-license-obligations",
       "platforms": [
@@ -81,13 +88,22 @@
         "browser flasher"
       ],
       "verification": [
-        "README inspected",
-        "recent commits inspected",
-        "root LICENSE lookup returned 404"
+        "README, PlatformIO configuration and source modes inspected",
+        "2026-10-11 commit and prebuilt firmware inspected",
+        "Pages deployment passed, not firmware CI",
+        "Root license not found; no hardware test"
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "copy_restriction_note": "Catalog and study upstream only until licensing or explicit permission is established."
+      "copy_restriction_note": "Catalog and study upstream only until licensing or explicit permission is established.",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 2,
+        "reusability": 4,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 3
+      }
     },
     {
       "name": "Termux Tools",
@@ -161,11 +177,20 @@
         "Termux package adaptations"
       ],
       "verification": [
-        "README inspected",
-        "root LICENSE inspected"
+        "README, install.sh, root MIT license and patched submodule inspected",
+        "v0.2.3 release published 2025-09-09",
+        "No CI runs found; no phone-to-phone USB test"
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 3,
+        "maintenance": 3
+      }
     },
     {
       "name": "ESP32-S3 Remote ID Add-on",
@@ -195,11 +220,21 @@
         "status indicators"
       ],
       "verification": [
-        "README inspected",
-        "root Apache-2.0 LICENSE inspected"
+        "README, Apache-2.0 license and source/tests tree inspected",
+        "2026-06-29 upstream ESP-IDF firmware-build CI passed",
+        "Inspected CI does not execute tests/remoteid_test.py",
+        "No independent RF or hardware test"
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 4,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 3
+      }
     },
     {
       "name": "OpenDroneID Core C",
@@ -469,7 +504,14 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 27,
-      "score_breakdown": {"utility":5,"working_evidence":4,"reusability":4,"novelty":4,"documentation":5,"maintenance":5},
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 4,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
       "license": "AGPL-3.0",
       "license_copy_status": "network-copyleft-review-required-before-reuse",
       "platforms": [
@@ -905,12 +947,21 @@
         "terminal integration"
       ],
       "verification": [
-        "README inspected",
-        "REUSE license-file search inspected",
-        "recent commits inspected"
+        "README, BUILDING.rst, REUSE/SPDX and Java modules inspected",
+        "2026-10-19 upstream Gradle unit tests passed",
+        "2026-10-19 upstream lint and CodeQL passed",
+        "No independent Android device testing"
       ],
       "hardware_tested_by_github_gold": false,
-      "research_priority": "high"
+      "research_priority": "high",
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 4,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      }
     },
     {
       "name": "Caddy",
@@ -1039,7 +1090,14 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 29,
-      "score_breakdown": {"utility":5,"working_evidence":5,"reusability":5,"novelty":4,"documentation":5,"maintenance":5},
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
       "license": "MIT",
       "license_copy_status": "permissive-source-license; model-weights-and-dependencies-separate",
       "platforms": [
@@ -1086,7 +1144,14 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 28,
-      "score_breakdown": {"utility":5,"working_evidence":4,"reusability":5,"novelty":5,"documentation":5,"maintenance":4},
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 4
+      },
       "license": "MIT",
       "license_copy_status": "permissive-root-license; check optional bindings/dependencies",
       "platforms": [
@@ -1193,7 +1258,14 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 29,
-      "score_breakdown": {"utility":5,"working_evidence":4,"reusability":5,"novelty":5,"documentation":5,"maintenance":5},
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 5
+      },
       "license": "MIT",
       "license_copy_status": "permissive-root-license; verify transport and dependency licenses",
       "platforms": [
@@ -1245,7 +1317,14 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 29,
-      "score_breakdown": {"utility":5,"working_evidence":5,"reusability":5,"novelty":4,"documentation":5,"maintenance":5},
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
       "license": "Apache-2.0 OR MIT",
       "license_copy_status": "dual-permissive-with-attribution",
       "platforms": [

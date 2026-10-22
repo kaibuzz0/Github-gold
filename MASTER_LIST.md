@@ -51,19 +51,19 @@ Suggested tiers:
 - **Author / Org:** colonelpanichacks
 - **Category:** ESP32-S3 / passive radio observation / BLE / Wi-Fi / PCAP / drone Remote ID
 - **Evidence:** PROMISING
-- **Tier / Score:** A / 24
+- **Tier / Score:** A / 24 (Utility 5 + Working Evidence 2 + Reusability 4 + Novelty 5 + Documentation 5 + Maintenance 3)
 - **What it does:** Multi-mode firmware for the Seeed Studio XIAO ESP32-S3. Its README documents BLE target detection, RSSI foxhunting, passive Wi-Fi observation, Wi-Fi PCAP, Remote ID monitoring, and passive BLE advertising capture.
 - **Why it is valuable:** Combines several reusable embedded-radio ideas behind one small device and exposes browser flashing, dashboards, USB-CDC command protocols, packet capture, persistence, and modular firmware selection.
-- **Useful code/components:** boot selector; BLE signature matching; RSSI proximity feedback; Wi-Fi promiscuous capture; PCAP streaming; Wireshark helpers; Open Drone ID parsing; USB-CDC protocol; SPIFFS persistence; browser flasher.
+- **Useful code/components:** `src/mode_manager.cpp`, `src/mode_detector.cpp`, `src/mode_flockyou_promiscious.cpp`, `src/mode_blesniff.cpp`, `src/mode_pcap.cpp`
 - **Install / runtime:** Browser flashing plus Python/esptool flashing are documented upstream.
 - **Platforms:** Seeed Studio XIAO ESP32-S3 plus desktop/browser companion tooling.
 - **License:** UNKNOWN — no root LICENSE found during inspection.
-- **Maintenance signals:** Active commits observed on 2026-08-18, including BLE SNIFF fixes and flasher updates.
-- **Verification performed:** README and recent history inspected; root LICENSE lookup returned 404. No hardware test performed.
+- **Maintenance signals:** Latest inspected source commit 2026-10-11 updated Mode 7 binary and web flasher. GitHub Pages deployment 38178185526 passed, but no firmware build/test workflow was found; no latest tagged release was available.
+- **Verification performed:** Inspected README, PlatformIO manifest, src/ modes, shipped firmware, October commits, and Actions runs. No independent flashing or BLE/Wi-Fi test; passing Pages deployment does not verify firmware.
 - **Source discovery:** GitHub-first discovery.
 - **Related projects:** colonelpanichacks/flock-you; colonelpanichacks/ouispy-pcap; colonelpanichacks/ouispy-blesniff; colonelpanichacks/Oui-Spy-UniPwn.
-- **Caveats / risks:** Do not copy or redistribute source into GitHub Gold until licensing/permission is established. Cataloged for defensive, interoperability, research, and situational-awareness use.
-- **Research notes:** High-priority component map once license status is resolved.
+- **Caveats / risks:** Root license UNKNOWN: do not copy source until permission is established. Device-identification signatures and RSSI can produce false positives; use only for authorized passive observation.
+- **Research notes:** Upstream-only scoring audit: `research/2026-10-22-legacy-four-scoring-audit.md`. No third-party source copied.
 
 ### Termux Tools
 
@@ -91,19 +91,19 @@ Suggested tiers:
 - **Author / Org:** nohajc
 - **Category:** Android / Termux / ADB / Fastboot / USB interoperability
 - **Evidence:** VERIFIED
-- **Tier / Score:** A / 23
+- **Tier / Score:** A / 23 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 3 + Maintenance 3)
 - **What it does:** Patches ADB and Fastboot so one Android device can debug another over USB from Termux without root using user-approved USB file descriptors.
 - **Why it is valuable:** Demonstrates a reusable interoperability pattern combining Android USB permission APIs with Unix-domain-socket file-descriptor passing.
-- **Useful code/components:** `termux-usb` integration; USB FD bridging; Unix-socket FD transfer; patched ADB/Fastboot enumeration; package adaptations.
+- **Useful code/components:** `install.sh` and `android-tools` submodule pointing to `nohajc/vendor-adb-patched` (USB FD bridging)
 - **Install / runtime:** Requires Termux and Termux:API; upstream provides an install flow and apt repository.
 - **Platforms:** Android / Termux.
 - **License:** MIT at repository root; upstream Android tools/submodules have separate licenses.
-- **Maintenance signals:** Substantial history and documented limitations.
-- **Verification performed:** README and root MIT license inspected. No device-to-device ADB test performed.
+- **Maintenance signals:** Latest inspected release v0.2.3 published 2025-09-09; latest commit 2026-03-13 modified install.sh. No GitHub Actions runs found.
+- **Verification performed:** Inspected README, MIT root license, install.sh, android-tools submodule and release/commit history. No independent Android USB test or upstream automated test evidence found.
 - **Source discovery:** Termux ecosystem pass.
 - **Related projects:** termux/termux-api; termux/termux-packages; Android platform-tools.
-- **Caveats / risks:** Inspect remote install scripts before execution. Review component licenses before extraction.
-- **Research notes:** Strong architecture reference for non-root Android USB FD bridging.
+- **Caveats / risks:** Documented curl-to-Bash installer adds a third-party APT repository and downloads its signing key without a pinned fingerprint in install.sh. Authenticate script and key before use; patched Android-tools submodule has separate licenses.
+- **Research notes:** Upstream-only scoring audit: `research/2026-10-22-legacy-four-scoring-audit.md`. No third-party source copied.
 
 ### ESP32-S3 Remote ID Add-on (`esp-remoteid`)
 
@@ -111,19 +111,19 @@ Suggested tiers:
 - **Author / Org:** Peinser BV / peinser
 - **Category:** ESP32-S3 / OpenDroneID / embedded firmware / interoperability
 - **Evidence:** PROMISING
-- **Tier / Score:** A / 24
+- **Tier / Score:** A / 24 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 3 + Documentation 5 + Maintenance 3)
 - **What it does:** ESP-IDF firmware for standards-based OpenDroneID / ASTM F3411 Remote ID broadcast over BLE and Wi-Fi with MAVLink input.
 - **Why it is valuable:** Well-documented standards implementation built around `opendroneid-core-c`, with explicit transport behavior and flight-controller integration paths.
-- **Useful code/components:** OpenDroneID state/transport integration; BLE advertisements; Wi-Fi beacon/NAN transport; Kconfig; MAVLink ingestion; readiness gating; indicators.
+- **Useful code/components:** `src/remoteid/main.c`, `src/remoteid/remoteid/`, `tests/remoteid_test.py`, `components/opendroneid_core`, `.github/workflows/firmware.yml`
 - **Install / runtime:** ESP-IDF environment with recursive submodules; build/flash/monitor workflow documented upstream.
 - **Platforms:** ESP32-S3.
 - **License:** Apache-2.0 at root; dependency licenses must also be preserved.
-- **Maintenance signals:** Current 2026 project with extensive documentation and active TODOs.
-- **Verification performed:** README and root license inspected. No firmware build or RF hardware test performed.
+- **Maintenance signals:** v1.0.0 released 2026-05-15; main commit 2026-06-29. Upstream ESP-IDF v5.5 esp32s3 firmware-build CI run 28357049701 passed 2026-06-29; tests and RF operation were not exercised in that workflow.
+- **Verification performed:** Inspected README, Apache-2.0 license, src/remoteid, components, tests and firmware.yml. Upstream compile succeeded; no independent build, receiver test or regulatory conformance test.
 - **Source discovery:** OpenDroneID ecosystem branch.
 - **Related projects:** opendroneid/opendroneid-core-c; opendroneid/receiver-android; ArduPilot/ArduRemoteID.
-- **Caveats / risks:** Regulatory compliance depends on jurisdiction and configuration.
-- **Research notes:** Good candidate for deeper source-level study after dependency-license review.
+- **Caveats / risks:** Successful compilation does not establish ASTM F3411 radio interoperability, timing, identity correctness or legal compliance. Preserve dependency/submodule licenses and follow applicable aviation regulations.
+- **Research notes:** Upstream-only scoring audit: `research/2026-10-22-legacy-four-scoring-audit.md`. No third-party source copied.
 
 ### OpenDroneID Core C
 
@@ -392,19 +392,19 @@ Suggested tiers:
 - **Author / Org:** MuntashirAkon
 - **Category:** Android / package inspection / app management / diagnostics / backup
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 27
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 4 + Documentation 5 + Maintenance 5)
 - **What it does:** Advanced Android package-management and diagnostics suite covering package/component inspection, manifests/signatures, tracker/library scanning, APK bundle workflows, backups, logcat, profiles, files, and terminal functionality.
 - **Why it is valuable:** Consolidates many Android package-analysis and device-management capabilities behind explicit privilege layers, making it a useful architecture reference for non-root, ADB-assisted, and root-enhanced workflows.
-- **Useful code/components:** package/component inspection; manifest/signature analysis; APK bundle installation; tracker/library scanning; logcat tools; profiles/batch operations; encrypted backup/restore; ADB/root capability layers; file manager; terminal integration.
+- **Useful code/components:** `app/src/main/java/io/github/muntashirakon/AppManager/{apk,backup,scanner,adb,profiles,logcat,crypto}/`
 - **Install / runtime:** Android application with optional ADB/root-enhanced capabilities.
 - **Platforms:** Android.
 - **License:** REUSE/SPDX model; primary application is documented GPL-3.0-or-later with additional file-level licenses.
-- **Maintenance signals:** Recent commits were inspected during the research pass.
-- **Verification performed:** README, REUSE/license metadata, and recent commits inspected. No Android execution performed by GitHub Gold.
+- **Maintenance signals:** v4.1.1 published 2026-09-04; commits through 2026-10-19. Upstream Tests 39186829907, Lint 39186829863 and CodeQL 39186829827 all passed 2026-10-19.
+- **Verification performed:** Inspected README, BUILDING.rst, REUSE/SPDX licensing, Java module tree and test workflow. Upstream Gradle unit tests, lint and CodeQL passed; no independent Android build, backup/restore or privileged-device test.
 - **Source discovery:** Embedded/Android tooling pass.
 - **Related projects:** Android package manager APIs, ADB, APK analysis and backup ecosystems.
-- **Caveats / risks:** Perform file-level SPDX/license review before code reuse; powerful package/device operations should be used only on devices the operator controls.
-- **Research notes:** Particularly strong as a map of Android package metadata, privilege abstraction, and diagnostics workflows.
+- **Caveats / risks:** Primary app GPL-3.0-or-later with file-level SPDX exceptions; review each file and submodule before copying. Privileged operations can alter user data; use on owned devices with backups.
+- **Research notes:** Upstream-only scoring audit: `research/2026-10-22-legacy-four-scoring-audit.md`. No third-party source copied.
 
 ### Caddy
 
