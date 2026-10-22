@@ -1039,6 +1039,46 @@ Suggested tiers:
 - **Caveats / risks:** Runtime installers execute third-party code and may need elevated privileges; provider-specific `min_release_age` and `postinstall_scripts` controls **warn and continue** where unsupported, rather than fail closed. Pin, isolate and verify packages before deployment.
 - **Research notes:** No upstream code copied. Upstream passing CI is not independent verification. Distinguish this package-provider runtime from abx-dl's capture orchestration.
 
+### SOPS
+
+- **Repository:** https://github.com/getsops/sops
+- **Author / Org:** getsops (CNCF Sandbox).
+- **Category:** Structured encrypted configuration / GitOps / secrets management.
+- **Evidence:** VERIFIED — upstream CI evidence; not independently security-audited.
+- **Tier / Score:** S / 28 (Utility 5; Working Evidence 5; Reusability 5; Novelty 4; Documentation 5; Maintenance 4).
+- **What it does:** Encrypts YAML, JSON, ENV, INI and binary configuration using age, PGP and cloud key providers.
+- **Why it is valuable:** Reusable format adapters, key-provider abstraction, multi-recipient policies and encrypted Git-friendly configuration.
+- **Useful code/components:** `stores/` serialization adapters; `age/`, `pgp/` and KMS provider integrations; `keyservice/` gRPC; `shamir/` secret sharing; `audit/`.
+- **Install / runtime:** Upstream binaries for Linux/macOS/Windows or Go source; supply keys or provider credentials.
+- **Platforms:** Linux, macOS, Windows.
+- **License:** MPL-2.0; file-level copyleft and attribution obligations.
+- **Maintenance signals:** v3.13.3 released 2026-07-23; main CLI CI passed 17/17 jobs on 2026-10-20; recent commits through 2026-10-20.
+- **Verification performed:** Inspected upstream README, license, source tree, release and GitHub Actions. No independent build, encryption/KMS test or security audit.
+- **Source discovery:** GitHub-first; `research/2026-10-22-sops-mcuboot-promotion-evidence.md` and earlier SOPS component dossiers.
+- **Related projects:** FiloSottile/age; getsops/community.
+- **Caveats / risks:** Endpoint compromise, plaintext at runtime and cloud keyservice permissions remain relevant; CI does not prove cryptographic security.
+- **Research notes:** No third-party implementation code copied.
+
+### MCUboot
+
+- **Repository:** https://github.com/mcu-tools/mcuboot
+- **Author / Org:** mcu-tools.
+- **Category:** Embedded secure boot / firmware signing / microcontroller updates.
+- **Evidence:** VERIFIED — upstream simulator, firmware-tool and platform CI; not independently hardware-tested.
+- **Tier / Score:** S / 29 (Utility 5; Working Evidence 5; Reusability 5; Novelty 5; Documentation 5; Maintenance 4).
+- **What it does:** Portable authenticated bootloader and firmware-update framework for 32-bit microcontrollers.
+- **Why it is valuable:** Security-sensitive image verification, update state machine, signing CLI and regression simulator are reusable across embedded platforms.
+- **Useful code/components:** `boot/bootutil/` image verification and swap; `boot/boot_serial/` recovery; `scripts/imgtool.py` signing; `sim/` regression simulator; platform ports.
+- **Install / runtime:** Integrate via board/RTOS bootloader support; configure flash layout, keys and update policy.
+- **Platforms:** Zephyr, Mynewt, NuttX, Mbed, Espressif and Cypress/Infineon; RIOT boot target.
+- **License:** Apache-2.0 plus NOTICE; review bundled cryptographic components separately.
+- **Maintenance signals:** Stable v2.4.0 released 2026-04-23; source version bumped to 2.5.0 on 2026-10-22 but a new stable release was not confirmed. Main Sim CI passed 42/42 jobs 2026-10-22; imgtool, FIH, Zephyr and Espressif workflows passed.
+- **Verification performed:** Inspected upstream README, license, NOTICE, source tree, release and Actions. No independent build, flashing, board-level testing or physical fault-injection audit.
+- **Source discovery:** GitHub-first; `research/2026-10-22-sops-mcuboot-promotion-evidence.md` and earlier MCUboot dossier.
+- **Related projects:** Zephyr, TinyCrypt, Mbed TLS.
+- **Caveats / risks:** Trust anchors, anti-rollback, debug lock and flash geometry require board-specific validation. Feature-branch CI failures should not be conflated with main.
+- **Research notes:** No third-party implementation code copied.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

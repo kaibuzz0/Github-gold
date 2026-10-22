@@ -2614,6 +2614,96 @@
       "research_priority": "high",
       "copy_restriction_note": "No third-party source copied. Provider actions can execute/install arbitrary packages, may require privileges, and can ignore unsupported safety controls with warnings; pin and verify packages, isolate execution and review each package's license.",
       "source": "GitHub-first recursive lead from ArchiveBox/abx-dl; research/2026-10-20-abxpkg-provider-runtime-ci-failure-analysis.md"
+    },
+    {
+      "name": "SOPS",
+      "repository": "https://github.com/getsops/sops",
+      "owner": "getsops",
+      "category": [
+        "secrets-management",
+        "encrypted-configuration",
+        "gitops"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MPL-2.0",
+      "license_copy_status": "file-level-copyleft-review-required",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "useful_components": [
+        "stores/ format adapters",
+        "age/ and cloud-KMS key providers",
+        "keyservice/ gRPC operations",
+        "shamir/ key sharing",
+        "audit/"
+      ],
+      "verification": [
+        "2026-10-20 upstream main CLI CI 17/17 passed: https://github.com/getsops/sops/actions/runs/39370255127",
+        "2026-07-23 v3.13.3 release; README, LICENSE and component source inspected",
+        "No independent build, encryption or cryptographic audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "source": "research/2026-10-22-sops-mcuboot-promotion-evidence.md",
+      "copy_restriction_note": "MPL-2.0 file-level copyleft; no source copied."
+    },
+    {
+      "name": "MCUboot",
+      "repository": "https://github.com/mcu-tools/mcuboot",
+      "owner": "mcu-tools",
+      "category": [
+        "embedded-firmware",
+        "secure-boot",
+        "firmware-update"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0",
+      "license_copy_status": "permissive-with-attribution-and-bundled-license-review",
+      "platforms": [
+        "Zephyr",
+        "Mynewt",
+        "NuttX",
+        "Mbed",
+        "Espressif",
+        "Cypress/Infineon"
+      ],
+      "useful_components": [
+        "boot/bootutil/ image verification and swap",
+        "boot/boot_serial/ recovery",
+        "scripts/imgtool.py signing",
+        "sim/ regression simulator"
+      ],
+      "verification": [
+        "2026-10-22 upstream main Sim CI 42/42 passed: https://github.com/mcu-tools/mcuboot/actions/runs/39761866485",
+        "v2.4.0 stable release 2026-04-23; 2.5.0 source bump not confirmed released",
+        "README, LICENSE, NOTICE, source and Actions inspected; no independent hardware or build tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "source": "research/2026-10-22-sops-mcuboot-promotion-evidence.md",
+      "copy_restriction_note": "Apache-2.0 plus NOTICE; review bundled crypto licenses. No source copied."
     }
   ],
   "deferred_or_rejected": [
