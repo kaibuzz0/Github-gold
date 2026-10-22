@@ -22,6 +22,7 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 28,
+      "score_breakdown": {"utility":5,"working_evidence":4,"reusability":5,"novelty":5,"documentation":5,"maintenance":4},
       "license": "GPL-3.0",
       "license_copy_status": "allowed-with-license-obligations",
       "platforms": [
@@ -1035,6 +1036,7 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 29,
+      "score_breakdown": {"utility":5,"working_evidence":5,"reusability":5,"novelty":4,"documentation":5,"maintenance":5},
       "license": "MIT",
       "license_copy_status": "permissive-source-license; model-weights-and-dependencies-separate",
       "platforms": [
@@ -1234,6 +1236,7 @@
       "evidence": "VERIFIED",
       "tier": "S",
       "score": 29,
+      "score_breakdown": {"utility":5,"working_evidence":5,"reusability":5,"novelty":4,"documentation":5,"maintenance":5},
       "license": "Apache-2.0 OR MIT",
       "license_copy_status": "dual-permissive-with-attribution",
       "platforms": [

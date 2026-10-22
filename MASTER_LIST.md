@@ -31,14 +31,14 @@ Suggested tiers:
 - **Author / Org:** Meshtastic
 - **Category:** LoRa / mesh networking / embedded firmware / off-grid communications
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 4)
 - **What it does:** Official firmware for the Meshtastic decentralized LoRa mesh network. Supports text messaging, location sharing, telemetry, and communication without cellular or internet infrastructure.
 - **Why it is valuable:** Mature multi-platform firmware with active development, build/flashing instructions, tests/CI signals, and support for ESP32, nRF52, RP2040/RP2350, and Linux-class targets.
 - **Useful code/components:** mesh routing; LoRa transport; position modules; packet handling; node database; telemetry; Wi-Fi/HTTP/TLS support; hardware variants.
 - **Install / runtime:** Build from source or flash supported hardware with official Meshtastic tooling.
 - **Platforms:** ESP32, nRF52, RP2040/RP2350, Linux.
 - **License:** GPL-3.0.
-- **Maintenance signals:** Multiple commits observed on 2026-08-18/19 fixing routing, position-channel behavior, device builds, and TLS memory recovery; README exposes CI status.
+- **Maintenance signals:** Latest GitHub non-prerelease v2.7.26.54e0d8d published 2026-06-24; develop CI succeeded 2026-10-21 (run 39633190319). A 2026-10-22 signing-policy commit postdates inspected CI.
 - **Verification performed:** README, license, and recent commit history inspected. Not hardware-tested by GitHub Gold.
 - **Source discovery:** GitHub-first discovery.
 - **Related projects:** meshtastic/Meshtastic-Android; meshtastic/python; meshtastic/web; meshtastic/protobufs; ShakataGaNai/awesome-meshtastic.
@@ -451,14 +451,14 @@ Suggested tiers:
 - **Author / Org:** ggml-org
 - **Category:** local AI / speech recognition / embedded inference
 - **Evidence:** VERIFIED (upstream code, release and CI evidence; not independently executed)
-- **Tier / Score:** S / 29 (provisional)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5; upstream evidence)
 - **What it does:** Local cross-platform speech recognition implementation in C/C++.
 - **Why it is valuable:** Embeddable C API and CPU/GPU backends for offline transcription.
 - **Useful code/components:** include/whisper.h C API; src/whisper.cpp inference core; CLI and streaming examples; VAD and quantization tooling; Android iOS WASM Java and Docker examples; GPU and accelerator backend integrations; talk-llama speech-to-LLM example.
 - **Install / runtime:** Build with CMake; obtain separately licensed model weights; run whisper-cli or link the C API.
 - **Platforms:** Linux, Windows, macOS, Android, iOS, WebAssembly.
 - **License:** MIT for the inspected root repository; third-party code and assets may differ.
-- **Maintenance signals:** Upstream stable release v1.9.5 published 2026-10-06; CI workflows cover multiple platforms.
+- **Maintenance signals:** v1.9.5 published 2026-10-06; upstream CPU CI passed 5/5 jobs 2026-10-19 (run 39266836864). Android, Windows, WASM and VAD workflows also succeeded. A later model-vocabulary check is not assumed shipped in v1.9.5.
 - **Verification performed:** README, license, upstream release and CI definitions inspected. No independent build, runtime test, or benchmark.
 - **Source discovery:** GitHub-first discovery; research/2026-08-20-local-ai-crdt.md
 - **Related projects:** ggml-org/ggml and Whisper model ecosystem.
@@ -538,7 +538,7 @@ Suggested tiers:
 - **Install / runtime:** Standalone installers or PyPI; Rust toolchain for source builds; some operations access package indexes or download interpreters.
 - **Platforms:** Linux, macOS, Windows.
 - **License:** Apache-2.0 OR MIT; inspect dependency and component terms before copying.
-- **Maintenance signals:** Upstream v0.13.1 published 2026-10-14; same-day commits; CI, integration, smoke and release workflows.
+- **Maintenance signals:** 0.13.5 published 2026-10-22 UTC (release notes dated 2026-10-21); updated managed CPython builds after 0.13.4 trust-root removal. Main CI succeeded 2026-10-22 (run 39720666204).
 - **Verification performed:** README, MIT and Apache-2.0 root licenses inspected; uv-resolver source tree and GitHub Actions test workflows inspected; v0.13.1 upstream release published 2026-10-14 inspected; No independent build, install or benchmark.
 - **Source discovery:** GitHub-first; research/2026-08-21-python-tooling.md
 - **Related projects:** Astral Ruff, ty; Python packaging standards.
