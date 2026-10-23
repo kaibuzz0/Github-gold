@@ -3239,6 +3239,119 @@
       "source": "GitHub-first; research/2026-09-11-soapysdr-vendor-neutral-sdr-hardware-abstraction.md; research/2026-10-23-zarr-soapysdr-promotion.md",
       "copy_restriction_note": "Core Boost-1.0 notice obligations apply; hardware plugins/vendor SDKs and firmware have separate licenses. No source copied.",
       "research_notes": "Reusable device/streaming API, plugin registry, format converters and CLI; inspect companion pothosware/SoapyRemote separately for remote exposure/authentication. Null-driver CI does not establish device-specific RF operation."
+    },
+    {
+      "name": "Icechunk",
+      "repository": "https://github.com/earth-mover/icechunk",
+      "owner": "earth-mover",
+      "category": [
+        "scientific-computing",
+        "transactional-object-storage",
+        "zarr",
+        "data-versioning",
+        "rust",
+        "python"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Apache-2.0",
+      "license_copy_status": "permissive-with-license-notice-attribution-and-modification-review",
+      "platforms": [
+        "Python >=3.12",
+        "Rust >=1.95 (v2.3.0)",
+        "Zarr Python >=3.1",
+        "Linux/macOS/Windows via supported wheels",
+        "S3/GCS/Azure/local/object_store backends"
+      ],
+      "useful_components": [
+        "icechunk-format/: snapshot, manifest and transaction-log encodings",
+        "icechunk-storage/: storage traits and conditional-write boundary",
+        "icechunk-arrow-object-store/: Apache Arrow object_store backend",
+        "icechunk-s3/: optional native S3 backend",
+        "icechunk/src/repository.rs and session.rs: repository, sessions and committed snapshots",
+        "icechunk/src/conflicts/: conflict resolution",
+        "icechunk/src/virtual_chunks.rs: external-file chunk references",
+        "icechunk/src/cli/: operational inspection and version control",
+        "icechunk-python/: PyO3 Zarr integration",
+        "icechunk-js/: JavaScript client"
+      ],
+      "verification": [
+        "2026-10-23 inspected README, Apache-2.0 root LICENSE, Rust source directories, Python pyproject.toml, v2.3.0 changelog and release published 2026-10-06",
+        "Upstream Python Check workflow 39895350092 succeeded 2026-10-23 with test, stateful/Hypothesis, xarray compatibility and free-threaded shards; upstream evidence only",
+        "Separate Python CI and library release workflow 39898974564 failed 2026-10-23; inspected failures include support/v1.x Python 3.15t wheel builds on Windows and macOS; this is a packaging warning, not evidence of a broken v2.3.0 engine",
+        "No independent builds, storage I/O, concurrency tests, snapshot recovery, cloud backend tests or security review"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v2.3.0 released 2026-10-06; upstream 2026-10-23 Python Check successful, separate Python release-wheel matrix partially failed for legacy support/v1.x Python 3.15t.",
+      "source": "GitHub-first recursive follow-up from Zarr Python; research/2026-09-06-icechunk-transactional-zarr-object-storage-versioning.md; research/2026-10-23-icechunk-soapyremote-promotion.md",
+      "copy_restriction_note": "No source copied. Apache-2.0 license/NOTICE and attribution obligations apply; inspect dependency, data, external-file and backend licenses separately.",
+      "research_notes": "Transactional semantics depend on backend conditional writes. Test concurrent commits, GC, branch resets, object-store metadata and external virtual chunk validity. Python package requires >=3.12; Rust v2.3.0 MSRV 1.95."
+    },
+    {
+      "name": "SoapyRemote",
+      "repository": "https://github.com/pothosware/SoapyRemote",
+      "owner": "pothosware",
+      "category": [
+        "software-defined-radio",
+        "remote-hardware-control",
+        "network-streaming",
+        "rpc",
+        "device-interoperability",
+        "c-plus-plus"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 3,
+        "maintenance": 4
+      },
+      "license": "BSL-1.0",
+      "license_copy_status": "permissive-with-copyright-and-license-notices-review-soapysdr-driver-licenses",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "FreeBSD",
+        "CMake/C++",
+        "SoapySDR-compatible devices with installed drivers"
+      ],
+      "useful_components": [
+        "client/Streaming.cpp: UDP/TCP sample transport, remote format/MTU/window negotiation",
+        "client/DiscoverServers.cpp: remote SDR discovery",
+        "client/Registration.cpp: SoapySDR remote device plugin",
+        "server/SoapyServer.cpp and ServerListener.cpp: remote device server/listener",
+        "server/ClientHandler.cpp: RPC dispatcher and device-control surface",
+        "common/SoapyRemoteDefs.hpp: RPC operations and defaults",
+        "common/: RPC packing/unpacking, socket, discovery and stream endpoint utilities",
+        "server/SoapySDRServer.1: deployment and bind documentation"
+      ],
+      "verification": [
+        "2026-10-23 inspected README, Boost-1.0 license, Changelog.txt, CI workflow, source trees, common RPC definitions and recent commits",
+        "Changelog declares v0.5.3 dated 2026-10-10; GitHub Releases endpoint returned no published Release objects",
+        "2026-10-10 upstream CI workflows 38059816370 and 38059814840 succeeded across Linux/macOS/Windows/FreeBSD build and SoapySDRUtil --check=remote registration; not an end-to-end SDR stream test",
+        "No independent build, client/server loopback, IQ sample validation, radio hardware test, authentication/security test or throughput benchmark"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Commits 2026-09-29 fix bad remote-call dereference, 2026-10-05 update Actions, 2026-10-10 bump v0.5.3; both inspected CI runs successful; no GitHub Release object.",
+      "source": "GitHub-first recursive follow-up from SoapySDR; research/2026-09-05-soapyremote-network-transparent-sdr-transport.md; research/2026-08-29-soapyremote-network-trust-boundary.md; research/2026-10-23-icechunk-soapyremote-promotion.md",
+      "copy_restriction_note": "No source copied. Retain Boost-1.0 notices for covered code. SoapySDR drivers/vendor SDKs and firmware have separate licenses.",
+      "research_notes": "Default server port 55132 and documented all-interface bind are a sensitive remote-control boundary; no stock TLS/client-auth was identified in inspected path, not a formal absence proof. Restrict to trusted networks or authenticated tunnel. CI covers builds/module registration, not end-to-end radio control or samples."
     }
   ],
   "deferred_or_rejected": [

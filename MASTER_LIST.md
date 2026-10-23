@@ -1281,6 +1281,46 @@ Suggested tiers:
 - **Caveats / risks:** A passing null-device/plugin test does not prove any particular SDR device works. Vendor driver licenses and remote device access controls vary. GitHub Release metadata does not independently confirm the changelog's 0.9.0 label.
 - **Research notes:** `research/2026-10-23-zarr-soapysdr-promotion.md`; no upstream code copied. Prioritize sample-format converter edge cases and SoapyRemote authentication/exposure review.
 
+### Icechunk
+
+- **Repository:** https://github.com/earth-mover/icechunk
+- **Author / Org:** Earthmover
+- **Category:** Scientific computing / transactional Zarr storage / object storage / data versioning / Rust / Python
+- **Evidence:** VERIFIED — upstream Python tests and source-level inspection; no independent storage tests
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Transactional, versioned object-storage engine for Zarr arrays; provides atomic committed snapshots, branches, tags, concurrent-write conflict detection and virtual chunk references.
+- **Why it is valuable:** Adds snapshot consistency and conflict-aware multi-writer updates to chunked scientific datasets, with reusable Rust storage/format crates and Python integration.
+- **Useful code/components:** `icechunk-format/` snapshot/manifest encodings; `icechunk-storage/` storage traits; `icechunk-arrow-object-store/` and `icechunk-s3/` backends; `icechunk/src/repository.rs`, `session.rs`, `conflicts/`, `virtual_chunks.rs`, `cli/`; `icechunk-python/` PyO3 bindings; `icechunk-js/` client.
+- **Install / runtime:** Python >=3.12 and Zarr Python >=3.1; Rust v2.3.0 requires Rust >=1.95 for source builds. Backend-specific cloud credentials and dependencies as applicable.
+- **Platforms:** Python/Rust on supported Linux/macOS/Windows targets; local and cloud object stores.
+- **License:** Apache-2.0 root; inspect dependencies and external datasets separately.
+- **Maintenance signals:** v2.3.0 released 2026-10-06. Upstream Python Check 39895350092 succeeded 2026-10-23; separate Python CI/release 39898974564 failed on several legacy support/v1.x Python 3.15t wheel jobs.
+- **Verification performed:** README, license, source structure, changelog, package requirements, release and CI job results inspected. No independent installation, storage transaction, concurrency or cloud test.
+- **Source discovery:** GitHub-first recursive Zarr Python follow-up; existing `research/2026-09-06-icechunk-transactional-zarr-object-storage-versioning.md`.
+- **Related projects:** zarr-developers/zarr-python; Apache Arrow object_store; xarray; Dask; Kerchunk.
+- **Caveats / risks:** Serializable transaction guarantees require backend conditional-write semantics; garbage collection, branch reset and external virtual references need rigorous validation. Legacy wheel build failures limit packaging confidence.
+- **Research notes:** `research/2026-10-23-icechunk-soapyremote-promotion.md`. No source copied. Prioritize conflict/GC state-model testing and cloud-backend conditional-write behavior.
+
+### SoapyRemote
+
+- **Repository:** https://github.com/pothosware/SoapyRemote
+- **Author / Org:** Pothosware
+- **Category:** Software-defined radio / remote device control / RPC / streaming / hardware interoperability
+- **Evidence:** VERIFIED — upstream cross-platform build/module-registration CI; no end-to-end stream or radio test
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 3 + Maintenance 4)
+- **What it does:** Exports SoapySDR-compatible devices across a network using a remote SoapySDR client plugin, control-plane RPC and configurable UDP/TCP sample streaming.
+- **Why it is valuable:** Reuses the existing SoapySDR device API for headless receivers and LAN-attached SDR hardware; its separated RPC, discovery, transport and device-adapter layers are useful components.
+- **Useful code/components:** `client/Streaming.cpp` sample format/MTU/window negotiation; `client/DiscoverServers.cpp` service discovery; `client/Registration.cpp` SoapySDR plugin; `server/ClientHandler.cpp` RPC dispatcher; `server/SoapyServer.cpp` and `ServerListener.cpp`; `common/SoapyRemoteDefs.hpp` protocol definitions; `common/` sockets and framing.
+- **Install / runtime:** Build with CMake and compatible SoapySDR; remote server and client need network connectivity; hardware requires appropriate SoapySDR plugins/vendor libraries.
+- **Platforms:** Linux, macOS, Windows and FreeBSD upstream build matrix.
+- **License:** Boost Software License 1.0; driver and vendor SDK terms vary.
+- **Maintenance signals:** 2026-09-29 remote-call safety fix, 2026-10-05 CI refresh, v0.5.3 in changelog dated 2026-10-10; upstream CI 38059816370 and 38059814840 succeeded. No GitHub Release object found.
+- **Verification performed:** Inspected README, root license, changelog, source layout, RPC definitions and CI jobs. No independent SDR hardware, remote control, sample-stream or security tests.
+- **Source discovery:** GitHub-first recursive follow-up from SoapySDR; existing `research/2026-09-05-soapyremote-network-transparent-sdr-transport.md`.
+- **Related projects:** pothosware/SoapySDR; SoapyRTLSDR; GNU Radio; SatDump; SDR++.
+- **Caveats / risks:** Default server port 55132; documented server binding may expose radio control beyond a trusted LAN. Inspected stock path did not establish TLS/client authentication; use external access controls. Passing module-registration CI does not prove sample transport works.
+- **Research notes:** `research/2026-10-23-icechunk-soapyremote-promotion.md` and `research/2026-08-29-soapyremote-network-trust-boundary.md`. No source copied. Prioritize safe loopback streaming and RPC authorization boundaries.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
