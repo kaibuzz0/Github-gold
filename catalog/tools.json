@@ -3352,6 +3352,121 @@
       "source": "GitHub-first recursive follow-up from SoapySDR; research/2026-09-05-soapyremote-network-transparent-sdr-transport.md; research/2026-08-29-soapyremote-network-trust-boundary.md; research/2026-10-23-icechunk-soapyremote-promotion.md",
       "copy_restriction_note": "No source copied. Retain Boost-1.0 notices for covered code. SoapySDR drivers/vendor SDKs and firmware have separate licenses.",
       "research_notes": "Default server port 55132 and documented all-interface bind are a sensitive remote-control boundary; no stock TLS/client-auth was identified in inspected path, not a formal absence proof. Restrict to trusted networks or authenticated tunnel. CI covers builds/module registration, not end-to-end radio control or samples."
+    },
+    {
+      "name": "NVDA",
+      "repository": "https://github.com/nvaccess/nvda",
+      "owner": "nvaccess",
+      "category": [
+        "accessibility",
+        "windows",
+        "screen-reader",
+        "assistive-technology",
+        "speech",
+        "braille",
+        "ui-automation"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 4,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "GPL-2.0-or-later with project-specific exceptions; bundled components have separate terms",
+      "license_copy_status": "copyleft-and-project-exceptions-review-before-reuse",
+      "platforms": [
+        "Windows 10/11 (check upstream support matrix)",
+        "Windows x64",
+        "Python 3.13 build/runtime baseline"
+      ],
+      "useful_components": [
+        "source/UIAHandler/: Windows UI Automation integration",
+        "source/IAccessibleHandler/: legacy accessibility integration",
+        "source/NVDAObjects/: accessible-object model",
+        "source/speech/ and source/synthDrivers/: speech abstraction",
+        "source/braille/ and source/brailleDisplayDrivers/: braille support",
+        "source/_remoteClient/: remote accessibility integration",
+        "source/addonHandler/: extension ecosystem",
+        "tests/system/: browser and installer integration tests"
+      ],
+      "verification": [
+        "2026-10-23 inspected source/ tree, pyproject.toml, copying.txt, stable GitHub release, commit history and upstream CI",
+        "2026-10-21 master push CI 39544741209 succeeded: 37 successful and 4 skipped jobs, including Windows build, unit tests, browser/installer system tests, type checks and dependency license checks",
+        "No independent Windows installation, screen-reader use, hardware braille test or accessibility/security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Latest confirmed stable release release-2026.2 published 2026-08-31; master commit 40e2df64cd dated 2026-10-21; master CI run 39544741209 successful. Separate 2026-10-23 PR CI failure 39951086469 does not invalidate the successful master run.",
+      "source": "GitHub-first accessibility category rotation; research/2026-09-12-nvda-windows-screen-reader-accessibility-platform.md",
+      "related_projects": [
+        "Microsoft UI Automation",
+        "Windows accessibility APIs",
+        "NVDA add-on ecosystem"
+      ],
+      "research_notes": "research/2026-10-23-nvda-libzim-promotion.md; source/pyproject.toml requires Python >=3.13,<3.14 for source builds. Review project-specific GPL exceptions, add-on trust, remote-control boundary and third-party component licenses before reuse."
+    },
+    {
+      "name": "libzim",
+      "repository": "https://github.com/openzim/libzim",
+      "owner": "openzim",
+      "category": [
+        "offline-knowledge",
+        "archival",
+        "zim-format",
+        "c-plus-plus",
+        "search",
+        "offline-first"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 5
+      },
+      "license": "GPL-2.0-or-later per upstream README/COPYING; meson.build declares GPL2",
+      "license_copy_status": "copyleft-obligations-review-dependencies-before-reuse",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Android",
+        "iOS",
+        "WebAssembly (upstream CI build targets)"
+      ],
+      "useful_components": [
+        "include/zim/archive.h: archive read access",
+        "include/zim/entry.h and item.h: entries and items",
+        "include/zim/blob.h: stored binary data",
+        "include/zim/search.h and suggestion.h: optional Xapian search/suggestions",
+        "include/zim/writer/: archive creation APIs",
+        "test/ and external zim-testing-suite: format regression fixtures"
+      ],
+      "verification": [
+        "2026-10-23 inspected README, include/zim headers, meson.build, release, recent commits and CI job results",
+        "2026-10-19 upstream main CI 39279529888 passed all 23 jobs, including native platforms and cross-build targets; not all cross-targets execute native runtime tests",
+        "2026-10-19 merged off-by-one random-entry selection fix; no independent ZIM parsing, creation, fuzzing or memory benchmark"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 9.8.2 published 2026-08-13; main commit ad888b4cdc dated 2026-10-19 fixes random-entry endpoint selection; upstream CI 39279529888 passed 23/23 jobs.",
+      "source": "GitHub-first recursive follow-up from openzim/zim-tools; research/2026-09-13-libzim-zim-offline-archive-library.md",
+      "related_projects": [
+        "openzim/zim-tools",
+        "openzim/zim-testing-suite",
+        "kiwix/kiwix-build",
+        "Kiwix readers"
+      ],
+      "research_notes": "research/2026-10-23-nvda-libzim-promotion.md; Meson/Ninja C++17 build with liblzma, ICU, Zstd and optional Xapian; disabling Xapian removes search APIs. Some upstream tests can require substantial memory. Review parser resource exhaustion and GPL obligations before embedding."
     }
   ],
   "deferred_or_rejected": [

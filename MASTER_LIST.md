@@ -1321,6 +1321,46 @@ Suggested tiers:
 - **Caveats / risks:** Default server port 55132; documented server binding may expose radio control beyond a trusted LAN. Inspected stock path did not establish TLS/client authentication; use external access controls. Passing module-registration CI does not prove sample transport works.
 - **Research notes:** `research/2026-10-23-icechunk-soapyremote-promotion.md` and `research/2026-08-29-soapyremote-network-trust-boundary.md`. No source copied. Prioritize safe loopback streaming and RPC authorization boundaries.
 
+### NVDA
+
+- **Repository:** https://github.com/nvaccess/nvda
+- **Author / Org:** NV Access
+- **Category:** Accessibility / Windows screen reader / speech / braille / UI automation
+- **Evidence:** VERIFIED — upstream Windows build, unit and system CI; no independent installation
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 4 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Open-source Windows screen reader with speech and braille output, browser accessibility, add-ons and application-specific accessibility adapters.
+- **Why it is valuable:** Mature, tested interoperability architecture for Windows UI Automation, IAccessible, ARIA/browser navigation, braille hardware and speech drivers.
+- **Useful code/components:** `source/UIAHandler/`, `source/IAccessibleHandler/`, `source/NVDAObjects/`, `source/speech/`, `source/braille/`, `source/brailleDisplayDrivers/`, `source/addonHandler/`, `source/_remoteClient/`, `tests/system/`.
+- **Install / runtime:** Official Windows installer for end users; source build uses SCons/Windows toolchain and `pyproject.toml` requires Python >=3.13,<3.14. Windows-only.
+- **Platforms:** Windows; upstream CI builds Windows x64 and runs installer/browser system tests.
+- **License:** GPL-2.0-or-later with two special project exceptions in `copying.txt`; bundled libraries have separate licenses.
+- **Maintenance signals:** Stable release `release-2026.2` published 2026-08-31; master commit `40e2df64cd` dated 2026-10-21. Upstream master CI 39544741209 passed 37 jobs with 4 skipped on 2026-10-21. A separate 2026-10-23 PR CI failed; do not generalize that failure to master.
+- **Verification performed:** Inspected root license, Python requirements, source layout, release, commits and upstream CI job results. No independent screen-reader, braille, installer, accessibility or security tests.
+- **Source discovery:** GitHub-first accessibility rotation; `research/2026-09-12-nvda-windows-screen-reader-accessibility-platform.md`.
+- **Related projects:** Microsoft UI Automation, NVDA add-on ecosystem, Windows accessibility APIs.
+- **Caveats / risks:** GPL exceptions and third-party licenses require file-level review; add-ons and remote-access components create separate trust boundaries. Windows-only; passing CI does not prove all applications are accessible.
+- **Research notes:** `research/2026-10-23-nvda-libzim-promotion.md`. No third-party code copied.
+
+### libzim
+
+- **Repository:** https://github.com/openzim/libzim
+- **Author / Org:** openZIM
+- **Category:** Offline knowledge / ZIM archives / C++ library / search / content packaging
+- **Evidence:** VERIFIED — upstream cross-platform CI and source inspection; no independent archive test
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 5)
+- **What it does:** Reference C++ implementation for reading, writing and searching ZIM offline-content archives.
+- **Why it is valuable:** Reusable archive-format APIs for offline reference libraries, education, disaster-preparedness and disconnected applications; complements existing operational `openzim/zim-tools` entry.
+- **Useful code/components:** `include/zim/archive.h`, `entry.h`, `item.h`, `blob.h`, `search.h`, `suggestion.h`, `writer/`; `test/` and external `openzim/zim-testing-suite`.
+- **Install / runtime:** C++17, Meson/Ninja, liblzma, ICU, Zstd; Xapian optional for search. Some test cases require high memory; cross-target builds have different feature flags.
+- **Platforms:** Linux, macOS, Windows; upstream build matrix includes Android, iOS and WebAssembly targets.
+- **License:** GPL-2.0-or-later per upstream README/COPYING; check individual dependencies and packaging obligations.
+- **Maintenance signals:** Stable release 9.8.2 published 2026-08-13; 2026-10-19 merged random-entry off-by-one fix. Upstream main CI 39279529888 passed all 23 jobs on 2026-10-19; cross-compilation does not imply on-device runtime testing.
+- **Verification performed:** Inspected README, root license declaration, Meson configuration, public headers, recent commits, release and upstream CI job outcomes. No independent parsing, writing, search, fuzz or performance tests.
+- **Source discovery:** GitHub-first recursive research from existing `openzim/zim-tools`; `research/2026-09-13-libzim-zim-offline-archive-library.md`.
+- **Related projects:** openzim/zim-tools, openzim/zim-testing-suite, Kiwix readers.
+- **Caveats / risks:** GPL copyleft affects embedding; optional Xapian changes available APIs; hostile ZIM files may present parser/decompression/resource-exhaustion risks requiring further testing.
+- **Research notes:** `research/2026-10-23-nvda-libzim-promotion.md`. No third-party code copied.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
