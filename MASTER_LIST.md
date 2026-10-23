@@ -1199,6 +1199,47 @@ Suggested tiers:
 - **Caveats / risks:** CI partly failing; stable tag older than current development. Build success does not prove decoder correctness; radio operation and data use have separate obligations.
 - **Research notes:** No source copied. Prioritize ARM64/macOS CI and recorded-IQ regression fixtures.
 
+### Zephyr RTOS
+
+- **Repository:** https://github.com/zephyrproject-rtos/zephyr
+- **Author / Org:** Zephyr Project
+- **Category:** Embedded RTOS / hardware abstraction / device drivers / Bluetooth / networking / test automation
+- **Evidence:** VERIFIED — upstream release, source and passing CI; not independently hardware-tested
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Configurable real-time OS for resource-constrained devices, with multi-architecture kernel, board descriptions, drivers, protocol stacks and test infrastructure.
+- **Why it is valuable:** Extensive reusable embedded architecture; Kconfig, devicetree, west, and Twister support portable and testable firmware across many targets.
+- **Useful code/components:** `kernel/`, `drivers/`, `subsys/`, `include/zephyr/`, `boards/`, `soc/`, `dts/`, `scripts/twister`, `scripts/pylib/twister/`, `west.yml`, `samples/`, `tests/`.
+- **Install / runtime:** west workspace and Zephyr SDK/toolchains; supported board, target-specific drivers and flashing/debug hardware as applicable.
+- **Platforms:** Arm, RISC-V, x86, Xtensa, ARC and other documented architectures; host build support depends on SDK/toolchain.
+- **License:** Apache-2.0 project; imported modules/HALs and some individually licensed files have separate SPDX terms.
+- **Maintenance signals:** Stable v4.4.2 published 2026-08-07 with security fixes; 2026-10-22 main commit prepared v4.5.0-rc3 (not a stable release). 2026-10-22 main Twister 39835122032, CodeQL 39835121878 and docs 39835121990 completed successfully.
+- **Verification performed:** Upstream README, source tree, west manifest, LICENSE, REUSE license guidance, release, commits and GitHub Actions inspected. No independent build, board flashing or security audit.
+- **Source discovery:** GitHub-first; `research/2026-09-07-zephyr-rtos-embedded-kernel-hardware-test-platform.md` and `research/2026-10-23-zephyr-zellij-promotion.md`.
+- **Related projects:** west; BabbleSim; MCUboot; ESPHome; RadioLib; probe-rs.
+- **Caveats / risks:** Security advisories affect multiple kernel/protocol paths; CI does not establish all board combinations work. Imported modules may not inherit the root license.
+- **Research notes:** No third-party code copied. Prioritize Twister sharding and devicetree/driver generation as reusable architectural studies.
+
+### Zellij
+
+- **Repository:** https://github.com/zellij-org/zellij
+- **Author / Org:** zellij-org
+- **Category:** Terminal multiplexer / Rust / developer workspace / WebAssembly plugins / terminal automation
+- **Evidence:** VERIFIED — upstream source, release and passing CI; no independent session or web-client testing
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Terminal workspace with persistent sessions, programmable layouts, pane management, collaboration, web client and Wasm plugins.
+- **Why it is valuable:** Composable terminal operations, remote workspaces and a reusable Rust client/server plus WebAssembly plugin architecture.
+- **Useful code/components:** `zellij-client/`, `zellij-server/`, `zellij-utils/`, `zellij-tile/`, `zellij-tile-utils/`, `default-plugins/`, `xtask/`, `zellij-integration-tests/`, layout assets.
+- **Install / runtime:** Prebuilt release binaries or Cargo source build; main workspace Rust >=1.95. Browser-client availability depends on build/configuration.
+- **Platforms:** Linux, macOS, Windows (upstream CI); browser client where enabled.
+- **License:** MIT; review third-party assets and plugin dependencies separately.
+- **Maintenance signals:** Stable v0.45.1 released 2026-08-28; main Cargo workspace v0.46.0 is development, not stable. 2026-10-22 main Rust CI 39811852472 passed 12/12 jobs; end-to-end 39811852673 passed 1/1. Main commits include session renaming and memory optimizations.
+- **Verification performed:** README, MIT license, Cargo workspace, source layout, releases, commits, upstream CI jobs inspected. No independent install, terminal-session tests or plugin security audit.
+- **Source discovery:** GitHub-first; `research/2026-09-09-zellij-terminal-workspace-wasm-plugin-platform.md` and `research/2026-10-23-zephyr-zellij-promotion.md`.
+- **Related projects:** Rust Cargo; WebAssembly plugin ecosystem; tmux; SSH; Nushell.
+- **Caveats / risks:** Browser terminal and collaborative sessions require careful authentication and network-exposure controls. Wasm plugins require capability-boundary review; CI contains some mutable action tags.
+- **Research notes:** No third-party code copied. Next investigate plugin host permissions, web-client exposure defaults and reproducible release builds.
+
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

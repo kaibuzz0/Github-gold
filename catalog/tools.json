@@ -3025,6 +3025,112 @@
       "research_priority": "high",
       "source": "GitHub-first SDR research; research/2026-09-29-satdump-satellite-sdr-processing.md; research/2026-10-22-iroh-satdump-promotion.md",
       "copy_restriction_note": "No source copied. GPL-3.0 and third-party driver/data terms apply; CI partly failing and stable release is older."
+    },
+    {
+      "name": "Zephyr RTOS",
+      "repository": "https://github.com/zephyrproject-rtos/zephyr",
+      "owner": "zephyrproject-rtos",
+      "category": [
+        "embedded-rtos",
+        "device-drivers",
+        "bluetooth",
+        "networking",
+        "hardware-abstraction",
+        "test-automation"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Apache-2.0 at root; imported HALs/modules and individually marked files may have separate terms",
+      "license_copy_status": "apache-2.0-notices-required; inspect-REUSE-SPDX-and-module-licenses",
+      "platforms": [
+        "Arm",
+        "RISC-V",
+        "x86",
+        "Xtensa",
+        "ARC",
+        "other supported architectures/boards",
+        "Linux/macOS/Windows host toolchains vary"
+      ],
+      "useful_components": [
+        "kernel/: scheduler, synchronization, memory and userspace APIs",
+        "drivers/ and include/zephyr/drivers/: portable driver APIs",
+        "subsys/: networking, Bluetooth, storage, USB, logging, power",
+        "boards/, soc/, dts/: devicetree hardware descriptions",
+        "scripts/twister and scripts/pylib/twister/: test planning and orchestration",
+        "west.yml, cmake/, Kconfig: reproducible modular firmware builds",
+        "samples/ and tests/: runnable examples and regression suites"
+      ],
+      "verification": [
+        "2026-10-23 inspected upstream README.rst, root LICENSE, README.license, LICENSES/ listing, repository tree, west.yml, releases and recent commits",
+        "Stable release v4.4.2 published 2026-08-07 contains extensive security/bug fixes; 2026-10-22 commit marks 4.5.0-rc3 (not stable)",
+        "2026-10-22 main push Run tests with twister 39835122032 completed success; CodeQL 39835121878 and Documentation Build 39835121990 succeeded",
+        "No independent build, test execution, hardware flashing or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "source": "GitHub-first existing dossier research/2026-09-07-zephyr-rtos-embedded-kernel-hardware-test-platform.md; refreshed research/2026-10-23-zephyr-zellij-promotion.md",
+      "copy_restriction_note": "No source copied. Check SPDX and west modules individually; stable v4.4.2 security advisories demonstrate meaningful kernel/protocol attack surface. Upstream CI success is not per-board hardware validation."
+    },
+    {
+      "name": "Zellij",
+      "repository": "https://github.com/zellij-org/zellij",
+      "owner": "zellij-org",
+      "category": [
+        "terminal-multiplexer",
+        "developer-tooling",
+        "rust",
+        "wasm-plugins",
+        "terminal-automation",
+        "remote-workspaces"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT",
+      "license_copy_status": "mit-attribution-required; review-plugin-and-asset-licenses",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows (upstream CI)",
+        "Rust >=1.95 for main source builds"
+      ],
+      "useful_components": [
+        "zellij-client/ and zellij-server/: persistent client/server terminal sessions",
+        "zellij-utils/: shared terminal and protocol primitives",
+        "zellij-tile/ and zellij-tile-utils/: WebAssembly plugin SDK",
+        "default-plugins/: status/tab bars, session manager and built-in UI plugins",
+        "assets/layouts/ and docs/: declarative terminal layouts",
+        "xtask/ and zellij-integration-tests/: reproducible builds and integration harness",
+        "web_server_capability feature: browser client, requiring access-control review"
+      ],
+      "verification": [
+        "2026-10-23 inspected upstream README, LICENSE.md, Cargo.toml, workspace tree, release and recent commits",
+        "Stable v0.45.1 released 2026-08-28; main Cargo workspace 0.46.0 is unreleased development version",
+        "2026-10-22 main Rust workflow 39811852472 succeeded with 12/12 jobs across builds, tests, integration, no-web and desktop smoke checks",
+        "2026-10-22 main End to End tests workflow 39811852673 succeeded (1/1 job)",
+        "No independent installation, session sharing, WebAssembly sandbox or browser-client security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "source": "GitHub-first existing dossier research/2026-09-09-zellij-terminal-workspace-wasm-plugin-platform.md; refreshed research/2026-10-23-zephyr-zellij-promotion.md",
+      "copy_restriction_note": "No source copied. Browser terminal, shared sessions and Wasm plugin host APIs need authentication/capability audit; upstream workflow uses some mutable action tags."
     }
   ],
   "deferred_or_rejected": [
