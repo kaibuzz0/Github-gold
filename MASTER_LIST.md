@@ -1119,6 +1119,46 @@ Suggested tiers:
 - **Caveats / risks:** `verify` is structural, not cryptographic or payload integrity; some anomalies are logged without failing. `serve` defaults to `0.0.0.0`. Differential sync is explicitly experimental.
 - **Research notes:** No third-party implementation code or map data copied.
 
+### marimo
+
+- **Repository:** https://github.com/marimo-team/marimo
+- **Author / Org:** marimo-team
+- **Category:** Reactive Python notebooks / scientific computing / interactive data apps / developer tooling
+- **Evidence:** VERIFIED — upstream source, release and CI; no independent execution
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Reactive Python notebooks stored as executable, version-control-friendly Python files; automatically re-executes dependent cells or marks them stale and supports SQL, UI widgets, scripts, apps and browser/Pyodide execution.
+- **Why it is valuable:** Reproducible, composable scientific and analytical workflows without opaque notebook JSON; reusable runtime, reactive graph, SQL, widget and export components.
+- **Useful code/components:** `marimo/_runtime/dataflow/` dependency tracking; `marimo/_runtime/executor/` execution; `marimo/_sql/` SQL; `marimo/_plugins/` UI widgets; `marimo/_export/` exports; `marimo/_pyodide/` WASM; `marimo/_server/` HTTP service; `marimo/_mcp/` agent interfaces.
+- **Install / runtime:** Python >=3.10; `pip install marimo` then `marimo tutorial intro`; SQL, sandbox and AI integrations have optional dependencies.
+- **Platforms:** Linux, Windows, macOS, browser via Pyodide/WASM.
+- **License:** Apache-2.0; review bundled third-party notices/assets before copying.
+- **Maintenance signals:** v0.25.2 released 2026-10-19; main CI 2026-10-22: backend run 39859957455 passed 18 jobs (docs skipped), frontend 39859957465 passed 4/4, Playwright 39859957692 passed 2/2.
+- **Verification performed:** Inspected README, pyproject, license, source layout, releases and upstream CI results; no independent notebook execution or security review.
+- **Source discovery:** GitHub-first; `research/2026-09-30-marimo.md` and `research/2026-10-22-marimo-probe-rs-promotion.md`.
+- **Related projects:** marimo-team/marimo-lsp; marimo-team/vscode-marimo; DuckDB; Loro; uv.
+- **Caveats / risks:** Notebook execution runs arbitrary Python and needs normal trust boundaries. As of 2026-10, native Loro dependency excludes Python 3.15 in `pyproject.toml`; do not infer identical collaboration behavior on all supported interpreters. Third-party assets may carry separate notices.
+- **Research notes:** No upstream code copied; prioritize runtime dependency graph, SQL isolation, and browser/native feature parity.
+
+### probe-rs
+
+- **Repository:** https://github.com/probe-rs/probe-rs
+- **Author / Org:** probe-rs
+- **Category:** Embedded debugging / SWD-JTAG / firmware flashing / Rust libraries / hardware test infrastructure
+- **Evidence:** VERIFIED — upstream source, release, CI and hardware smoke-test jobs; no independent device test
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Rust libraries and CLI for embedded debug probes, MCU memory/register access, flashing, GDB and Debug Adapter Protocol integration across supported Arm, RISC-V and Xtensa targets.
+- **Why it is valuable:** Modular transports, target descriptions, flashing engines, remote RPC and real hardware test infrastructure; useful for interoperability and authorized board development.
+- **Useful code/components:** `probe-rs/src/probe/` transports; `probe-rs/src/architecture/` CPU support; `probe-rs/src/flashing/` loaders; `probe-rs-target/` chip metadata; `probe-rs-debug/` DAP; `probe-rs-rpc/` and `probe-rs-rpc-client/` remote API; `probe-rs-linux/` GPIO/spidev SWD; `smoke-tester/` hardware harness.
+- **Install / runtime:** Upstream CLI binaries or Rust workspace (minimum Rust 1.95); physical probe and compatible MCU normally required; Linux GPIO/spidev backend is hardware-specific.
+- **Platforms:** Linux, Windows, macOS hosts; Arm/RISC-V/Xtensa embedded targets where supported.
+- **License:** MIT OR Apache-2.0 workspace; external CMSIS packs and flash algorithms may differ.
+- **Maintenance signals:** Stable v0.32.0 published 2026-07-22; master 2026-10-22 Run CI 39849611123 passed 12/12 jobs; Run smoke test 39849610977 passed 5/5 including two named hardware-runner jobs and embedded-test.
+- **Verification performed:** Inspected README, workspace manifest, MIT license, source tree, release and CI jobs. Upstream hardware tests are not independent GitHub Gold tests.
+- **Source discovery:** GitHub-first; `research/2026-10-08-probe-rs-embedded-debugging-flashing-toolkit.md` and `research/2026-10-22-marimo-probe-rs-promotion.md`.
+- **Related projects:** probe-rs/vscode; probe-rs/embedded-test; pyOCD; esptool; MCUboot.
+- **Caveats / risks:** Flash erase can permanently overwrite data or brick targets. Probe and MCU support varies. Remote RPC can expose sensitive debug operations. Verify external target-pack/flash-algorithm licensing before reuse.
+- **Research notes:** No upstream code copied; compare DAP/GDB behavior with pyOCD and independently validate supported boards before production claims.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

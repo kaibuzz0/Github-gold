@@ -2809,6 +2809,115 @@
       "research_priority": "high",
       "source": "Recursive GitHub-first PMTiles lead; research/2026-09-06-go-pmtiles-operational-cli-range-sync-server.md; research/2026-10-22-pmtiles-go-pmtiles-promotion.md",
       "copy_restriction_note": "No source copied. Preserve BSD-3-Clause notices; map data separate. serve defaults to 0.0.0.0; sync commands explicitly experimental."
+    },
+    {
+      "name": "marimo",
+      "repository": "https://github.com/marimo-team/marimo",
+      "owner": "marimo-team",
+      "category": [
+        "reactive-notebooks",
+        "python",
+        "local-first-data-tools",
+        "scientific-computing",
+        "interactive-apps",
+        "developer-tooling"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Apache-2.0 (upstream project; review bundled third-party notices)",
+      "license_copy_status": "apache-2.0-attribution-notice-required; third-party-assets-separate",
+      "platforms": [
+        "Python >=3.10",
+        "Linux",
+        "Windows",
+        "macOS",
+        "Browser via Pyodide/WASM"
+      ],
+      "useful_components": [
+        "marimo/_runtime/dataflow/: reactive dependency graph and invalidation",
+        "marimo/_runtime/executor/: notebook execution scheduling",
+        "marimo/_sql/: SQL cells and data integration",
+        "marimo/_plugins/: interactive widgets and UI bindings",
+        "marimo/_export/: executable/static export",
+        "marimo/_pyodide/: browser/WASM runtime",
+        "marimo/_server/: app/editor HTTP service",
+        "marimo/_mcp/: agent integration interfaces"
+      ],
+      "verification": [
+        "2026-10-22 inspected README, pyproject.toml, LICENSE, source directories and release metadata",
+        "v0.25.2 published 2026-10-19; supports Python 3.15 and GeoJSON/GeoParquet export",
+        "2026-10-22 main Test BE run 39859957455: 18 successes, one skipped docs job; includes Python 3.10-3.15 and Linux/Windows/macOS matrix",
+        "2026-10-22 main Test FE run 39859957465: 4/4 success; Playwright run 39859957692: 2/2 success",
+        "No independent installation, notebook execution, browser runtime or security tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "source": "GitHub-first scientific-computing discovery; research/2026-09-30-marimo.md; research/2026-10-22-marimo-probe-rs-promotion.md",
+      "copy_restriction_note": "No source copied. Apache-2.0 notices and bundled third-party asset licenses must be preserved. Python 3.15 excludes native loro dependency as of 2026-10, so collaborative features may differ; interactive notebook execution requires normal code-execution trust controls."
+    },
+    {
+      "name": "probe-rs",
+      "repository": "https://github.com/probe-rs/probe-rs",
+      "owner": "probe-rs",
+      "category": [
+        "embedded-debugging",
+        "firmware-flashing",
+        "rust-library",
+        "swd-jtag",
+        "debug-adapter",
+        "hardware-in-loop"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT OR Apache-2.0 workspace; external CMSIS packs, target metadata and flash algorithms may have separate licenses",
+      "license_copy_status": "dual-permissive-notice-required; external-pack-provenance-review",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Rust >=1.95",
+        "Arm/RISC-V/Xtensa targets",
+        "supported SWD/JTAG probes"
+      ],
+      "useful_components": [
+        "probe-rs/src/probe/: CMSIS-DAP, ST-Link, J-Link, FTDI and other probe transports",
+        "probe-rs/src/architecture/: Arm, RISC-V and Xtensa abstractions",
+        "probe-rs/src/flashing/: erase/program/verify orchestration",
+        "probe-rs-target/: chip descriptions and flash algorithm metadata",
+        "probe-rs-debug/: Debug Adapter Protocol implementation",
+        "probe-rs-rpc/ and probe-rs-rpc-client/: remote debug API",
+        "probe-rs-linux/: Linux GPIO/spidev SWD adapters",
+        "smoke-tester/: board/probe hardware regression harness"
+      ],
+      "verification": [
+        "2026-10-22 inspected README, Cargo.toml, LICENSE-MIT, source/workspace tree, release metadata and upstream workflows",
+        "Latest inspected stable v0.32.0 published 2026-07-22; Rust 1.95 minimum",
+        "2026-10-22 master Run CI 39849611123: 12/12 jobs passed including Windows/Linux tests, macOS checks, lint, docs and minimum Rust",
+        "2026-10-22 master Run smoke test 39849610977: 5/5 jobs passed including two named hardware runner test jobs and embedded-test",
+        "No independent build, probe attachment, firmware flashing, electrical validation or remote-RPC security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "source": "GitHub-first embedded tooling; research/2026-10-08-probe-rs-embedded-debugging-flashing-toolkit.md; research/2026-10-22-marimo-probe-rs-promotion.md",
+      "copy_restriction_note": "No source copied. Review external CMSIS pack and flash algorithm licenses; flashing/erase can damage or overwrite user devices; remote RPC should be confined to trusted environments."
     }
   ],
   "deferred_or_rejected": [
