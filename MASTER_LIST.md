@@ -1159,6 +1159,46 @@ Suggested tiers:
 - **Caveats / risks:** Flash erase can permanently overwrite data or brick targets. Probe and MCU support varies. Remote RPC can expose sensitive debug operations. Verify external target-pack/flash-algorithm licensing before reuse.
 - **Research notes:** No upstream code copied; compare DAP/GDB behavior with pyOCD and independently validate supported boards before production claims.
 
+### Iroh
+
+- **Repository:** https://github.com/n0-computer/iroh
+- **Author / Org:** n0-computer
+- **Category:** P2P networking / QUIC / NAT traversal / Rust / local-first infrastructure
+- **Evidence:** VERIFIED — upstream source, release and CI; not independently network-tested
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 5)
+- **What it does:** Public-key-addressed QUIC connections with direct path selection, hole punching, relay fallback and protocol composition.
+- **Why it is valuable:** Reusable transport for sync, messaging, edge and mobile software; self-hostable relay and discovery components.
+- **Useful code/components:** `iroh/src/endpoint.rs`, `endpoint/`, `address_lookup/`, `portmapper.rs`, `protocol.rs`, `net_report/`; `iroh-relay/`, `iroh-base/`, `iroh-dns-server/`.
+- **Install / runtime:** Rust crate/workspace; upstream CI MSRV 1.91; configure discovery and relay policy.
+- **Platforms:** Linux, Windows, macOS, Android, browser/Wasm build targets (feature parity not established).
+- **License:** MIT OR Apache-2.0; ecosystem licenses need separate review.
+- **Maintenance signals:** v1.4.1 published 2026-10-22; main CI 39805786602 passed 28/28 jobs (desktop, Android, Wasm, netsim and cross-build); recent relay handshake leak fix.
+- **Verification performed:** README, licenses, source layout, releases, commits and upstream CI inspected. No independent NAT, relay, battery, performance or crypto testing.
+- **Source discovery:** GitHub-first GuardianDB ecosystem; `research/2026-09-30-iroh-key-addressed-p2p-quic.md` and `research/2026-10-22-iroh-satdump-promotion.md`.
+- **Related projects:** iroh-blobs; iroh-gossip; iroh-docs; iroh-ffi; noq; go-libp2p.
+- **Caveats / risks:** Relays/discovery may expose metadata. Real NAT and datagram path behavior varies; upstream reports some edge cases.
+- **Research notes:** No source copied. Investigate relay trust, NAT reliability and Android idle-power consumption.
+
+### SatDump
+
+- **Repository:** https://github.com/SatDump/SatDump
+- **Author / Org:** SatDump
+- **Category:** SDR / satellite data / offline DSP / weather imagery / scientific tools
+- **Evidence:** VERIFIED — upstream source and partial CI success; no independent reception/decoder test
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 5)
+- **What it does:** GUI/CLI pipeline system for live satellite SDR reception or offline baseband processing, decoding and image/data products.
+- **Why it is valuable:** Broad modular DSP and decoder stack with offline use and cross-platform packaging.
+- **Useful code/components:** `src-core/dsp/`, `src-core/pipeline/`, `src-core/products/`, `src-core/image/`, `src-core/projection/`, `src-cli/`, `src-ui/`, `plugins/`, `src-testing/`.
+- **Install / runtime:** CMake and optional SDR/acceleration libraries; recorded input works without SDR hardware; live reception requires drivers/device.
+- **Platforms:** Linux, Windows, macOS, Android.
+- **License:** GPL-3.0; third-party drivers and satellite data may have separate terms.
+- **Maintenance signals:** Latest numbered stable 1.2.2 (2024-11-29); active 2026-10-22 IERS fix. Build All 39809901226: 5 jobs succeeded, 3 failed, 1 skipped; macOS SDRPlay dependency download invalid ZIP, ARM64 compiler killed.
+- **Verification performed:** README, license, source tree, release, commits, upstream CI and failing logs inspected. No independent build, radio, decoder or imagery tests.
+- **Source discovery:** GitHub-first SDR ecosystem; `research/2026-09-29-satdump-satellite-sdr-processing.md` and `research/2026-10-22-iroh-satdump-promotion.md`.
+- **Related projects:** GNU Radio; SoapySDR; RTL-SDR; HackRF; weather-satellite processing.
+- **Caveats / risks:** CI partly failing; stable tag older than current development. Build success does not prove decoder correctness; radio operation and data use have separate obligations.
+- **Research notes:** No source copied. Prioritize ARM64/macOS CI and recorded-IQ regression fixtures.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

@@ -2918,6 +2918,113 @@
       "research_priority": "high",
       "source": "GitHub-first embedded tooling; research/2026-10-08-probe-rs-embedded-debugging-flashing-toolkit.md; research/2026-10-22-marimo-probe-rs-promotion.md",
       "copy_restriction_note": "No source copied. Review external CMSIS pack and flash algorithm licenses; flashing/erase can damage or overwrite user devices; remote RPC should be confined to trusted environments."
+    },
+    {
+      "name": "Iroh",
+      "repository": "https://github.com/n0-computer/iroh",
+      "owner": "n0-computer",
+      "category": [
+        "peer-to-peer",
+        "quic",
+        "nat-traversal",
+        "rust-library",
+        "local-first",
+        "relay-infrastructure"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 4,
+        "maintenance": 5
+      },
+      "license": "MIT OR Apache-2.0",
+      "license_copy_status": "dual-permissive-with-notices; review-ecosystem-licenses",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Android",
+        "WebAssembly/browser",
+        "Rust >=1.91 CI MSRV"
+      ],
+      "useful_components": [
+        "iroh/src/endpoint.rs and endpoint/: public-key-addressed QUIC",
+        "iroh/src/address_lookup/: peer discovery",
+        "iroh/src/portmapper.rs: NAT mapping",
+        "iroh/src/protocol.rs: ALPN router",
+        "iroh-relay/: client and server",
+        "iroh-base/: identity and shared types",
+        "iroh-dns-server/: DNS/Pkarr discovery",
+        "iroh/src/net_report/: network diagnostics"
+      ],
+      "verification": [
+        "2026-10-22 inspected upstream README, licenses, source tree, release and commits",
+        "v1.4.1 released 2026-10-22, including rustls-webpki trust dependency update",
+        "2026-10-22 main CI run 39805786602: 28/28 successful jobs, including Android, browser/Wasm, netsim and desktop tests",
+        "No independent networking, relay, NAT, mobile or security testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "source": "GitHub-first GuardianDB/Iroh ecosystem research; research/2026-09-30-iroh-key-addressed-p2p-quic.md; research/2026-10-22-iroh-satdump-promotion.md",
+      "copy_restriction_note": "No source copied. Relay/discovery metadata and NAT/path edge cases require review; ecosystem dependencies have separate licenses."
+    },
+    {
+      "name": "SatDump",
+      "repository": "https://github.com/SatDump/SatDump",
+      "owner": "SatDump",
+      "category": [
+        "software-defined-radio",
+        "satellite-data",
+        "signal-processing",
+        "weather-imagery",
+        "offline-scientific-tools"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 5
+      },
+      "license": "GPL-3.0",
+      "license_copy_status": "copyleft-obligations; third-party-hardware-libraries-and-data-separate",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Android",
+        "SDR optional for offline processing"
+      ],
+      "useful_components": [
+        "src-core/dsp/: signal processing",
+        "src-core/pipeline/: satellite processing pipelines",
+        "src-core/products/: data products",
+        "src-core/image/ and projection/: imagery/georeferencing",
+        "src-cli/: headless processing",
+        "src-ui/: GUI/live SDR",
+        "plugins/: decoder and source integrations",
+        "src-testing/: diagnostic tools"
+      ],
+      "verification": [
+        "2026-10-22 inspected README, GPL-3.0 license, source tree, releases and commits",
+        "Latest numbered stable 1.2.2 released 2024-11-29; active master fix for IERS crash 2026-10-22",
+        "2026-10-22 Build All run 39809901226: five success, three failure, one skipped",
+        "ARM64 cc1plus process killed; macOS Intel failed after SDRPlay download was invalid ZIP; macOS Silicon dependency step also failed",
+        "No independent build, SDR reception, decoder, imagery or hardware testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "source": "GitHub-first SDR research; research/2026-09-29-satdump-satellite-sdr-processing.md; research/2026-10-22-iroh-satdump-promotion.md",
+      "copy_restriction_note": "No source copied. GPL-3.0 and third-party driver/data terms apply; CI partly failing and stable release is older."
     }
   ],
   "deferred_or_rejected": [
