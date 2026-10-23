@@ -3131,6 +3131,114 @@
       "research_priority": "high",
       "source": "GitHub-first existing dossier research/2026-09-09-zellij-terminal-workspace-wasm-plugin-platform.md; refreshed research/2026-10-23-zephyr-zellij-promotion.md",
       "copy_restriction_note": "No source copied. Browser terminal, shared sessions and Wasm plugin host APIs need authentication/capability audit; upstream workflow uses some mutable action tags."
+    },
+    {
+      "name": "Zarr Python",
+      "repository": "https://github.com/zarr-developers/zarr-python",
+      "owner": "zarr-developers",
+      "category": [
+        "scientific-computing",
+        "chunked-arrays",
+        "object-storage",
+        "data-formats",
+        "python"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT",
+      "license_copy_status": "permissive-with-copyright-and-license-notice",
+      "platforms": [
+        "Python 3.12+",
+        "Linux",
+        "macOS",
+        "Windows",
+        "cloud/object storage with backend"
+      ],
+      "useful_components": [
+        "src/zarr/core/array.py",
+        "src/zarr/core/codec_pipeline.py",
+        "src/zarr/core/chunk_grids.py",
+        "src/zarr/storage/_fsspec.py",
+        "src/zarr/storage/_obstore.py",
+        "packages/zarr-indexing/",
+        "packages/zarr-http-server/",
+        "packages/zarr-metadata/"
+      ],
+      "verification": [
+        "2026-10-23: inspected MIT license, pyproject.toml (Python >=3.12), source directories, subpackage READMEs and v3.4.1 release published 2026-10-08",
+        "Upstream pull-request Test workflow 39892893049 succeeded 16/16 jobs on 2026-10-23; Slow Hypothesis workflow 39892893145 succeeded; upstream CI only",
+        "No independent install, read/write, concurrency, HTTP, cloud, benchmark or security testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v3.4.1 released 2026-10-08; upstream main pushed 2026-10-22; 2026-10-23 Test 39892893049 passed 16/16 and Slow Hypothesis 39892893145 passed. CI run is on a PR head, not a blanket guarantee for all releases.",
+      "source": "GitHub-first; research/2026-09-06-zarr-python-chunked-array-storage-indexing-stack.md; research/2026-10-23-zarr-soapysdr-promotion.md",
+      "copy_restriction_note": "MIT notice required for covered source; codecs, datasets, dependencies and storage backends have separate terms. No upstream source copied.",
+      "research_notes": "Experimental zarr-http-server defaults to read-only; store_app exposes all store keys and enabling writes changes the security boundary. Core Zarr is not a transactional database; evaluate Icechunk for committed snapshots."
+    },
+    {
+      "name": "SoapySDR",
+      "repository": "https://github.com/pothosware/SoapySDR",
+      "owner": "pothosware",
+      "category": [
+        "software-defined-radio",
+        "hardware-abstraction",
+        "device-drivers",
+        "c-plus-plus",
+        "interoperability"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "BSL-1.0",
+      "license_copy_status": "permissive-with-license-notice-review-driver-licenses",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "C++11",
+        "CMake",
+        "optional Python/SWIG and LuaJIT"
+      ],
+      "useful_components": [
+        "include/SoapySDR/Device.hpp",
+        "include/SoapySDR/Device.h",
+        "include/SoapySDR/ConverterRegistry.hpp",
+        "include/SoapySDR/Modules.hpp",
+        "include/SoapySDR/Registry.hpp",
+        "apps/",
+        "ExampleDriver/",
+        "swig/",
+        "luajit/"
+      ],
+      "verification": [
+        "2026-10-23: inspected README, Boost license, CMakeLists.txt, Changelog.txt, public header tree, CI workflow, recent commits and companion SoapyRemote",
+        "Upstream CI 38058033433 (2026-10-10) succeeded 36/36 jobs and cross-compile CI 38058033417 succeeded 15/15; tests include null device and example driver, not physical RF hardware",
+        "No independent build, SDR hardware, sample-stream, converter-correctness, network or security tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Changelog and CMake version parser show 0.9.0 dated 2026-10-10; GitHub releases endpoint returned no Release object. Source commit 8b0970d bumps version; 2026-10-10 CI passed 36/36 and cross-compile passed 15/15.",
+      "source": "GitHub-first; research/2026-09-11-soapysdr-vendor-neutral-sdr-hardware-abstraction.md; research/2026-10-23-zarr-soapysdr-promotion.md",
+      "copy_restriction_note": "Core Boost-1.0 notice obligations apply; hardware plugins/vendor SDKs and firmware have separate licenses. No source copied.",
+      "research_notes": "Reusable device/streaming API, plugin registry, format converters and CLI; inspect companion pothosware/SoapyRemote separately for remote exposure/authentication. Null-driver CI does not establish device-specific RF operation."
     }
   ],
   "deferred_or_rejected": [

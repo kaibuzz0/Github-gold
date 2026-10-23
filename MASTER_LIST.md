@@ -1240,6 +1240,47 @@ Suggested tiers:
 - **Research notes:** No third-party code copied. Next investigate plugin host permissions, web-client exposure defaults and reproducible release builds.
 
 
+
+### Zarr Python
+
+- **Repository:** https://github.com/zarr-developers/zarr-python
+- **Author / Org:** Zarr Developers
+- **Category:** Scientific computing / chunked array storage / object stores / Python / large datasets
+- **Evidence:** VERIFIED — upstream source, release and CI; no independent execution
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Implements compressed, chunked N-dimensional arrays, Zarr metadata, storage backends, and optional separately packaged lazy indexing and HTTP serving.
+- **Why it is valuable:** Fine-grained access to large arrays, reusable storage and codec abstractions, object-store interoperability, lazy indexing and modular scientific data services.
+- **Useful code/components:** `src/zarr/core/array.py`, `src/zarr/core/codec_pipeline.py`, `src/zarr/core/chunk_grids.py`, `src/zarr/storage/_fsspec.py`, `src/zarr/storage/_obstore.py`, `packages/zarr-indexing/`, `packages/zarr-http-server/`, `packages/zarr-metadata/`.
+- **Install / runtime:** Python >=3.12; install via Python package tooling; NumPy and numcodecs dependencies; optional fsspec/obstore and HTTP service dependencies.
+- **Platforms:** Python on Linux, macOS, Windows; supported object stores with backend adapters.
+- **License:** MIT (root and inspected indexing subpackage); inspect optional codec/backend/data licenses separately.
+- **Maintenance signals:** Stable v3.4.1 published 2026-10-08; source activity 2026-10-22. Upstream 2026-10-23 Test workflow 39892893049 passed 16/16 jobs; Slow Hypothesis 39892893145 passed 1/1 (PR workflows, not independent tests).
+- **Verification performed:** Inspected upstream README/package manifests, license, source layout, subpackage docs, release notes and workflow results; no local installation, dataset I/O, concurrency, cloud or security test.
+- **Source discovery:** GitHub-first; `research/2026-09-06-zarr-python-chunked-array-storage-indexing-stack.md`.
+- **Related projects:** earth-mover/icechunk; zarr-developers/zarr-specs; zarr-developers/numcodecs; xarray; Dask; TensorStore.
+- **Caveats / risks:** Core Zarr is not a transactional database; chunk sizing, backend consistency and cloud costs matter. Experimental `zarr-http-server` is read-only by default; `store_app` exposes all keys and enabling writes requires independent access controls.
+- **Research notes:** `research/2026-10-23-zarr-soapysdr-promotion.md`; no upstream code copied. Prioritize HTTP authorization boundaries and sharded partial-write correctness.
+
+### SoapySDR
+
+- **Repository:** https://github.com/pothosware/SoapySDR
+- **Author / Org:** Pothosware
+- **Category:** SDR / hardware abstraction / portable device APIs / C++ / interoperability
+- **Evidence:** VERIFIED — upstream cross-platform build, null-device tests and plugin CI; no physical radio test
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** Vendor-neutral SDR device discovery, configuration and sample streaming through a C++ API, C wrapper and dynamically loadable hardware modules.
+- **Why it is valuable:** Separates DSP applications from hardware SDKs and offers reusable device capabilities, stream APIs, sample converters, language bindings and driver plugin architecture.
+- **Useful code/components:** `include/SoapySDR/Device.hpp`, `include/SoapySDR/Device.h`, `include/SoapySDR/ConverterRegistry.hpp`, `include/SoapySDR/Modules.hpp`, `include/SoapySDR/Registry.hpp`, `apps/`, `ExampleDriver/`, `swig/`, `luajit/`.
+- **Install / runtime:** CMake and C++11; build from source or platform packages; optional SWIG/Python and LuaJIT bindings; hardware requires separately installed Soapy driver plugins and vendor libraries.
+- **Platforms:** Linux, macOS, Windows (upstream CI); actual device support depends on drivers.
+- **License:** Boost Software License 1.0; inspect individual drivers, vendor SDKs and firmware separately.
+- **Maintenance signals:** Source Changelog declares 0.9.0 dated 2026-10-10 and CMake derives version from it; GitHub Releases API returned no published release object. Upstream CI 38058033433 passed 36/36 jobs and cross-compile CI 38058033417 passed 15/15 on 2026-10-10.
+- **Verification performed:** Inspected source header tree, README, license, changelog, CMake and CI results. Null-device and example-driver tests are upstream evidence, not independent hardware streaming validation.
+- **Source discovery:** GitHub-first; `research/2026-09-11-soapysdr-vendor-neutral-sdr-hardware-abstraction.md`.
+- **Related projects:** pothosware/SoapyRemote; SoapyRTLSDR; GNU Radio; SatDump; SDR++.
+- **Caveats / risks:** A passing null-device/plugin test does not prove any particular SDR device works. Vendor driver licenses and remote device access controls vary. GitHub Release metadata does not independently confirm the changelog's 0.9.0 label.
+- **Research notes:** `research/2026-10-23-zarr-soapysdr-promotion.md`; no upstream code copied. Prioritize sample-format converter edge cases and SoapyRemote authentication/exposure review.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
