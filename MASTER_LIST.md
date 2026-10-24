@@ -1361,6 +1361,47 @@ Suggested tiers:
 - **Caveats / risks:** GPL copyleft affects embedding; optional Xapian changes available APIs; hostile ZIM files may present parser/decompression/resource-exhaustion risks requiring further testing.
 - **Research notes:** `research/2026-10-23-nvda-libzim-promotion.md`. No third-party code copied.
 
+
+### OpenTelemetry Collector
+
+- **Repository:** https://github.com/open-telemetry/opentelemetry-collector
+- **Author / Org:** OpenTelemetry / CNCF ecosystem
+- **Category:** Observability / Go / traces / metrics / logs / extensible telemetry pipelines
+- **Evidence:** VERIFIED — upstream source and CI; no independent deployment
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Vendor-neutral, configurable receivers → processors → exporters pipeline for logs, metrics and traces.
+- **Why it is valuable:** Modular Go framework for agents, gateways, custom collectors and resilient telemetry delivery; separates data-plane interfaces from runtime orchestration.
+- **Useful code/components:** `receiver/`, `processor/`, `exporter/exporterhelper/` (queues, batching, retry), `service/pipelines/`, `confmap/`, `config/`, `pdata/`, `cmd/`.
+- **Install / runtime:** Go 1.26.0 declared in core `go.mod`; official binary distribution is built using `open-telemetry/opentelemetry-collector-releases`, not the root module alone. Configuration is mandatory.
+- **Platforms:** Go cross-builds cover Linux, macOS, Windows and several additional targets; successful cross-compilation is not runtime verification on every OS.
+- **License:** Apache-2.0; retain notices and attribution for reused code.
+- **Maintenance signals:** Latest inspected stable GitHub release v0.163.0 (2026-10-14). On 2026-10-23, upstream main `build-and-test` run 40012185839 passed 24 jobs, skipped one; main CodeQL, ARM, Windows and builder integration workflows also passed.
+- **Verification performed:** Inspected README, LICENSE, `go.mod`, source trees, security guidance, release and CI job results. No independent Go build, telemetry capture, network test or security audit.
+- **Source discovery:** GitHub-first observability research; prior dossier `research/2026-09-01-opentelemetry-collector-modular-observability-pipeline.md`.
+- **Related projects:** `open-telemetry/opentelemetry-collector-contrib`; `open-telemetry/opentelemetry-collector-releases`; `open-telemetry/opentelemetry-proto`.
+- **Caveats / risks:** Exporter queues/retries need capacity planning; configuration and extension exposure require security review. Core security guidance specifies validated config, secure connections and least privilege; no blanket guarantee that custom components follow these rules.
+- **Research notes:** `research/2026-10-23-otel-collector-openrtx-promotion.md`. Next: queue batching semantics, TLS defaults, data leakage and resource exhaustion.
+
+### OpenRTX
+
+- **Repository:** https://github.com/OpenRTX/OpenRTX
+- **Author / Org:** OpenRTX contributors
+- **Category:** Embedded firmware / amateur radio / M17 digital voice / DSP / hardware abstraction
+- **Evidence:** VERIFIED — upstream builds/tests; hardware and radio interoperability not independently tested
+- **Tier / Score:** S / 26 (Utility 4 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 4)
+- **What it does:** Experimental modular open-source firmware for supported digital amateur radios, including an integrated M17 voice/data protocol implementation.
+- **Why it is valuable:** End-to-end M17 encoding/decoding, DSP/FEC, device abstractions and multi-target firmware builds make it useful for legitimate radio interoperability and embedded research.
+- **Useful code/components:** `openrtx/src/protocols/M17/{FrameEncoder,FrameDecoder,Golay,DSP,Modulator,Demodulator,Callsign,MetaText}.cpp`; `openrtx/src/rtx/OpMode_M17.cpp`; `platform/`; `tests/unit/M17_*.cpp`.
+- **Install / runtime:** Meson/CMake, cross toolchains, libcodec2, Python build helpers; firmware images require exact supported radio hardware and safe flashing procedures. Linux emulation/runtime available; some M17 use requires radio modifications.
+- **Platforms:** Linux; supported radio Cortex-M targets; Zephyr-based ESP32-S3/Lilygo T-TWR Plus target.
+- **License:** Primary GPL-3.0-or-later; mixed file/subtree licenses tracked by `REUSE.toml`, including GPL-2.0-or-later, MIT, Apache-2.0 and vendor-specific terms. Review exact file before copying.
+- **Maintenance signals:** Latest inspected GitHub release v0.4.5 (2026-10-04) is a prerelease. Master build-and-test run 38790546561 (2026-10-15) passed all 13 jobs, including unit tests, Zephyr and firmware builds. Retevis-c62 PR-branch build and devcontainer workflows failed 2026-10-23; these do not imply a failed master build.
+- **Verification performed:** Inspected README, REUSE metadata, protocol source/test tree, requirements, workflow, release and run jobs. No local build, radio flash, RF reception/transmission, M17 interoperability or memory-safety audit.
+- **Source discovery:** GitHub-first embedded/off-grid radio research; prior dossier `research/2026-09-06-openrtx-modular-amateur-radio-firmware-m17-stack.md`.
+- **Related projects:** M17 Project, Zephyr RTOS, `travisgoodspeed/md380tools`, `v0l/radio_tool`, Codec2.
+- **Caveats / risks:** Upstream explicitly calls firmware highly experimental; flashing carries device risk and RF operation is regulated. Vendor SDK licensing differs from the main project. CI builds do not establish on-device functionality.
+- **Research notes:** `research/2026-10-23-otel-collector-openrtx-promotion.md`. Follow failed PR builds and perform device-specific M17 interoperability tests before making operational claims.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

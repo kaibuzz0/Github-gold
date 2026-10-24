@@ -3467,6 +3467,126 @@
         "Kiwix readers"
       ],
       "research_notes": "research/2026-10-23-nvda-libzim-promotion.md; Meson/Ninja C++17 build with liblzma, ICU, Zstd and optional Xapian; disabling Xapian removes search APIs. Some upstream tests can require substantial memory. Review parser resource exhaustion and GPL obligations before embedding."
+    },
+    {
+      "name": "OpenTelemetry Collector",
+      "repository": "https://github.com/open-telemetry/opentelemetry-collector",
+      "owner": "open-telemetry",
+      "category": [
+        "observability",
+        "telemetry",
+        "distributed-tracing",
+        "metrics",
+        "logs",
+        "go",
+        "pipeline-framework"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Apache-2.0",
+      "license_copy_status": "permissive-with-attribution-and-notice-obligations",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "FreeBSD and other Go cross-build targets (runtime support varies)"
+      ],
+      "useful_components": [
+        "receiver/: modular telemetry ingestion interfaces and OTLP receiver",
+        "processor/: processing stages and lifecycle interfaces",
+        "exporter/exporterhelper/: queue batching, retries and exporter helpers",
+        "service/pipelines/: pipeline assembly and service lifecycle",
+        "confmap/ and config/: configuration loading, TLS and sensitive-field helpers",
+        "cmd/otelcorecol and otelcol/: collector distribution/runtime wiring",
+        "pdata/: structured logs, metrics and traces data model",
+        "examples/: example receiver, processor, exporter and custom distributions"
+      ],
+      "verification": [
+        "2026-10-23 inspected upstream README, Apache-2.0 LICENSE, Go module, security guidance, source directories, release metadata and workflow/job results",
+        "2026-10-23 main push build-and-test run 40012185839 succeeded: 24 successful jobs, one skipped (cross-builds, unit tests, coverage, lint and govulncheck)",
+        "2026-10-23 main CodeQL 40012185757, ARM 40012185810, Windows 40012185622 and builder integration 40012185787 succeeded",
+        "No independent collector deployment, telemetry transport tests, benchmarks or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Latest inspected GitHub stable release v0.163.0 published 2026-10-14; main activity on 2026-10-23 and passing build-and-test run 40012185839. Core go.mod declares Go 1.26.0; official binaries use separate collector-releases manifests.",
+      "source": "GitHub-first observability category; research/2026-09-01-opentelemetry-collector-modular-observability-pipeline.md",
+      "related_projects": [
+        "open-telemetry/opentelemetry-collector-contrib",
+        "open-telemetry/opentelemetry-collector-releases",
+        "open-telemetry/opentelemetry-proto",
+        "open-telemetry/opentelemetry-go"
+      ],
+      "research_notes": "research/2026-10-23-otel-collector-openrtx-promotion.md; prioritize exporterhelper queue retry/batching, configopaque handling, resource-exhaustion safeguards and custom distribution build. Security guidance requires validated configuration and encrypted transport defaults; third-party receivers/extensions need separate review."
+    },
+    {
+      "name": "OpenRTX",
+      "repository": "https://github.com/OpenRTX/OpenRTX",
+      "owner": "OpenRTX",
+      "category": [
+        "embedded-firmware",
+        "amateur-radio",
+        "digital-voice",
+        "m17",
+        "dsp",
+        "off-grid-communications",
+        "hardware-abstraction"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 26,
+      "score_breakdown": {
+        "utility": 4,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "GPL-3.0-or-later for main project; REUSE.toml documents GPL-2.0-or-later, MIT, Apache-2.0 and vendor-specific subtrees",
+      "license_copy_status": "mixed-licenses-review-exact-files-and-copyleft-before-reuse",
+      "platforms": [
+        "Linux emulator/runtime",
+        "supported Cortex-M4/M7 handheld radios (hardware-specific)",
+        "Lilygo T-TWR Plus / ESP32-S3 Zephyr build target"
+      ],
+      "useful_components": [
+        "openrtx/src/protocols/M17/FrameEncoder.cpp and FrameDecoder.cpp: M17 framing",
+        "openrtx/src/protocols/M17/Golay.cpp: error correction",
+        "openrtx/src/protocols/M17/DSP.cpp, Modulator.cpp and Demodulator.cpp: signal processing",
+        "openrtx/src/protocols/M17/Callsign.cpp and MetaText.cpp: protocol metadata",
+        "openrtx/src/rtx/OpMode_M17.cpp: integrated M17 radio operating mode",
+        "platform/: target-specific hardware support",
+        "tests/unit/M17_*.cpp: protocol regression tests",
+        "meson.build and CMakeLists.txt: multi-target build orchestration"
+      ],
+      "verification": [
+        "2026-10-23 inspected README, REUSE.toml, LICENSES/, protocol source tree, test names, requirements, build workflow, releases and Actions history",
+        "2026-10-15 master push Build and test 38790546561 succeeded all 13 jobs including unit tests, Zephyr build and multiple firmware image builds",
+        "2026-10-23 Retevis-c62 pull-request builds 40039127608 and devcontainer 40039127403 failed; these are PR-branch results, not a failed master release",
+        "No independent compilation, device flashing, over-the-air M17 interoperability test, radio safety assessment or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Latest inspected GitHub release v0.4.5 dated 2026-10-04 is marked prerelease; upstream explicitly calls firmware highly experimental. Master Build and test passed 2026-10-15 (38790546561); Oct 23 Retevis-c62 PR builds failed.",
+      "source": "GitHub-first embedded/radio category; research/2026-09-06-openrtx-modular-amateur-radio-firmware-m17-stack.md",
+      "related_projects": [
+        "M17 Project",
+        "zephyrproject-rtos/zephyr",
+        "travisgoodspeed/md380tools",
+        "v0l/radio_tool",
+        "Codec2"
+      ],
+      "research_notes": "research/2026-10-23-otel-collector-openrtx-promotion.md; no source copied. Verify exact-file REUSE licenses (including vendor STM32 USB code) before reuse. Firmware is experimental and radio-specific; authorized amateur-radio use only. Investigate failed Retevis-c62 PR jobs and M17 over-the-air interoperability."
     }
   ],
   "deferred_or_rejected": [
