@@ -3465,7 +3465,8 @@
         "openzim/zim-testing-suite",
         "kiwix/kiwix-build",
         "Kiwix readers",
-        "kiwix/kiwix-android"
+        "kiwix/kiwix-android",
+        "kiwix/java-libkiwix"
       ],
       "research_notes": "research/2026-10-23-nvda-libzim-promotion.md; Meson/Ninja C++17 build with liblzma, ICU, Zstd and optional Xapian; disabling Xapian removes search APIs. Some upstream tests can require substantial memory. Review parser resource exhaustion and GPL obligations before embedding."
     },
@@ -3829,6 +3830,127 @@
         "kiwix/kiwix-desktop"
       ],
       "research_notes": "Full and Play Store variants have different ZIM file access. Large archives may exceed FAT32 limits; app storage deletion can remove files. Audit Wi-Fi Direct peer authentication and local HTTP exposure. Distinguish emulator coverage from real device tests."
+    },
+    {
+      "name": "java-libkiwix",
+      "repository": "https://github.com/kiwix/java-libkiwix",
+      "owner": "kiwix",
+      "category": [
+        "android",
+        "java",
+        "kotlin",
+        "jni",
+        "offline-knowledge",
+        "zim-format",
+        "embedded-http-server"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "GPL-3.0-or-later (README/COPYING; native libkiwix/libzim and bundled dependencies require separate review)",
+      "license_copy_status": "copyleft-obligations-review-native-and-third-party-licenses",
+      "platforms": [
+        "Android API 24+",
+        "Java/Kotlin Android library",
+        "Android AAR with native .so for ARM/x86 ABIs"
+      ],
+      "useful_components": [
+        "lib/src/main/java/org/kiwix/libzim/Archive.java: ZIM archive access and language metadata",
+        "lib/src/main/java/org/kiwix/libzim/Searcher.java and SuggestionSearcher.java: native-backed full-text search and suggestions",
+        "lib/src/main/java/org/kiwix/libkiwix/Library.java and Manager.java: offline book catalog and directory import",
+        "lib/src/main/java/org/kiwix/libkiwix/Server.java: embedded local HTTP content serving",
+        "lib/src/main/cpp/libzim/archive.cpp and searcher.cpp: JNI archive/search bridges",
+        "lib/src/main/cpp/libkiwix/kiwixserver.cpp: JNI server bridge",
+        "lib/src/test/: ZIM fixtures and Java tests; .github/workflows/ci.yml: build and coverage"
+      ],
+      "verification": [
+        "2026-10-24: inspected README, GPL license/COPYING, CHANGELOG, lib/build.gradle, JNI C++ and Java source trees, fixtures, CI workflow and release history",
+        "2.7.0 released 2026-10-21; changelog adds archive/book language APIs and updates libzim to 9.8.2; lib/build.gradle declares libkiwix 14.2.1",
+        "2026-10-21 upstream CI 39562805161 completed successfully: Build & test source code job runs install_deps.sh, Gradle buildHeaders/build, coverage",
+        "README requires JDK 17 for builds; Gradle minSdk 24, compileSdk 34, NDK 27.3.13750724 with 16KB page-size support",
+        "No independent Android build, JNI load, malformed-ZIM tests, hardware/emulator run or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Upstream release 2.7.0 on 2026-10-21, main CI success 39562805161 on 2026-10-21; active dependency upgrades and JNI/API maintenance.",
+      "source": "Recursive GitHub-first discovery from existing libzim/Kiwix Android; research/2026-10-24-java-libkiwix-rizin-promotion.md",
+      "related_projects": [
+        "kiwix/kiwix-android",
+        "kiwix/libkiwix",
+        "openzim/libzim",
+        "openzim/zim-tools"
+      ],
+      "research_notes": "GPLv3+ with native binary dependency licensing review required. Android JNI and native libraries add ABI, 16KB page-size, memory-safety and untrusted-archive parsing risks. CI builds and tests but does not establish real-device behavior or safe LAN server exposure."
+    },
+    {
+      "name": "Rizin",
+      "repository": "https://github.com/rizinorg/rizin",
+      "owner": "rizinorg",
+      "category": [
+        "reverse-engineering",
+        "binary-analysis",
+        "debugging",
+        "forensics",
+        "c",
+        "developer-tooling",
+        "defensive-security"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "LGPL-3.0-only for core (meson.build); mixed per-file SPDX licensing and bundled dependencies in LICENSES/REUSE.toml",
+      "license_copy_status": "do-not-copy-without-file-level-spdx-and-dependency-license-review",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "BSD",
+        "Android and other targets documented upstream; support varies by build"
+      ],
+      "useful_components": [
+        "librz/bin/: binary loaders, PE/ELF/Mach-O parsing and symbols",
+        "librz/arch/: architecture decoding, assembly/disassembly and analysis",
+        "librz/arch/il/: intermediate-language lifting and analysis",
+        "librz/diff/fastcdc.c: content-defined chunking implementation",
+        "librz/diff/bytes_diff.c and lines_diff.c: binary/text differencing",
+        "librz/search/: pattern search infrastructure",
+        "binrz/: rz-bin, rz-asm, rz-diff, rz-find and related CLI tools",
+        "test/db/, test/unit/, test/fuzz/: regression, unit and fuzz harnesses"
+      ],
+      "verification": [
+        "2026-10-24: inspected README, BUILDING.md, meson.build, COPYING.LESSER, REUSE.toml, LICENSES/, librz modules, test/README.md, CI workflow and upstream release history",
+        "Latest stable GitHub release v0.9.1 published 2026-06-29; dev meson.build currently reports v0.10.0 (unreleased development version)",
+        "2026-10-23 dev CI 39999863129 and rerun 40000224650 failed: four Capstone variant Meson build jobs (v4/v5/v6/system); core Linux/macOS, sanitizer and RISC-V QEMU jobs passed",
+        "Upstream test framework documents regression, unit and fuzz tests, including expected-broken test status; success of some jobs is not a clean full-matrix pass",
+        "No independent build, parser fuzzing, disassembly correctness validation, malware analysis or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "2026-10-23 dev commits add DLang RTTI and RISC-V lifting; CI core builds pass but Capstone compatibility jobs fail; v0.9.1 released 2026-06-29.",
+      "source": "GitHub-first defensive binary-analysis category; research/2026-10-24-java-libkiwix-rizin-promotion.md",
+      "related_projects": [
+        "rizinorg/rz-pipe",
+        "rizinorg/rizin-testbins",
+        "rizinorg/cutter",
+        "radareorg/radare2"
+      ],
+      "research_notes": "Score deliberately capped at A/25 because recent dev CI has four Capstone build failures. File-level SPDX varies; LGPL-3.0-only core does not imply all bundled assets share that license. Review untrusted binary parser robustness and current dependency build matrix before promotion."
     }
   ],
   "deferred_or_rejected": [

@@ -1357,7 +1357,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable release 9.8.2 published 2026-08-13; 2026-10-19 merged random-entry off-by-one fix. Upstream main CI 39279529888 passed all 23 jobs on 2026-10-19; cross-compilation does not imply on-device runtime testing.
 - **Verification performed:** Inspected README, root license declaration, Meson configuration, public headers, recent commits, release and upstream CI job outcomes. No independent parsing, writing, search, fuzz or performance tests.
 - **Source discovery:** GitHub-first recursive research from existing `openzim/zim-tools`; `research/2026-09-13-libzim-zim-offline-archive-library.md`.
-- **Related projects:** openzim/zim-tools, openzim/zim-testing-suite, Kiwix readers.
+- **Related projects:** openzim/zim-tools, openzim/zim-testing-suite, Kiwix readers.; `kiwix/java-libkiwix` (Android JNI binding).
 - **Caveats / risks:** GPL copyleft affects embedding; optional Xapian changes available APIs; hostile ZIM files may present parser/decompression/resource-exhaustion risks requiring further testing.
 - **Research notes:** `research/2026-10-23-nvda-libzim-promotion.md`. No third-party code copied.
 
@@ -1482,6 +1482,48 @@ Suggested tiers:
 - **Related projects:** `openzim/libzim`, `openzim/zim-tools`, `kiwix/java-libkiwix`, `kiwix/kiwix-android-branded`, `kiwix/kiwix-desktop`.
 - **Caveats / risks:** Play Store variant has Android scoped-storage restrictions; full variant permits broader file selection. Large ZIM files may exceed FAT32 limits; deleting the app can delete app-managed archives. Wi-Fi Direct and local server trust boundaries need review. Main's 4.0.0 version configuration is not a published stable release.
 - **Research notes:** `research/2026-10-24-openrefine-kiwix-android-promotion.md`. Follow Android API 25 CI regression and test cold-start offline, network sharing and file integrity.
+
+
+### java-libkiwix
+
+- **Repository:** https://github.com/kiwix/java-libkiwix
+- **Author / Org:** Kiwix
+- **Category:** Android / JNI / Java-Kotlin / offline ZIM archives / embedded local HTTP serving
+- **Evidence:** VERIFIED (upstream source, release and CI build/test; no independent Android runtime verification)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Java/Kotlin Android bindings to native libkiwix and libzim for archive access, catalog management, full-text search, suggestions and local serving.
+- **Why it is valuable:** Integrates reusable native ZIM components into Android applications, exposing archive readers, searchable offline libraries and HTTP serving without implementing the native format stack from scratch.
+- **Useful code/components:** `lib/src/main/java/org/kiwix/libzim/Archive.java`, `Searcher.java`, `SuggestionSearcher.java`; `lib/src/main/java/org/kiwix/libkiwix/Library.java`, `Manager.java`, `Server.java`; JNI bridges `lib/src/main/cpp/libzim/archive.cpp`, `searcher.cpp`, `libkiwix/kiwixserver.cpp`; `lib/src/test/` ZIM fixtures and Java tests.
+- **Install / runtime:** README specifies JDK 17, `./install_deps.sh`, `./gradlew buildHeaders build`; produces Android AAR. Current Gradle manifest: minSdk 24, compileSdk 34, NDK 27.3.13750724. Native libraries support multiple Android ABIs.
+- **Platforms:** Android API 24+; Java/Kotlin apps with bundled native libraries.
+- **License:** GPL-3.0-or-later per README/COPYING. Native libkiwix/libzim and third-party components require independent notice and licensing review.
+- **Maintenance signals:** Stable 2.7.0 released 2026-10-21; adds ZIM language metadata and updates libzim 9.8.2. [Upstream CI 39562805161](https://github.com/kiwix/java-libkiwix/actions/runs/39562805161) succeeded 2026-10-21 (one build-and-test job).
+- **Verification performed:** Inspected README, COPYING, CHANGELOG, Gradle manifest, Java/JNI module trees, test fixtures, CI workflow, release and job result on 2026-10-24. No local build, emulator/device run, malformed archive test or security audit.
+- **Source discovery:** Recursive GitHub-first investigation from existing libzim and Kiwix Android entries.
+- **Related projects:** `kiwix/kiwix-android`, `kiwix/libkiwix`, `openzim/libzim`, `openzim/zim-tools`.
+- **Caveats / risks:** JNI ABI compatibility, native memory safety, 16KB page-size support and malicious ZIM parsing require further tests. CI success is not proof of Android device compatibility or safe local HTTP exposure.
+- **Research notes:** `research/2026-10-24-java-libkiwix-rizin-promotion.md`. Test corrupted archives and network-serving boundaries; check transitive native licenses.
+
+### Rizin
+
+- **Repository:** https://github.com/rizinorg/rizin
+- **Author / Org:** RizinOrg
+- **Category:** Defensive reverse engineering / binary parsing / forensics / developer tools / C
+- **Evidence:** VERIFIED (upstream source, release and partially passing CI; no independent binary-analysis tests)
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** Scriptable binary-analysis and debugging framework with disassemblers, file-format parsers, search/diff utilities and reusable C libraries.
+- **Why it is valuable:** Exposes practical stand-alone binary-inspection CLIs and composable libraries for legitimate forensics, firmware interoperability, debugging and defensive program analysis.
+- **Useful code/components:** `librz/bin/` loaders and parsers; `librz/arch/` disassembly/analysis; `librz/arch/il/` intermediate-language lifting; `librz/diff/fastcdc.c` content-defined chunking; `librz/diff/bytes_diff.c` and `lines_diff.c`; `librz/search/`; `binrz/` command-line tools; `test/db/`, `test/unit/`, `test/fuzz/` test infrastructure.
+- **Install / runtime:** Meson/Ninja build (`meson setup build`, `meson compile -C build`); install via supported packages or source. C toolchain, Python build helpers and architecture/format dependencies vary by target.
+- **Platforms:** Linux, macOS, Windows, BSD; additional targets including Android are documented upstream but were not independently tested.
+- **License:** Core Meson project declares LGPL-3.0-only. `REUSE.toml`, file SPDX headers and `LICENSES/` show mixed licensing; inspect each reused file and dependency.
+- **Maintenance signals:** Stable v0.9.1 released 2026-06-29; active dev commits 2026-10-23. Development `meson.build` reports v0.10.0, not a published stable release. [Upstream CI 39999863129](https://github.com/rizinorg/rizin/actions/runs/39999863129) and [rerun 40000224650](https://github.com/rizinorg/rizin/actions/runs/40000224650) failed four Capstone variant builds; several Linux/macOS, sanitizer and QEMU RISC-V jobs passed.
+- **Verification performed:** Inspected README, BUILDING.md, Meson, LGPL text, REUSE licensing annotations, source/test trees, release metadata and CI job conclusions on 2026-10-24. No local compile, parser correctness tests, fuzzing or security audit.
+- **Source discovery:** GitHub-first defensive binary-analysis category.
+- **Related projects:** `rizinorg/rz-pipe`, `rizinorg/rizin-testbins`, `rizinorg/cutter`, `radareorg/radare2`.
+- **Caveats / risks:** Current development CI is not green; Capstone dependency compatibility needs investigation. Untrusted binary formats present parser attack surface; do not assume LGPL covers all bundled files. Intended catalog use is authorized debugging, forensics and interoperability.
+- **Research notes:** `research/2026-10-24-java-libkiwix-rizin-promotion.md`. Recheck Capstone matrix and evaluate FastCDC, RzIL and fuzz corpus independently.
+
 
 ## Rejected / Deferred Leads
 
