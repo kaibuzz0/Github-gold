@@ -3587,6 +3587,128 @@
         "Codec2"
       ],
       "research_notes": "research/2026-10-23-otel-collector-openrtx-promotion.md; no source copied. Verify exact-file REUSE licenses (including vendor STM32 USB code) before reuse. Firmware is experimental and radio-specific; authorized amateur-radio use only. Investigate failed Retevis-c62 PR jobs and M17 over-the-air interoperability."
+    },
+    {
+      "name": "Dora",
+      "repository": "https://github.com/dora-rs/dora",
+      "owner": "dora-rs",
+      "category": [
+        "robotics",
+        "distributed-dataflow",
+        "ai-infrastructure",
+        "rust",
+        "arrow",
+        "ros2",
+        "record-replay"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Apache-2.0 (root; dependencies and Node Hub packages have separate licenses)",
+      "license_copy_status": "permissive-with-attribution-and-notice-obligations",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Rust/Python/C/C++ nodes",
+        "Zenoh/ROS2 integrations with additional dependencies"
+      ],
+      "useful_components": [
+        "libraries/recording/src/lib.rs: versioned .drec reader/writer, internal unstable API",
+        "binaries/record-node/src/main.rs and binaries/replay-node/src/main.rs: record/replay nodes",
+        "binaries/coordinator/src/: lifecycle, daemon liveness, scheduling and WebSocket control",
+        "binaries/daemon/: node runtime and local/remote transport",
+        "libraries/arrow-convert/: cross-language Arrow data conversions",
+        "apis/rust/node/ and apis/python/node/: node APIs",
+        "tests/fault-tolerance-e2e.rs and tests/daemon-reconnect-e2e.rs: regression suites"
+      ],
+      "verification": [
+        "2026-10-23 inspected README, LICENSE, Cargo workspace, source tree, recording implementation, release metadata and tests",
+        "2026-10-22 main CI run 39797929129 passed 13/13 jobs including Linux tests, E2E, semantic contracts, benchmark regression and audit",
+        "Stable v1.1.0 released 2026-10-08 with 14 assets; 2026-10-22 commits address record-node encoding and runtime",
+        "No independent build, runtime, ROS2/Zenoh interoperability, hardware, performance or security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v1.1.0 2026-10-08; 2026-10-22 main CI 39797929129 passed all 13 jobs. Cargo workspace rust-version 1.95.0; CI pins 1.97.1.",
+      "source": "GitHub-first robotics category; research/2026-09-26-dora-real-time-robotics-dataflow.md",
+      "related_projects": [
+        "dora-rs/dora-hub",
+        "eclipse-zenoh/zenoh",
+        "apache/arrow-rs",
+        "ros2/rmw_zenoh",
+        "Ekumen-OS/andino-rs"
+      ],
+      "research_notes": "research/2026-10-23-dora-asterics-aac-promotion.md; .drec crate is explicitly internal, outside 1.0 API stability, current format v2 with 64 MiB record cap. Performance comparisons are upstream claims. Soft real-time is not safety certification."
+    },
+    {
+      "name": "Asterics AAC",
+      "repository": "https://github.com/asterics/Asterics-AAC",
+      "owner": "asterics",
+      "category": [
+        "accessibility",
+        "aac",
+        "offline-first",
+        "assistive-input",
+        "pwa",
+        "smart-home"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "AGPL-3.0 source; README documents CC BY-SA 4.0 non-source; external assets and services vary",
+      "license_copy_status": "network-copyleft-and-asset-license-review-before-reuse",
+      "platforms": [
+        "Android/iOS web browsers",
+        "Windows",
+        "Linux",
+        "macOS",
+        "PWA offline after required assets are cached (cold start untested)"
+      ],
+      "useful_components": [
+        "src/js/input/scanning.js: switch/auto/binary/linear scanning",
+        "src/js/input/inputEventHandler.js: alternate input handling",
+        "src/js/service/predictionService.js: text prediction",
+        "src/js/service/data/pouchDbService.js and pouchDbAdapter.js: local persistence",
+        "src/js/service/data/encryptionService.js and encryptionService.test.js: encrypted-object handling and regression tests",
+        "src/js/service/speechService.js: speech output",
+        "src/js/service/actionService.js and openHABService.js: actions and smart-home integration",
+        "serviceWorker.js and serviceWorkerCachePaths.js: Workbox offline cache"
+      ],
+      "verification": [
+        "2026-10-23 inspected README, AGPL-3.0 LICENSE, package.json, scanning/encryption source, service worker and Jest tests",
+        "2026-10-23 PR Beta release - Build 39950169970 succeeded; workflow npm run build runs Jest then Webpack and cache-generation script",
+        "2026-10-21 stable release release-2026-10-21-12.10/+0200 contains word-form, navigation and import fixes",
+        "No independent offline cold-start, browser, switch/eye-gaze, usability, encryption, cloud sync or hardware tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable release 2026-10-21; 2026-10-23 PR build succeeded with Jest+Webpack; workflow uses Node 22; Vue 2.7.15 dependency remains.",
+      "source": "GitHub-first accessibility category; research/2026-09-25-asterics-aac-offline-accessibility-platform.md",
+      "related_projects": [
+        "asterics/predictionary",
+        "asterics/AsTeRICS",
+        "asterics/FabiWare",
+        "asterics/FLipMouse",
+        "ARASAAC"
+      ],
+      "research_notes": "research/2026-10-23-dora-asterics-aac-promotion.md; offline fresh-start untested. Optional Matrix, sync and HTTP actions need trust controls. AGPL and external symbol/media licenses must be checked before reuse; user-specific AAC suitability not assessed."
     }
   ],
   "deferred_or_rejected": [

@@ -1402,6 +1402,47 @@ Suggested tiers:
 - **Caveats / risks:** Upstream explicitly calls firmware highly experimental; flashing carries device risk and RF operation is regulated. Vendor SDK licensing differs from the main project. CI builds do not establish on-device functionality.
 - **Research notes:** `research/2026-10-23-otel-collector-openrtx-promotion.md`. Follow failed PR builds and perform device-specific M17 interoperability tests before making operational claims.
 
+
+### Dora
+
+- **Repository:** https://github.com/dora-rs/dora
+- **Author / Org:** dora-rs
+- **Category:** Robotics / distributed AI dataflow / Rust / Arrow / ROS2 interoperability
+- **Evidence:** VERIFIED — upstream
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Dataflow-oriented robotics/AI runtime with typed YAML graphs, Rust/Python/C/C++ nodes, Arrow messages, shared-memory/Zenoh transports, coordinator/daemon lifecycle and record/replay.
+- **Why it is valuable:** Composable cross-language runtime, fault recovery, observability and concrete regression infrastructure, with current releases and substantial upstream CI.
+- **Useful code/components:** `libraries/recording/src/lib.rs` (versioned `.drec` read/write); `binaries/record-node/src/main.rs`; `binaries/replay-node/src/main.rs`; `binaries/coordinator/src/` (scheduling/liveness); `binaries/daemon/`; `libraries/arrow-convert/`; `apis/rust/node/`; `tests/fault-tolerance-e2e.rs`.
+- **Install / runtime:** Rust/Cargo CLI; Python/PyArrow or Rust/C/C++ node APIs; optional Zenoh networking and ROS2 dependencies. Cargo workspace minimum Rust 1.95.0, CI Rust 1.97.1.
+- **Platforms:** Linux, macOS and Windows, with feature-specific platform limitations.
+- **License:** Apache-2.0 root; inspect third-party dependencies and Node Hub packages individually. No source copied.
+- **Maintenance signals:** Stable v1.1.0 published 2026-10-08 with 14 release assets. 2026-10-22 [main CI 39797929129](https://github.com/dora-rs/dora/actions/runs/39797929129) passed 13/13 jobs including Linux unit, E2E, semantic contracts, benchmarks and audits; Oct 22 commits update record-node and runtime code.
+- **Verification performed:** Inspected README, LICENSE, Cargo workspace, implementation directories, `.drec` reader/writer, releases, CI jobs and tests. No independent build, dataflow, Zenoh/ROS2, benchmark or robot-hardware test.
+- **Source discovery:** GitHub-first robotics category; `research/2026-09-26-dora-real-time-robotics-dataflow.md`.
+- **Related projects:** `dora-rs/dora-hub`, Zenoh, Apache Arrow, ROS2 `rmw_zenoh`, `Ekumen-OS/andino-rs`.
+- **Caveats / risks:** `dora_recording` explicitly declares itself **internal and outside the 1.0 API stability guarantee**; format v2 limits record bodies to 64 MiB. README latency claims not independently reproduced; soft real-time is not hard real-time certification.
+- **Research notes:** `research/2026-10-23-dora-asterics-aac-promotion.md`. Investigate coordinator recovery, backpressure and `.drec` format compatibility.
+
+### Asterics AAC
+
+- **Repository:** https://github.com/asterics/Asterics-AAC
+- **Author / Org:** asterics / AsTeRICS Foundation ecosystem
+- **Category:** Accessibility / augmentative and alternative communication / offline-first PWA / alternate input
+- **Evidence:** VERIFIED — upstream
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Customizable communication grids with speech, multilingual vocabulary, switch scanning, predictive text, optional messaging and smart-home actions; documented offline-capable PWA.
+- **Why it is valuable:** Unifies assistive input, communication and actions across devices; source contains reusable scanning, local data, prediction, speech and grid-action components.
+- **Useful code/components:** `src/js/input/scanning.js`, `inputEventHandler.js`; `src/js/service/predictionService.js`; `src/js/service/data/pouchDbService.js`, `encryptionService.js` and `encryptionService.test.js`; `src/js/service/speechService.js`, `actionService.js`, `openHABService.js`; `serviceWorker.js`.
+- **Install / runtime:** Modern browser/PWA on mobile/desktop; developer build uses Node.js, npm/Yarn, Jest and Webpack. CI uses Node 22; `npm run build` runs Jest then Webpack and cache generation.
+- **Platforms:** Android, iOS, Windows, Linux and macOS browsers.
+- **License:** AGPL-3.0 source; CC BY-SA 4.0 documentation/non-source per README; symbol libraries, voices, fonts and media have separate terms. No code or assets copied.
+- **Maintenance signals:** Stable release `release-2026-10-21-12.10/+0200` (2026-10-21) fixes word forms, navigation and imports. 2026-10-23 [PR Beta Build 39950169970](https://github.com/asterics/Asterics-AAC/actions/runs/39950169970) succeeded with Jest+Webpack; beta deployment success is not independent UI verification.
+- **Verification performed:** Inspected README, LICENSE, package manifest, scanning and encryption source, service worker, Jest tests, release and CI workflow. No independent browser install, offline cold-start, switch/eye-gaze hardware, user study or cryptographic audit.
+- **Source discovery:** GitHub-first accessibility category; `research/2026-09-25-asterics-aac-offline-accessibility-platform.md`.
+- **Related projects:** `asterics/predictionary`, `asterics/AsTeRICS`, `asterics/FabiWare`, `asterics/FLipMouse`, ARASAAC.
+- **Caveats / risks:** Offline use may require prior caching; cloud/Matrix/HTTP integrations need trust controls. Vue 2-era dependencies merit review. AAC suitability is user-specific and was not assessed.
+- **Research notes:** `research/2026-10-23-dora-asterics-aac-promotion.md`. Test fresh-install offline behavior, physical switch scanning and external asset licensing.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
