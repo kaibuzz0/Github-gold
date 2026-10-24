@@ -1443,6 +1443,46 @@ Suggested tiers:
 - **Caveats / risks:** Offline use may require prior caching; cloud/Matrix/HTTP integrations need trust controls. Vue 2-era dependencies merit review. AAC suitability is user-specific and was not assessed.
 - **Research notes:** `research/2026-10-23-dora-asterics-aac-promotion.md`. Test fresh-install offline behavior, physical switch scanning and external asset licensing.
 
+### OpenRefine
+
+- **Repository:** https://github.com/OpenRefine/OpenRefine
+- **Author / Org:** OpenRefine community
+- **Category:** Data cleaning / reconciliation / local-first data transformations / Java
+- **Evidence:** VERIFIED (upstream source, release, unit/E2E CI; no independent execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Browser-based local data-cleaning workbench for importing, profiling, clustering, transforming, reconciling and exporting tabular/structured data.
+- **Why it is valuable:** Reusable GREL parser, format importers, string-clustering strategies, reconciliation extensions and reproducible operations, supported by browser E2E and Java unit tests.
+- **Useful code/components:** `modules/grel/src/main/java/com/google/refine/grel/Parser.java` and `Scanner.java`; `main/src/com/google/refine/importers/`; `main/src/com/google/refine/clustering/`; `extensions/wikibase/`; `server/src/com/google/refine/ValidateHostHandler.java`; `main/tests/cypress/`.
+- **Install / runtime:** Official desktop packages; for source builds Maven, Node.js and Java. README says JDK 11+, but current root `pom.xml` declares Java minimum 21; follow the manifest/branch-specific build instructions.
+- **Platforms:** Windows, macOS, Linux; Java server with local browser interface.
+- **License:** BSD-3-Clause root; preserve notices and separately inspect extension/dependency licenses.
+- **Maintenance signals:** Stable 3.10.1 released 2026-03-04; October 23 commits fix path-prefixed URLs and macOS signing. 2026-10-23 [upstream snapshot CI](https://github.com/OpenRefine/OpenRefine/actions/runs/40010351064) passed 12/12 jobs, including seven Cypress E2E groups, unit tests and packaging.
+- **Verification performed:** README, LICENSE.txt, pom.xml, GREL parser, importers/clustering, server Host validation and CI workflow/job results inspected 2026-10-24. No independent install, transformations, performance tests or security audit.
+- **Source discovery:** GitHub-first data-cleaning category.
+- **Related projects:** Wikibase, Wikidata, OpenRefine reconciliation services, OpenRefine extensions.
+- **Caveats / risks:** README and current build manifest disagree on Java minimum. The local HTTP interface's host-validation code does not establish full security. Third-party integrations and imported data require privacy/license review.
+- **Research notes:** `research/2026-10-24-openrefine-kiwix-android-promotion.md`. Test release-specific Java requirements, import edge cases, reconciliation provenance and local HTTP trust boundaries.
+
+### Kiwix Android
+
+- **Repository:** https://github.com/kiwix/kiwix-android
+- **Author / Org:** Kiwix
+- **Category:** Android / offline knowledge / ZIM archives / Wi-Fi Direct content sharing
+- **Evidence:** VERIFIED (upstream source, stable release, partial emulator CI; not independently run)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Offline Android reader for ZIM archives (including Wikipedia), with local library management, file transfer and local-network serving.
+- **Why it is valuable:** Practical offline knowledge distribution with reusable Android storage handling, Wi-Fi Direct file exchange, ZIM-reader integration and optional local HTTP sharing.
+- **Useful code/components:** `app/src/main/java/org/kiwix/kiwixmobile/webserver/KiwixServer.kt`; `localFileTransfer/WifiDirectManager.kt`; `zimManager/Fat32Checker.kt`; `core/src/main/java/org/kiwix/kiwixmobile/core/reader/`; `core/.../downloader/`; `app/.../zimManager/`.
+- **Install / runtime:** Android 7.1+ (minSdk 25). Official full APK or restricted Play Store variant; source builds require Android Studio/Gradle with JDK 21.
+- **Platforms:** Android phones and tablets; targetSdk 36 in current development source.
+- **License:** GPL-3.0-or-later; separate rights apply to ZIM content, branding and dependencies.
+- **Maintenance signals:** Stable v3.14.1 released 2026-05-14; October 22 source changes improve read-aloud and java-libkiwix integration. 2026-10-22 [main CI](https://github.com/kiwix/kiwix-android/actions/runs/39790121822) **failed** an Android API 25 standard-app test while other matrix jobs passed; 2026-10-24 CD succeeded but does not prove runtime correctness.
+- **Verification performed:** README, COPYING, Gradle, Config.kt, Wi-Fi Direct manager, server, FAT32 checker, test matrix and CI job results inspected 2026-10-24. No independent Android build, real-device test, offline archive read, peer transfer or security audit.
+- **Source discovery:** Recursive GitHub-first follow-up from libzim and ZIM Tools.
+- **Related projects:** `openzim/libzim`, `openzim/zim-tools`, `kiwix/java-libkiwix`, `kiwix/kiwix-android-branded`, `kiwix/kiwix-desktop`.
+- **Caveats / risks:** Play Store variant has Android scoped-storage restrictions; full variant permits broader file selection. Large ZIM files may exceed FAT32 limits; deleting the app can delete app-managed archives. Wi-Fi Direct and local server trust boundaries need review. Main's 4.0.0 version configuration is not a published stable release.
+- **Research notes:** `research/2026-10-24-openrefine-kiwix-android-promotion.md`. Follow Android API 25 CI regression and test cold-start offline, network sharing and file integrity.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
