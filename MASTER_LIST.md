@@ -1567,6 +1567,46 @@ Suggested tiers:
 - **Research notes:** `research/2026-10-24-osm2pgsql-rz-pipe-promotion.md`. Follow-up: remote trust boundaries, per-language license audit, Windows and Rust runtime tests, malformed command/output behavior.
 
 
+### Tesseract OCR
+
+- **Repository:** https://github.com/tesseract-ocr/tesseract
+- **Author / Org:** tesseract-ocr
+- **Category:** offline-ocr / document-processing / computer-vision / c++ / c-api / text-extraction
+- **Evidence:** VERIFIED (upstream code, releases and CI; no independent execution)
+- **Tier / Score:** S / 28 (utility 5 + working evidence 5 + reusability 5 + novelty 3 + documentation 5 + maintenance 5)
+- **What it does:** Offline LSTM and optional legacy OCR engine with CLI, C/C++ APIs and text/hOCR/ALTO/PAGE/TSV/searchable-PDF output.
+- **Why it is valuable:** Reusable image-to-text pipeline, document renderers, page-layout algorithms, training utilities and cross-platform embedding.
+- **Useful code/components:** `include/tesseract/baseapi.h; src/api/baseapi.cpp (C++ OCR API)`; `include/tesseract/capi.h; src/api/capi.cpp (C interface)`; `src/api/hocrrenderer.cpp, altorenderer.cpp, pdfrenderer.cpp (document outputs)`; `src/textord/ (page segmentation and text layout)`; `src/lstm/lstmrecognizer.cpp, recodebeam.cpp (neural recognition)`; `src/training/lstmtraining.cpp, text2image.cpp (training tools)`; `unittest/ (API, LSTM, page layout, sanitizer tests)`.
+- **Install / runtime:** Use packages or CMake/Autotools C++ build with Leptonica and separate traineddata language models; preprocess PDF into images for input.
+- **Platforms:** Linux, Windows, macOS, C++/Leptonica-supported environments.
+- **License:** Apache-2.0 engine; Leptonica, language traineddata and other dependencies separately licensed. No third-party code copied.
+- **Maintenance signals:** 2026-10-24 main commits fix Windows NSIS buffer and skip unit tests when traineddata absent; active multi-platform CI; stable 5.5.3 (2026-07-24).
+- **Verification performed:** 2026-10-24: inspected README, LICENSE, VERSION, doc/tesseract.1.asc, source/API trees, unit tests, and CI workflows; Stable GitHub release 5.5.3 published 2026-07-24; VERSION matches; 2026-10-24 upstream Linux autotools CI 40128395434 passed 4/4; macOS autotools 40127924448 and Windows msys2 40114227579 succeeded; Upstream CMake CI 40025480669 passed 8/8; sanitizer unit tests 40042891468 passed 2/2; CodeQL 40091625811 succeeded; CI invokes sample OCR and make check; no independent build, OCR accuracy test or security audit.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `tesseract-ocr/tessdata`; `tesseract-ocr/tessdata_fast`; `tesseract-ocr/tessdata_best`; `DanBloomberg/leptonica`.
+- **Caveats / risks:** Untrusted-image parsing, model licensing, image quality and C API memory ownership require review; upstream CI does not prove accuracy or safety.
+- **Research notes:** research/2026-10-24-tesseract-openscad-promotion.md. OCR engine accepts raster images, not PDFs directly; PDF output supported. Model availability, input image quality and page segmentation affect accuracy. No independent OCR accuracy benchmark. Check traineddata licenses and memory ownership before code extraction.
+
+### OpenSCAD
+
+- **Repository:** https://github.com/openscad/openscad
+- **Author / Org:** openscad
+- **Category:** parametric-cad / 3d-printing / geometry / c++ / design-automation / offline-tools
+- **Evidence:** VERIFIED (upstream code, releases and CI; no independent execution)
+- **Tier / Score:** S / 26 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 4 + maintenance 3)
+- **What it does:** Script-driven 3D CAD compiler for constructive solid geometry, parametric parts, extrusion and mesh export.
+- **Why it is valuable:** Reproducible, version-controlled mechanical designs; reusable geometry and export components.
+- **Useful code/components:** `src/core/AST.cc, Expression.cc (parametric language evaluation)`; `src/core/CSGTreeEvaluator.cc (constructive solid geometry tree)`; `src/geometry/GeometryEvaluator.cc, boolean_utils.cc (geometry operations)`; `src/geometry/linear_extrude.cc, rotate_extrude.cc (extrusion)`; `src/io/export_stl.cc, export_3mf_v2.cc, import_stl.cc (model interchange)`; `tests/regression/, tests/test_cmdline_tool.py, tests/stlexportsanitytest.py`; `libraries/MCAD (mechanical shapes, LGPL-2.1 submodule)`.
+- **Install / runtime:** Desktop binary or C++17/CMake build with Qt, CGAL, OpenCSG, Eigen, Boost and other libraries; optional headless build.
+- **Platforms:** Linux/Unix, Windows, macOS, headless CLI builds.
+- **License:** GPL-2.0-or-later with CGAL linking exception; MCAD and other submodules have separate licenses. No third-party code copied.
+- **Maintenance signals:** Active 2026-10-24 master commits and multi-OS green CI; last non-prerelease GitHub tag remains 2021.01 (2021-02-07).
+- **Verification performed:** 2026-10-24: inspected README, COPYING, src/openscad.cc license header, .gitmodules, CMake, geometry/core/io source and regression tests; Latest GitHub stable release found openscad-2021.01 (2021-02-07); master commit bf28796b dated 2026-10-24; 2026-10-24 upstream Linux release build 40109445217, release tests 40109445203 and experimental tests 40109445087 succeeded; 2026-10-24 upstream macOS experimental 40109445085 and Windows msys2 40109445266 succeeded (Windows Qt5 and Qt6 jobs); Linux experimental CI invokes CTest, example tests and coverage; no independent geometry rendering, STL validation or 3D printing.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `openscad/MCAD`; `elalish/manifold`; `floriankirsch/OpenCSG`; `AngusJohnson/Clipper2`.
+- **Caveats / risks:** Stable release is over five years old; active master differs. 3D geometry must be checked before physical fabrication; license exception does not cover all submodules.
+- **Research notes:** research/2026-10-24-tesseract-openscad-promotion.md. S/26 discounts old stable release despite active development. CGAL, Qt, OpenCSG, Eigen, Boost and other dependencies required; submodule licenses differ. Verify manifold quality and nightly/stable differences before production use.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.

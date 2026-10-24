@@ -4075,6 +4075,124 @@
         "radareorg/radare2"
       ],
       "research_notes": "Transport APIs can execute arbitrary Rizin commands; use only authorized binaries and trusted Rizin endpoints. HTTP/TCP transports may lack built-in authentication/encryption; avoid public exposure. Python command result framing uses NUL terminators and a 10ms polling loop. CI compiles Rust but does not run Rust cargo test. Mixed per-language licensing precludes blanket code copying."
+    },
+    {
+      "name": "Tesseract OCR",
+      "repository": "https://github.com/tesseract-ocr/tesseract",
+      "owner": "tesseract-ocr",
+      "category": [
+        "offline-ocr",
+        "document-processing",
+        "computer-vision",
+        "c++",
+        "c-api",
+        "text-extraction"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Apache-2.0 engine; Leptonica, language traineddata and other dependencies separately licensed",
+      "license_copy_status": "permissive-with-attribution; review dependency and model licenses",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "C++/Leptonica-supported environments"
+      ],
+      "useful_components": [
+        "include/tesseract/baseapi.h; src/api/baseapi.cpp (C++ OCR API)",
+        "include/tesseract/capi.h; src/api/capi.cpp (C interface)",
+        "src/api/hocrrenderer.cpp, altorenderer.cpp, pdfrenderer.cpp (document outputs)",
+        "src/textord/ (page segmentation and text layout)",
+        "src/lstm/lstmrecognizer.cpp, recodebeam.cpp (neural recognition)",
+        "src/training/lstmtraining.cpp, text2image.cpp (training tools)",
+        "unittest/ (API, LSTM, page layout, sanitizer tests)"
+      ],
+      "verification": [
+        "2026-10-24: inspected README, LICENSE, VERSION, doc/tesseract.1.asc, source/API trees, unit tests, and CI workflows",
+        "Stable GitHub release 5.5.3 published 2026-07-24; VERSION matches",
+        "2026-10-24 upstream Linux autotools CI 40128395434 passed 4/4; macOS autotools 40127924448 and Windows msys2 40114227579 succeeded",
+        "Upstream CMake CI 40025480669 passed 8/8; sanitizer unit tests 40042891468 passed 2/2; CodeQL 40091625811 succeeded",
+        "CI invokes sample OCR and make check; no independent build, OCR accuracy test or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "2026-10-24 main commits fix Windows NSIS buffer and skip unit tests when traineddata absent; active multi-platform CI; stable 5.5.3 (2026-07-24).",
+      "source": "GitHub-first OCR discovery; research/2026-10-24-tesseract-openscad-promotion.md",
+      "related_projects": [
+        "tesseract-ocr/tessdata",
+        "tesseract-ocr/tessdata_fast",
+        "tesseract-ocr/tessdata_best",
+        "DanBloomberg/leptonica"
+      ],
+      "research_notes": "OCR engine accepts raster images, not PDFs directly; PDF output supported. Model availability, input image quality and page segmentation affect accuracy. No independent OCR accuracy benchmark. Check traineddata licenses and memory ownership before code extraction."
+    },
+    {
+      "name": "OpenSCAD",
+      "repository": "https://github.com/openscad/openscad",
+      "owner": "openscad",
+      "category": [
+        "parametric-cad",
+        "3d-printing",
+        "geometry",
+        "c++",
+        "design-automation",
+        "offline-tools"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 26,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 3
+      },
+      "license": "GPL-2.0-or-later with CGAL linking exception; MCAD and other submodules have separate licenses",
+      "license_copy_status": "copyleft-with-cgal-exception; check individual submodule and file licenses",
+      "platforms": [
+        "Linux/Unix",
+        "Windows",
+        "macOS",
+        "headless CLI builds"
+      ],
+      "useful_components": [
+        "src/core/AST.cc, Expression.cc (parametric language evaluation)",
+        "src/core/CSGTreeEvaluator.cc (constructive solid geometry tree)",
+        "src/geometry/GeometryEvaluator.cc, boolean_utils.cc (geometry operations)",
+        "src/geometry/linear_extrude.cc, rotate_extrude.cc (extrusion)",
+        "src/io/export_stl.cc, export_3mf_v2.cc, import_stl.cc (model interchange)",
+        "tests/regression/, tests/test_cmdline_tool.py, tests/stlexportsanitytest.py",
+        "libraries/MCAD (mechanical shapes, LGPL-2.1 submodule)"
+      ],
+      "verification": [
+        "2026-10-24: inspected README, COPYING, src/openscad.cc license header, .gitmodules, CMake, geometry/core/io source and regression tests",
+        "Latest GitHub stable release found openscad-2021.01 (2021-02-07); master commit bf28796b dated 2026-10-24",
+        "2026-10-24 upstream Linux release build 40109445217, release tests 40109445203 and experimental tests 40109445087 succeeded",
+        "2026-10-24 upstream macOS experimental 40109445085 and Windows msys2 40109445266 succeeded (Windows Qt5 and Qt6 jobs)",
+        "Linux experimental CI invokes CTest, example tests and coverage; no independent geometry rendering, STL validation or 3D printing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "medium",
+      "maintenance_signals": "Active 2026-10-24 master commits and multi-OS green CI; last non-prerelease GitHub tag remains 2021.01 (2021-02-07).",
+      "source": "GitHub-first CAD discovery; research/2026-10-24-tesseract-openscad-promotion.md",
+      "related_projects": [
+        "openscad/MCAD",
+        "elalish/manifold",
+        "floriankirsch/OpenCSG",
+        "AngusJohnson/Clipper2"
+      ],
+      "research_notes": "S/26 discounts old stable release despite active development. CGAL, Qt, OpenCSG, Eigen, Boost and other dependencies required; submodule licenses differ. Verify manifold quality and nightly/stable differences before production use."
     }
   ],
   "deferred_or_rejected": [
