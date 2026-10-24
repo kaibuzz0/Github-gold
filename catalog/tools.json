@@ -3951,6 +3951,130 @@
         "radareorg/radare2"
       ],
       "research_notes": "Score deliberately capped at A/25 because recent dev CI has four Capstone build failures. File-level SPDX varies; LGPL-3.0-only core does not imply all bundled assets share that license. Review untrusted binary parser robustness and current dependency build matrix before promotion."
+    },
+    {
+      "name": "osm2pgsql",
+      "repository": "https://github.com/osm2pgsql-dev/osm2pgsql",
+      "owner": "osm2pgsql-dev",
+      "category": [
+        "openstreetmap",
+        "geospatial",
+        "postgresql",
+        "postgis",
+        "data-import",
+        "lua",
+        "map-rendering",
+        "offline-data-pipelines"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "GPL-2.0-or-later (README and source SPDX); flex-config example scripts explicitly dedicated to public domain; bundled dependencies separately licensed",
+      "license_copy_status": "link-only; file-level attribution and GPL obligations required for copied implementation",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "other Unix-like systems with supported dependencies"
+      ],
+      "useful_components": [
+        "src/input.cpp and src/osmdata.cpp: OSM/PBF/O5M input and object processing",
+        "src/output-flex.cpp and src/flex-lua-*.cpp: configurable Lua-driven PostGIS output",
+        "src/geom-from-osm.cpp and src/geom-functions.cpp: OSM-to-geometry conversion",
+        "src/expire-tiles.cpp and src/expire-output.cpp: dirty-tile invalidation for incremental updates",
+        "src/node-persistent-cache.cpp and src/middle-pgsql.cpp: intermediate object storage",
+        "flex-config/*.lua: documented public-domain examples for addresses, relations, tile expiry and generalization",
+        "tests/test-output-flex-update.cpp, tests/test-expire-tiles.cpp and tests/bdd/: regression coverage"
+      ],
+      "verification": [
+        "2026-10-24: inspected upstream README, COPYING, CMake build requirements, src/, tests/, flex-config/README.md, CI workflow and reusable module source headers",
+        "Upstream stable release 2.3.1 published 2026-07-05; release notes fix a diff-expire segfault on tables with multiple expire outputs",
+        "2026-10-15 master CI run 38734399518 succeeded with 20/20 jobs across Linux PostgreSQL configurations and Windows builds; build-and-test composite invokes make and ctest (pg_virtualenv where configured)",
+        "2026-10-15 install test 38734399525 passed 2/2; clang-tidy and Lua lint workflows passed independently",
+        "Latest inspected master commit 5d821cce on 2026-10-15 added grouped-linemerge generalization example",
+        "No independent import, PostGIS deployment, replication replay, performance benchmark or security audit by GitHub Gold"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 2.3.1 (2026-07-05); latest inspected master commit 2026-10-15; CI 20/20 and install tests 2/2 passed 2026-10-15.",
+      "source": "GitHub-first geospatial data-pipeline discovery; research/2026-10-24-osm2pgsql-rz-pipe-promotion.md",
+      "related_projects": [
+        "osm2pgsql-dev/osm2pgsql-themepark",
+        "osmcode/libosmium",
+        "mapbox/protozero",
+        "protomaps/PMTiles",
+        "onthegomap/planetiler"
+      ],
+      "research_notes": "PostgreSQL >=12 (14+ recommended), PostGIS >=3.0, C++17 compiler and CMake required for source builds; Lua flex output supports incremental diffs and geometry transforms. Global imports can be resource-intensive. OSM input data has independent ODbL attribution/share-alike considerations. Validate incremental update idempotency and tile expiry against real replication streams; no independent execution."
+    },
+    {
+      "name": "rz-pipe",
+      "repository": "https://github.com/rizinorg/rz-pipe",
+      "owner": "rizinorg",
+      "category": [
+        "reverse-engineering",
+        "defensive-binary-analysis",
+        "multi-language-bindings",
+        "automation",
+        "ipc",
+        "python",
+        "rust",
+        "go"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "A",
+      "score": 24,
+      "score_breakdown": {
+        "utility": 4,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "Mixed per-language: Python and Haskell MIT; Rust MIT OR Apache-2.0; no root LICENSE and other language directories require independent licensing review",
+      "license_copy_status": "do-not-copy-unreviewed-language-directories; preserve per-language notices",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows (implementation-dependent)",
+        "local Rizin process or trusted Rizin remote endpoint"
+      ],
+      "useful_components": [
+        "python/rzpipe/open_sync.py: subprocess, TCP and HTTP Rizin command transports",
+        "python/rzpipe/open_async.py and open_base.py: asynchronous interface and shared command/JSON helpers",
+        "python/tests/: Python API regression tests",
+        "go/rzpipe.go and go/native.go: Go Rizin transport bindings; go/rzpipe_test.go tests",
+        "rust/src/rzpipe.rs, rz.rs and errors.rs: Rust command transport, typed error handling and JSON integration",
+        "racket/main.rkt, ocaml/rz.ml, ruby/rzpipe.rb and haskell/RzPipe/: language-specific bindings"
+      ],
+      "verification": [
+        "2026-10-24: inspected README, Python implementation/tests/setup.py/MIT LICENSE, Rust Cargo manifest/MIT-OR-Apache license, Go Makefile, Haskell MIT LICENSE, CI workflow, commits and CI jobs",
+        "2026-09-27 master CI 36352169977 passed both Ubuntu and rust-fmt-clippy jobs; Ubuntu workflow builds Rizin, runs Python pytest, Go tests, OCaml install, Rust cargo build, Ruby make and Racket tests",
+        "2026-09-29 PR CI 36553151732 passed; not evidence of a new master release",
+        "Latest inspected master commit b2fa2dfd (2026-09-27) adds Racket implementation; prior change addresses Python output with embedded NUL bytes",
+        "No GitHub release objects returned as of 2026-10-24; Rust manifest declares 0.1.0 but this is not a confirmed published release",
+        "No independent Rizin execution, remote transport test, package installation, network security review or benchmark"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "medium",
+      "maintenance_signals": "Master commits through 2026-09-27; CI 36352169977 succeeded (2/2 jobs); no GitHub release objects found.",
+      "source": "Recursive follow-up from canonical Rizin binary-analysis entry; research/2026-10-24-osm2pgsql-rz-pipe-promotion.md",
+      "related_projects": [
+        "rizinorg/rizin",
+        "rizinorg/cutter",
+        "rizinorg/rizin-testbins",
+        "radareorg/radare2"
+      ],
+      "research_notes": "Transport APIs can execute arbitrary Rizin commands; use only authorized binaries and trusted Rizin endpoints. HTTP/TCP transports may lack built-in authentication/encryption; avoid public exposure. Python command result framing uses NUL terminators and a 10ms polling loop. CI compiles Rust but does not run Rust cargo test. Mixed per-language licensing precludes blanket code copying."
     }
   ],
   "deferred_or_rejected": [

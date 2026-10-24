@@ -1525,6 +1525,48 @@ Suggested tiers:
 - **Research notes:** `research/2026-10-24-java-libkiwix-rizin-promotion.md`. Recheck Capstone matrix and evaluate FastCDC, RzIL and fuzz corpus independently.
 
 
+
+### osm2pgsql
+
+- **Repository:** https://github.com/osm2pgsql-dev/osm2pgsql
+- **Author / Org:** osm2pgsql-dev
+- **Category:** OpenStreetMap / geospatial ETL / PostgreSQL / PostGIS / incremental data import / Lua
+- **Evidence:** VERIFIED (upstream source, release and CI; no independent database import)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Imports OSM, PBF and O5M geodata into PostgreSQL/PostGIS, with Lua-configurable geometry and table outputs and incremental replication diffs.
+- **Why it is valuable:** Mature, well-tested ingestion and transformation pipeline for self-hosted maps, geocoding and geospatial analysis; valuable incremental tile-expiry and geometry code.
+- **Useful code/components:** `src/input.cpp`, `src/osmdata.cpp` (ingestion); `src/output-flex.cpp`, `src/flex-lua-*.cpp` (Lua/PostGIS output); `src/geom-from-osm.cpp` (geometry); `src/expire-tiles.cpp`, `src/expire-output.cpp` (tile invalidation); `src/node-persistent-cache.cpp`, `src/middle-pgsql.cpp` (intermediate storage); `flex-config/*.lua` (public-domain examples); `tests/test-output-flex-update.cpp`, `tests/test-expire-tiles.cpp` and `tests/bdd/` (regressions).
+- **Install / runtime:** Distribution packages or CMake/C++17 source build; requires PostgreSQL >=12 (14+ recommended) and PostGIS >=3.0; Lua and other build libraries; large-area imports need substantial storage and memory.
+- **Platforms:** Linux, Windows, macOS; other Unix-like platforms with dependencies.
+- **License:** GPL-2.0-or-later (README and SPDX); `flex-config/` examples are explicitly public domain. Bundled third-party libraries have separate licenses; OSM input data has separate ODbL obligations.
+- **Maintenance signals:** Stable v2.3.1 released 2026-07-05, fixing a diff-expire segfault; 2026-10-15 master commit 5d821cce adds grouped-linemerge generalization. Upstream CI [38734399518](https://github.com/osm2pgsql-dev/osm2pgsql/actions/runs/38734399518) passed **20/20** jobs; installation CI [38734399525](https://github.com/osm2pgsql-dev/osm2pgsql/actions/runs/38734399525) passed **2/2**.
+- **Verification performed:** Inspected README, COPYING, CMake requirements, source/test trees, flex configuration examples, release notes and workflow; upstream build-and-test action invokes `ctest` under PostgreSQL virtual environments. No local import, replication replay, benchmark or security audit.
+- **Source discovery:** GitHub-first geospatial tooling pass.
+- **Related projects:** `osm2pgsql-dev/osm2pgsql-themepark`, `osmcode/libosmium`, `mapbox/protozero`; `protomaps/PMTiles` and `onthegomap/planetiler` are adjacent map-pipeline alternatives, not dependencies.
+- **Caveats / risks:** High resource demand for global imports; ensure PostgreSQL access control and validate incremental updates/dirty-tile calculations on real data. GPL and OSM dataset licenses are distinct.
+- **Research notes:** `research/2026-10-24-osm2pgsql-rz-pipe-promotion.md`. Follow-up: replication-diff idempotency, multi-output expiry regression, Lua transformation correctness, geometry edge cases.
+
+### rz-pipe
+
+- **Repository:** https://github.com/rizinorg/rz-pipe
+- **Author / Org:** rizinorg
+- **Category:** Defensive binary analysis / Rizin automation / IPC / Python / Rust / Go / multi-language bindings
+- **Evidence:** VERIFIED (upstream source and passing CI for supported components; no independent runtime tests)
+- **Tier / Score:** A / 24 (Utility 4 + Working Evidence 4 + Reusability 5 + Novelty 3 + Documentation 4 + Maintenance 4)
+- **What it does:** Exposes Rizin command execution and JSON output to Python, Go, Rust, Haskell, OCaml, Ruby and Racket through local subprocess/pipes and optional network transports.
+- **Why it is valuable:** Reusable automation bridge for scripted, authorized firmware and binary inspection without embedding Rizin's internal C APIs.
+- **Useful code/components:** `python/rzpipe/open_sync.py`, `open_async.py`, `open_base.py` (transport and command helpers); `python/tests/`; `go/rzpipe.go`, `go/native.go`, `go/rzpipe_test.go`; `rust/src/rzpipe.rs`, `rz.rs`, `errors.rs`; Racket, Ruby, OCaml and Haskell bindings.
+- **Install / runtime:** Rizin CLI or compatible trusted remote endpoint; Python package `rzpipe` (`pip install rzpipe` documented), Go module or Rust Cargo build; other languages have separate package/build procedures.
+- **Platforms:** Linux, macOS and Windows where corresponding language runtime and Rizin process/transport are supported; exact portability varies by binding.
+- **License:** **Mixed by language:** Python/Haskell MIT; Rust MIT OR Apache-2.0. No root LICENSE; Go, Ruby, OCaml and Racket source licensing not established in this pass. **Do not copy unreviewed language code.**
+- **Maintenance signals:** Master commit b2fa2dfd (2026-09-27) adds Racket binding; Python NUL-output fix 2026-09-27. Upstream CI [36352169977](https://github.com/rizinorg/rz-pipe/actions/runs/36352169977) passed **2/2** jobs; no GitHub Releases objects returned.
+- **Verification performed:** Inspected README, language trees, Python and Rust manifests/licenses, Go tests, Python subprocess implementation and CI workflow. CI runs Python pytest and Go tests, builds Rust and exercises additional bindings; it does **not** run Rust unit tests. No independent installation, execution, transport-security testing or audit.
+- **Source discovery:** Recursive investigation of the existing `rizinorg/rizin` entry.
+- **Related projects:** `rizinorg/rizin`, `rizinorg/cutter`, `rizinorg/rizin-testbins`, `radareorg/radare2`.
+- **Caveats / risks:** Plain HTTP/TCP remote command interfaces may lack authentication and transport encryption; do not expose publicly. Commands can manipulate Rizin analysis state and targets; use only on authorized files and trusted services. Python NUL-delimited output handling and polling deserve regression testing.
+- **Research notes:** `research/2026-10-24-osm2pgsql-rz-pipe-promotion.md`. Follow-up: remote trust boundaries, per-language license audit, Windows and Rust runtime tests, malformed command/output behavior.
+
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
