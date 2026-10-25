@@ -1215,7 +1215,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable v4.4.2 published 2026-08-07 with security fixes; 2026-10-22 main commit prepared v4.5.0-rc3 (not a stable release). 2026-10-22 main Twister 39835122032, CodeQL 39835121878 and docs 39835121990 completed successfully.
 - **Verification performed:** Upstream README, source tree, west manifest, LICENSE, REUSE license guidance, release, commits and GitHub Actions inspected. No independent build, board flashing or security audit.
 - **Source discovery:** GitHub-first; `research/2026-09-07-zephyr-rtos-embedded-kernel-hardware-test-platform.md` and `research/2026-10-23-zephyr-zellij-promotion.md`.
-- **Related projects:** west; BabbleSim; MCUboot; ESPHome; RadioLib; probe-rs.
+- **Related projects:** west; BabbleSim; MCUboot; ESPHome; RadioLib; probe-rs; `zmkfirmware/zmk` (ZMK pins a separate Zephyr fork).
 - **Caveats / risks:** Security advisories affect multiple kernel/protocol paths; CI does not establish all board combinations work. Imported modules may not inherit the root license.
 - **Research notes:** No third-party code copied. Prioritize Twister sharding and devicetree/driver generation as reusable architectural studies.
 
@@ -1606,6 +1606,46 @@ Suggested tiers:
 - **Related projects:** `openscad/MCAD`; `elalish/manifold`; `floriankirsch/OpenCSG`; `AngusJohnson/Clipper2`.
 - **Caveats / risks:** Stable release is over five years old; active master differs. 3D geometry must be checked before physical fabrication; license exception does not cover all submodules.
 - **Research notes:** research/2026-10-24-tesseract-openscad-promotion.md. S/26 discounts old stable release despite active development. CGAL, Qt, OpenCSG, Eigen, Boost and other dependencies required; submodule licenses differ. Verify manifold quality and nightly/stable differences before production use.
+
+### OpenROAD
+
+- **Repository:** https://github.com/The-OpenROAD-Project/OpenROAD
+- **Author / Org:** The OpenROAD Project
+- **Category:** Electronic design automation / ASIC physical design / OpenDB / C++ / Tcl / limited Python
+- **Evidence:** VERIFIED (upstream code, build CI and regression fixtures; no independent execution)
+- **Tier / Score:** S / 27 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 4)
+- **What it does:** Open-source ASIC physical-design application with floorplanning, placement, clock-tree synthesis, routing, timing repair and design database.
+- **Why it is valuable:** Reusable LEF/DEF physical-design database, placement/routing engines, Tcl/Python control and example chip-design flows.
+- **Useful code/components:** `src/odb/` (OpenDB LEF/DEF and binary DB); `src/drt/` (detailed routing/DRC); `src/rsz/` (timing and gate repair); `src/gpl/`, `src/cts/`, `src/pdn/`, `src/grt/` (placement/clock/power/global routing); `src/README.md` (API); `test/` and `src/*/test/` (regressions).
+- **Install / runtime:** Bazelisk and Bazel-supported C++ build toolchain, with relevant physical-design libraries and PDK; Tcl interface, limited Python bindings. **CMake deprecated and scheduled for removal November 1, 2026.**
+- **Platforms:** Linux primary; macOS upstream CI; other Bazel-supported hosts require confirmation.
+- **License:** BSD-3-Clause root; review third-party/submodule SPDX and notices. No third-party code copied.
+- **Maintenance signals:** 2026-10-25 UTC master commits; upstream macOS build 40145237901 passed, CodeQL 40145237910 passed, expected-output check 40145237885 passed. No current stable GitHub release verified (only old v0.9.0-beta object returned).
+- **Verification performed:** README, LICENSE, Bazel/CMake docs, OpenDB/detailed-route/resizer documentation, source/test trees and GitHub Actions inspected. No independent build, end-to-end RTL-to-GDSII run, PDK integration, silicon or security audit.
+- **Source discovery:** GitHub-first EDA research; no YouTube attribution.
+- **Related projects:** `The-OpenROAD-Project/OpenROAD-flow-scripts`; OpenSTA; PDK toolchains.
+- **Caveats / risks:** CMake deprecation, large build/PDK requirements, incomplete OpenDB API documentation, limited Python support; passing CI does not establish physical-design quality.
+- **Research notes:** `research/2026-10-24-openroad-zmk-promotion.md`. Investigate OpenDB reuse, detailed-route reproducibility, PDK compatibility and Bazel transition.
+
+### ZMK Firmware
+
+- **Repository:** https://github.com/zmkfirmware/zmk
+- **Author / Org:** zmkfirmware
+- **Category:** Zephyr-based embedded keyboard firmware / BLE / USB HID / split keyboards / alternative input
+- **Evidence:** VERIFIED (upstream source, tests and build CI; no independent hardware test)
+- **Tier / Score:** S / 26 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 3)
+- **What it does:** Configurable low-power firmware for wired/wireless custom keyboards, split input devices, key layers, macros, pointing devices and Studio configuration.
+- **Why it is valuable:** Reusable key-behavior engine and BLE/USB HID, split transport, programmable alternative-input capabilities.
+- **Useful code/components:** `app/src/behaviors/` (hold-tap, sticky keys, tap dance, macros); `app/src/split/` (wired/BLE split); `app/src/pointing/` (input processors); `app/src/studio/` (RPC/transport); `app/src/ble.c`, `usb_hid.c`, `keymap.c`; `app/tests/` (behavior/BLE regressions).
+- **Install / runtime:** Zephyr `west` workspace and board-specific firmware builds; supported MCU/shield and USB/BLE input hardware. `app/west.yml` pins `zmkfirmware/zephyr` `v4.1.0+zmk-fixes`.
+- **Platforms:** Supported nRF52/nRF53, RP2040 and other listed boards; USB and BLE HID; Linux/macOS/Windows build hosts vary.
+- **License:** MIT root; west modules and HALs retain their own licenses. No third-party code copied.
+- **Maintenance signals:** Stable v0.3.0 (2025-08-01); master commits through 2026-10-09. Oct 23 Tests 40030685287 passed 25/25; BLE 40030685316 passed 4/4; Oct 24 scheduled Build 40062805918 failed one `proton_c` matrix job.
+- **Verification performed:** README, LICENSE, changelog, west manifest, source/test directories, workflows, recent commits and CI job matrices inspected. No independent flash, BLE pairing, accessibility testing or security audit.
+- **Source discovery:** GitHub-first embedded/alternative-input discovery; no YouTube attribution.
+- **Related projects:** `zephyrproject-rtos/zephyr`; `zmkfirmware/zephyr`; `zmkfirmware/zmk-studio`.
+- **Caveats / risks:** One scheduled `proton_c` board build failed; board and shield combinations are not universally verified. BLE pairing, split reliability and Studio RPC need security testing. Customizable input is not itself proof of accessibility suitability.
+- **Research notes:** `research/2026-10-24-openroad-zmk-promotion.md`. Follow the pinned Zephyr fork, investigate `proton_c` failure, Studio RPC and hardware compatibility.
 
 ## Rejected / Deferred Leads
 

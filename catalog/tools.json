@@ -3078,7 +3078,11 @@
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
       "source": "GitHub-first existing dossier research/2026-09-07-zephyr-rtos-embedded-kernel-hardware-test-platform.md; refreshed research/2026-10-23-zephyr-zellij-promotion.md",
-      "copy_restriction_note": "No source copied. Check SPDX and west modules individually; stable v4.4.2 security advisories demonstrate meaningful kernel/protocol attack surface. Upstream CI success is not per-board hardware validation."
+      "copy_restriction_note": "No source copied. Check SPDX and west modules individually; stable v4.4.2 security advisories demonstrate meaningful kernel/protocol attack surface. Upstream CI success is not per-board hardware validation.",
+      "related_projects": [
+        "zmkfirmware/zmk",
+        "zmkfirmware/zephyr"
+      ]
     },
     {
       "name": "Zellij",
@@ -4193,6 +4197,125 @@
         "AngusJohnson/Clipper2"
       ],
       "research_notes": "S/26 discounts old stable release despite active development. CGAL, Qt, OpenCSG, Eigen, Boost and other dependencies required; submodule licenses differ. Verify manifold quality and nightly/stable differences before production use."
+    },
+    {
+      "name": "OpenROAD",
+      "repository": "https://github.com/The-OpenROAD-Project/OpenROAD",
+      "owner": "The-OpenROAD-Project",
+      "category": [
+        "electronic-design-automation",
+        "asic-physical-design",
+        "open-source-eda",
+        "c++",
+        "tcl",
+        "python-bindings",
+        "design-database"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "BSD-3-Clause at repository root; third-party and submodule code require file-level license review",
+      "license_copy_status": "bsd-3-clause-notices-and-third-party-file-review-required",
+      "platforms": [
+        "Linux (primary documented build)",
+        "macOS (upstream build CI)",
+        "Bazel-supported build hosts; PDK-dependent flows"
+      ],
+      "useful_components": [
+        "src/odb/ and src/odb/README.md: OpenDB LEF/DEF readers, writers and binary chip-design database",
+        "src/drt/ and src/drt/README.md: TritonRoute pin access, detailed routing and design-rule checks",
+        "src/rsz/ and src/rsz/README.md: timing/area repair and gate-resizing commands",
+        "src/gpl/, src/cts/, src/pdn/, src/grt/: placement, clock-tree synthesis, power-grid and global routing",
+        "src/README.md: Tcl and limited Python API for read_lef/read_def/read_db/write_db",
+        "test/ and src/*/test/: sample AES/GCD physical-design flows and regression fixtures",
+        "docs/user/Bazel.md and MODULE.bazel: Bazel build/test configuration"
+      ],
+      "verification": [
+        "2026-10-24 CDT (2026-10-25 UTC): inspected README, root BSD-3-Clause LICENSE, CMakeLists.txt, Bazel guide, src/README.md, OpenDB/detailed-route/resizer docs, source/test directory trees and workflows",
+        "2026-10-25 00:36 UTC master commits fb59e23b and dca44bea show active geometry and design checks",
+        "2026-10-25 upstream PR workflow 40145237901 macOS build passed 1/1; 40145237910 CodeQL passed 3/3; 40145237885 regression expected-output freshness check passed 1/1",
+        "2026-10-25 master ODB-generated-file check 40147387817 passed; other lint/security workflows passed, some macOS builds still running at inspection",
+        "GitHub releases endpoint yielded only 2020 v0.9.0-beta; not evidence of a current stable tagged release; ongoing development is primarily source-based",
+        "No independent build, RTL-to-GDSII flow, timing closure, silicon fabrication, PDK integration or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Active master commits through 2026-10-25 UTC and upstream build/static-analysis CI; Bazel is supported; CMake deprecated with removal scheduled 2026-11-01.",
+      "source": "GitHub-first electronic-design-automation discovery; research/2026-10-24-openroad-zmk-promotion.md",
+      "related_projects": [
+        "The-OpenROAD-Project/OpenROAD-flow-scripts",
+        "The-OpenROAD-Project/OpenROAD",
+        "The-OpenROAD-Project/OpenSTA"
+      ],
+      "research_notes": "CMakeLists.txt explicitly deprecates CMake in favor of Bazel, with removal planned 2026-11-01. OpenDB APIs are incompletely documented and Python support is limited. Successful CI checks are not proof of full RTL-to-GDSII quality or reproducibility; PDK access, toolchain resources and design rules remain external dependencies."
+    },
+    {
+      "name": "ZMK Firmware",
+      "repository": "https://github.com/zmkfirmware/zmk",
+      "owner": "zmkfirmware",
+      "category": [
+        "embedded-firmware",
+        "custom-keyboards",
+        "bluetooth-low-energy",
+        "assistive-input",
+        "zephyr-rtos",
+        "split-keyboards",
+        "human-interface-devices"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 26,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 3
+      },
+      "license": "MIT at repository root; Zephyr fork, HALs, LVGL and other west modules retain separate upstream terms",
+      "license_copy_status": "mit-with-attribution; review-west-dependencies-and-file-spdx-before-copying",
+      "platforms": [
+        "Zephyr-supported nRF52/nRF53, RP2040 and selected other MCU boards",
+        "USB HID",
+        "Bluetooth LE",
+        "Linux/macOS/Windows build hosts with Zephyr/west toolchain"
+      ],
+      "useful_components": [
+        "app/src/behaviors/: hold-tap, tap-dance, sticky keys, macros, key repeat, combos and layers",
+        "app/src/split/: central/peripheral, Bluetooth and wired split transport",
+        "app/src/pointing/: input transform, scaling, code mapping and split pointing support",
+        "app/src/studio/: framed RPC, BLE GATT/UART transport and live keymap integration",
+        "app/src/ble.c, usb_hid.c, keymap.c, matrix_transform.c: HID transport and key mapping",
+        "app/tests/: behavior, split/BLE, pointing and studio regression tests",
+        "app/west.yml: pinned Zephyr fork v4.1.0+zmk-fixes and companion modules"
+      ],
+      "verification": [
+        "2026-10-24: inspected README, MIT LICENSE, CHANGELOG, app/west.yml, source trees, test directories and build/BLE/test workflows",
+        "Latest GitHub stable release v0.3.0 published 2025-08-01; main commits through 2026-10-09 include split input deadlock fix and RP2040 support",
+        "2026-10-23 upstream PR Tests run 40030685287 passed 25/25 jobs; BLE Tests 40030685316 passed 4/4; PR Build 40030685289 passed 14 jobs with 2 skipped",
+        "2026-10-23 scheduled main Build 39901202810 passed 38 jobs with 3 skipped",
+        "2026-10-24 scheduled main Build 40062805918 failed: proton_c board build job failed while most other matrix builds passed",
+        "No independent firmware build, flashing, physical keyboard operation, BLE pairing, split latency or accessibility usability test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Main last inspected commit 2026-10-09; release v0.3.0 (2025-08-01); Oct 23 successful test/BLE matrix, Oct 24 one proton_c scheduled-build failure.",
+      "source": "GitHub-first embedded input/accessibility discovery; research/2026-10-24-openroad-zmk-promotion.md",
+      "related_projects": [
+        "zephyrproject-rtos/zephyr",
+        "zmkfirmware/zephyr",
+        "zmkfirmware/zmk-studio"
+      ],
+      "research_notes": "Firmware is customizable for alternative input layouts but accessibility suitability requires user/hardware testing. App manifest pins a ZMK-maintained Zephyr fork rather than current upstream Zephyr; evaluate security fixes and API drift. Investigate proton_c failure, BLE trust/pairing, split reliability, Studio RPC permissions and module licensing."
     }
   ],
   "deferred_or_rejected": [
