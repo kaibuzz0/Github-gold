@@ -3242,7 +3242,10 @@
       "maintenance_signals": "Changelog and CMake version parser show 0.9.0 dated 2026-10-10; GitHub releases endpoint returned no Release object. Source commit 8b0970d bumps version; 2026-10-10 CI passed 36/36 and cross-compile passed 15/15.",
       "source": "GitHub-first; research/2026-09-11-soapysdr-vendor-neutral-sdr-hardware-abstraction.md; research/2026-10-23-zarr-soapysdr-promotion.md",
       "copy_restriction_note": "Core Boost-1.0 notice obligations apply; hardware plugins/vendor SDKs and firmware have separate licenses. No source copied.",
-      "research_notes": "Reusable device/streaming API, plugin registry, format converters and CLI; inspect companion pothosware/SoapyRemote separately for remote exposure/authentication. Null-driver CI does not establish device-specific RF operation."
+      "research_notes": "Reusable device/streaming API, plugin registry, format converters and CLI; inspect companion pothosware/SoapyRemote separately for remote exposure/authentication. Null-driver CI does not establish device-specific RF operation.",
+      "related_projects": [
+        "AlexandreRouma/SDRPlusPlus (Soapy source plugin)"
+      ]
     },
     {
       "name": "Icechunk",
@@ -3590,7 +3593,8 @@
         "zephyrproject-rtos/zephyr",
         "travisgoodspeed/md380tools",
         "v0l/radio_tool",
-        "Codec2"
+        "Codec2",
+        "AlexandreRouma/SDRPlusPlus (optional M17 receive decoder; interoperability untested)"
       ],
       "research_notes": "research/2026-10-23-otel-collector-openrtx-promotion.md; no source copied. Verify exact-file REUSE licenses (including vendor STM32 USB code) before reuse. Firmware is experimental and radio-specific; authorized amateur-radio use only. Investigate failed Retevis-c62 PR jobs and M17 over-the-air interoperability."
     },
@@ -4659,6 +4663,126 @@
         "open-telemetry/opentelemetry-collector (conceptual only)"
       ],
       "research_notes": "PROMISING until e2e execution confirmed. LICENSES.md referenced in source but not found at root. Investigate CI Node mismatch, WebSocket reconnect and CouchDB security. No code copied."
+    },
+    {
+      "name": "Zigbee2MQTT",
+      "repository": "https://github.com/Koenkk/zigbee2mqtt",
+      "owner": "Koenkk",
+      "category": [
+        "zigbee",
+        "mqtt",
+        "home-automation",
+        "local-first",
+        "iot",
+        "device-interoperability"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "GPL-3.0 root; Zigbee-herdsman and zigbee-herdsman-converters are separate MIT projects",
+      "license_copy_status": "gpl-copyleft-review-component-and-dependency-licenses",
+      "platforms": [
+        "Node.js ^22.2.0 or ^24 or <=26.2 per package.json",
+        "Linux",
+        "Windows",
+        "macOS",
+        "Docker/ARM deployments",
+        "Zigbee coordinator required"
+      ],
+      "useful_components": [
+        "lib/zigbee.ts — Zigbee adapter/event orchestration",
+        "lib/mqtt.ts — MQTT bridge transport",
+        "lib/controller.ts — controller lifecycle",
+        "lib/extension/otaUpdate.ts — Zigbee OTA update handling",
+        "lib/extension/networkMap.ts — Zigbee network topology",
+        "lib/extension/availability.ts — availability monitoring",
+        "lib/extension/homeassistant.ts — Home Assistant integration",
+        "test/ and test/extensions/ — Vitest test suites"
+      ],
+      "verification": [
+        "2026-10-25 inspected README, GPL-3.0 LICENSE, package.json, CI workflow, lib/ and lib/extension/ source trees and test tree",
+        "Stable 2.14.2 published 2026-10-01; master package.json version 2.14.2; dependencies zigbee-herdsman 10.10.0 and converters 26.115.1",
+        "Upstream dev CI run 40171469797 on 2026-10-25 passed 10/10 jobs, including check/build/test and Linux/Windows/macOS Node 22/24/26 test matrix",
+        "No independent Node install, MQTT broker connection, Zigbee coordinator pairing, firmware OTA or RF test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "2026-10-25 upstream dev CI 10/10 passed; stable 2.14.2 released 2026-10-01; upstream source active same day.",
+      "source": "GitHub-first; research/2026-10-25-zigbee2mqtt-sdrpp.md; no usable YouTube transcript attribution",
+      "related_projects": [
+        "Koenkk/zigbee-herdsman",
+        "Koenkk/zigbee-herdsman-converters",
+        "zigbee2mqtt/hassio-zigbee2mqtt"
+      ],
+      "research_notes": "Requires a compatible Zigbee coordinator, MQTT broker, and careful pairing/network security. Do not expose unauthenticated MQTT or frontend. OTA compatibility varies by device. GPL-3.0 obligations for copied core; companion libraries MIT. No code copied."
+    },
+    {
+      "name": "SDR++",
+      "repository": "https://github.com/AlexandreRouma/SDRPlusPlus",
+      "owner": "AlexandreRouma",
+      "category": [
+        "software-defined-radio",
+        "dsp",
+        "signal-processing",
+        "sdr-hardware",
+        "radio-reception",
+        "cross-platform"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 26,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "GPL-3.0 root; bundled DSP libraries and external SDR driver SDKs require file-level review",
+      "license_copy_status": "gpl-copyleft-review-bundled-code-and-vendor-sdks",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "BSD source builds",
+        "Android APK build (runtime not verified)"
+      ],
+      "useful_components": [
+        "core/src/dsp/ — filters, demodulators, stream and buffer abstractions",
+        "core/src/signal_path/ — IQ frontend, VFO manager and routing",
+        "core/src/module.cpp and module.h — modular plugin architecture",
+        "source_modules/soapy_source/ — SoapySDR integration",
+        "source_modules/rtl_sdr_source/ and rtl_tcp_source/ — RTL-SDR local/remote inputs",
+        "decoder_modules/m17_decoder/ — M17 decoder (optional build)",
+        "decoder_modules/meteor_demodulator/ — weather-satellite demodulation",
+        "misc_modules/ — recorder, scanner, IQ exporter and other utilities"
+      ],
+      "verification": [
+        "2026-10-25 inspected README, GPL-3.0 license, CMakeLists.txt, module and DSP trees, Android build tree and Build Binaries workflow",
+        "Upstream Build Binaries run 39896187183 on 2026-10-23 passed 22/22 jobs across Windows, macOS Intel/ARM, multiple Linux distributions, Android, lint/formatting and packaging",
+        "Current GitHub stable release tag 1.0.4 published 2021-10-17; rolling 'nightly' release object dated 2022-11-22 despite 2026 successful builds; do not treat tag date as latest nightly artifact date",
+        "No independent installation, SDR RF reception, decoder accuracy, Android runtime, DSP correctness or security tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Active master commits and 2026-10-23 22/22 green build jobs; GitHub stable tag 1.0.4 from 2021, nightly artifacts maintained through CI.",
+      "source": "GitHub-first; research/2026-10-25-zigbee2mqtt-sdrpp.md; no usable YouTube transcript attribution",
+      "related_projects": [
+        "pothosware/SoapySDR",
+        "pothosware/SoapyRemote",
+        "OpenRTX/OpenRTX (M17 ecosystem, not tested interoperability)",
+        "AlexandreRouma/libperseus-sdr"
+      ],
+      "research_notes": "Modular C++17/CMake application; individual hardware plugins depend on vendor SDKs and drivers. Successful builds do not prove RF hardware or decoding accuracy. M17 decoder optional and codec2-dependent. Review licensing of core/libcorrect and external SDKs. Use only legally permitted reception; secure network source/server interfaces. No code copied."
     }
   ],
   "deferred_or_rejected": [

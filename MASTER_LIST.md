@@ -1277,7 +1277,7 @@ Suggested tiers:
 - **Maintenance signals:** Source Changelog declares 0.9.0 dated 2026-10-10 and CMake derives version from it; GitHub Releases API returned no published release object. Upstream CI 38058033433 passed 36/36 jobs and cross-compile CI 38058033417 passed 15/15 on 2026-10-10.
 - **Verification performed:** Inspected source header tree, README, license, changelog, CMake and CI results. Null-device and example-driver tests are upstream evidence, not independent hardware streaming validation.
 - **Source discovery:** GitHub-first; `research/2026-09-11-soapysdr-vendor-neutral-sdr-hardware-abstraction.md`.
-- **Related projects:** pothosware/SoapyRemote; SoapyRTLSDR; GNU Radio; SatDump; SDR++.
+- **Related projects:** pothosware/SoapyRemote; SoapyRTLSDR; GNU Radio; SatDump; `AlexandreRouma/SDRPlusPlus` (SDR++ Soapy source plugin).
 - **Caveats / risks:** A passing null-device/plugin test does not prove any particular SDR device works. Vendor driver licenses and remote device access controls vary. GitHub Release metadata does not independently confirm the changelog's 0.9.0 label.
 - **Research notes:** `research/2026-10-23-zarr-soapysdr-promotion.md`; no upstream code copied. Prioritize sample-format converter edge cases and SoapyRemote authentication/exposure review.
 
@@ -1398,7 +1398,7 @@ Suggested tiers:
 - **Maintenance signals:** Latest inspected GitHub release v0.4.5 (2026-10-04) is a prerelease. Master build-and-test run 38790546561 (2026-10-15) passed all 13 jobs, including unit tests, Zephyr and firmware builds. Retevis-c62 PR-branch build and devcontainer workflows failed 2026-10-23; these do not imply a failed master build.
 - **Verification performed:** Inspected README, REUSE metadata, protocol source/test tree, requirements, workflow, release and run jobs. No local build, radio flash, RF reception/transmission, M17 interoperability or memory-safety audit.
 - **Source discovery:** GitHub-first embedded/off-grid radio research; prior dossier `research/2026-09-06-openrtx-modular-amateur-radio-firmware-m17-stack.md`.
-- **Related projects:** M17 Project, Zephyr RTOS, `travisgoodspeed/md380tools`, `v0l/radio_tool`, Codec2.
+- **Related projects:** M17 Project, Zephyr RTOS, `travisgoodspeed/md380tools`, `v0l/radio_tool`, Codec2. `AlexandreRouma/SDRPlusPlus` provides an optional M17 decoder; interoperability untested.
 - **Caveats / risks:** Upstream explicitly calls firmware highly experimental; flashing carries device risk and RF operation is regulated. Vendor SDK licensing differs from the main project. CI builds do not establish on-device functionality.
 - **Research notes:** `research/2026-10-23-otel-collector-openrtx-promotion.md`. Follow failed PR builds and perform device-specific M17 interoperability tests before making operational claims.
 
@@ -1768,6 +1768,47 @@ Suggested tiers:
 - **Related projects:** `nasa/openmct-tutorial`, `nasa/openmct-map`, `akhenry/openmct-yamcs`; OpenTelemetry Collector is a conceptual neighbor, not confirmed integration.
 - **Caveats / risks:** No passing current full e2e execution verified. Review plugin input sanitization, WebSocket reconnection, CouchDB permissions and packaged licenses.
 - **Research notes:** `research/2026-10-25-ghidra-openmct.md`. Next: resolve CI Node mismatch and verify full telemetry workflow.
+
+### Zigbee2MQTT
+
+- **Repository:** https://github.com/Koenkk/zigbee2mqtt
+- **Author / Org:** Koen Kanters / Koenkk
+- **Category:** Zigbee / MQTT / IoT / local-first automation / device interoperability
+- **Evidence:** VERIFIED (upstream CI; no independent hardware test)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Bridges supported Zigbee devices into MQTT topics without a proprietary vendor gateway.
+- **Why it is valuable:** Practical, modular local automation infrastructure with reusable Zigbee device state, event translation, firmware OTA handling, topology and MQTT integration.
+- **Useful code/components:** `lib/zigbee.ts` Zigbee lifecycle; `lib/mqtt.ts` MQTT transport; `lib/controller.ts` orchestration; `lib/extension/otaUpdate.ts` OTA; `networkMap.ts` topology; `availability.ts` health; `homeassistant.ts` integration; `test/` Vitest tests.
+- **Install / runtime:** Node.js as constrained by `package.json` (`^22.2.0 || ^24 || <=26.2`), pnpm 11, MQTT broker, compatible Zigbee USB/network coordinator; Docker packages available.
+- **Platforms:** Linux, Windows, macOS, ARM/Docker hosts; Zigbee coordinator hardware required for radio use.
+- **License:** GPL-3.0 root; `Koenkk/zigbee-herdsman` and `Koenkk/zigbee-herdsman-converters` are separately MIT licensed. Review dependency notices before extracting.
+- **Maintenance signals:** Stable 2.14.2 released 2026-10-01; upstream dev [CI 40171469797](https://github.com/Koenkk/zigbee2mqtt/actions/runs/40171469797) passed 10/10 jobs on 2026-10-25 (Linux/Windows/macOS, Node 22/24/26; check/build/tests).
+- **Verification performed:** README, license, package manifest, lib/extension tree, test suite and CI job steps inspected. No independent MQTT connection, coordinator pairing, firmware OTA, RF or security tests.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `Koenkk/zigbee-herdsman`, `Koenkk/zigbee-herdsman-converters`, `zigbee2mqtt/hassio-zigbee2mqtt`.
+- **Caveats / risks:** Device support and OTA reliability vary. Secure MQTT credentials, Zigbee pairing and exposed web UI. GPL obligations for covered copied code; no source copied.
+- **Research notes:** `research/2026-10-25-zigbee2mqtt-sdrpp.md`. Follow network-key handling, OTA validation and device-converter tests.
+
+### SDR++
+
+- **Repository:** https://github.com/AlexandreRouma/SDRPlusPlus
+- **Author / Org:** Alexandre Rouma
+- **Category:** SDR / digital signal processing / modular radio receivers / cross-platform
+- **Evidence:** VERIFIED (upstream cross-platform build evidence; no independent RF reception)
+- **Tier / Score:** S / 26 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** Cross-platform modular software-defined-radio receiver with hardware source plugins, waterfall display, multiple VFOs, demodulators and recording.
+- **Why it is valuable:** Reusable C++ DSP blocks, IQ streaming, VFO management, plugin interfaces and optional decoders; complements the existing SoapySDR and OpenRTX entries.
+- **Useful code/components:** `core/src/dsp/` filters/demodulators/streams; `core/src/signal_path/` IQ frontend and VFO; `core/src/module.{cpp,h}` plugin interfaces; `source_modules/soapy_source/`, `rtl_sdr_source/`, `rtl_tcp_source/`; `decoder_modules/m17_decoder/`, `meteor_demodulator/`; `misc_modules/` recorder/scanner.
+- **Install / runtime:** C++17/CMake; system libraries including FFTW, GLFW and audio backends; radio hardware requires appropriate vendor drivers; Android build exists but runtime not validated.
+- **Platforms:** Windows, Linux, macOS, BSD source builds, Android build target.
+- **License:** GPL-3.0 root; bundled `core/libcorrect` and third-party SDR vendor SDKs/modules require separate license review before reuse.
+- **Maintenance signals:** [Upstream Build Binaries 39896187183](https://github.com/AlexandreRouma/SDRPlusPlus/actions/runs/39896187183) passed 22/22 jobs on 2026-10-23, including Windows, macOS x86/ARM, Linux variants, Android APK build and formatting checks. Last confirmed numbered stable GitHub tag 1.0.4 dates to 2021-10-17; rolling nightly release is not a newly dated stable release.
+- **Verification performed:** README, license, CMake build switches, DSP/signal-path/source/decoder trees, Android project and upstream CI jobs inspected. No independent build, device RF test, decoder verification or Android installation.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `pothosware/SoapySDR`, `pothosware/SoapyRemote`, `OpenRTX/OpenRTX` (M17 ecosystem only), `AlexandreRouma/libperseus-sdr`.
+- **Caveats / risks:** CI compilation does not demonstrate device-specific RF correctness. Some optional decoders are disabled by default; drivers and vendor SDKs have independent licensing. Protect remote interfaces and comply with radio laws. No source copied.
+- **Research notes:** `research/2026-10-25-zigbee2mqtt-sdrpp.md`. Follow M17 decoding and Soapy plugin compatibility, Android runtime and bundled-code licenses.
+
 
 ## Rejected / Deferred Leads
 
