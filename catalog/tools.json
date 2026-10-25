@@ -4304,18 +4304,19 @@
         "2026-10-23 upstream PR Tests run 40030685287 passed 25/25 jobs; BLE Tests 40030685316 passed 4/4; PR Build 40030685289 passed 14 jobs with 2 skipped",
         "2026-10-23 scheduled main Build 39901202810 passed 38 jobs with 3 skipped",
         "2026-10-24 scheduled main Build 40062805918 failed: proton_c board build job failed while most other matrix builds passed",
-        "No independent firmware build, flashing, physical keyboard operation, BLE pairing, split latency or accessibility usability test"
+        "No independent firmware build, flashing, physical keyboard operation, BLE pairing, split latency or accessibility usability test",
+        "2026-10-25: main Build 40162399914 passed 38 jobs (3 skipped), including proton_c; 2026-10-24 failure 40062805918 remains unexplained"
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "maintenance_signals": "Main last inspected commit 2026-10-09; release v0.3.0 (2025-08-01); Oct 23 successful test/BLE matrix, Oct 24 one proton_c scheduled-build failure.",
+      "maintenance_signals": "Main last inspected commit 2026-10-09; release v0.3.0 (2025-08-01); Oct 23 successful test/BLE matrix, Oct 24 one proton_c scheduled-build failure. Later Oct 25 main Build 40162399914 passed 38 jobs (3 skipped), including proton_c; previous failure root cause unknown.",
       "source": "GitHub-first embedded input/accessibility discovery; research/2026-10-24-openroad-zmk-promotion.md",
       "related_projects": [
         "zephyrproject-rtos/zephyr",
         "zmkfirmware/zephyr",
         "zmkfirmware/zmk-studio"
       ],
-      "research_notes": "Firmware is customizable for alternative input layouts but accessibility suitability requires user/hardware testing. App manifest pins a ZMK-maintained Zephyr fork rather than current upstream Zephyr; evaluate security fixes and API drift. Investigate proton_c failure, BLE trust/pairing, split reliability, Studio RPC permissions and module licensing."
+      "research_notes": "Firmware is customizable for alternative input layouts but accessibility suitability requires user/hardware testing. App manifest pins a ZMK-maintained Zephyr fork rather than current upstream Zephyr; evaluate security fixes and API drift. Investigate proton_c failure, BLE trust/pairing, split reliability, Studio RPC permissions and module licensing. Oct 25 proton_c green does not establish the cause of Oct 24 failure."
     },
     {
       "name": "LibrePCB",
@@ -4433,6 +4434,121 @@
         "Xournal++ Mobile (separate mobile project; verify license/platform independently)"
       ],
       "research_notes": "PDF annotations and handwriting are local-first, but pressure sensitivity, stylus mapping and accessibility depend on device/platform. Lua plugins are executable extensions and should be treated as trusted code unless sandboxed. Verify xopp parser resilience, PDF export fidelity, auto-backup recovery, plugin trust boundaries and third-party asset licenses."
+    },
+    {
+      "name": "Renode",
+      "repository": "https://github.com/renode/renode",
+      "owner": "renode",
+      "category": [
+        "embedded-emulation",
+        "virtual-hardware",
+        "firmware-testing",
+        "robot-framework",
+        "co-simulation"
+      ],
+      "evidence": "PROMISING",
+      "tier": "S",
+      "score": 26,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 3
+      },
+      "license": "MIT core; third-party libraries separately licensed",
+      "license_copy_status": "mit-attribution-and-third-party-license-review",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "virtual ARM/RISC-V/x86/SPARC/POWER/Xtensa/MSP430X"
+      ],
+      "useful_components": [
+        "src/Renode/PlatformDescription/: board descriptions",
+        "src/Renode/Network/ and Connectors/: virtual networks",
+        "src/Renode/RobotFrameworkEngine/: test keywords",
+        "tests/run_tests.py and tests/platforms/*.robot: Robot/NUnit regression harness",
+        "src/Plugins/CoSimulationPlugin/ and SystemCPlugin/: co-simulation",
+        "src/Renode/WebSockets/ and ws-api/: remote interfaces"
+      ],
+      "verification": [
+        "2026-10-25: README, MIT LICENSE, source/test/platform trees and test runner inspected",
+        "Stable v1.17.0 published 2026-09-07 with binary assets and detailed architecture fixes",
+        "2026-10-23 master commit 04cafbb adjusts CPU pause/halt synchronization",
+        "No passing current core emulator CI found; 2026-10-22 GitHub Actions success 39742143711 was dependency graph update only",
+        "No independent build, firmware boot, timing/hardware test or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v1.17.0 (2026-09-07), recent master commit 2026-10-23; core passing CI unconfirmed.",
+      "source": "GitHub-first discovery; research/2026-10-25-renode-odm-maintenance.md",
+      "related_projects": [
+        "renode/renode-infrastructure",
+        "zephyrproject-rtos/zephyr",
+        "lowRISC/opentitan"
+      ],
+      "research_notes": "PROMISING until actual emulator tests confirmed. .NET >=6; GTK2 for Linux portable GUI; Robot Framework/Python tests. Simulated peripheral/timing fidelity varies; secure remote APIs and check dependency licenses."
+    },
+    {
+      "name": "OpenDroneMap",
+      "repository": "https://github.com/OpenDroneMap/ODM",
+      "owner": "OpenDroneMap",
+      "category": [
+        "photogrammetry",
+        "aerial-mapping",
+        "geospatial",
+        "point-clouds",
+        "orthophotos",
+        "3d-reconstruction"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "AGPL-3.0 root; native dependencies/assets separately licensed",
+      "license_copy_status": "agpl-network-copyleft-and-dependency-review",
+      "platforms": [
+        "Linux Docker amd64/arm64",
+        "Windows",
+        "macOS",
+        "optional NVIDIA GPU"
+      ],
+      "useful_components": [
+        "stages/run_opensfm.py, odm_meshing.py, odm_dem.py, odm_orthophoto.py: reconstruction stages",
+        "opendm/gcp.py and geo.py: ground-control/georeferencing",
+        "opendm/dem/: DEM and PDAL",
+        "opendm/orthophoto.py, cogeo.py, tiles/: orthophotos/GeoTIFF/tiles",
+        "opendm/multispectral.py and thermal.py: sensor data",
+        "opendm/remote.py and stages/splitmerge.py: remote processing",
+        "tests/test_gcp.py and tests/: regression fixtures"
+      ],
+      "verification": [
+        "2026-10-25: README, AGPL LICENSE, stages/modules/tests, native/Docker workflows inspected",
+        "Stable v3.6.2 released 2026-08-12; master 77439b1 merged OpenSfM v110 on 2026-09-15",
+        "Upstream 2026-09-16 Native Builds 35092809957 passed 4/4 Linux/ARM/Windows/macOS jobs with Test, Smoke and Prod smoke steps",
+        "Upstream 2026-09-15 Docker CPU 34975847090 passed 5/5 jobs",
+        "2026-09-15 Windows Setup publish 34975845646 failed; later October PR action_required is not test execution",
+        "No independent aerial reconstruction, GCP accuracy, GPU benchmark or installer testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 3.6.2 on 2026-08-12; 2026-09-16 native CI 4/4 green; recurring Windows installer publishing failures.",
+      "source": "GitHub-first discovery; research/2026-10-25-renode-odm-maintenance.md",
+      "related_projects": [
+        "OpenDroneMap/NodeODM",
+        "OpenDroneMap/WebODM",
+        "mapillary/OpenSfM"
+      ],
+      "research_notes": "Docker or native pixi/SuperBuild; high CPU/RAM/disk demands. AGPL network copyleft and dependency licenses. Verify GCP residuals, reflectance/NoData, orthophoto repeatability, Windows packaging."
     }
   ],
   "deferred_or_rejected": [

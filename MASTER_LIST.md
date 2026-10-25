@@ -1640,11 +1640,11 @@ Suggested tiers:
 - **Install / runtime:** Zephyr `west` workspace and board-specific firmware builds; supported MCU/shield and USB/BLE input hardware. `app/west.yml` pins `zmkfirmware/zephyr` `v4.1.0+zmk-fixes`.
 - **Platforms:** Supported nRF52/nRF53, RP2040 and other listed boards; USB and BLE HID; Linux/macOS/Windows build hosts vary.
 - **License:** MIT root; west modules and HALs retain their own licenses. No third-party code copied.
-- **Maintenance signals:** Stable v0.3.0 (2025-08-01); master commits through 2026-10-09. Oct 23 Tests 40030685287 passed 25/25; BLE 40030685316 passed 4/4; Oct 24 scheduled Build 40062805918 failed one `proton_c` matrix job.
+- **Maintenance signals:** Stable v0.3.0 (2025-08-01); master commits through 2026-10-09. Oct 23 Tests 40030685287 passed 25/25; BLE 40030685316 passed 4/4; Oct 24 scheduled Build 40062805918 failed one `proton_c` matrix job; Oct 25 main Build 40162399914 passed 38 jobs (3 skipped), including `proton_c`. Root cause unknown.
 - **Verification performed:** README, LICENSE, changelog, west manifest, source/test directories, workflows, recent commits and CI job matrices inspected. No independent flash, BLE pairing, accessibility testing or security audit.
 - **Source discovery:** GitHub-first embedded/alternative-input discovery; no YouTube attribution.
 - **Related projects:** `zephyrproject-rtos/zephyr`; `zmkfirmware/zephyr`; `zmkfirmware/zmk-studio`.
-- **Caveats / risks:** One scheduled `proton_c` board build failed; board and shield combinations are not universally verified. BLE pairing, split reliability and Studio RPC need security testing. Customizable input is not itself proof of accessibility suitability.
+- **Caveats / risks:** The Oct 24 `proton_c` failure was followed by an Oct 25 passing `proton_c` build; root cause unknown and board/shield combinations are not universally verified. BLE pairing, split reliability and Studio RPC need security testing. Customizable input is not itself proof of accessibility suitability.
 - **Research notes:** `research/2026-10-24-openroad-zmk-promotion.md`. Follow the pinned Zephyr fork, investigate `proton_c` failure, Studio RPC and hardware compatibility.
 
 
@@ -1687,6 +1687,46 @@ Suggested tiers:
 - **Related projects:** Flathub packaging and Xournal++ Mobile (separate upstream).
 - **Caveats / risks:** Lua plugins execute code; trust boundaries need review. Stylus compatibility and PDF round-trips vary by platform and file. File-level asset licenses differ.
 - **Research notes:** `research/2026-10-24-librepcb-xournalpp-promotion.md`. Investigate document parser resilience, plugin security, stylus latency and backup recovery.
+
+### Renode
+
+- **Repository:** https://github.com/renode/renode
+- **Author / Org:** renode
+- **Category:** embedded-emulation / virtual-hardware / firmware-testing / robot-framework / co-simulation
+- **Evidence:** PROMISING (upstream evidence only)
+- **Tier / Score:** S / 26 (utility 5 + working evidence 3 + reusability 5 + novelty 5 + documentation 5 + maintenance 3)
+- **What it does:** Emulates embedded CPUs, boards, peripherals and networks to run unmodified firmware without hardware.
+- **Why it is valuable:** Multi-node virtual hardware and firmware regression automation; useful reusable test infrastructure.
+- **Useful code/components:** src/Renode/PlatformDescription/: board descriptions; src/Renode/Network/ and Connectors/: virtual networks; src/Renode/RobotFrameworkEngine/: test keywords; tests/run_tests.py and tests/platforms/*.robot: Robot/NUnit regression harness; src/Plugins/CoSimulationPlugin/ and SystemCPlugin/: co-simulation; src/Renode/WebSockets/ and ws-api/: remote interfaces.
+- **Install / runtime:** .NET >=6, prebuilt Windows/Linux/macOS packages or source; GTK2 for Linux portable GUI, Robot Framework/Python for tests.
+- **Platforms:** Linux, Windows, macOS, virtual ARM/RISC-V/x86/SPARC/POWER/Xtensa/MSP430X.
+- **License:** MIT core; third-party libraries separately licensed; no code copied.
+- **Maintenance signals:** Stable v1.17.0 (2026-09-07), recent master commit 2026-10-23; core passing CI unconfirmed.
+- **Verification performed:** 2026-10-25: README, MIT LICENSE, source/test/platform trees and test runner inspected; Stable v1.17.0 published 2026-09-07 with binary assets and detailed architecture fixes; 2026-10-23 master commit 04cafbb adjusts CPU pause/halt synchronization; No passing current core emulator CI found; 2026-10-22 GitHub Actions success 39742143711 was dependency graph update only; No independent build, firmware boot, timing/hardware test or security audit.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** renode/renode-infrastructure; zephyrproject-rtos/zephyr; lowRISC/opentitan.
+- **Caveats / risks:** Core test execution not verified; virtual timing differs from hardware; bundled licenses and remote API access require review.
+- **Research notes:** `research/2026-10-25-renode-odm-maintenance.md`. PROMISING until actual emulator tests confirmed. .NET >=6; GTK2 for Linux portable GUI; Robot Framework/Python tests. Simulated peripheral/timing fidelity varies; secure remote APIs and check dependency licenses.
+
+### OpenDroneMap
+
+- **Repository:** https://github.com/OpenDroneMap/ODM
+- **Author / Org:** OpenDroneMap
+- **Category:** photogrammetry / aerial-mapping / geospatial / point-clouds / orthophotos / 3d-reconstruction
+- **Evidence:** VERIFIED (upstream evidence only)
+- **Tier / Score:** S / 27 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 4)
+- **What it does:** Converts aerial photographs into georeferenced orthophotos, elevation models, point clouds and textured 3D meshes.
+- **Why it is valuable:** Reusable open geospatial reconstruction with GCP, multispectral/thermal and map tiling components.
+- **Useful code/components:** stages/run_opensfm.py, odm_meshing.py, odm_dem.py, odm_orthophoto.py: reconstruction stages; opendm/gcp.py and geo.py: ground-control/georeferencing; opendm/dem/: DEM and PDAL; opendm/orthophoto.py, cogeo.py, tiles/: orthophotos/GeoTIFF/tiles; opendm/multispectral.py and thermal.py: sensor data; opendm/remote.py and stages/splitmerge.py: remote processing; tests/test_gcp.py and tests/: regression fixtures.
+- **Install / runtime:** Docker CPU amd64/arm64, optional NVIDIA GPU image, or native pixi/SuperBuild; large datasets resource-intensive.
+- **Platforms:** Linux Docker amd64/arm64, Windows, macOS, optional NVIDIA GPU.
+- **License:** AGPL-3.0 root; native dependencies/assets separately licensed; no code copied.
+- **Maintenance signals:** Stable 3.6.2 on 2026-08-12; 2026-09-16 native CI 4/4 green; recurring Windows installer publishing failures.
+- **Verification performed:** 2026-10-25: README, AGPL LICENSE, stages/modules/tests, native/Docker workflows inspected; Stable v3.6.2 released 2026-08-12; master 77439b1 merged OpenSfM v110 on 2026-09-15; Upstream 2026-09-16 Native Builds 35092809957 passed 4/4 Linux/ARM/Windows/macOS jobs with Test, Smoke and Prod smoke steps; Upstream 2026-09-15 Docker CPU 34975847090 passed 5/5 jobs; 2026-09-15 Windows Setup publish 34975845646 failed; later October PR action_required is not test execution; No independent aerial reconstruction, GCP accuracy, GPU benchmark or installer testing.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** OpenDroneMap/NodeODM; OpenDroneMap/WebODM; mapillary/OpenSfM.
+- **Caveats / risks:** AGPL obligations; reconstruction accuracy depends on image overlap and georeferencing. Windows installer CI failure remains unresolved.
+- **Research notes:** `research/2026-10-25-renode-odm-maintenance.md`. Docker or native pixi/SuperBuild; high CPU/RAM/disk demands. AGPL network copyleft and dependency licenses. Verify GCP residuals, reflectance/NoData, orthophoto repeatability, Windows packaging.
 
 ## Rejected / Deferred Leads
 
