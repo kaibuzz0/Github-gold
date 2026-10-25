@@ -3952,7 +3952,8 @@
         "rizinorg/rz-pipe",
         "rizinorg/rizin-testbins",
         "rizinorg/cutter",
-        "radareorg/radare2"
+        "radareorg/radare2",
+        "NationalSecurityAgency/ghidra"
       ],
       "research_notes": "Score deliberately capped at A/25 because recent dev CI has four Capstone build failures. File-level SPDX varies; LGPL-3.0-only core does not imply all bundled assets share that license. Review untrusted binary parser robustness and current dependency build matrix before promotion."
     },
@@ -4549,6 +4550,115 @@
         "mapillary/OpenSfM"
       ],
       "research_notes": "Docker or native pixi/SuperBuild; high CPU/RAM/disk demands. AGPL network copyleft and dependency licenses. Verify GCP residuals, reflectance/NoData, orthophoto repeatability, Windows packaging."
+    },
+    {
+      "name": "Ghidra",
+      "repository": "https://github.com/NationalSecurityAgency/ghidra",
+      "owner": "NationalSecurityAgency",
+      "category": [
+        "reverse-engineering",
+        "decompiler",
+        "disassembler",
+        "forensics",
+        "defensive-security"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 core; GPL-3 stand-alone support programs and per-module third-party licenses",
+      "license_copy_status": "review-NOTICE-and-module-LICENSE-txt-before-reuse",
+      "platforms": [
+        "Windows",
+        "macOS",
+        "Linux"
+      ],
+      "useful_components": [
+        "Ghidra/Features/Decompiler/src/main/java/ghidra/app/decompiler/DecompInterface.java — decompiler API",
+        "Ghidra/Features/Decompiler/src/decompile/cpp/sleigh.hh — instruction-to-p-code semantics",
+        "Ghidra/Features/Base/src/main/java/ghidra/app/util/headless/AnalyzeHeadless.java — headless analysis",
+        "Ghidra/RuntimeScripts/support/analyzeHeadless — batch CLI",
+        "Ghidra/RuntimeScripts/support/sleigh — language compiler"
+      ],
+      "verification": [
+        "2026-10-25 inspected README, LICENSE, NOTICE, application.properties, decompiler source, SLEIGH source, headless CLI and Gradle workflow",
+        "Stable 12.2 released 2026-10-22; master application.properties 12.3 DEV requires JDK 25",
+        "Upstream Build Ghidra run 39747670372 on 2026-10-22 passed 1/1 Ubuntu buildGhidra job, not a full regression suite",
+        "No independent build, binary analysis, fuzzing or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Ghidra 12.2 released 2026-10-22; upstream build 39747670372 passed. 2026 decompiler and Mach-O security advisories patched in 12.1.",
+      "source": "GitHub-first; research/2026-10-25-ghidra-openmct.md",
+      "related_projects": [
+        "rizinorg/rizin",
+        "NationalSecurityAgency/ghidra-data",
+        "rizinorg/cutter"
+      ],
+      "research_notes": "Source build requires Gradle 9.1+, Python 3.9–3.15 and native toolchains; 64-bit JDK 25. Apache core, GPL-3 helpers and module-specific licenses. Isolate untrusted binaries. No code copied."
+    },
+    {
+      "name": "Open MCT",
+      "repository": "https://github.com/nasa/openmct",
+      "owner": "nasa",
+      "category": [
+        "telemetry",
+        "mission-control",
+        "web-dashboard",
+        "visualization",
+        "javascript"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 3
+      },
+      "license": "Apache-2.0 core (LICENSE.md); third-party dependency and asset licenses separate",
+      "license_copy_status": "review-dependencies-and-assets-before-copy",
+      "platforms": [
+        "Web browsers",
+        "Node.js development: Linux/macOS/Windows/WSL"
+      ],
+      "useful_components": [
+        "src/api/telemetry/TelemetryAPI.js — telemetry providers and subscriptions",
+        "src/api/telemetry/BatchingWebSocket.js — batched WebSocket",
+        "src/api/telemetry/TelemetryCollection.js — telemetry collection",
+        "src/plugins/persistence/couch/ — CouchDB persistence",
+        "src/api/plan/PlanAPI.js — plan/execution monitoring",
+        "API.md — plugin and time API",
+        "e2e/tests/ — Playwright tests"
+      ],
+      "verification": [
+        "2026-10-25 inspected README, LICENSE.md, package.json, API.md, TelemetryAPI.js, AGENTS.md, e2e-full workflow and job steps",
+        "Stable v4.3.1 released 2026-08-31; master package.json requires Node >=24.14.1",
+        "Upstream e2e-full 40147454572 on 2026-10-25 failed at Ubuntu npm ci; Playwright tests skipped and Windows cancelled",
+        "Workflow uses Node lts/hydrogen (18) despite engine >=24.14.1; root cause unconfirmed",
+        "No independent install, browser or telemetry tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v4.3.1 released 2026-08-31; latest inspected master commit 2026-10-07. Scheduled e2e-full 40147454572 failed 2026-10-25 before tests.",
+      "source": "GitHub-first; research/2026-10-25-ghidra-openmct.md",
+      "related_projects": [
+        "nasa/openmct-tutorial",
+        "nasa/openmct-map",
+        "akhenry/openmct-yamcs",
+        "open-telemetry/opentelemetry-collector (conceptual only)"
+      ],
+      "research_notes": "PROMISING until e2e execution confirmed. LICENSES.md referenced in source but not found at root. Investigate CI Node mismatch, WebSocket reconnect and CouchDB security. No code copied."
     }
   ],
   "deferred_or_rejected": [

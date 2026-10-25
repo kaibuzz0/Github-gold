@@ -1520,7 +1520,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable v0.9.1 released 2026-06-29; active dev commits 2026-10-23. Development `meson.build` reports v0.10.0, not a published stable release. [Upstream CI 39999863129](https://github.com/rizinorg/rizin/actions/runs/39999863129) and [rerun 40000224650](https://github.com/rizinorg/rizin/actions/runs/40000224650) failed four Capstone variant builds; several Linux/macOS, sanitizer and QEMU RISC-V jobs passed.
 - **Verification performed:** Inspected README, BUILDING.md, Meson, LGPL text, REUSE licensing annotations, source/test trees, release metadata and CI job conclusions on 2026-10-24. No local compile, parser correctness tests, fuzzing or security audit.
 - **Source discovery:** GitHub-first defensive binary-analysis category.
-- **Related projects:** `rizinorg/rz-pipe`, `rizinorg/rizin-testbins`, `rizinorg/cutter`, `radareorg/radare2`.
+- **Related projects:** `rizinorg/rz-pipe`, `rizinorg/rizin-testbins`, `rizinorg/cutter`, `radareorg/radare2`; `NationalSecurityAgency/ghidra` (independent alternative).
 - **Caveats / risks:** Current development CI is not green; Capstone dependency compatibility needs investigation. Untrusted binary formats present parser attack surface; do not assume LGPL covers all bundled files. Intended catalog use is authorized debugging, forensics and interoperability.
 - **Research notes:** `research/2026-10-24-java-libkiwix-rizin-promotion.md`. Recheck Capstone matrix and evaluate FastCDC, RzIL and fuzz corpus independently.
 
@@ -1727,6 +1727,47 @@ Suggested tiers:
 - **Related projects:** OpenDroneMap/NodeODM; OpenDroneMap/WebODM; mapillary/OpenSfM.
 - **Caveats / risks:** AGPL obligations; reconstruction accuracy depends on image overlap and georeferencing. Windows installer CI failure remains unresolved.
 - **Research notes:** `research/2026-10-25-renode-odm-maintenance.md`. Docker or native pixi/SuperBuild; high CPU/RAM/disk demands. AGPL network copyleft and dependency licenses. Verify GCP residuals, reflectance/NoData, orthophoto repeatability, Windows packaging.
+
+
+### Ghidra
+
+- **Repository:** https://github.com/NationalSecurityAgency/ghidra
+- **Author / Org:** National Security Agency Research Directorate
+- **Category:** Defensive reverse engineering / decompilation / binary analysis / forensics
+- **Evidence:** VERIFIED (upstream release and successful build; no independent runtime tests)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 4)
+- **What it does:** Extensible disassembler, decompiler, debugger and binary-analysis platform supporting numerous processors and executable formats.
+- **Why it is valuable:** Reusable SLEIGH/p-code processor semantics, decompiler API, headless automation and scripting for legitimate firmware analysis and interoperability.
+- **Useful code/components:** `Ghidra/Features/Decompiler/src/main/java/ghidra/app/decompiler/DecompInterface.java`; `Ghidra/Features/Decompiler/src/decompile/cpp/sleigh.hh`; `Ghidra/Features/Base/src/main/java/ghidra/app/util/headless/AnalyzeHeadless.java`; `Ghidra/RuntimeScripts/support/analyzeHeadless`; `Ghidra/RuntimeScripts/support/sleigh`.
+- **Install / runtime:** Official multi-platform ZIP, JDK 25 64-bit; source Gradle 9.1+, Python 3.9–3.15, native toolchains. Master declares 12.3 DEV, not a stable release.
+- **Platforms:** Windows, macOS, Linux.
+- **License:** Apache-2.0 core. `NOTICE` documents GPL-3 stand-alone support tools and module-specific third-party licensing; inspect `LICENSE.txt` before copying.
+- **Maintenance signals:** [Stable 12.2](https://github.com/NationalSecurityAgency/ghidra/releases/tag/Ghidra_12.2_build) released 2026-10-22; [upstream Ubuntu Gradle build 39747670372](https://github.com/NationalSecurityAgency/ghidra/actions/runs/39747670372) passed 2026-10-22. The build workflow does not establish a full regression suite.
+- **Verification performed:** README, LICENSE, NOTICE, version manifest, Gradle workflow, SLEIGH/decompiler source, headless CLI and release inspected. No local build, binary processing, fuzzing or security audit.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `rizinorg/rizin` (independent alternative), `NationalSecurityAgency/ghidra-data`, `rizinorg/cutter`.
+- **Caveats / risks:** Treat untrusted binaries as hostile. [Decompiler use-after-free](https://github.com/NationalSecurityAgency/ghidra/security/advisories/GHSA-8jqp-qv73-395r) and [Mach-O export-trie exhaustion](https://github.com/NationalSecurityAgency/ghidra/security/advisories/GHSA-wm33-9f68-3vjg) affected older versions and were patched in 12.1.
+- **Research notes:** `research/2026-10-25-ghidra-openmct.md`. Next: SLEIGH, PyGhidra and parser fuzzing.
+
+### Open MCT
+
+- **Repository:** https://github.com/nasa/openmct
+- **Author / Org:** NASA Ames Research Center
+- **Category:** Telemetry visualization / mission control / browser dashboards / JavaScript
+- **Evidence:** PROMISING (released project and test source, but current e2e run fails before tests)
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 3)
+- **What it does:** Extensible browser framework for time-series telemetry, plots, timelines, status and operations planning.
+- **Why it is valuable:** Composable telemetry providers/subscriptions, WebSocket batching, persistence and dashboard APIs for robotics, instrumentation and monitoring.
+- **Useful code/components:** `src/api/telemetry/TelemetryAPI.js`, `BatchingWebSocket.js`, `TelemetryCollection.js`, `src/plugins/persistence/couch/`, `src/api/plan/PlanAPI.js`, `API.md`, `e2e/tests/`.
+- **Install / runtime:** Node/npm/webpack and modern browser; `npm install`, `npm start`, `npm run build`. Current `package.json` requires Node >=24.14.1.
+- **Platforms:** Browsers; Linux, macOS and Windows/WSL development hosts.
+- **License:** Apache-2.0 core (`LICENSE.md`); dependency/asset licenses separate. Source headers mention `LICENSES.md`, not found at inspected root.
+- **Maintenance signals:** [Stable v4.3.1](https://github.com/nasa/openmct/releases/tag/v4.3.1) released 2026-08-31; latest inspected master commit 2026-10-07. [e2e-full 40147454572](https://github.com/nasa/openmct/actions/runs/40147454572) FAILED 2026-10-25 at Ubuntu `npm ci`; Playwright tests skipped, Windows cancelled. Workflow uses Node `lts/hydrogen` (18) while package engine requires >=24.14.1. Cause unconfirmed.
+- **Verification performed:** README, LICENSE.md, package.json, API.md, telemetry source, e2e workflow and job steps inspected. No local install, browser test or telemetry execution.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `nasa/openmct-tutorial`, `nasa/openmct-map`, `akhenry/openmct-yamcs`; OpenTelemetry Collector is a conceptual neighbor, not confirmed integration.
+- **Caveats / risks:** No passing current full e2e execution verified. Review plugin input sanitization, WebSocket reconnection, CouchDB permissions and packaged licenses.
+- **Research notes:** `research/2026-10-25-ghidra-openmct.md`. Next: resolve CI Node mismatch and verify full telemetry workflow.
 
 ## Rejected / Deferred Leads
 
