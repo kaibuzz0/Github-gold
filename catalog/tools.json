@@ -4316,6 +4316,123 @@
         "zmkfirmware/zmk-studio"
       ],
       "research_notes": "Firmware is customizable for alternative input layouts but accessibility suitability requires user/hardware testing. App manifest pins a ZMK-maintained Zephyr fork rather than current upstream Zephyr; evaluate security fixes and API drift. Investigate proton_c failure, BLE trust/pairing, split reliability, Studio RPC permissions and module licensing."
+    },
+    {
+      "name": "LibrePCB",
+      "repository": "https://github.com/LibrePCB/LibrePCB",
+      "owner": "LibrePCB",
+      "category": [
+        "electronic-design-automation",
+        "pcb-design",
+        "schematic-capture",
+        "electronics",
+        "c++",
+        "rust",
+        "qt",
+        "cli-automation"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "GPL-3.0 (README and LICENSE.txt); REUSE/file-level SPDX and submodule dependencies include additional licenses",
+      "license_copy_status": "gpl-3.0-copyleft-and-reuse-file-level-review-required",
+      "platforms": [
+        "Windows (MinGW GNU toolchain, not MSVC)",
+        "Linux",
+        "macOS"
+      ],
+      "useful_components": [
+        "libs/librepcb/core/: board/project model, geometry, serialization, rulecheck and file I/O",
+        "libs/librepcb/kicadimport/kicadlibraryconverter.cpp and kicadtypeconverter.cpp: KiCad library conversion",
+        "libs/librepcb/eagleimport/: EAGLE library import",
+        "apps/librepcb-cli/commandlineinterface.cpp: headless/automatable design validation and export",
+        "libs/librepcb/core/export/, core/3d/, core/geometry/: CAD data export, 3D and geometry layers",
+        "tests/unittests/, tests/cli/, tests/funq/, tests/ui/: unit, CLI, GUI and functional fixtures"
+      ],
+      "verification": [
+        "2026-10-24 CDT: inspected upstream README, GPL-3.0 LICENSE.txt, LICENSES/, .github/workflows/main.yml, source trees, tests/README.md and release metadata",
+        "Stable release 2.1.1 published 2026-06-12; master commit b1f683c (2026-10-20) fixed potential IBOM crash from unconnected footprint pads",
+        "Upstream CI run 40072270629 created 2026-10-24 passed 9/9 jobs: Linux Clang/GCC, macOS x86_64/ARM64, Windows x86_64, Doxygen, clang-tidy and stylecheck",
+        "2026-10-22 upstream CI runs 39853944608, 39850133589 and 39842588997 failed; newer successful runs do not prove absence of all regressions",
+        "No independent build, PCB design validation, board fabrication, KiCad import execution or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Active 2026-10-20 master fix and 2026-10-24 successful multi-platform CI; stable 2.1.1 released 2026-06-12.",
+      "source": "GitHub-first PCB EDA research; research/2026-10-24-librepcb-xournalpp-promotion.md",
+      "related_projects": [
+        "KiCad/KiCad (upstream primarily on GitLab; verify GitHub mirrors before citing)",
+        "LibrePCB/LibrePCB",
+        "LibrePCB/LibrePCB_Libraries"
+      ],
+      "research_notes": "Master explicitly unstable and may corrupt projects/workspaces; use official stable builds. C++20, Rust >=1.92 (GNU), Qt >=6.2, CMake >=3.22, OpenSSL; OpenCASCADE optional. Windows MSVC unsupported. REUSE and submodule licenses require file-level review. Evaluate KiCad/EAGLE import fidelity, rule-check completeness, manufacturing export correctness and GUI regression coverage."
+    },
+    {
+      "name": "Xournal++",
+      "repository": "https://github.com/xournalpp/xournalpp",
+      "owner": "xournalpp",
+      "category": [
+        "offline-productivity",
+        "handwriting",
+        "pdf-annotation",
+        "accessibility-input",
+        "stylus",
+        "document-editing",
+        "lua-plugins"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "GPL-2.0-or-later for core per copyright.txt; assets include GPL-3.0-or-later, ISC and CC-BY-SA-4.0; file-level license review required",
+      "license_copy_status": "gpl-2-plus-core-mixed-asset-licenses-review-before-reuse",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Chromium OS via Linux container; Android mobile is separate project"
+      ],
+      "useful_components": [
+        "src/core/model/Stroke.cpp, Document.cpp, Layer.cpp, Snapping.cpp: ink stroke and layered document model",
+        "src/core/pdf/ and src/core/control/xojfile/: PDF integration and native Xournal document I/O",
+        "src/core/plugin/PluginController.cpp and plugins/: Lua plugin interface and bundled plugin examples",
+        "src/core/audio/: audio recording/playback integration with notes",
+        "src/core/gui/, src/core/view/: stylus input, rendering, selection and PDF annotation UI",
+        "test/unit_tests/, test/gtk_tests/: GoogleTest unit and GTK integration coverage"
+      ],
+      "verification": [
+        "2026-10-24 CDT: inspected upstream README, GPLv2 LICENSE, Debian copyright.txt with file-level licenses, CMake and source/plugin/test trees, test/README.md and GitHub Actions workflow",
+        "Latest stable release v1.3.8 published 2026-09-26 (nightly prerelease tag is not a newer stable version)",
+        "Upstream master commit b2ef631 (2026-10-24) addresses clipboard paste; previous commits fix audio setup, Windows dependencies and invalid display DPI",
+        "Upstream Build run 40072649214 created 2026-10-24 passed 7/7 jobs: Ubuntu 22.04 x86_64/ARM, Windows x86_64/ARM and macOS x64/ARM; workflow defines locale, unit and GTK integration tests",
+        "Some later PR-triggered workflows show action_required; these are not treated as passed tests or proof of code failure",
+        "No independent install, pen tablet test, PDF round-trip, plugin sandbox audit or file-format fuzzing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v1.3.8 on 2026-09-26; source changes through 2026-10-24; 2026-10-24 multi-platform Build 7/7 green.",
+      "source": "GitHub-first local-first document tooling research; research/2026-10-24-librepcb-xournalpp-promotion.md",
+      "related_projects": [
+        "xournalpp/xournalpp",
+        "flathub/com.github.xournalpp.xournalpp",
+        "Xournal++ Mobile (separate mobile project; verify license/platform independently)"
+      ],
+      "research_notes": "PDF annotations and handwriting are local-first, but pressure sensitivity, stylus mapping and accessibility depend on device/platform. Lua plugins are executable extensions and should be treated as trusted code unless sandboxed. Verify xopp parser resilience, PDF export fidelity, auto-backup recovery, plugin trust boundaries and third-party asset licenses."
     }
   ],
   "deferred_or_rejected": [

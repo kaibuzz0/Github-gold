@@ -1647,6 +1647,47 @@ Suggested tiers:
 - **Caveats / risks:** One scheduled `proton_c` board build failed; board and shield combinations are not universally verified. BLE pairing, split reliability and Studio RPC need security testing. Customizable input is not itself proof of accessibility suitability.
 - **Research notes:** `research/2026-10-24-openroad-zmk-promotion.md`. Follow the pinned Zephyr fork, investigate `proton_c` failure, Studio RPC and hardware compatibility.
 
+
+### LibrePCB
+
+- **Repository:** https://github.com/LibrePCB/LibrePCB
+- **Author / Org:** LibrePCB
+- **Category:** PCB EDA / schematic capture / circuit-board layout / C++ / Rust / Qt / CLI
+- **Evidence:** VERIFIED (upstream source, release and CI; no independent build)
+- **Tier / Score:** S / 28 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 5)
+- **What it does:** Cross-platform, open-source electronic design suite for schematic capture and PCB layout, with design libraries, importers and CLI automation.
+- **Why it is valuable:** Working PCB engineering stack with reusable geometry, import, export, board model and rule-checking components, plus CLI and test fixtures.
+- **Useful code/components:** `libs/librepcb/core/` (project/board models, serialization, geometry, rule checks); `libs/librepcb/kicadimport/` and `libs/librepcb/eagleimport/` (library converters); `apps/librepcb-cli/commandlineinterface.cpp` (automation); `tests/unittests/`, `tests/cli/`, `tests/funq/`, `tests/ui/` (tests).
+- **Install / runtime:** Stable release recommended; source requires C++20, Rust >=1.92 GNU, Qt >=6.2, CMake >=3.22, OpenSSL; OpenCASCADE optional. Windows builds require MinGW GNU rather than MSVC.
+- **Platforms:** Windows, Linux, macOS.
+- **License:** GPL-3.0 root; REUSE metadata, third-party assets and submodules have distinct file-level obligations. No code copied.
+- **Maintenance signals:** Stable release 2.1.1 on 2026-06-12; active master fix 2026-10-20; [upstream 2026-10-24 CI](https://github.com/LibrePCB/LibrePCB/actions/runs/40072270629) passed 9/9 jobs on Linux/macOS/Windows plus quality checks. Some Oct 22 CI runs failed before newer green runs.
+- **Verification performed:** README, license/REUSE tree, source and test directories, CI job matrix, releases and commits inspected; no independent compilation, PCB fabrication, import/export validation or security testing.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** KiCad import ecosystem, LibrePCB libraries and EAGLE import.
+- **Caveats / risks:** Master explicitly unstable and may break projects/workspaces; prefer stable builds. Verify imported library geometry, rule checks and fabrication exports before manufacturing; comply with copyleft and third-party licensing.
+- **Research notes:** `research/2026-10-24-librepcb-xournalpp-promotion.md`. Follow up on KiCad/EAGLE import fidelity, CLI automation and rule-check regressions.
+
+### Xournal++
+
+- **Repository:** https://github.com/xournalpp/xournalpp
+- **Author / Org:** xournalpp
+- **Category:** Offline note-taking / stylus input / PDF annotation / Lua plugins / document processing
+- **Evidence:** VERIFIED (upstream release and CI; no independent install)
+- **Tier / Score:** S / 27 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 4)
+- **What it does:** Cross-platform handwriting and PDF-annotation application supporting pen tablets, layers, images, text, audio, and extensible Lua plugins.
+- **Why it is valuable:** Offline document workflow with reusable stroke and layer models, PDF integration, Lua plugin hooks and multi-platform test coverage.
+- **Useful code/components:** `src/core/model/Stroke.cpp`, `Document.cpp`, `Layer.cpp`, `Snapping.cpp` (ink/document); `src/core/pdf/` (PDF); `src/core/control/xojfile/` (native document I/O); `src/core/plugin/`, `plugins/` (Lua); `src/core/audio/`; `test/unit_tests/`, `test/gtk_tests/`.
+- **Install / runtime:** Official release packages for Linux, Windows and macOS; Linux distribution packages, Flatpak and AppImage; source uses CMake/C++ and GTK stack. LaTeX tool requires separate TeX installation.
+- **Platforms:** Linux, Windows, macOS; ChromeOS via Linux container. Mobile version is separate software.
+- **License:** GPL-2.0-or-later core per `copyright.txt`; some icons/assets GPL-3.0+, ISC or CC-BY-SA-4.0. File-level review required; no code/assets copied.
+- **Maintenance signals:** Stable v1.3.8 on 2026-09-26; commits through 2026-10-24; [upstream 2026-10-24 Build](https://github.com/xournalpp/xournalpp/actions/runs/40072649214) passed 7/7 cross-platform jobs. Some later PR checks show `action_required`, not passing verification.
+- **Verification performed:** README, licenses and `copyright.txt`, plugin/model/PDF/test source trees, workflow and release metadata inspected. No independent pen, PDF, plugin, export, backup or security testing.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** Flathub packaging and Xournal++ Mobile (separate upstream).
+- **Caveats / risks:** Lua plugins execute code; trust boundaries need review. Stylus compatibility and PDF round-trips vary by platform and file. File-level asset licenses differ.
+- **Research notes:** `research/2026-10-24-librepcb-xournalpp-promotion.md`. Investigate document parser resilience, plugin security, stylus latency and backup recovery.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
