@@ -1277,7 +1277,7 @@ Suggested tiers:
 - **Maintenance signals:** Source Changelog declares 0.9.0 dated 2026-10-10 and CMake derives version from it; GitHub Releases API returned no published release object. Upstream CI 38058033433 passed 36/36 jobs and cross-compile CI 38058033417 passed 15/15 on 2026-10-10.
 - **Verification performed:** Inspected source header tree, README, license, changelog, CMake and CI results. Null-device and example-driver tests are upstream evidence, not independent hardware streaming validation.
 - **Source discovery:** GitHub-first; `research/2026-09-11-soapysdr-vendor-neutral-sdr-hardware-abstraction.md`.
-- **Related projects:** pothosware/SoapyRemote; SoapyRTLSDR; GNU Radio; SatDump; `AlexandreRouma/SDRPlusPlus` (SDR++ Soapy source plugin).
+- **Related projects:** pothosware/SoapyRemote; SoapyRTLSDR; GNU Radio; SatDump; `AlexandreRouma/SDRPlusPlus` (SDR++ Soapy source plugin); `merbanan/rtl_433` (SoapySDR receiver input; RF not independently tested).
 - **Caveats / risks:** A passing null-device/plugin test does not prove any particular SDR device works. Vendor driver licenses and remote device access controls vary. GitHub Release metadata does not independently confirm the changelog's 0.9.0 label.
 - **Research notes:** `research/2026-10-23-zarr-soapysdr-promotion.md`; no upstream code copied. Prioritize sample-format converter edge cases and SoapyRemote authentication/exposure review.
 
@@ -1808,6 +1808,47 @@ Suggested tiers:
 - **Related projects:** `pothosware/SoapySDR`, `pothosware/SoapyRemote`, `OpenRTX/OpenRTX` (M17 ecosystem only), `AlexandreRouma/libperseus-sdr`.
 - **Caveats / risks:** CI compilation does not demonstrate device-specific RF correctness. Some optional decoders are disabled by default; drivers and vendor SDKs have independent licensing. Protect remote interfaces and comply with radio laws. No source copied.
 - **Research notes:** `research/2026-10-25-zigbee2mqtt-sdrpp.md`. Follow M17 decoding and Soapy plugin compatibility, Android runtime and bundled-code licenses.
+
+
+### CyberChef
+
+- **Repository:** https://github.com/gchq/CyberChef
+- **Author / Org:** GCHQ
+- **Category:** Browser-based data transformation / encoding / decoding / forensics / local-first utilities
+- **Evidence:** VERIFIED (upstream Node and browser CI; no independent execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Composable browser recipes for text and binary transformations, encoding/decoding, compression, hashes, parsing and data inspection.
+- **Why it is valuable:** Reusable typed operation pipeline with a large collection of individual operations, a Node interface and browser UI; can run from a locally hosted build.
+- **Useful code/components:** `src/core/Chef.mjs` recipe execution; `Recipe.mjs` sequencing; `Dish.mjs` typed data; `Operation.mjs` extension contract; `src/core/operations/` operation implementations; `src/node/` API; `tests/operations/`, `tests/node/`, `tests/browser/`.
+- **Install / runtime:** Node.js 24 supported (26 CI tested); `npm ci`, `npm run build`, `npm test`; Docker image or local browser build. Browser/Node versions and dependency requirements should be checked for deployed versions.
+- **Platforms:** Browser on desktop systems, Node.js and Docker; offline usage possible with locally built assets.
+- **License:** Apache-2.0 root and core file headers. Bundled and npm dependencies retain their own licenses.
+- **Maintenance signals:** Stable [v11.5.0](https://github.com/gchq/CyberChef/releases/tag/v11.5.0) released 2026-09-18; [upstream master CI 39942157083](https://github.com/gchq/CyberChef/actions/runs/39942157083) passed 2/2 Node 24/26 jobs on 2026-10-23, including lint, unit tests, production builds and browser UI tests.
+- **Verification performed:** Inspected README, LICENSE, SECURITY.md, package.json, core operation architecture, test tree, workflow and upstream CI job steps. No independent build, browser recipe execution or cryptographic verification.
+- **Source discovery:** GitHub-first; no usable YouTube transcript evidence.
+- **Related projects:** Node consumer API; Tesseract.js dependency (not the native Tesseract engine).
+- **Caveats / risks:** Upstream SECURITY.md explicitly warns cryptographic operations should not be relied on for security guarantees. Review individual dependencies and operation implementations before reuse. Handle confidential data and recipe URLs carefully. No third-party code copied.
+- **Research notes:** `research/2026-10-25-cyberchef-rtl433.md`. Follow operation-level test coverage, input size limits, browser security and dependency licenses.
+
+### rtl_433
+
+- **Repository:** https://github.com/merbanan/rtl_433
+- **Author / Org:** Benjamin Larsson and rtl_433 contributors / merbanan
+- **Category:** SDR / ISM-band sensor decoding / RF signal processing / embedded C / local IoT telemetry
+- **Evidence:** VERIFIED (upstream builds, unit/integration tests and static analysis; no independent RF test)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** Receives and decodes signals from compatible unlicensed-band sensors and devices using RTL-SDR or SoapySDR, or analyzes recorded sample files.
+- **Why it is valuable:** Hundreds of device decoder source files, reusable pulse detection/bit parsing, low-resource C99 implementation and output bridges for MQTT, JSON, CSV and other sinks.
+- **Useful code/components:** `src/pulse_detect.c`, `pulse_detect_fsk.c`, `pulse_slicer.c` for demodulation; `src/bitbuffer.c` bit parsing; `src/devices/` protocol decoders; `src/output_mqtt.c`, `output_influx.c`, `http_server.c`; `tests/` unit and HTTP integration suites.
+- **Install / runtime:** C99/CMake or platform packages; supported RTL-SDR/SoapySDR hardware for live reception, or input IQ files for offline decoding.
+- **Platforms:** Linux (including ARM/embedded), FreeBSD, macOS, Windows; device support depends on drivers.
+- **License:** GPL-2.0-or-later in examined core source; COPYING contains GPL-2.0 text. Review vendored components and device files separately.
+- **Maintenance signals:** Stable [25.12](https://github.com/merbanan/rtl_433/releases/tag/25.12) released 2025-12-12; [upstream CI 39967799370](https://github.com/merbanan/rtl_433/actions/runs/39967799370) passed 12/12 jobs on 2026-10-23 (Linux/macOS build/tests, coverage, Clang analysis, style, docs). A later [2026-10-24 run](https://github.com/merbanan/rtl_433/actions/runs/40144928023) concluded `action_required`; investigate before claiming all latest checks green.
+- **Verification performed:** README, COPYING, source license headers, CMake, `src/`, `src/devices/`, `tests/`, workflow and CI job steps inspected. Linux matrix disables hardware backends; no live RF capture or decoder accuracy test performed.
+- **Source discovery:** GitHub-first; no usable YouTube transcript evidence.
+- **Related projects:** `pothosware/SoapySDR`, `osmocom/rtl-sdr`, `pothosware/SoapyRemote`, SDR++ (complementary SDR receiver, no direct integration confirmed).
+- **Caveats / risks:** Device-specific decoders require representative capture testing. Secure MQTT, HTTP and remote receiver interfaces; sensor telemetry may reveal location or activity. RF use subject to applicable rules. GPL obligations and vendored code licenses apply; no code copied.
+- **Research notes:** `research/2026-10-25-cyberchef-rtl433.md`. Follow decoder test coverage, malformed-packet robustness and SoapySDR hardware integration.
 
 
 ## Rejected / Deferred Leads

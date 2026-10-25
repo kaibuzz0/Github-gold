@@ -3244,7 +3244,8 @@
       "copy_restriction_note": "Core Boost-1.0 notice obligations apply; hardware plugins/vendor SDKs and firmware have separate licenses. No source copied.",
       "research_notes": "Reusable device/streaming API, plugin registry, format converters and CLI; inspect companion pothosware/SoapyRemote separately for remote exposure/authentication. Null-driver CI does not establish device-specific RF operation.",
       "related_projects": [
-        "AlexandreRouma/SDRPlusPlus (Soapy source plugin)"
+        "AlexandreRouma/SDRPlusPlus (Soapy source plugin)",
+        "merbanan/rtl_433 (SoapySDR input supported upstream; hardware interoperability not independently tested)"
       ]
     },
     {
@@ -4783,6 +4784,124 @@
         "AlexandreRouma/libperseus-sdr"
       ],
       "research_notes": "Modular C++17/CMake application; individual hardware plugins depend on vendor SDKs and drivers. Successful builds do not prove RF hardware or decoding accuracy. M17 decoder optional and codec2-dependent. Review licensing of core/libcorrect and external SDKs. Use only legally permitted reception; secure network source/server interfaces. No code copied."
+    },
+    {
+      "name": "CyberChef",
+      "repository": "https://github.com/gchq/CyberChef",
+      "owner": "gchq",
+      "category": [
+        "browser-tools",
+        "data-transformation",
+        "encoding",
+        "forensics",
+        "local-first",
+        "javascript"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 (root LICENSE and core file headers); third-party dependencies retain own licenses",
+      "license_copy_status": "permissive-with-attribution-notice-and-dependency-review",
+      "platforms": [
+        "Web browser (locally served or static build)",
+        "Node.js 24 supported; Node.js 26 CI tested",
+        "Docker/Linux hosts",
+        "Browser on Windows/macOS/Linux"
+      ],
+      "useful_components": [
+        "src/core/Chef.mjs — recipe orchestration and bake API",
+        "src/core/Recipe.mjs — operation sequencing and flow control",
+        "src/core/Dish.mjs — typed data representation",
+        "src/core/Operation.mjs — operation plugin contract",
+        "src/core/operations/ — 500+ operation modules including encodings, parsers and hashes",
+        "src/node/ — Node consumer interface",
+        "tests/operations/, tests/node/, tests/browser/ — regression and UI test suites"
+      ],
+      "verification": [
+        "2026-10-25 inspected official README, LICENSE, SECURITY.md, package.json v11.5.0, core source files, operation and test directories, master.yml workflow",
+        "Stable v11.5.0 released 2026-09-18; package.json version 11.5.0; Node.js 24 officially supported",
+        "2026-10-23 upstream Master Build, Test & Deploy run 39942157083 passed 2/2 Node 24/26 jobs; both completed lint, unit tests, production build and browser UI tests",
+        "No independent browser run, npm install, recipe execution, crypto validation or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable release v11.5.0 (2026-09-18); master CI 39942157083 passed both Node 24/26 matrices on 2026-10-23; core source actively maintained.",
+      "source": "GitHub-first; research/2026-10-25-cyberchef-rtl433.md; two playlist IDs checked with no usable indexed transcripts",
+      "related_projects": [
+        "gchq/CyberChef releases",
+        "tesseract.js (optional dependency; not the native Tesseract project)",
+        "gchq/CyberChef tests/operations"
+      ],
+      "research_notes": "SECURITY.md explicitly disclaims cryptographic correctness/security guarantees; not a substitute for validated cryptographic libraries. Browser recipes and URLs can expose sensitive input/metadata; use trusted local build for sensitive work. Review per-operation vendored and npm licenses before reuse. No source copied."
+    },
+    {
+      "name": "rtl_433",
+      "repository": "https://github.com/merbanan/rtl_433",
+      "owner": "merbanan",
+      "category": [
+        "software-defined-radio",
+        "rf-protocol-decoding",
+        "iot-sensors",
+        "c99",
+        "offline",
+        "signal-processing"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "GPL-2.0-or-later for examined core source (COPYING GPL-2.0 and src/rtl_433.c header); bundled third-party files require separate review",
+      "license_copy_status": "gpl-copyleft-and-vendored-source-license-review",
+      "platforms": [
+        "Linux including ARM and embedded",
+        "FreeBSD",
+        "macOS",
+        "Windows",
+        "C99/CMake",
+        "RTL-SDR or SoapySDR hardware optional for offline sample-file decoding"
+      ],
+      "useful_components": [
+        "src/pulse_detect.c and src/pulse_detect_fsk.c — pulse detection",
+        "src/pulse_slicer.c — demodulated pulse slicing",
+        "src/bitbuffer.c — bitstream buffer and utilities",
+        "src/devices/ — 300+ device decoder source files (not a count of supported device models)",
+        "src/output_mqtt.c, output_influx.c, output_file.c — output transports",
+        "src/http_server.c and src/output_rtltcp.c — HTTP and remote data interfaces",
+        "tests/baseband-test.c, tests/data-test.c, tests/http-integration-test.sh — offline and integration tests"
+      ],
+      "verification": [
+        "2026-10-25 inspected README, COPYING, src/rtl_433.c GPL header, CMakeLists.txt, src/ and tests/ directory trees, .github/workflows/check.yml",
+        "Stable release 25.12 published 2025-12-12; nightly prerelease object 2026-09-20; master remains active in 2026",
+        "2026-10-23 upstream Build Analyze Check run 39967799370 passed 12/12 jobs including Linux debug/release CMake builds/tests, macOS builds/tests, coverage, Clang analyzer, style and docs",
+        "2026-10-24 subsequent run 40144928023 concluded action_required; reason not established; do not claim latest CI all green",
+        "Linux matrix disables RTLSDR and SOAPYSDR for test builds; no independent RF hardware, live signal or device-specific decoding tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable release 25.12 (2025-12-12), active master CI in October 2026; 2026-10-23 upstream 12/12 green run; 2026-10-24 action_required run requires follow-up.",
+      "source": "GitHub-first; research/2026-10-25-cyberchef-rtl433.md; no transcript-derived claims",
+      "related_projects": [
+        "pothosware/SoapySDR",
+        "osmocom/rtl-sdr",
+        "pothosware/SoapyRemote",
+        "AlexandreRouma/SDRPlusPlus (complementary receiver; no direct integration verified)"
+      ],
+      "research_notes": "RF receive-only use and legal constraints depend on band and jurisdiction. MQTT/HTTP/rtl_tcp endpoints may leak sensor identifiers/location or expose unauthenticated services. Many decoders need representative IQ/pulse captures to verify correctness. GPL and bundled Mongoose/other source licenses require per-file review. No code copied."
     }
   ],
   "deferred_or_rejected": [
