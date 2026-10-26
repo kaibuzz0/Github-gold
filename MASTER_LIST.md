@@ -1927,7 +1927,7 @@ Suggested tiers:
 - **Maintenance signals:** Vehicle-specific stable v4.7.2 releases published 2026-10-14. On 2026-10-25, upstream [unit/SITL build 40231792309](https://github.com/ArduPilot/ardupilot/actions/runs/40231792309) passed 8/8 jobs, [Copter 40231792304](https://github.com/ArduPilot/ardupilot/actions/runs/40231792304) 12/12, [Plane 40231792276](https://github.com/ArduPilot/ardupilot/actions/runs/40231792276) 7/7; [Renode integration 40231792336](https://github.com/ArduPilot/ardupilot/actions/runs/40231792336) passed a CubeOrangePlus quadplane mission and emulator unit tests.
 - **Verification performed:** README, COPYING, BUILD.md, EKF/control source, SITL workflows, Renode integration scripts/tests and CI job steps inspected. No independent build, simulation, firmware flashing, flight or safety audit.
 - **Source discovery:** GitHub-first; no accessible YouTube transcript attribution.
-- **Related projects:** `renode/renode` (ArduPilot-patched downstream integration), `mavlink/mavlink`, `ArduPilot/pymavlink`, `ArduPilot/MAVProxy`, `PX4/PX4-Autopilot` (alternative ecosystem).
+- **Related projects:** `renode/renode` (ArduPilot-patched downstream integration), `mavlink/mavlink`, `ArduPilot/pymavlink`, `ArduPilot/MAVProxy`, `PX4/PX4-Autopilot` (alternative ecosystem), `mavlink/MAVSDK` (SDK, integration untested).
 - **Caveats / risks:** GPL copyleft; embedded hardware/sensor compatibility and aviation safety are not established by CI. Renode tests use an ArduPilot-hosted, checksum-verified custom Renode package, not necessarily upstream stock Renode. No code copied.
 - **Research notes:** `research/2026-10-25-openthread-ardupilot-renode.md`. Investigate EKF failures, failsafes, GPS denial, mission regression, and MAVLink trust boundaries.
 
@@ -1971,6 +1971,47 @@ Suggested tiers:
 - **Related projects:** OPCFoundation/UA-.NETStandard; zephyrproject-rtos/zephyr.
 - **Caveats / risks:** Certificate trust, legacy cryptography, PubSub SKS and exposed server defaults require review. CodeQL failure was dependency installation, not a scan finding.
 - **Research notes:** `research/2026-10-26-otbr-open62541-maintenance.md`. MPL-2.0 file-level copyleft; CC0 only for specifically marked files. Upstream reports certification for a v1.4 example server, not arbitrary current deployments. No code copied.
+
+
+### OpenWrt
+
+- **Repository:** https://github.com/openwrt/openwrt
+- **Author / Org:** OpenWrt
+- **Category:** Embedded Linux / router firmware / firewall / network infrastructure / image building
+- **Evidence:** VERIFIED (upstream build CI; no independent hardware testing)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Customizable Linux firmware and package/image build system for supported routers and embedded networking hardware.
+- **Why it is valuable:** Reusable embedded build infrastructure, network configuration, firewall integration, reproducible image assembly and extensive device targeting.
+- **Useful code/components:** `scripts/feeds` (feed management); `package/network/config/netifd/files/` (network configuration); `package/network/config/firewall4/` (nftables); `package/base-files/files/etc/` (init/hotplug); `target/imagebuilder/Makefile` (image builder); `scripts/gen_image_generic.sh` (reproducible image assembly); `target/linux/` and `toolchain/`.
+- **Install / runtime:** Build with host toolchain on case-sensitive GNU/Linux/BSD/macOS; run `scripts/feeds update -a`, `scripts/feeds install -a`, `make menuconfig`, `make`. Flash only verified supported device/board images.
+- **Platforms:** Supported embedded routers/network devices; Linux/BSD/macOS build hosts.
+- **License:** GPL-2.0-only root COPYING; inspect third-party package, kernel and driver licenses separately.
+- **Maintenance signals:** [v25.12.6](https://github.com/openwrt/openwrt/releases/tag/v25.12.6) 2026-10-18; active 2026-10-26. [Kernel 40231519176](https://github.com/openwrt/openwrt/actions/runs/40231519176) 29/29 and [core packages 40231388127](https://github.com/openwrt/openwrt/actions/runs/40231388127) 10/10 passed on 2026-10-25; toolchain workflow 40231388106 succeeded.
+- **Verification performed:** Inspected README, COPYING, package/target/scripts source, APK Makefile, image builder and upstream workflows. No independent build, flash, network operation or security audit.
+- **Source discovery:** GitHub-first 2026-10-26; YouTube playlist fetches throttled; no transcript-derived claims.
+- **Related projects:** `openwrt/luci`, `openwrt/packages`, `openwrt/routing`, `openwrt/actions-shared-workflows`.
+- **Caveats / risks:** Device-specific flashing can brick hardware. README references opkg, but current APK package and image builder support APK/OPKG configurations; verify target/release. Root GPL does not cover every dependency. No code copied.
+- **Research notes:** `research/2026-10-26-openwrt-mavsdk.md`. Follow sysupgrade recovery, firewall tests, image reproducibility and package-manager transition.
+
+### MAVSDK
+
+- **Repository:** https://github.com/mavlink/MAVSDK
+- **Author / Org:** MAVLink / MAVSDK
+- **Category:** Robotics / MAVLink / telemetry / mission control / cross-platform SDK
+- **Evidence:** VERIFIED (upstream CI; no independent simulator or vehicle test)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** C++ MAVLink SDK with direct C, Python and Kotlin bindings, mission, telemetry, offboard-control and raw-message plugins.
+- **Why it is valuable:** Reusable protocol clients and portable language bindings, examples, fuzz tests and broad platform support.
+- **Useful code/components:** `cpp/src/mavsdk/core/mavsdk_impl.cpp`, `libmav_receiver.cpp`, `cpp/src/mavsdk/plugins/mission/`, `telemetry/`, `offboard/`, `mavlink_direct/`, `c/`, `py/mavsdk/`, `kt/`, `jni/`, `cpp/examples/`, optional `cpp/src/mavsdk_server/`.
+- **Install / runtime:** CMake/C++ toolchain or packaged direct bindings; optional gRPC server for legacy clients; MAVLink vehicle or SITL needed for functional testing.
+- **Platforms:** Linux, Windows, macOS, Android, iOS; C++, C, Python, Kotlin.
+- **License:** BSD-3-Clause root LICENSE.md; proto submodule and third-party dependencies require separate review.
+- **Maintenance signals:** [v4.0.6](https://github.com/mavlink/MAVSDK/releases/tag/v4.0.6) 2026-10-08. 2026-10-26 upstream [Linux 40313071240](https://github.com/mavlink/MAVSDK/actions/runs/40313071240) 30 jobs, [Windows 40313071239](https://github.com/mavlink/MAVSDK/actions/runs/40313071239) 14/14, [Kotlin 40313071246](https://github.com/mavlink/MAVSDK/actions/runs/40313071246) 9 passed/1 skipped, [fuzz 40313071314](https://github.com/mavlink/MAVSDK/actions/runs/40313071314) passed; macOS 40313071347 failed on x64 artifact upload (six jobs passed).
+- **Verification performed:** Inspected README, LICENSE, SECURITY.md, py/README.md, core/plugins/examples, .gitmodules, release and CI. No independent compilation, protocol connection, simulator, vehicle or security test.
+- **Source discovery:** GitHub-first 2026-10-26; YouTube playlist fetches throttled; no transcript-derived claims.
+- **Related projects:** `mavlink/MAVSDK-Proto`, `mavlink/MAVSDK-Python`, `mavlink/mavlink`, `ArduPilot/ardupilot`, `PX4/PX4-Autopilot`.
+- **Caveats / risks:** Upstream SECURITY.md says MAVLink signing is not implemented; optional `mavsdk_server` gRPC is unauthenticated/unencrypted and binds 0.0.0.0 by default, exposing connected vehicle control to reachable clients. Prefer direct v4 bindings and isolate/firewall legacy server. No code copied.
+- **Research notes:** `research/2026-10-26-openwrt-mavsdk.md`. Follow fuzz parser coverage, network trust, SITL compatibility, macOS artifact publishing.
 
 ## Rejected / Deferred Leads
 

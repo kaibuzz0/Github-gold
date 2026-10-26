@@ -5142,7 +5142,8 @@
         "mavlink/mavlink — message protocol ecosystem",
         "ArduPilot/pymavlink — Python MAVLink library",
         "ArduPilot/MAVProxy — command-line ground station",
-        "PX4/PX4-Autopilot — independent autopilot ecosystem"
+        "PX4/PX4-Autopilot — independent autopilot ecosystem",
+        "mavlink/MAVSDK — high-level MAVLink SDK; no independent integration verification"
       ],
       "research_notes": "GPL-3.0 source obligations; check each submodule. Mission-critical code: passing CI/SITL is not evidence of safe flight or regulatory compliance. Renode integration downloads ArduPilot-hosted SHA-256-checked package, not necessarily upstream stock Renode. Study EKF edge cases, GPS loss, failsafe transitions, SITL reproducibility and MAVLink authentication. No code copied."
     },
@@ -5268,6 +5269,124 @@
         "zephyrproject-rtos/zephyr"
       ],
       "research_notes": "MPL-2.0 file-level copyleft; CC0 only for specifically marked files. Upstream reports certification for a v1.4 example server, not arbitrary current deployments. No code copied."
+    },
+    {
+      "name": "OpenWrt",
+      "repository": "https://github.com/openwrt/openwrt",
+      "owner": "openwrt",
+      "category": [
+        "embedded-linux",
+        "router-firmware",
+        "networking",
+        "firewall",
+        "firmware-build-system"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "GPL-2.0-only root COPYING; component, kernel and package licenses vary",
+      "license_copy_status": "gpl2-only-and-per-component-review",
+      "platforms": [
+        "supported embedded routers/network devices",
+        "GNU/Linux/BSD/macOS build hosts with case-sensitive filesystem"
+      ],
+      "useful_components": [
+        "scripts/feeds — package feed integration",
+        "package/network/config/netifd/files — network interface configuration",
+        "package/network/config/firewall4 — nftables firewall package integration",
+        "package/base-files/files/etc — init/hotplug/UCI templates",
+        "target/imagebuilder/Makefile — image building",
+        "scripts/gen_image_generic.sh — reproducible image assembly",
+        "target/linux and toolchain — board targets and cross-compilation"
+      ],
+      "verification": [
+        "2026-10-26 inspected upstream README, COPYING, source/build tree, APK Makefile and image builder",
+        "v25.12.6 released 2026-10-18; commits active 2026-10-26",
+        "2026-10-25 upstream kernel CI 40231519176 passed 29/29; core packages 40231388127 passed 10/10; toolchains 40231388106 succeeded (first 30 of 130 jobs inspected)",
+        "No independent firmware build, device flash, networking or security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v25.12.6 2026-10-18; active 2026-10-26; upstream kernel/packages/toolchain builds successful.",
+      "source": "GitHub-first 2026-10-26; research/2026-10-26-openwrt-mavsdk.md; YouTube playlist pages throttled",
+      "related_projects": [
+        "openwrt/luci",
+        "openwrt/packages",
+        "openwrt/routing",
+        "openwrt/actions-shared-workflows"
+      ],
+      "research_notes": "README refers to opkg but package/system/apk/Makefile and target/imagebuilder/Makefile support APK and OPKG configurations. Confirm package manager by release/target. GPL-2.0-only at root does not cover all third-party dependencies. Match exact hardware revision before flashing; no code copied."
+    },
+    {
+      "name": "MAVSDK",
+      "repository": "https://github.com/mavlink/MAVSDK",
+      "owner": "mavlink",
+      "category": [
+        "mavlink",
+        "robotics",
+        "telemetry",
+        "vehicle-control-sdk",
+        "cross-platform-api"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "BSD-3-Clause root LICENSE.md; proto submodule and dependencies separately licensed",
+      "license_copy_status": "bsd3-attribution-plus-submodule-dependency-review",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Android",
+        "iOS",
+        "C++/C/Python/Kotlin"
+      ],
+      "useful_components": [
+        "cpp/src/mavsdk/core/mavsdk_impl.cpp — transport and connections",
+        "cpp/src/mavsdk/core/libmav_receiver.cpp — incoming MAVLink parsing",
+        "cpp/src/mavsdk/plugins/mission — mission protocol",
+        "cpp/src/mavsdk/plugins/telemetry — telemetry subscription",
+        "cpp/src/mavsdk/plugins/offboard — offboard control",
+        "cpp/src/mavsdk/plugins/mavlink_direct — raw MAVLink",
+        "c, py/mavsdk, kt, jni — direct language bindings",
+        "cpp/src/mavsdk_server — optional insecure-by-default gRPC server",
+        "cpp/examples — runnable examples"
+      ],
+      "verification": [
+        "2026-10-26 inspected README, LICENSE.md, SECURITY.md, py/README.md, core/plugins, examples and .gitmodules",
+        "v4.0.6 released 2026-10-08; active 2026-10-26 parser/fuzz commits",
+        "2026-10-26 upstream Linux 40313071240 passed 30 jobs, Windows 40313071239 passed 14/14, Kotlin 40313071246 passed 9/1 skipped, fuzz 40313071314 passed",
+        "macOS 40313071347 failed overall on x64 artifact upload; six other jobs succeeded, one skipped",
+        "No independent SDK build, MAVLink connection, simulator, vehicle flight or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v4.0.6 2026-10-08; active 2026-10-26; Linux/Windows/Kotlin/fuzz CI passing, macOS packaging job failing.",
+      "source": "GitHub-first 2026-10-26; research/2026-10-26-openwrt-mavsdk.md; YouTube playlist pages throttled",
+      "related_projects": [
+        "mavlink/MAVSDK-Proto",
+        "mavlink/MAVSDK-Python (legacy gRPC)",
+        "mavlink/mavlink",
+        "ArduPilot/ardupilot (interoperability not independently tested)",
+        "PX4/PX4-Autopilot"
+      ],
+      "research_notes": "Upstream SECURITY.md explicitly says MAVLink signing not implemented. mavsdk_server gRPC is unencrypted and unauthenticated and listens on 0.0.0.0 by default; any reachable client can control connected vehicles. Prefer v4 direct bindings, restrict network exposure. py/README.md says newer asyncio wrapper less tested than older gRPC client. No code copied."
     }
   ],
   "deferred_or_rejected": [
