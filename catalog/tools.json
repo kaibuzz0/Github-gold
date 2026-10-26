@@ -3245,7 +3245,8 @@
       "research_notes": "Reusable device/streaming API, plugin registry, format converters and CLI; inspect companion pothosware/SoapyRemote separately for remote exposure/authentication. Null-driver CI does not establish device-specific RF operation.",
       "related_projects": [
         "AlexandreRouma/SDRPlusPlus (Soapy source plugin)",
-        "merbanan/rtl_433 (SoapySDR input supported upstream; hardware interoperability not independently tested)"
+        "merbanan/rtl_433 (SoapySDR input supported upstream; hardware interoperability not independently tested)",
+        "gnuradio/gnuradio (in-tree gr-soapy adapter; optional SoapySDR dependency, no hardware test)"
       ]
     },
     {
@@ -4902,6 +4903,126 @@
         "AlexandreRouma/SDRPlusPlus (complementary receiver; no direct integration verified)"
       ],
       "research_notes": "RF receive-only use and legal constraints depend on band and jurisdiction. MQTT/HTTP/rtl_tcp endpoints may leak sensor identifiers/location or expose unauthenticated services. Many decoders need representative IQ/pulse captures to verify correctness. GPL and bundled Mongoose/other source licenses require per-file review. No code copied."
+    },
+    {
+      "name": "ESPHome",
+      "repository": "https://github.com/esphome/esphome",
+      "owner": "esphome",
+      "category": [
+        "embedded-firmware",
+        "esp32",
+        "esp8266",
+        "home-automation",
+        "local-first",
+        "yaml",
+        "iot"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Split licensing: Python and non-C++ code MIT; C/C++ runtime (.c/.cpp/.h/.hpp/.tcc/.ino) GPLv3 per root LICENSE; external components/dependencies separate",
+      "license_copy_status": "mixed-mit-and-gplv3-review-file-extension-and-dependency-before-reuse",
+      "platforms": [
+        "Python >=3.12,<3.16 configuration/CLI host",
+        "ESP32",
+        "ESP8266",
+        "RP2",
+        "supported LibreTiny/Zephyr targets (board-specific)"
+      ],
+      "useful_components": [
+        "esphome/config.py — YAML validation, substitutions, packages and component resolution",
+        "esphome/codegen.py and cpp_generator.py — Python-to-C++ firmware code generation",
+        "esphome/components/api/ — native device API and Noise encryption configuration",
+        "esphome/components/ota/ and safe_mode/ — OTA orchestration and recovery",
+        "esphome/components/mqtt/ — MQTT integration",
+        "esphome/components/modbus/ and esp32_ble/ — industrial and BLE device interfaces",
+        "tests/integration/ and .github/workflows/ci.yml — integration, component, C++ and lint checks"
+      ],
+      "verification": [
+        "2026-10-25 inspected README, root mixed-license LICENSE, pyproject.toml, config.py, codegen.py, API/OTA/safe-mode/MQTT component source and ci.yml",
+        "Upstream stable 2026.10.0 released 2026-10-21; 2026-10-25 PR #21626 CI run 40218426253 completed 28 success, 2 skipped (30 jobs) including integration, C++ unit, ESP32/ESP8266 builds and lint",
+        "Upstream source commits on 2026-10-25 include scheduler correctness and JPEG PSRAM allocation",
+        "No independent YAML-to-firmware generation, flashing, device control, MQTT operation, OTA recovery or security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "2026.10.0 release 2026-10-21; active dev commits 2026-10-25; PR CI 40218426253 passed 28/30 jobs, 2 skipped; full device-specific RF and OTA operation untested.",
+      "source": "GitHub-first; research/2026-10-25-esphome-gnuradio.md; no usable YouTube transcript attribution",
+      "related_projects": [
+        "home-assistant/core (ecosystem; not required for standalone device operation)",
+        "Koenkk/zigbee2mqtt (complementary local IoT bridge; not a direct integration claim)",
+        "esphome/esphome.io"
+      ],
+      "research_notes": "Python package metadata says MIT but root LICENSE explicitly assigns C++ firmware runtime GPLv3: license each extracted file, not the whole repository as MIT. YAML external_components, API encryption, OTA authentication and recovery are security-sensitive. Board/framework-specific build paths vary. No code copied."
+    },
+    {
+      "name": "GNU Radio",
+      "repository": "https://github.com/gnuradio/gnuradio",
+      "owner": "gnuradio",
+      "category": [
+        "software-defined-radio",
+        "digital-signal-processing",
+        "flowgraphs",
+        "radio-protocols",
+        "simulation",
+        "c-plus-plus",
+        "python"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "GPL-3.0-or-later for core (COPYING GPLv3; source SPDX headers); external libraries, drivers and bundled code separate",
+      "license_copy_status": "gpl3-copyleft-review-module-and-third-party-dependencies",
+      "platforms": [
+        "Linux (upstream multi-distro CI)",
+        "Windows/macOS supported via platform-specific distributions/builds",
+        "C++/Python with CMake and optional Qt",
+        "SoapySDR hardware optional; offline DSP/flowgraphs possible"
+      ],
+      "useful_components": [
+        "gnuradio-runtime/lib/top_block_impl.cc — flowgraph runtime and scheduler integration",
+        "gr-digital/lib/ — OFDM, FEC-related framing, symbol sync, CRC and modulation blocks",
+        "gr-filter/lib/ — FIR and resampling DSP blocks",
+        "gr-analog/ and gr-fft/ — signal generation, modulation and spectral processing",
+        "gr-soapy/ — SoapySDR hardware interface and Python gnuradio.soapy namespace",
+        "grc/core/FlowGraph.py — graphical flowgraph model",
+        "gr-utils/modtool/ — out-of-tree block/module scaffolding",
+        "gr-digital/python/digital/qa_ofdm_*.py — focused DSP regression tests"
+      ],
+      "verification": [
+        "2026-10-25 inspected README, COPYING, CMakeLists.txt, runtime top_block_impl.cc, gr-digital and gr-filter build sources, gr-soapy docs/CMake, GRC FlowGraph, modtool and Make Test workflow",
+        "Latest inspected GitHub stable v3.10.12.0 released 2025-02-20; active main commits in October 2026 including 2026-10-20 channel-model correctness fixes and regression tests",
+        "Upstream 2026-10-20 PR #8240 Make Test run 39263827649 passed 10/10 jobs across Ubuntu/Fedora/Debian, including 32-bit and clang; separate conda package workflow 39263827623 failed 2/2 jobs",
+        "2026-10-08 PR #8124 upstream Make Test run 37622209718 passed 11/11 jobs after DVB-T heap-overflow fix",
+        "No independent installation, compiled flowgraph, SDR hardware reception, DSP output validation, RF decoding or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable tag v3.10.12.0 from 2025-02-20, but main code actively maintained 2026-10-20; Make Test 39263827649 passed 10/10, conda packaging 39263827623 failed 2/2. GNU Radio 4 is a separate active C++23 codebase.",
+      "source": "GitHub-first; research/2026-10-25-esphome-gnuradio.md; no usable YouTube transcript attribution",
+      "related_projects": [
+        "pothosware/SoapySDR (gr-soapy in-tree adapter)",
+        "gnuradio/gnuradio4 (separate next-generation codebase, not a drop-in replacement)",
+        "AlexandreRouma/SDRPlusPlus (complementary SDR application)",
+        "merbanan/rtl_433 (complementary sensor decoder)"
+      ],
+      "research_notes": "Core is GPL-3.0-or-later; review file headers and third-party VOLK/Soapy/UHD dependencies. CI passing in Make Test does not cover conda packaging or radio hardware. Recent buffer-overflow and signal-model correctness fixes warrant fuzzing and golden-vector regression review. GNU Radio 4 should be a separate research lead. No code copied."
     }
   ],
   "deferred_or_rejected": [

@@ -1277,7 +1277,7 @@ Suggested tiers:
 - **Maintenance signals:** Source Changelog declares 0.9.0 dated 2026-10-10 and CMake derives version from it; GitHub Releases API returned no published release object. Upstream CI 38058033433 passed 36/36 jobs and cross-compile CI 38058033417 passed 15/15 on 2026-10-10.
 - **Verification performed:** Inspected source header tree, README, license, changelog, CMake and CI results. Null-device and example-driver tests are upstream evidence, not independent hardware streaming validation.
 - **Source discovery:** GitHub-first; `research/2026-09-11-soapysdr-vendor-neutral-sdr-hardware-abstraction.md`.
-- **Related projects:** pothosware/SoapyRemote; SoapyRTLSDR; GNU Radio; SatDump; `AlexandreRouma/SDRPlusPlus` (SDR++ Soapy source plugin); `merbanan/rtl_433` (SoapySDR receiver input; RF not independently tested).
+- **Related projects:** pothosware/SoapyRemote; SoapyRTLSDR; `gnuradio/gnuradio` (in-tree `gr-soapy` adapter; no RF hardware validation); SatDump; `AlexandreRouma/SDRPlusPlus` (SDR++ Soapy source plugin); `merbanan/rtl_433` (SoapySDR receiver input; RF not independently tested).
 - **Caveats / risks:** A passing null-device/plugin test does not prove any particular SDR device works. Vendor driver licenses and remote device access controls vary. GitHub Release metadata does not independently confirm the changelog's 0.9.0 label.
 - **Research notes:** `research/2026-10-23-zarr-soapysdr-promotion.md`; no upstream code copied. Prioritize sample-format converter edge cases and SoapyRemote authentication/exposure review.
 
@@ -1850,6 +1850,46 @@ Suggested tiers:
 - **Caveats / risks:** Device-specific decoders require representative capture testing. Secure MQTT, HTTP and remote receiver interfaces; sensor telemetry may reveal location or activity. RF use subject to applicable rules. GPL obligations and vendored code licenses apply; no code copied.
 - **Research notes:** `research/2026-10-25-cyberchef-rtl433.md`. Follow decoder test coverage, malformed-packet robustness and SoapySDR hardware integration.
 
+
+### ESPHome
+
+- **Repository:** https://github.com/esphome/esphome
+- **Author / Org:** ESPHome / Open Home Foundation ecosystem
+- **Category:** Embedded firmware / ESP32 / ESP8266 / local-first home automation / YAML code generation / IoT
+- **Evidence:** VERIFIED (upstream release and CI; no independent hardware or firmware test)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Generates configurable microcontroller firmware from declarative YAML for local sensors, controls, device integrations and automation.
+- **Why it is valuable:** Reusable configuration-validation, code-generation and device-component architecture, with OTA recovery and native encrypted API; can operate locally without mandatory cloud services.
+- **Useful code/components:** `esphome/config.py` YAML packages/substitutions/validation; `esphome/codegen.py` and `cpp_generator.py` C++ generation; `esphome/components/api/` native API and Noise configuration; `ota/` and `safe_mode/` firmware updates/recovery; `mqtt/`, `modbus/`, `esp32_ble/` integration modules; `tests/integration/` regression fixtures.
+- **Install / runtime:** Python >=3.12,<3.16 per `pyproject.toml`, PlatformIO/ESP-IDF and appropriate toolchains for target boards; CLI or supported device-builder workflow; flashing requires appropriate hardware and drivers.
+- **Platforms:** ESP32, ESP8266, RP2 and selected LibreTiny/Zephyr targets; Python development hosts. Verify each specific board/framework before use.
+- **License:** **Split license:** Python and other non-C++ files MIT; C/C++ firmware/runtime files GPLv3 by root `LICENSE`. Dependencies and external components may have other licenses. Do not treat the entire repository as MIT based on package metadata.
+- **Maintenance signals:** [Stable 2026.10.0](https://github.com/esphome/esphome/releases/tag/2026.10.0) released 2026-10-21; active 2026-10-25 development commits. [Upstream PR CI 40218426253](https://github.com/esphome/esphome/actions/runs/40218426253) completed **28 successful, 2 skipped** jobs on 2026-10-25 (integration tests, C++ tests, component builds, static checks).
+- **Verification performed:** Inspected README, root license, Python manifest, configuration/codegen, API, OTA, safe-mode, MQTT source and CI workflow; inspected upstream CI job results. No independent build, flash, MQTT connection, OTA recovery or device security test.
+- **Source discovery:** GitHub-first; no usable YouTube transcript evidence.
+- **Related projects:** `home-assistant/core` (ecosystem); `Koenkk/zigbee2mqtt` (complementary local IoT bridge, not a direct integration); `esphome/esphome.io` documentation.
+- **Caveats / risks:** YAML external components are executable build inputs; protect API encryption keys, OTA authentication and device credentials. Firmware reliability and resource use vary by board. GPLv3 obligations apply to C++ runtime reuse. No source copied.
+- **Research notes:** `research/2026-10-25-esphome-gnuradio.md`. Investigate API Noise session handling, OTA rollback and external-component trust.
+
+### GNU Radio
+
+- **Repository:** https://github.com/gnuradio/gnuradio
+- **Author / Org:** GNU Radio contributors / gnuradio
+- **Category:** Software-defined radio / digital signal processing / C++ / Python / radio simulation / flowgraphs
+- **Evidence:** VERIFIED (upstream multi-distro tests; no independent flowgraph or radio-hardware execution)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** C++/Python DSP block runtime and visual flowgraph toolkit for SDR receivers, digital communications, protocol research and offline signal processing.
+- **Why it is valuable:** Mature composable DSP blocks, schedulers, modulation and channel models, visual graph construction, testing utilities and vendor-neutral SDR interfaces.
+- **Useful code/components:** `gnuradio-runtime/lib/top_block_impl.cc` runtime; `gr-digital/lib/` OFDM/CRC/synchronization; `gr-filter/lib/` DSP filters; `gr-analog/`, `gr-fft/` signal generation/FFT; `gr-soapy/` SoapySDR adapter; `grc/core/FlowGraph.py` flowgraph model; `gr-utils/modtool/` block scaffolding; `gr-digital/python/digital/qa_ofdm_*.py` tests.
+- **Install / runtime:** Debian/Ubuntu package `gnuradio` or platform-specific packages; source CMake build needs C++ compiler, Python and DSP/GUI dependencies (Boost, VOLK, optional Qt and SoapySDR).
+- **Platforms:** Linux (multi-distro CI), Windows/macOS via supported packaging/build methods; live RF requires SDR hardware and compatible drivers, offline flowgraphs do not.
+- **License:** GPL-3.0-or-later for examined core (`COPYING` and SPDX source headers); review dependencies and external modules individually.
+- **Maintenance signals:** Latest inspected stable GitHub release [v3.10.12.0](https://github.com/gnuradio/gnuradio/releases/tag/v3.10.12.0) dates to **2025-02-20**; main development remains active in October 2026. [Upstream Make Test 39263827649](https://github.com/gnuradio/gnuradio/actions/runs/39263827649) on PR #8240 passed **10/10 jobs** (Ubuntu, Fedora, Debian, 32-bit and clang). Separate [Conda build 39263827623](https://github.com/gnuradio/gnuradio/actions/runs/39263827623) **failed 2/2 jobs**; do not call all CI green.
+- **Verification performed:** Inspected README, COPYING, CMake, runtime, digital/filter sources, Soapy integration, GRC, module tooling and CI workflow; checked upstream jobs. No independent installation, DSP flowgraph execution, RF reception or security test.
+- **Source discovery:** GitHub-first; no usable YouTube transcript evidence.
+- **Related projects:** `pothosware/SoapySDR` (in-tree `gr-soapy` adapter); `gnuradio/gnuradio4` (separate next-generation C++23 codebase); SDR++; `merbanan/rtl_433` (complementary decoding).
+- **Caveats / risks:** Conda packaging currently has failed upstream CI evidence. Recent 2026 DVB-T buffer-overflow and channel-model correctness fixes warrant review of parser boundaries and DSP test vectors. GNU Radio 4 is not assumed drop-in compatible. Comply with spectrum rules; no source copied.
+- **Research notes:** `research/2026-10-25-esphome-gnuradio.md`. Follow Conda packaging, gr-soapy integration, malformed-stream testing and GNU Radio 4 migration.
 
 ## Rejected / Deferred Leads
 
