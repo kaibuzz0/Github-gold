@@ -462,7 +462,7 @@ Suggested tiers:
 - **Maintenance signals:** v1.9.5 published 2026-10-06; upstream CPU CI passed 5/5 jobs 2026-10-19 (run 39266836864). Android, Windows, WASM and VAD workflows also succeeded. A later model-vocabulary check is not assumed shipped in v1.9.5.
 - **Verification performed:** README, license, upstream release and CI definitions inspected. No independent build, runtime test, or benchmark.
 - **Source discovery:** GitHub-first discovery; research/2026-08-20-local-ai-crdt.md
-- **Related projects:** ggml-org/ggml and Whisper model ecosystem.
+- **Related projects:** ggml-org/ggml; ggml-org/llama.cpp (shared ggml and talk-llama example); Whisper model ecosystem.
 - **Caveats / risks:** MIT source licensing is permissive, but model weights and third-party dependencies/backends may have separate terms.
 - **Research notes:** Promoted from READY queue; scoring remains provisional.
 
@@ -664,7 +664,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable 0.116.1 published 2026-10-04; 2026-10-16 commits correct plugin-input lifetime, MCP visibility and number formatting.
 - **Verification performed:** official README inspected; root MIT license inspected; repository metadata inspected; CI/nightly and release surfaces inspected; 0.114.1 release dated 2026-07-11 observed upstream; August 2026 ecosystem maintenance observed; not independently built, benchmarked, or cross-platform tested by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
 - **Source discovery:** GitHub-first discovery; research/2026-08-22-structured-shell.md
-- **Related projects:** nushell/reedline; nushell/nushell.github.io.
+- **Related projects:** nushell/reedline; nushell/nushell.github.io; jqlang/jq (complementary JSON CLI; no integration asserted).
 - **Caveats / risks:** Nushell semantics differ materially from POSIX shells and some commands/design details may evolve. Plugins, packages, integrations, and separately maintained ecosystem repositories require independent license checks. No third-party implementation code copied.
 - **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
 
@@ -2057,6 +2057,47 @@ Suggested tiers:
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
 - **colonelpanichacks/Remote-ID-Spoofer:** not promoted. Its primary purpose is Remote ID spoofing, outside this catalog's preferred defensive/interoperability scope.
+
+
+### llama.cpp
+
+- **Repository:** https://github.com/ggml-org/llama.cpp
+- **Author / Org:** ggml-org
+- **Category:** Local AI / LLM inference / GGUF / quantization / C++ / Android
+- **Evidence:** VERIFIED (upstream builds and CI; not independently executed).
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 5, Documentation 5, Maintenance 4).
+- **What it does:** Local LLM/VLM inference engine, GGUF model loader, quantization utilities and HTTP API server.
+- **Why it is valuable:** Portable, low-resource CPU inference, optional GPU acceleration, embeddable C API, model inspection and reusable constrained-decoding components.
+- **Useful code/components:** `include/llama.h` C API; `src/llama-model-loader.cpp`; `src/llama-sampler.cpp`; `src/llama-grammar.cpp`; `tools/server/`; `tools/quantize/`, `tools/imatrix/`; `gguf-py/gguf/scripts/gguf_dump.py`; `docs/android.md`; `examples/llama.android`; `tests/test-gguf.cpp`.
+- **Install / runtime:** CMake source build or rolling binaries; separate GGUF model weights. Android/Termux and NDK instructions available. RAM/VRAM varies with model/context/quantization.
+- **Platforms:** Linux, Windows, macOS, Android/Termux, iOS, WASM and accelerator-specific targets.
+- **License:** MIT root; check `gguf-py/LICENSE`, `vendor/`, dependencies and model-weight terms before reuse.
+- **Maintenance signals:** Rolling [b11907](https://github.com/ggml-org/llama.cpp/releases/tag/b11907) prerelease 2026-10-26 with 36 assets; [Server CI 40389494969](https://github.com/ggml-org/llama.cpp/actions/runs/40389494969) Windows/Ubuntu passed 2/2; [self-hosted Server 40379656923](https://github.com/ggml-org/llama.cpp/actions/runs/40379656923) CUDA/Metal/KleidiAI passed 3/3; [WASM 40389495039](https://github.com/ggml-org/llama.cpp/actions/runs/40389495039) passed.
+- **Verification performed:** Inspected upstream README, LICENSE, SECURITY.md, source, tests, server/Android/GGUF docs and CI 2026-10-26. No independent build, inference, Android run, benchmark or security audit.
+- **Source discovery:** GitHub-first; `research/2026-10-26-llamacpp-jq.md`. Two YouTube playlists throttled; no transcript attribution.
+- **Related projects:** ggml-org/ggml; ggml-org/whisper.cpp; ggml-org/llama.vscode.
+- **Caveats / risks:** Upstream security policy advises isolating untrusted models and not exposing server/RPC to untrusted networks. Model licenses vary; b-tags are rolling prereleases.
+- **Research notes:** Follow GGUF parser fuzzing, model-license provenance, API isolation and Android memory profiling. No third-party code copied.
+
+### jq
+
+- **Repository:** https://github.com/jqlang/jq
+- **Author / Org:** jqlang
+- **Category:** JSON / structured-data CLI / C library / data transformation
+- **Evidence:** VERIFIED (upstream release and CI; not independently executed).
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4).
+- **What it does:** JSON query and transformation CLI with an embeddable C filter language runtime.
+- **Why it is valuable:** Reusable parser, typed-value model, filter compiler/VM, shell integration and regression/fuzzing components.
+- **Useful code/components:** `src/jv_parse.c` parser; `src/jv.c` values; `src/compile.c` compiler; `src/execute.c` VM; `src/lexer.l`, `src/parser.y`; `src/builtin.c`, `src/builtin.jq`; `tests/jq.test`, `tests/jq_fuzz_parse.c`; `src/jq.h` C API.
+- **Install / runtime:** Standalone release binaries, Docker or autotools build; optional Oniguruma; `make check` documented.
+- **Platforms:** Linux, Windows, macOS, FreeBSD, NetBSD, ARM, RISC-V and other cross-built targets.
+- **License:** MIT jq core; `COPYING` lists CC BY 3.0 documentation, ICU decNumber, Lucent dtoa, Heimdal/NetBSD notices; check Oniguruma separately.
+- **Maintenance signals:** Stable [jq-1.8.2](https://github.com/jqlang/jq/releases/tag/jq-1.8.2) published 2026-06-20 with security fixes; [CI 40382053397](https://github.com/jqlang/jq/actions/runs/40382053397) 24 jobs passed, release job skipped; [Valgrind 40382053249](https://github.com/jqlang/jq/actions/runs/40382053249) and [BSD 40382053191](https://github.com/jqlang/jq/actions/runs/40382053191) passed. Source commits 2026-10-25.
+- **Verification performed:** README, COPYING, SECURITY.md, source, tests, parser fuzz harness, release and CI inspected 2026-10-26. No independent execution or fuzz campaign.
+- **Source discovery:** GitHub-first; `research/2026-10-26-llamacpp-jq.md`. Two YouTube playlists throttled; no transcript attribution.
+- **Related projects:** nushell/nushell (complementary structured-data shell, not direct integration).
+- **Caveats / risks:** jq-1.8.2 addresses multiple parser/memory-safety, path-depth and DoS CVEs. Patch deployments processing untrusted JSON. Bundled components have additional licenses.
+- **Research notes:** Follow parser fuzzing, deep-input limits, regex engine configuration and embedded libjq use. No code copied.
 
 ## Entry format
 

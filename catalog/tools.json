@@ -1130,7 +1130,8 @@
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
       "source_discovery": "GitHub-first discovery; research/2026-08-20-local-ai-crdt.md",
-      "caveats": "MIT source licensing is permissive, but model weights and third-party dependencies/backends may have separate terms."
+      "caveats": "MIT source licensing is permissive, but model weights and third-party dependencies/backends may have separate terms.",
+      "related_projects": ["ggml-org/ggml","ggml-org/llama.cpp (shared ggml, talk-llama example)"]
     },
     {
       "name": "Loro",
@@ -1674,7 +1675,8 @@
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
       "copy_restriction_note": "Nushell semantics differ materially from POSIX shells and some commands/design details may evolve. Plugins, packages, integrations, and separately maintained ecosystem repositories require independent license checks.",
-      "source": "GitHub-first discovery; research/2026-08-22-structured-shell.md"
+      "source": "GitHub-first discovery; research/2026-08-22-structured-shell.md",
+      "related_projects": ["nushell/reedline","nushell/nushell.github.io","jqlang/jq (complementary JSON CLI; no integration asserted)"]
     },
     {
       "name": "Reedline",
@@ -5502,6 +5504,126 @@
         "OpenCPN/OpenCPN (in-tree chartdldr_pi, grib_pi, dashboard_pi)"
       ],
       "research_notes": "Upstream SECURITY.md explicitly states plugins inherit full user privileges and untrusted charts/sensor data require caution. Navigation and AIS data can be incorrect or stale; not a sole source of navigational safety. Multi-license bundle: do not copy code without checking data/copyright. No third-party code copied."
+    },
+    {
+      "name": "llama.cpp",
+      "repository": "https://github.com/ggml-org/llama.cpp",
+      "owner": "ggml-org",
+      "category": [
+        "local-ai",
+        "llm-inference",
+        "gguf",
+        "quantization",
+        "android"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT root; model weights and vendor/dependency licenses separate",
+      "license_copy_status": "mit-root-check-vendor-and-model-licenses",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Android/Termux",
+        "iOS",
+        "WASM",
+        "CPU/GPU backends"
+      ],
+      "useful_components": [
+        "include/llama.h C API",
+        "src/llama-model-loader.cpp GGUF loader",
+        "src/llama-sampler.cpp sampling",
+        "src/llama-grammar.cpp constrained decoding",
+        "tools/server HTTP API",
+        "tools/quantize and tools/imatrix",
+        "gguf-py/gguf/scripts/gguf_dump.py",
+        "docs/android.md and examples/llama.android",
+        "tests/test-gguf.cpp and tests/test-sampling.cpp"
+      ],
+      "verification": [
+        "2026-10-26 inspected README, LICENSE, SECURITY.md, server/Android/GGUF docs, source and tests",
+        "Rolling prerelease b11907 2026-10-26 has 36 artifacts (not numbered stable release)",
+        "Upstream Server CI 40389494969 Windows/Ubuntu passed 2/2, self-hosted Server 40379656923 CUDA/Metal/KleidiAI passed 3/3, WASM 40389495039 passed",
+        "No independent build, model inference, Android deployment, benchmark or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "2026-10-26 rolling b11907 prerelease; passing upstream server and WASM CI",
+      "source": "GitHub-first 2026-10-26; research/2026-10-26-llamacpp-jq.md; YouTube throttled",
+      "related_projects": [
+        "ggml-org/ggml",
+        "ggml-org/whisper.cpp",
+        "ggml-org/llama.vscode"
+      ],
+      "research_notes": "Upstream SECURITY.md recommends isolating untrusted models/inputs and not exposing server/RPC to untrusted networks. Model weights licensed separately. No source copied."
+    },
+    {
+      "name": "jq",
+      "repository": "https://github.com/jqlang/jq",
+      "owner": "jqlang",
+      "category": [
+        "developer-tools",
+        "json",
+        "cli",
+        "structured-data",
+        "c-library"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT core; CC BY 3.0 docs; ICU decNumber, Lucent dtoa, Heimdal/NetBSD, Oniguruma notices separate",
+      "license_copy_status": "mit-core-review-third-party-and-doc-notices",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "FreeBSD",
+        "NetBSD",
+        "ARM",
+        "RISC-V"
+      ],
+      "useful_components": [
+        "src/jv_parse.c JSON parser",
+        "src/jv.c values",
+        "src/compile.c filter compiler",
+        "src/execute.c filter VM",
+        "src/lexer.l and src/parser.y grammar",
+        "src/builtin.c and src/builtin.jq",
+        "tests/jq.test regression",
+        "tests/jq_fuzz_parse.c fuzz harness",
+        "src/jq.h C API"
+      ],
+      "verification": [
+        "2026-10-26 inspected README, COPYING, SECURITY.md, src and tests, fuzz harness and release",
+        "Stable jq-1.8.2 published 2026-06-20 with multiple security fixes",
+        "Upstream CI 40382053397 passed 24 jobs (one release skipped), Valgrind 40382053249 passed, BSD 40382053191 passed",
+        "2026-10-25 commits; no independent build, parsing, fuzz campaign or audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "2026-06-20 stable jq-1.8.2; commits 2026-10-25; passing multi-platform CI and Valgrind 2026-10-26",
+      "source": "GitHub-first 2026-10-26; research/2026-10-26-llamacpp-jq.md; YouTube throttled",
+      "related_projects": [
+        "nushell/nushell (complementary JSON CLI; no direct integration)"
+      ],
+      "research_notes": "jq-1.8.2 release addresses parser, memory safety, path-depth and DoS CVEs. Check deployed version for untrusted JSON. No source copied."
     }
   ],
   "deferred_or_rejected": [
