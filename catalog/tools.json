@@ -4453,12 +4453,12 @@
         "robot-framework",
         "co-simulation"
       ],
-      "evidence": "PROMISING",
+      "evidence": "VERIFIED",
       "tier": "S",
-      "score": 26,
+      "score": 27,
       "score_breakdown": {
         "utility": 5,
-        "working_evidence": 3,
+        "working_evidence": 4,
         "reusability": 5,
         "novelty": 5,
         "documentation": 5,
@@ -4485,18 +4485,20 @@
         "Stable v1.17.0 published 2026-09-07 with binary assets and detailed architecture fixes",
         "2026-10-23 master commit 04cafbb adjusts CPU pause/halt synchronization",
         "No passing current core emulator CI found; 2026-10-22 GitHub Actions success 39742143711 was dependency graph update only",
-        "No independent build, firmware boot, timing/hardware test or security audit"
+        "No independent build, firmware boot, timing/hardware test or security audit",
+        "2026-10-25 downstream ArduPilot CI run 40231792336 passed Renode unit tests and CubeOrangePlus quadplane mission (job 121284892561); Tools/renode/tests/fetch_renode.sh downloads an ArduPilot-hosted manifest/SHA-256-verified customized Renode build. This is concrete downstream execution evidence, not upstream stock Renode CI."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "maintenance_signals": "Stable v1.17.0 (2026-09-07), recent master commit 2026-10-23; core passing CI unconfirmed.",
+      "maintenance_signals": "Upstream stable v1.17.0 (2026-09-07), active source 2026-10-23; upstream core CI still unconfirmed. Downstream ArduPilot patched Renode integration passed 2026-10-25 (40231792336).",
       "source": "GitHub-first discovery; research/2026-10-25-renode-odm-maintenance.md",
       "related_projects": [
         "renode/renode-infrastructure",
         "zephyrproject-rtos/zephyr",
-        "lowRISC/opentitan"
+        "lowRISC/opentitan",
+        "ArduPilot/ardupilot — Tools/renode/ downstream tested firmware emulator integration"
       ],
-      "research_notes": "PROMISING until actual emulator tests confirmed. .NET >=6; GTK2 for Linux portable GUI; Robot Framework/Python tests. Simulated peripheral/timing fidelity varies; secure remote APIs and check dependency licenses."
+      "research_notes": "VERIFIED narrowly by 2026-10-25 ArduPilot downstream patched Renode execution (unit tests and quadplane mission). Stock upstream Renode v1.17.0, broad CPU/peripheral accuracy and real hardware equivalence remain untested. .NET >=6; GTK2 for Linux GUI; Robot Framework/Python tests. Review emulator version/patches and license obligations. No source copied."
     },
     {
       "name": "OpenDroneMap",
@@ -4652,11 +4654,12 @@
         "Stable v4.3.1 released 2026-08-31; master package.json requires Node >=24.14.1",
         "Upstream e2e-full 40147454572 on 2026-10-25 failed at Ubuntu npm ci; Playwright tests skipped and Windows cancelled",
         "Workflow uses Node lts/hydrogen (18) despite engine >=24.14.1; root cause unconfirmed",
-        "No independent install, browser or telemetry tests"
+        "No independent install, browser or telemetry tests",
+        "2026-10-26 UTC scheduled e2e-full run 40250211098 failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 also failed. No passing full e2e test established; cause not newly verified."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "maintenance_signals": "Stable v4.3.1 released 2026-08-31; latest inspected master commit 2026-10-07. Scheduled e2e-full 40147454572 failed 2026-10-25 before tests.",
+      "maintenance_signals": "Stable v4.3.1 (2026-08-31); scheduled 2026-10-26 UTC e2e-full 40250211098 failed (Ubuntu failure, Windows cancelled), e2e-perf 40248391927 and pr-platform 40247907640 failed. Prior Node version mismatch remains a hypothesis, not proven cause.",
       "source": "GitHub-first; research/2026-10-25-ghidra-openmct.md",
       "related_projects": [
         "nasa/openmct-tutorial",
@@ -4664,7 +4667,7 @@
         "akhenry/openmct-yamcs",
         "open-telemetry/opentelemetry-collector (conceptual only)"
       ],
-      "research_notes": "PROMISING until e2e execution confirmed. LICENSES.md referenced in source but not found at root. Investigate CI Node mismatch, WebSocket reconnect and CouchDB security. No code copied."
+      "research_notes": "PROMISING until e2e execution confirmed. LICENSES.md referenced in source but not found at root. Investigate CI Node mismatch, WebSocket reconnect and CouchDB security. No code copied. 2026-10-26 UTC maintenance recheck: e2e-full, e2e-perf and pr-platform still failing; preserve PROMISING/25 pending diagnosed root cause and passing end-to-end run."
     },
     {
       "name": "Zigbee2MQTT",
@@ -5023,6 +5026,124 @@
         "merbanan/rtl_433 (complementary sensor decoder)"
       ],
       "research_notes": "Core is GPL-3.0-or-later; review file headers and third-party VOLK/Soapy/UHD dependencies. CI passing in Make Test does not cover conda packaging or radio hardware. Recent buffer-overflow and signal-model correctness fixes warrant fuzzing and golden-vector regression review. GNU Radio 4 should be a separate research lead. No code copied."
+    },
+    {
+      "name": "OpenThread",
+      "repository": "https://github.com/openthread/openthread",
+      "owner": "openthread",
+      "category": [
+        "thread-networking",
+        "ipv6-mesh",
+        "ieee-802154",
+        "embedded-networking",
+        "iot",
+        "border-router",
+        "simulation"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "BSD-3-Clause (root LICENSE and inspected core source headers); third_party/ and linked platform modules separately licensed",
+      "license_copy_status": "bsd-3-clause-preserve-copyright-license-disclaimer-and-review-third-party",
+      "platforms": [
+        "Embedded Thread-capable SoCs / RCPs / NCPs with IEEE 802.15.4 radio",
+        "Linux and macOS POSIX simulation/test hosts",
+        "C/C++ with CMake or GN and board-specific toolchains"
+      ],
+      "useful_components": [
+        "src/core/thread/mesh_forwarder.cpp — IPv6/6LoWPAN mesh packet forwarding and queueing",
+        "src/core/thread/key_manager.cpp — Thread network security material lifecycle",
+        "src/core/thread/mle.cpp and router_table.cpp — mesh link establishment and routing state",
+        "src/core/net/ and src/core/mac/ — IPv6 networking and IEEE 802.15.4 MAC components",
+        "src/core/border_router/ and src/posix/ — border-routing and POSIX integration",
+        "tests/unit/, tests/toranj/, tests/fuzz/ — unit, topology and fuzzing harnesses",
+        "examples/platforms/ and include/openthread/ — hardware abstraction and public C API"
+      ],
+      "verification": [
+        "2026-10-25 inspected README, root BSD-3-Clause LICENSE, CMakeLists, mesh_forwarder.cpp, key_manager.cpp, tests tree and Unit workflow",
+        "Upstream stable v2026.10.0 published 2026-10-01; main pushed 2026-10-25",
+        "2026-10-25 main push Unit 40228441160 passed 3/3 jobs, Build 40228441197 passed 54/54, POSIX 40228441091 passed 10/10, Simulation 40228441202 passed 6/6, Border Router 40228441070 passed 4/4",
+        "No independent compilation, Thread commissioning, RF radio testing, interoperability, security audit or Thread certification performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v2026.10.0 (2026-10-01), active main 2026-10-25; passing upstream main Build/Unit/POSIX/Simulation/Border Router CI. Separate untrusted PR action_required workflows are not failed core tests.",
+      "source": "GitHub-first 2026-10-25; research/2026-10-25-openthread-ardupilot-renode.md; no YouTube transcript attribution",
+      "related_projects": [
+        "openthread/ot-br-posix — border router companion",
+        "openthread/ot-ns — discrete-event Thread network simulator",
+        "zephyrproject-rtos/zephyr — complementary RTOS integration ecosystem",
+        "Koenkk/zigbee2mqtt — distinct Zigbee protocol, not an interoperable Thread substitute"
+      ],
+      "research_notes": "Thread networking is distinct from Zigbee despite shared IEEE 802.15.4 physical layer. BSD-3-Clause source copying requires notices; audit third-party code separately. Review commissioning, network-key storage, border-router privileges and fuzz coverage. Successful simulated tests do not establish device-specific RF reliability. No code copied."
+    },
+    {
+      "name": "ArduPilot",
+      "repository": "https://github.com/ArduPilot/ardupilot",
+      "owner": "ArduPilot",
+      "category": [
+        "robotics",
+        "autopilot",
+        "flight-control",
+        "vehicle-control",
+        "embedded-firmware",
+        "simulation",
+        "mavlink"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "GPL-3.0 root COPYING.txt and repository metadata; file-level headers, submodules and bundled third-party components require separate review",
+      "license_copy_status": "gpl3-copyleft-and-third-party-submodule-notice-review",
+      "platforms": [
+        "ChibiOS flight controllers / supported embedded autopilot boards",
+        "Linux SBC and SITL",
+        "Windows/macOS development via supported host toolchains; Waf/Python build environment"
+      ],
+      "useful_components": [
+        "libraries/AP_NavEKF3/ — extended Kalman filter navigation and sensor fusion",
+        "libraries/AC_AttitudeControl/ — attitude and rate control loops",
+        "libraries/AP_HAL_SITL/ and Tools/autotest/ — simulated hardware and vehicle regression harness",
+        "libraries/AP_GPS/, AP_Compass/, AP_InertialSensor/ — sensor abstraction and drivers",
+        "libraries/GCS_MAVLink/ — telemetry and ground-station protocol handling",
+        "libraries/AP_Avoidance/, AP_Mission/, AC_WPNav/ — mission planning and navigation",
+        "Tools/renode/ — STM32 firmware emulator, generated board models, sensor simulation and tests"
+      ],
+      "verification": [
+        "2026-10-25 inspected README, COPYING.txt, BUILD.md, AC_AttitudeControl.cpp, AP_NavEKF3.cpp, AP_HAL_SITL tree and SITL workflows",
+        "Stable vehicle-specific 4.7.2 release tags published 2026-10-14 (Plane, Copter, Rover, Sub, Tracker and AP_Periph); active master 2026-10-25",
+        "2026-10-25 upstream PR CI unit/SITL build run 40231792309 passed 8/8 jobs; Copter 40231792304 passed 12/12; Plane 40231792276 passed 7/7; Rover 40231792286 succeeded",
+        "2026-10-25 ArduPilot Renode run 40231792336 passed a CubeOrangePlus quadplane mission with unit tests using downloaded checksum-verified custom Renode artifact; does not prove unmodified Renode or real-world flight",
+        "No independent compilation, simulated flight, firmware flash, real vehicle flight, sensor calibration or safety/security certification performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Vehicle-specific v4.7.2 releases 2026-10-14; active 2026-10-25; upstream SITL, unit-build and Renode integration workflows passed. Some separate PR jobs have failed; success is not universal.",
+      "source": "GitHub-first 2026-10-25; research/2026-10-25-openthread-ardupilot-renode.md; no YouTube transcript attribution",
+      "related_projects": [
+        "renode/renode — downstream patched emulator integration in Tools/renode",
+        "mavlink/mavlink — message protocol ecosystem",
+        "ArduPilot/pymavlink — Python MAVLink library",
+        "ArduPilot/MAVProxy — command-line ground station",
+        "PX4/PX4-Autopilot — independent autopilot ecosystem"
+      ],
+      "research_notes": "GPL-3.0 source obligations; check each submodule. Mission-critical code: passing CI/SITL is not evidence of safe flight or regulatory compliance. Renode integration downloads ArduPilot-hosted SHA-256-checked package, not necessarily upstream stock Renode. Study EKF edge cases, GPS loss, failsafe transitions, SITL reproducibility and MAVLink authentication. No code copied."
     }
   ],
   "deferred_or_rejected": [

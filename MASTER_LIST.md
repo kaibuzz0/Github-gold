@@ -1693,20 +1693,20 @@ Suggested tiers:
 - **Repository:** https://github.com/renode/renode
 - **Author / Org:** renode
 - **Category:** embedded-emulation / virtual-hardware / firmware-testing / robot-framework / co-simulation
-- **Evidence:** PROMISING (upstream evidence only)
-- **Tier / Score:** S / 26 (utility 5 + working evidence 3 + reusability 5 + novelty 5 + documentation 5 + maintenance 3)
+- **Evidence:** VERIFIED (narrow downstream patched Renode execution; upstream core CI unconfirmed)
+- **Tier / Score:** S / 27 (utility 5 + working evidence 4 + reusability 5 + novelty 5 + documentation 5 + maintenance 3)
 - **What it does:** Emulates embedded CPUs, boards, peripherals and networks to run unmodified firmware without hardware.
 - **Why it is valuable:** Multi-node virtual hardware and firmware regression automation; useful reusable test infrastructure.
 - **Useful code/components:** src/Renode/PlatformDescription/: board descriptions; src/Renode/Network/ and Connectors/: virtual networks; src/Renode/RobotFrameworkEngine/: test keywords; tests/run_tests.py and tests/platforms/*.robot: Robot/NUnit regression harness; src/Plugins/CoSimulationPlugin/ and SystemCPlugin/: co-simulation; src/Renode/WebSockets/ and ws-api/: remote interfaces.
 - **Install / runtime:** .NET >=6, prebuilt Windows/Linux/macOS packages or source; GTK2 for Linux portable GUI, Robot Framework/Python for tests.
 - **Platforms:** Linux, Windows, macOS, virtual ARM/RISC-V/x86/SPARC/POWER/Xtensa/MSP430X.
 - **License:** MIT core; third-party libraries separately licensed; no code copied.
-- **Maintenance signals:** Stable v1.17.0 (2026-09-07), recent master commit 2026-10-23; core passing CI unconfirmed.
-- **Verification performed:** 2026-10-25: README, MIT LICENSE, source/test/platform trees and test runner inspected; Stable v1.17.0 published 2026-09-07 with binary assets and detailed architecture fixes; 2026-10-23 master commit 04cafbb adjusts CPU pause/halt synchronization; No passing current core emulator CI found; 2026-10-22 GitHub Actions success 39742143711 was dependency graph update only; No independent build, firmware boot, timing/hardware test or security audit.
+- **Maintenance signals:** Stable v1.17.0 (2026-09-07), active source 2026-10-23; upstream core CI unconfirmed. [ArduPilot Renode run 40231792336](https://github.com/ArduPilot/ardupilot/actions/runs/40231792336) passed 2026-10-25 with emulator unit tests and CubeOrangePlus quadplane mission.
+- **Verification performed:** 2026-10-25: README, MIT LICENSE, source/test/platform trees and test runner inspected; Stable v1.17.0 published 2026-09-07 with binary assets and detailed architecture fixes; 2026-10-23 master commit 04cafbb adjusts CPU pause/halt synchronization; No passing current core emulator CI found; 2026-10-22 GitHub Actions success 39742143711 was dependency graph update only; 2026-10-25 downstream ArduPilot job 121284892561 passed Renode unit tests and quadplane mission using an ArduPilot-hosted, checksum-verified custom Renode package. No independent build, upstream stock runtime test, physical hardware timing test or security audit.
 - **Source discovery:** GitHub-first; no YouTube attribution.
-- **Related projects:** renode/renode-infrastructure; zephyrproject-rtos/zephyr; lowRISC/opentitan.
-- **Caveats / risks:** Core test execution not verified; virtual timing differs from hardware; bundled licenses and remote API access require review.
-- **Research notes:** `research/2026-10-25-renode-odm-maintenance.md`. PROMISING until actual emulator tests confirmed. .NET >=6; GTK2 for Linux portable GUI; Robot Framework/Python tests. Simulated peripheral/timing fidelity varies; secure remote APIs and check dependency licenses.
+- **Related projects:** renode/renode-infrastructure; zephyrproject-rtos/zephyr; lowRISC/opentitan; ArduPilot/ardupilot (`Tools/renode/` downstream integration).
+- **Caveats / risks:** Downstream patched Renode executed successfully, but unmodified upstream core tests and broad CPU/peripheral fidelity remain unverified; virtual timing differs from hardware; bundled licenses and remote API access require review.
+- **Research notes:** `research/2026-10-25-renode-odm-maintenance.md`. VERIFIED narrowly via downstream patched Renode execution, not general stock upstream or hardware equivalence. See `research/2026-10-25-openthread-ardupilot-renode.md`. .NET >=6; GTK2 for Linux portable GUI; Robot Framework/Python tests. Simulated peripheral/timing fidelity varies; secure remote APIs and check dependency licenses.
 
 ### OpenDroneMap
 
@@ -1762,12 +1762,12 @@ Suggested tiers:
 - **Install / runtime:** Node/npm/webpack and modern browser; `npm install`, `npm start`, `npm run build`. Current `package.json` requires Node >=24.14.1.
 - **Platforms:** Browsers; Linux, macOS and Windows/WSL development hosts.
 - **License:** Apache-2.0 core (`LICENSE.md`); dependency/asset licenses separate. Source headers mention `LICENSES.md`, not found at inspected root.
-- **Maintenance signals:** [Stable v4.3.1](https://github.com/nasa/openmct/releases/tag/v4.3.1) released 2026-08-31; latest inspected master commit 2026-10-07. [e2e-full 40147454572](https://github.com/nasa/openmct/actions/runs/40147454572) FAILED 2026-10-25 at Ubuntu `npm ci`; Playwright tests skipped, Windows cancelled. Workflow uses Node `lts/hydrogen` (18) while package engine requires >=24.14.1. Cause unconfirmed.
+- **Maintenance signals:** [Stable v4.3.1](https://github.com/nasa/openmct/releases/tag/v4.3.1) released 2026-08-31; latest inspected master commit 2026-10-07. [e2e-full 40147454572](https://github.com/nasa/openmct/actions/runs/40147454572) FAILED 2026-10-25 at Ubuntu `npm ci`; Playwright tests skipped, Windows cancelled. Workflow uses Node `lts/hydrogen` (18) while package engine requires >=24.14.1. Cause unconfirmed. Subsequent 2026-10-26 UTC [e2e-full 40250211098](https://github.com/nasa/openmct/actions/runs/40250211098) also failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 failed.
 - **Verification performed:** README, LICENSE.md, package.json, API.md, telemetry source, e2e workflow and job steps inspected. No local install, browser test or telemetry execution.
 - **Source discovery:** GitHub-first; no YouTube attribution.
 - **Related projects:** `nasa/openmct-tutorial`, `nasa/openmct-map`, `akhenry/openmct-yamcs`; OpenTelemetry Collector is a conceptual neighbor, not confirmed integration.
 - **Caveats / risks:** No passing current full e2e execution verified. Review plugin input sanitization, WebSocket reconnection, CouchDB permissions and packaged licenses.
-- **Research notes:** `research/2026-10-25-ghidra-openmct.md`. Next: resolve CI Node mismatch and verify full telemetry workflow.
+- **Research notes:** `research/2026-10-25-ghidra-openmct.md`. Rechecked 2026-10-26 UTC: three scheduled workflows remain failed. Node mismatch remains unproven as the root cause. Keep PROMISING/25; next resolve CI failures and verify full telemetry workflow.
 
 ### Zigbee2MQTT
 
@@ -1890,6 +1890,46 @@ Suggested tiers:
 - **Related projects:** `pothosware/SoapySDR` (in-tree `gr-soapy` adapter); `gnuradio/gnuradio4` (separate next-generation C++23 codebase); SDR++; `merbanan/rtl_433` (complementary decoding).
 - **Caveats / risks:** Conda packaging currently has failed upstream CI evidence. Recent 2026 DVB-T buffer-overflow and channel-model correctness fixes warrant review of parser boundaries and DSP test vectors. GNU Radio 4 is not assumed drop-in compatible. Comply with spectrum rules; no source copied.
 - **Research notes:** `research/2026-10-25-esphome-gnuradio.md`. Follow Conda packaging, gr-soapy integration, malformed-stream testing and GNU Radio 4 migration.
+
+### OpenThread
+
+- **Repository:** https://github.com/openthread/openthread
+- **Author / Org:** OpenThread (Google and contributors)
+- **Category:** Thread IPv6 mesh / IEEE 802.15.4 / embedded networking / IoT / border routers
+- **Evidence:** VERIFIED (upstream build, unit, POSIX, simulation and border-router CI)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Portable implementation of the Thread mesh protocol with IPv6/6LoWPAN, link security, routing, commissioning and border-router support.
+- **Why it is valuable:** Reusable standards-based low-power mesh stack, portable hardware abstraction and reproducible network simulation; complements rather than replaces Zigbee implementations.
+- **Useful code/components:** `src/core/thread/mesh_forwarder.cpp` (6LoWPAN packet forwarding); `src/core/thread/key_manager.cpp` (security material); `src/core/thread/mle.cpp` and `router_table.cpp` (mesh establishment/routing); `src/core/net/`, `src/core/mac/`, `src/posix/`; `tests/unit/`, `tests/toranj/`, `tests/fuzz/`.
+- **Install / runtime:** CMake/GN and C/C++ host toolchain; Thread-capable IEEE 802.15.4 hardware for real RF, or POSIX simulation without hardware. Board-specific builds and integration vary.
+- **Platforms:** Embedded SoC/NCP/RCP; Linux/macOS POSIX development and simulation.
+- **License:** BSD-3-Clause at root and inspected core files; preserve notices and review `third_party/` separately.
+- **Maintenance signals:** Stable [v2026.10.0](https://github.com/openthread/openthread/releases/tag/v2026.10.0) published 2026-10-01; active main 2026-10-25. Upstream [Build 40228441197](https://github.com/openthread/openthread/actions/runs/40228441197) passed 54/54, [Unit 40228441160](https://github.com/openthread/openthread/actions/runs/40228441160) 3/3, [POSIX 40228441091](https://github.com/openthread/openthread/actions/runs/40228441091) 10/10, [Simulation 40228441202](https://github.com/openthread/openthread/actions/runs/40228441202) 6/6, [Border Router 40228441070](https://github.com/openthread/openthread/actions/runs/40228441070) 4/4 (2026-10-25).
+- **Verification performed:** README, LICENSE, CMake, core forwarding/key-management source, tests tree and workflow inspected; upstream successful CI reviewed. No independent build, hardware, commissioning, RF or security test.
+- **Source discovery:** GitHub-first; no accessible YouTube transcript attribution.
+- **Related projects:** `openthread/ot-br-posix` (border router), `openthread/ot-ns` (network simulation), `zephyrproject-rtos/zephyr` (RTOS ecosystem); Zigbee2MQTT uses a distinct protocol.
+- **Caveats / risks:** Mesh key storage and commissioning security require review; passing simulation is not physical radio reliability or Thread certification. Third-party licensing separate; no code copied.
+- **Research notes:** `research/2026-10-25-openthread-ardupilot-renode.md`. Follow commissioning, border-router privileges, multi-vendor radio interoperability and fuzz harnesses.
+
+### ArduPilot
+
+- **Repository:** https://github.com/ArduPilot/ardupilot
+- **Author / Org:** ArduPilot
+- **Category:** Robotics / autopilot / embedded vehicle control / navigation / MAVLink / simulation
+- **Evidence:** VERIFIED (upstream SITL, unit-build and downstream Renode integration CI)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Open-source autopilot firmware and supporting libraries for copters, planes, rovers, submarines and other autonomous vehicles.
+- **Why it is valuable:** Mature modular flight-control, sensor-fusion, hardware abstraction, navigation, safety/failsafe and software-in-the-loop test components.
+- **Useful code/components:** `libraries/AP_NavEKF3/` (navigation EKF), `libraries/AC_AttitudeControl/` (attitude/rate loops), `libraries/AP_HAL_SITL/` and `Tools/autotest/` (simulation), `libraries/GCS_MAVLink/`, `libraries/AP_GPS/`, `libraries/AP_Avoidance/`, `Tools/renode/` (board-level emulator integration).
+- **Install / runtime:** Git clone with recursive submodules, Python/Waf build toolchain; board-specific ChibiOS toolchains for embedded firmware or SITL development environment.
+- **Platforms:** Supported flight controllers, Linux SBC and SITL; platform-specific desktop development.
+- **License:** GPL-3.0 root `COPYING.txt`; individual files, submodules and bundled dependencies require separate checks.
+- **Maintenance signals:** Vehicle-specific stable v4.7.2 releases published 2026-10-14. On 2026-10-25, upstream [unit/SITL build 40231792309](https://github.com/ArduPilot/ardupilot/actions/runs/40231792309) passed 8/8 jobs, [Copter 40231792304](https://github.com/ArduPilot/ardupilot/actions/runs/40231792304) 12/12, [Plane 40231792276](https://github.com/ArduPilot/ardupilot/actions/runs/40231792276) 7/7; [Renode integration 40231792336](https://github.com/ArduPilot/ardupilot/actions/runs/40231792336) passed a CubeOrangePlus quadplane mission and emulator unit tests.
+- **Verification performed:** README, COPYING, BUILD.md, EKF/control source, SITL workflows, Renode integration scripts/tests and CI job steps inspected. No independent build, simulation, firmware flashing, flight or safety audit.
+- **Source discovery:** GitHub-first; no accessible YouTube transcript attribution.
+- **Related projects:** `renode/renode` (ArduPilot-patched downstream integration), `mavlink/mavlink`, `ArduPilot/pymavlink`, `ArduPilot/MAVProxy`, `PX4/PX4-Autopilot` (alternative ecosystem).
+- **Caveats / risks:** GPL copyleft; embedded hardware/sensor compatibility and aviation safety are not established by CI. Renode tests use an ArduPilot-hosted, checksum-verified custom Renode package, not necessarily upstream stock Renode. No code copied.
+- **Research notes:** `research/2026-10-25-openthread-ardupilot-renode.md`. Investigate EKF failures, failsafes, GPS denial, mission regression, and MAVLink trust boundaries.
 
 ## Rejected / Deferred Leads
 
