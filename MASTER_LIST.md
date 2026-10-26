@@ -1603,7 +1603,7 @@ Suggested tiers:
 - **Maintenance signals:** Active 2026-10-24 master commits and multi-OS green CI; last non-prerelease GitHub tag remains 2021.01 (2021-02-07).
 - **Verification performed:** 2026-10-24: inspected README, COPYING, src/openscad.cc license header, .gitmodules, CMake, geometry/core/io source and regression tests; Latest GitHub stable release found openscad-2021.01 (2021-02-07); master commit bf28796b dated 2026-10-24; 2026-10-24 upstream Linux release build 40109445217, release tests 40109445203 and experimental tests 40109445087 succeeded; 2026-10-24 upstream macOS experimental 40109445085 and Windows msys2 40109445266 succeeded (Windows Qt5 and Qt6 jobs); Linux experimental CI invokes CTest, example tests and coverage; no independent geometry rendering, STL validation or 3D printing.
 - **Source discovery:** GitHub-first; no YouTube attribution.
-- **Related projects:** `openscad/MCAD`; `elalish/manifold`; `floriankirsch/OpenCSG`; `AngusJohnson/Clipper2`.
+- **Related projects:** `openscad/MCAD`; `elalish/manifold`; `floriankirsch/OpenCSG`; `AngusJohnson/Clipper2`; `FreeCAD/FreeCAD` (OpenSCAD workbench; interoperability untested).
 - **Caveats / risks:** Stable release is over five years old; active master differs. 3D geometry must be checked before physical fabrication; license exception does not cover all submodules.
 - **Research notes:** research/2026-10-24-tesseract-openscad-promotion.md. S/26 discounts old stable release despite active development. CGAL, Qt, OpenCSG, Eigen, Boost and other dependencies required; submodule licenses differ. Verify manifold quality and nightly/stable differences before production use.
 
@@ -2012,6 +2012,46 @@ Suggested tiers:
 - **Related projects:** `mavlink/MAVSDK-Proto`, `mavlink/MAVSDK-Python`, `mavlink/mavlink`, `ArduPilot/ardupilot`, `PX4/PX4-Autopilot`.
 - **Caveats / risks:** Upstream SECURITY.md says MAVLink signing is not implemented; optional `mavsdk_server` gRPC is unauthenticated/unencrypted and binds 0.0.0.0 by default, exposing connected vehicle control to reachable clients. Prefer direct v4 bindings and isolate/firewall legacy server. No code copied.
 - **Research notes:** `research/2026-10-26-openwrt-mavsdk.md`. Follow fuzz parser coverage, network trust, SITL compatibility, macOS artifact publishing.
+
+### FreeCAD
+
+- **Repository:** https://github.com/FreeCAD/FreeCAD
+- **Author / Org:** FreeCAD
+- **Category:** parametric CAD / mechanical design / 3D modeling / Python automation
+- **Evidence:** VERIFIED (upstream build and tests; no independent CAD execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Cross-platform, history-based parametric 3D modeler using OpenCASCADE, Qt and Python scripting.
+- **Why it is valuable:** Open-source mechanical-design workflows with reusable sketch constraints, geometric modeling, technical drawings, and automation APIs.
+- **Useful code/components:** `src/Mod/Sketcher/App/Constraint.cpp`, `SketchObject.cpp` (constraint model); `src/Mod/Part/App` (OpenCASCADE B-rep wrappers); `src/Mod/PartDesign` (feature modeling); `src/Mod/OpenSCAD/importCSG.py`, `exportCSG.py` (CSG exchange); `src/Mod/TechDraw` (drawings); `tests/src` and `SketcherTests` (regression).
+- **Install / runtime:** Official desktop releases or CMake >=3.22 with OpenCASCADE, Qt, Python, Coin3D and platform build dependencies; documented Python API and workbenches.
+- **Platforms:** Linux, Windows, macOS; C++/Python.
+- **License:** Root LGPL-2.1 text; inspected `src/App/CMakeLists.txt` declares LGPL-2.1-or-later. Review each reused file, third-party dependency and asset license separately; no code copied.
+- **Maintenance signals:** Stable 1.1.4 released 2026-09-28; upstream main FreeCAD CI primary [40346216527](https://github.com/FreeCAD/FreeCAD/actions/runs/40346216527) passed 2026-10-26 with build, CLI/GUI, C++ and install tests; CodeQL [40346215716](https://github.com/FreeCAD/FreeCAD/actions/runs/40346215716) passed.
+- **Verification performed:** Inspected README, LICENSE, module SPDX, CMake, workbench and test trees, SECURITY.md, stable release and upstream CI steps. No independent installation, model generation, geometry precision or manufacturing test.
+- **Source discovery:** GitHub-first 2026-10-26; YouTube seed pages throttled, no transcript evidence claimed.
+- **Related projects:** `openscad/openscad` (in-tree FreeCAD OpenSCAD workbench), OpenCASCADE/OCCT, `FreeCAD/FreeCAD-Bundle`.
+- **Caveats / risks:** Geometry and manufactured part tolerances require domain validation; macros/addons and imported CAD files require trust review. Root license does not imply uniform dependency licensing.
+- **Research notes:** `research/2026-10-26-freecad-opencpn.md`. Follow OpenSCAD roundtrip fidelity, sketch solver regressions and Python macro sandboxing.
+
+### OpenCPN
+
+- **Repository:** https://github.com/OpenCPN/OpenCPN
+- **Author / Org:** OpenCPN
+- **Category:** marine navigation / offline charts / AIS / NMEA / geospatial sensors
+- **Evidence:** VERIFIED (upstream multi-platform builds and tests; no independent navigation)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Open-source chartplotter and vessel navigation application with raster/vector charts, AIS, NMEA 0183/2000 and Signal K inputs.
+- **Why it is valuable:** Mature offline-capable navigation interface and reusable marine telemetry, chart, protocol and plugin components.
+- **Useful code/components:** `model/src/ais_decoder.cpp`, `ais_target_data.cpp` (AIS); `comm_drv_n0183_serial.cpp`, `comm_drv_n0183_net.cpp` (NMEA 0183); `comm_drv_n2k_socketcan.cpp` (NMEA 2000); `comm_drv_signalk_net.cpp` (Signal K); `libs/s57-charts` (ENC charts); `plugins/dashboard_pi`, `plugins/grib_pi` (dashboard and weather); `test/n2k_tests.cpp`, `test/rest-tests.cpp` (tests).
+- **Install / runtime:** Desktop release packages or CMake/wxWidgets source build; chart datasets and sensor interfaces vary by platform. Android supported upstream but not tested this run.
+- **Platforms:** Linux, Windows, macOS, Android.
+- **License:** OpenCPN-authored files GPL-2.0-or-later per `LICENSING`; bundled dependencies and assets use multiple licenses, with file-level inventory in `data/copyright`. No code copied.
+- **Maintenance signals:** Stable 5.14.2 released 2026-09-28; 2026-10-15 upstream Linux [38800150299](https://github.com/OpenCPN/OpenCPN/actions/runs/38800150299) passed 3 jobs (including ASan and test steps), macOS [38800150392](https://github.com/OpenCPN/OpenCPN/actions/runs/38800150392) 2/2, Windows [38800150288](https://github.com/OpenCPN/OpenCPN/actions/runs/38800150288) 1/1.
+- **Verification performed:** Inspected README, LICENSING, SECURITY.md, source modules, plugins, test README and CI jobs. No independent AIS/GPS device, chart, sea-trial or Android testing.
+- **Source discovery:** GitHub-first 2026-10-26; YouTube seed pages throttled, no transcript evidence claimed.
+- **Related projects:** `SignalK/signalk-server-node`; OpenCPN in-tree plugins and chart parsers.
+- **Caveats / risks:** Upstream SECURITY.md states third-party plugins inherit full user privileges; charts and sensor data can be untrusted. AIS/GPS data and chart currency must not be treated as infallible navigation safety evidence.
+- **Research notes:** `research/2026-10-26-freecad-opencpn.md`. Follow AIS malformed-input tests, chart parser fuzzing, plugin trust and Signal K transport security.
 
 ## Rejected / Deferred Leads
 

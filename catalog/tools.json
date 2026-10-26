@@ -4201,7 +4201,8 @@
         "openscad/MCAD",
         "elalish/manifold",
         "floriankirsch/OpenCSG",
-        "AngusJohnson/Clipper2"
+        "AngusJohnson/Clipper2",
+        "FreeCAD/FreeCAD (OpenSCAD workbench; not independently tested)"
       ],
       "research_notes": "S/26 discounts old stable release despite active development. CGAL, Qt, OpenCSG, Eigen, Boost and other dependencies required; submodule licenses differ. Verify manifold quality and nightly/stable differences before production use."
     },
@@ -5387,6 +5388,120 @@
         "PX4/PX4-Autopilot"
       ],
       "research_notes": "Upstream SECURITY.md explicitly says MAVLink signing not implemented. mavsdk_server gRPC is unencrypted and unauthenticated and listens on 0.0.0.0 by default; any reachable client can control connected vehicles. Prefer v4 direct bindings, restrict network exposure. py/README.md says newer asyncio wrapper less tested than older gRPC client. No code copied."
+    },
+    {
+      "name": "FreeCAD",
+      "repository": "https://github.com/FreeCAD/FreeCAD",
+      "owner": "FreeCAD",
+      "category": [
+        "parametric-cad",
+        "mechanical-design",
+        "geometry-kernel",
+        "python-automation",
+        "3d-printing",
+        "offline-tools"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "LGPL-2.1-or-later for inspected FreeCADApp module (SPDX); root LICENSE contains LGPL-2.1 text; per-file, dependency and OpenCASCADE/Qt/Coin3D terms require review",
+      "license_copy_status": "lgpl2.1-or-later-per-file-and-dependency-review",
+      "platforms": [
+        "Windows",
+        "macOS",
+        "Linux",
+        "C++ and Python API"
+      ],
+      "useful_components": [
+        "src/Mod/Sketcher/App/Constraint.cpp and SketchObject.cpp — parametric sketch constraints",
+        "src/Mod/Part/App — OpenCASCADE geometry and B-rep wrappers",
+        "src/Mod/PartDesign — feature-based parametric modeling",
+        "src/Mod/OpenSCAD/importCSG.py and exportCSG.py — OpenSCAD CSG interoperability",
+        "src/Mod/TechDraw — technical drawing workbench",
+        "src/App — application document and Python API infrastructure",
+        "tests/src and src/Mod/Sketcher/SketcherTests — regression and module tests"
+      ],
+      "verification": [
+        "2026-10-26 inspected README, root LICENSE, src/App/CMakeLists.txt LGPL-2.1-or-later SPDX, CMakeLists.txt, src/Mod and tests layout, SECURITY.md",
+        "Stable 1.1.4 published 2026-09-28; current 1.1 and development branches supported for security fixes",
+        "2026-10-26 upstream FreeCAD CI primary run 40346216527 on main passed: Ubuntu CMake build, CLI/GUI tests, Coin snapshot tests, C++ tests and install tests; CodeQL 40346215716 passed",
+        "No independent FreeCAD installation, CAD operation, geometry validation or model export tested"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "FreeCAD 1.1.4 2026-09-28; active 2026-10-26; main CI 40346216527 and CodeQL 40346215716 successful.",
+      "source": "GitHub-first 2026-10-26; research/2026-10-26-freecad-opencpn.md; playlist fetch throttled, no transcript attribution",
+      "related_projects": [
+        "openscad/openscad (OpenSCAD workbench, interoperability not tested)",
+        "Open-Cascade-SAS/OCCT",
+        "FreeCAD/FreeCAD-Bundle"
+      ],
+      "research_notes": "CAD files/macros/addons can contain untrusted scripts or malformed geometry. LGPL text at root does not settle individual module/asset licensing. Upstream passing tests do not establish mechanical accuracy or safe manufacturing. No third-party code copied."
+    },
+    {
+      "name": "OpenCPN",
+      "repository": "https://github.com/OpenCPN/OpenCPN",
+      "owner": "OpenCPN",
+      "category": [
+        "marine-navigation",
+        "offline-mapping",
+        "nmea",
+        "ais",
+        "sensor-integration",
+        "geospatial"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "GPL-2.0-or-later for OpenCPN-developed files per LICENSING; GPLv3/LGPL/BSD/MIT/other bundled components documented in data/copyright",
+      "license_copy_status": "gpl2-plus-file-by-file-multilicense-review",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Android (upstream documented; not checked in CI this run)"
+      ],
+      "useful_components": [
+        "model/src/ais_decoder.cpp and ais_target_data.cpp — AIS target decoding/state",
+        "model/src/comm_drv_n0183_serial.cpp and comm_drv_n0183_net.cpp — NMEA 0183 serial/network transports",
+        "model/src/comm_drv_n2k_socketcan.cpp and comm_drv_n2k_net.cpp — NMEA 2000 interfaces",
+        "model/src/comm_drv_signalk_net.cpp — Signal K network integration",
+        "libs/s57-charts — S-57 electronic navigational chart processing",
+        "plugins/dashboard_pi and plugins/grib_pi — sensor dashboard and GRIB weather modules",
+        "test/n2k_tests.cpp, test/rest-tests.cpp and test/route_point_tests.cpp — protocol/API/navigation tests"
+      ],
+      "verification": [
+        "2026-10-26 inspected README, LICENSING, SECURITY.md, model/src, libs, plugins, test/README.md and test code layout",
+        "Stable OpenCPN 5.14.2 released 2026-09-28",
+        "2026-10-15 upstream Linux build 38800150299 passed 3/3 including AddressSanitizer and Test steps; macOS 38800150392 passed 2/2; Windows 38800150288 passed 1/1",
+        "No independent navigation, GPS/AIS reception, chart rendering, Android installation or at-sea test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 5.14.2 2026-09-28; last inspected Oct 15 multi-platform build/test CI successful.",
+      "source": "GitHub-first 2026-10-26; research/2026-10-26-freecad-opencpn.md; playlist fetch throttled, no transcript attribution",
+      "related_projects": [
+        "OpenCPN/plugins",
+        "SignalK/signalk-server-node",
+        "OpenCPN/OpenCPN (in-tree chartdldr_pi, grib_pi, dashboard_pi)"
+      ],
+      "research_notes": "Upstream SECURITY.md explicitly states plugins inherit full user privileges and untrusted charts/sensor data require caution. Navigation and AIS data can be incorrect or stale; not a sole source of navigational safety. Multi-license bundle: do not copy code without checking data/copyright. No third-party code copied."
     }
   ],
   "deferred_or_rejected": [
