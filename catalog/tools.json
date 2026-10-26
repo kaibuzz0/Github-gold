@@ -4655,11 +4655,12 @@
         "Upstream e2e-full 40147454572 on 2026-10-25 failed at Ubuntu npm ci; Playwright tests skipped and Windows cancelled",
         "Workflow uses Node lts/hydrogen (18) despite engine >=24.14.1; root cause unconfirmed",
         "No independent install, browser or telemetry tests",
-        "2026-10-26 UTC scheduled e2e-full run 40250211098 failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 also failed. No passing full e2e test established; cause not newly verified."
+        "2026-10-26 UTC scheduled e2e-full run 40250211098 failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 also failed. No passing full e2e test established; cause not newly verified.",
+        "2026-10-26 inspected upstream e2e-full 40250211098 Ubuntu job 121340243471 logs: npm ci failed EBADENGINE; required Node >=24.14.1, actual v18.20.8/npm 10.8.2. Confirms install failure cause, no Playwright e2e executed."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "maintenance_signals": "Stable v4.3.1 (2026-08-31); scheduled 2026-10-26 UTC e2e-full 40250211098 failed (Ubuntu failure, Windows cancelled), e2e-perf 40248391927 and pr-platform 40247907640 failed. Prior Node version mismatch remains a hypothesis, not proven cause.",
+      "maintenance_signals": "Stable v4.3.1 (2026-08-31). 2026-10-26 e2e-full 40250211098 failed Ubuntu npm ci EBADENGINE (Node v18.20.8 vs required >=24.14.1); Windows cancelled. e2e-perf 40248391927 and pr-platform 40247907640 also failed; causes not established.",
       "source": "GitHub-first; research/2026-10-25-ghidra-openmct.md",
       "related_projects": [
         "nasa/openmct-tutorial",
@@ -4667,7 +4668,7 @@
         "akhenry/openmct-yamcs",
         "open-telemetry/opentelemetry-collector (conceptual only)"
       ],
-      "research_notes": "PROMISING until e2e execution confirmed. LICENSES.md referenced in source but not found at root. Investigate CI Node mismatch, WebSocket reconnect and CouchDB security. No code copied. 2026-10-26 UTC maintenance recheck: e2e-full, e2e-perf and pr-platform still failing; preserve PROMISING/25 pending diagnosed root cause and passing end-to-end run."
+      "research_notes": "PROMISING until e2e execution confirmed. LICENSES.md referenced in source but not found at root. Investigate CI Node mismatch, WebSocket reconnect and CouchDB security. No code copied. 2026-10-26 UTC maintenance recheck: e2e-full, e2e-perf and pr-platform still failing; preserve PROMISING/25 pending diagnosed root cause and passing end-to-end run. 2026-10-26 job log confirms Node engine mismatch as Ubuntu e2e-full npm ci failure cause. Update CI Node to >=24.14.1 and rerun e2e before promotion."
     },
     {
       "name": "Zigbee2MQTT",
@@ -5144,6 +5145,129 @@
         "PX4/PX4-Autopilot — independent autopilot ecosystem"
       ],
       "research_notes": "GPL-3.0 source obligations; check each submodule. Mission-critical code: passing CI/SITL is not evidence of safe flight or regulatory compliance. Renode integration downloads ArduPilot-hosted SHA-256-checked package, not necessarily upstream stock Renode. Study EKF edge cases, GPS loss, failsafe transitions, SITL reproducibility and MAVLink authentication. No code copied."
+    },
+    {
+      "name": "OpenThread Border Router",
+      "repository": "https://github.com/openthread/ot-br-posix",
+      "owner": "openthread",
+      "category": [
+        "thread-networking",
+        "ipv6-border-router",
+        "nat64",
+        "dns-srp-mdns",
+        "iot",
+        "embedded-gateway"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "BSD-3-Clause (root LICENSE and inspected scripts); third-party dependencies separately licensed",
+      "license_copy_status": "review-upstream-license-and-third-party-notices-before-reuse",
+      "platforms": [
+        "Linux",
+        "Raspberry Pi",
+        "OpenWrt",
+        "Docker amd64/arm64/armv7",
+        "macOS CI",
+        "IEEE 802.15.4 RCP/NCP hardware for live use"
+      ],
+      "useful_components": [
+        "src/agent/application.cpp — border router daemon",
+        "src/border_agent/border_agent.cpp — Thread border agent",
+        "src/sdp_proxy/advertising_proxy.cpp and discovery_proxy.cpp — SRP/mDNS bridging",
+        "src/mdns/mdns_openthread.cpp and mdns_mdnssd.cpp — mDNS backends",
+        "src/dbus/server/dbus_agent.cpp — D-Bus control plane",
+        "src/rest/rest_web_server.cpp and src/rest/openapi.yaml — commissioning and diagnostics HTTP API",
+        "script/_firewall, script/_nat64 and src/agent/nftables-backend.in — host firewall and NAT",
+        "tests/scripts/thread-cert/border_router/ — simulated routing tests"
+      ],
+      "verification": [
+        "2026-10-26 inspected README, BSD-3-Clause LICENSE, REST API docs, NAT/firewall scripts, source tree, workflow and releases",
+        "Stable v2026.10.0 published 2026-10-01",
+        "2026-10-25 Border Router 40165604861 passed 7/7; Build 40165604824 passed 13/13; Docker Border Router 40165604873 had 3 passed and 1 skipped; OpenWrt 40165604857, Raspbian 40165604829, macOS 40165604856 succeeded",
+        "No independent build, commissioning, radio, gateway deployment or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v2026.10.0 (2026-10-01), active 2026-10-25; upstream [Border Router 7/7](https://github.com/openthread/ot-br-posix/actions/runs/40165604861), [Build 13/13](https://github.com/openthread/ot-br-posix/actions/runs/40165604824), [Docker 3 builds](https://github.com/openthread/ot-br-posix/actions/runs/40165604873) succeeded (merge skipped).",
+      "source": "GitHub-first; research/2026-10-26-otbr-open62541-maintenance.md; no YouTube transcript evidence",
+      "related_projects": [
+        "openthread/openthread",
+        "openthread/ot-ns",
+        "zephyrproject-rtos/zephyr"
+      ],
+      "research_notes": "BSD-3-Clause notices required; inspect third-party licensing. Research REST authentication and RCP compatibility. No code copied."
+    },
+    {
+      "name": "open62541",
+      "repository": "https://github.com/open62541/open62541",
+      "owner": "open62541",
+      "category": [
+        "industrial-automation",
+        "opc-ua",
+        "c-library",
+        "pubsub",
+        "embedded-networking",
+        "protocol-implementation"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MPL-2.0 core; select examples/plugins CC0; deps/README.md documents separately licensed MIT, BSD, Apache, Boost and MPL components",
+      "license_copy_status": "review-upstream-license-and-third-party-notices-before-reuse",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Zephyr",
+        "FreeRTOS/lwIP",
+        "C99/CMake/Python generator",
+        "OpenSSL or mbedTLS optional"
+      ],
+      "useful_components": [
+        "src/client/ua_client.c and ua_client_subscriptions.c — client and subscription APIs",
+        "src/server/ua_server.c and ua_services_securechannel.c — server and secure channels",
+        "src/pubsub/ua_pubsub_networkmessage_binary.c and ua_pubsub_networkmessage_json.c — PubSub codecs",
+        "src/pubsub/ua_pubsub_keystorage.c — PubSub key storage",
+        "plugins/crypto/openssl/ and plugins/crypto/mbedtls/ — security policy backends",
+        "arch/zephyr/eventloop_zephyr.c — Zephyr event loop",
+        "tests/fuzz/fuzz_binary_message.cc — parser fuzzing",
+        "tests/interop/ — cross-SDK interoperability",
+        "CMakeLists.txt UA_ENABLE_AMALGAMATION — single-file C distribution"
+      ],
+      "verification": [
+        "2026-10-26 inspected README, FEATURES.md, MPL-2.0 LICENSE, deps/README.md, CMake, client/server/PubSub/Zephyr source and workflows",
+        "Stable v1.5.9 published 2026-10-04",
+        "2026-10-26 upstream interop 40294086389 passed 2/2, CIFuzz 40294086435 passed 1/1, Windows 40294086561 passed 4/4; Zephyr 40294086507 and macOS 40294086387 succeeded",
+        "Linux 40294086564 had 18 successful and 12 in-progress jobs at inspection; no overall pass claimed",
+        "Code Scanning 40294086468 failed 2/2 before CodeQL analysis: job log reports missing apt package clang-tools-14; not evidence of code vulnerability",
+        "No independent build, OPC UA connection, fuzz run, industrial hardware or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v1.5.9 (2026-10-04); [interop 2/2](https://github.com/open62541/open62541/actions/runs/40294086389), [CIFuzz 1/1](https://github.com/open62541/open62541/actions/runs/40294086435), [Windows 4/4](https://github.com/open62541/open62541/actions/runs/40294086561), Zephyr/macOS passed 2026-10-26. [CodeQL](https://github.com/open62541/open62541/actions/runs/40294086468) blocked by missing clang-tools-14; Linux still running.",
+      "source": "GitHub-first; research/2026-10-26-otbr-open62541-maintenance.md; no YouTube transcript evidence",
+      "related_projects": [
+        "OPCFoundation/UA-.NETStandard",
+        "zephyrproject-rtos/zephyr"
+      ],
+      "research_notes": "MPL-2.0 file-level copyleft; CC0 only for specifically marked files. Upstream reports certification for a v1.4 example server, not arbitrary current deployments. No code copied."
     }
   ],
   "deferred_or_rejected": [

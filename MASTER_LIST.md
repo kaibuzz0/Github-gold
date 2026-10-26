@@ -1762,12 +1762,12 @@ Suggested tiers:
 - **Install / runtime:** Node/npm/webpack and modern browser; `npm install`, `npm start`, `npm run build`. Current `package.json` requires Node >=24.14.1.
 - **Platforms:** Browsers; Linux, macOS and Windows/WSL development hosts.
 - **License:** Apache-2.0 core (`LICENSE.md`); dependency/asset licenses separate. Source headers mention `LICENSES.md`, not found at inspected root.
-- **Maintenance signals:** [Stable v4.3.1](https://github.com/nasa/openmct/releases/tag/v4.3.1) released 2026-08-31; latest inspected master commit 2026-10-07. [e2e-full 40147454572](https://github.com/nasa/openmct/actions/runs/40147454572) FAILED 2026-10-25 at Ubuntu `npm ci`; Playwright tests skipped, Windows cancelled. Workflow uses Node `lts/hydrogen` (18) while package engine requires >=24.14.1. Cause unconfirmed. Subsequent 2026-10-26 UTC [e2e-full 40250211098](https://github.com/nasa/openmct/actions/runs/40250211098) also failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 failed.
+- **Maintenance signals:** [Stable v4.3.1](https://github.com/nasa/openmct/releases/tag/v4.3.1) released 2026-08-31; latest inspected master commit 2026-10-07. [e2e-full 40147454572](https://github.com/nasa/openmct/actions/runs/40147454572) FAILED 2026-10-25 at Ubuntu `npm ci`; Playwright tests skipped, Windows cancelled. Workflow uses Node `lts/hydrogen` (18) while package engine requires >=24.14.1. The 2026-10-26 [Ubuntu e2e-full job log](https://github.com/nasa/openmct/actions/runs/40250211098) confirms `npm ci` failed `EBADENGINE`: actual Node v18.20.8, required >=24.14.1. Other workflow failures remain undiagnosed. Subsequent 2026-10-26 UTC [e2e-full 40250211098](https://github.com/nasa/openmct/actions/runs/40250211098) also failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 failed.
 - **Verification performed:** README, LICENSE.md, package.json, API.md, telemetry source, e2e workflow and job steps inspected. No local install, browser test or telemetry execution.
 - **Source discovery:** GitHub-first; no YouTube attribution.
 - **Related projects:** `nasa/openmct-tutorial`, `nasa/openmct-map`, `akhenry/openmct-yamcs`; OpenTelemetry Collector is a conceptual neighbor, not confirmed integration.
 - **Caveats / risks:** No passing current full e2e execution verified. Review plugin input sanitization, WebSocket reconnection, CouchDB permissions and packaged licenses.
-- **Research notes:** `research/2026-10-25-ghidra-openmct.md`. Rechecked 2026-10-26 UTC: three scheduled workflows remain failed. Node mismatch remains unproven as the root cause. Keep PROMISING/25; next resolve CI failures and verify full telemetry workflow.
+- **Research notes:** `research/2026-10-25-ghidra-openmct.md`. Rechecked 2026-10-26 UTC: three scheduled workflows remain failed. Node mismatch confirmed by Ubuntu `EBADENGINE` log as the e2e-full `npm ci` cause. Keep PROMISING/25; update CI Node >=24.14.1 and require passing Playwright e2e before promotion.
 
 ### Zigbee2MQTT
 
@@ -1930,6 +1930,47 @@ Suggested tiers:
 - **Related projects:** `renode/renode` (ArduPilot-patched downstream integration), `mavlink/mavlink`, `ArduPilot/pymavlink`, `ArduPilot/MAVProxy`, `PX4/PX4-Autopilot` (alternative ecosystem).
 - **Caveats / risks:** GPL copyleft; embedded hardware/sensor compatibility and aviation safety are not established by CI. Renode tests use an ArduPilot-hosted, checksum-verified custom Renode package, not necessarily upstream stock Renode. No code copied.
 - **Research notes:** `research/2026-10-25-openthread-ardupilot-renode.md`. Investigate EKF failures, failsafes, GPS denial, mission regression, and MAVLink trust boundaries.
+
+### OpenThread Border Router
+
+- **Repository:** https://github.com/openthread/ot-br-posix
+- **Author / Org:** openthread
+- **Category:** thread-networking / ipv6-border-router / nat64 / dns-srp-mdns / iot / embedded-gateway
+- **Evidence:** VERIFIED (upstream CI; no independent runtime/hardware test)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Connects Thread mesh networks to external IP networks using IPv6 routing, service discovery, DHCPv6 prefix delegation, NAT64 and commissioning.
+- **Why it is valuable:** Practical Thread gateway with reusable service-discovery proxies, REST diagnostics, D-Bus interfaces, host firewall and routing regression tests.
+- **Useful code/components:** `src/agent/application.cpp` — border router daemon; `src/border_agent/border_agent.cpp` — Thread border agent; `src/sdp_proxy/advertising_proxy.cpp and discovery_proxy.cpp` — SRP/mDNS bridging; `src/mdns/mdns_openthread.cpp and mdns_mdnssd.cpp` — mDNS backends; `src/dbus/server/dbus_agent.cpp` — D-Bus control plane; `src/rest/rest_web_server.cpp and src/rest/openapi.yaml` — commissioning and diagnostics HTTP API; `script/_firewall, script/_nat64 and src/agent/nftables-backend.in` — host firewall and NAT; `tests/scripts/thread-cert/border_router/` — simulated routing tests.
+- **Install / runtime:** CMake/POSIX, Raspberry Pi, Docker or OpenWrt packaging; radio RCP/NCP and host networking privileges required for live Thread.
+- **Platforms:** Linux; Raspberry Pi; OpenWrt; Docker amd64/arm64/armv7; macOS CI; IEEE 802.15.4 RCP/NCP hardware for live use.
+- **License:** BSD-3-Clause (root LICENSE and inspected scripts); third-party dependencies separately licensed.
+- **Maintenance signals:** v2026.10.0 (2026-10-01), active 2026-10-25; upstream [Border Router 7/7](https://github.com/openthread/ot-br-posix/actions/runs/40165604861), [Build 13/13](https://github.com/openthread/ot-br-posix/actions/runs/40165604824), [Docker 3 builds](https://github.com/openthread/ot-br-posix/actions/runs/40165604873) succeeded (merge skipped).
+- **Verification performed:** 2026-10-26 inspected README, BSD-3-Clause LICENSE, REST API docs, NAT/firewall scripts, source tree, workflow and releases; Stable v2026.10.0 published 2026-10-01; 2026-10-25 Border Router 40165604861 passed 7/7; Build 40165604824 passed 13/13; Docker Border Router 40165604873 had 3 passed and 1 skipped; OpenWrt 40165604857, Raspbian 40165604829, macOS 40165604856 succeeded; No independent build, commissioning, radio, gateway deployment or security audit.
+- **Source discovery:** GitHub-first; research/2026-10-26-otbr-open62541-maintenance.md; no YouTube transcript evidence.
+- **Related projects:** openthread/openthread; openthread/ot-ns; zephyrproject-rtos/zephyr.
+- **Caveats / risks:** Review commissioning/diagnostics REST authorization, D-Bus access, host firewall/nftables/pf and network-key protection. Upstream simulated tests do not verify radio interoperability.
+- **Research notes:** `research/2026-10-26-otbr-open62541-maintenance.md`. BSD-3-Clause notices required; inspect third-party licensing. Research REST authentication and RCP compatibility. No code copied.
+
+
+### open62541
+
+- **Repository:** https://github.com/open62541/open62541
+- **Author / Org:** open62541
+- **Category:** industrial-automation / opc-ua / c-library / pubsub / embedded-networking / protocol-implementation
+- **Evidence:** VERIFIED (upstream CI; no independent runtime/hardware test)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Portable C99 implementation of OPC UA (IEC 62541) clients, servers, subscriptions, PubSub and security plugins.
+- **Why it is valuable:** Reusable industrial communication stack with Zephyr support, single-file amalgamation, upstream fuzzing and OpenSSL/mbedTLS interoperability tests.
+- **Useful code/components:** `src/client/ua_client.c and ua_client_subscriptions.c` — client and subscription APIs; `src/server/ua_server.c and ua_services_securechannel.c` — server and secure channels; `src/pubsub/ua_pubsub_networkmessage_binary.c and ua_pubsub_networkmessage_json.c` — PubSub codecs; `src/pubsub/ua_pubsub_keystorage.c` — PubSub key storage; `plugins/crypto/openssl/ and plugins/crypto/mbedtls/` — security policy backends; `arch/zephyr/eventloop_zephyr.c` — Zephyr event loop; `tests/fuzz/fuzz_binary_message.cc` — parser fuzzing; `tests/interop/` — cross-SDK interoperability; `CMakeLists.txt UA_ENABLE_AMALGAMATION` — single-file C distribution.
+- **Install / runtime:** C99 compiler, CMake and Python for generated definitions; optional OpenSSL/mbedTLS; UA_ENABLE_AMALGAMATION emits combined open62541.c/.h.
+- **Platforms:** Linux; Windows; macOS; Zephyr; FreeRTOS/lwIP; C99/CMake/Python generator; OpenSSL or mbedTLS optional.
+- **License:** MPL-2.0 core; select examples/plugins CC0; deps/README.md documents separately licensed MIT, BSD, Apache, Boost and MPL components.
+- **Maintenance signals:** v1.5.9 (2026-10-04); [interop 2/2](https://github.com/open62541/open62541/actions/runs/40294086389), [CIFuzz 1/1](https://github.com/open62541/open62541/actions/runs/40294086435), [Windows 4/4](https://github.com/open62541/open62541/actions/runs/40294086561), Zephyr/macOS passed 2026-10-26. [CodeQL](https://github.com/open62541/open62541/actions/runs/40294086468) blocked by missing clang-tools-14; Linux still running.
+- **Verification performed:** 2026-10-26 inspected README, FEATURES.md, MPL-2.0 LICENSE, deps/README.md, CMake, client/server/PubSub/Zephyr source and workflows; Stable v1.5.9 published 2026-10-04; 2026-10-26 upstream interop 40294086389 passed 2/2, CIFuzz 40294086435 passed 1/1, Windows 40294086561 passed 4/4; Zephyr 40294086507 and macOS 40294086387 succeeded; Linux 40294086564 had 18 successful and 12 in-progress jobs at inspection; no overall pass claimed; Code Scanning 40294086468 failed 2/2 before CodeQL analysis: job log reports missing apt package clang-tools-14; not evidence of code vulnerability; No independent build, OPC UA connection, fuzz run, industrial hardware or security audit.
+- **Source discovery:** GitHub-first; research/2026-10-26-otbr-open62541-maintenance.md; no YouTube transcript evidence.
+- **Related projects:** OPCFoundation/UA-.NETStandard; zephyrproject-rtos/zephyr.
+- **Caveats / risks:** Certificate trust, legacy cryptography, PubSub SKS and exposed server defaults require review. CodeQL failure was dependency installation, not a scan finding.
+- **Research notes:** `research/2026-10-26-otbr-open62541-maintenance.md`. MPL-2.0 file-level copyleft; CC0 only for specifically marked files. Upstream reports certification for a v1.4 example server, not arbitrary current deployments. No code copied.
 
 ## Rejected / Deferred Leads
 
