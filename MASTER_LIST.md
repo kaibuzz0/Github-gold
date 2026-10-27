@@ -2222,6 +2222,46 @@ Suggested tiers:
 - **Caveats / risks:** No stable core release tag; firmware/kernel provenance and licenses separate. Review HTTPS/Basic auth, management exposure and update/rollback before deployment.
 - **Research notes:** `research/2026-10-27-ocrmypdf-gokrazy.md`. No third-party code copied.
 
+### yt-dlp
+
+- **Repository:** https://github.com/yt-dlp/yt-dlp
+- **Author / Org:** yt-dlp maintainers
+- **Category:** media-archiving / python-cli / metadata-extraction / subtitles / offline-preservation
+- **Evidence:** VERIFIED (upstream evidence; no independent execution)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Extensible Python media/metadata/subtitle downloader with format selection, HTTP resume and postprocessing.
+- **Why it is valuable:** Reusable extractor, network, plugin and postprocessor architecture; useful for permitted archival workflows.
+- **Useful code/components:** `yt_dlp/extractor/common.py`; `yt_dlp/downloader/http.py`; `yt_dlp/networking/`; `yt_dlp/plugins.py`; `yt_dlp/YoutubeDL.py`; `yt_dlp/postprocessor/`; `test/`.
+- **Install / runtime:** Python >=3.11, optional FFmpeg and JS runtime depending on site/format.
+- **Platforms:** Linux, Windows, macOS, Python >=3.11, Android/Termux with compatible tools.
+- **License:** Unlicense root; optional dependencies and media have independent rights. No source copied.
+- **Maintenance signals:** Stable [2026.10.26](https://github.com/yt-dlp/yt-dlp/releases/tag/2026.10.26) published 2026-10-26. [Core Tests](https://github.com/yt-dlp/yt-dlp/actions/runs/40404432725) 13/13 passed across Linux/Windows/Python 3.11–3.15/PyPy; [Quick Test](https://github.com/yt-dlp/yt-dlp/actions/runs/40404432887) 2/2 passed; [CodeQL](https://github.com/yt-dlp/yt-dlp/actions/runs/40404432831) passed. Later Core Tests run 40409938717 was skipped.
+- **Verification performed:** README, license, manifest, source, release and upstream CI inspected; no local download, subtitle extraction or security test.
+- **Source discovery:** GitHub-first 2026-10-27; playlist pages throttled, no transcript attribution.
+- **Related projects:** ArchiveBox (optional external downloader), abx-dl, FFmpeg.
+- **Caveats / risks:** Unlicense root does not cover FFmpeg, optional packages or downloaded content. Handle cookies and plugins as sensitive/untrusted. Respect rights and site terms.
+- **Research notes:** `research/2026-10-27-ytdlp-immich.md`.
+
+### Immich
+
+- **Repository:** https://github.com/immich-app/immich
+- **Author / Org:** immich-app
+- **Category:** self-hosting / photo-video-archiving / mobile-backup / local-machine-learning / media-management
+- **Evidence:** PROMISING (upstream evidence; no independent execution)
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 4)
+- **What it does:** Self-hosted photo/video library with mobile backup, search, deduplication, ML and sharing.
+- **Why it is valuable:** Reusable media lifecycle, authorization, duplicate resolution, database backups and typed local inference pipeline.
+- **Useful code/components:** `server/src/services/asset.service.ts`; `duplicate.service.ts`; `database-backup.service.ts`; `search.service.ts`; `machine-learning/immich_ml/pipeline.py`; server `*.spec.ts` tests.
+- **Install / runtime:** Docker server with PostgreSQL and Redis; optional ML service, Android/iOS apps and browser.
+- **Platforms:** Linux/Docker server, web browsers, Android, iOS, PostgreSQL/Redis, Python ML service.
+- **License:** AGPL-3.0 root; ML models, assets and dependencies separately licensed. No source copied.
+- **Maintenance signals:** Stable [v3.3.5](https://github.com/immich-app/immich/releases/tag/v3.3.5) published 2026-10-21. 2026-10-27 [CodeQL](https://github.com/immich-app/immich/actions/runs/40492780574) and [static analysis](https://github.com/immich-app/immich/actions/runs/40492780708) passed; [Test](https://github.com/immich-app/immich/actions/runs/40492780438) failed overall. Server test/lint passed; SQL/e2e GHCR image pulls throttled (`toomanyrequests`), medium tests lacked PostgreSQL image. Mobile build-and-sign jobs were skipped.
+- **Verification performed:** README, license, package manifest, source and upstream CI logs inspected; no local deployment, mobile upload, backup restore, ML inference or e2e test.
+- **Source discovery:** GitHub-first 2026-10-27; playlist pages throttled, no transcript attribution.
+- **Related projects:** immich-app/devtools, PostgreSQL, FFmpeg; no claimed direct integration.
+- **Caveats / risks:** AGPL-3.0 network copyleft; third-party/model rights. Official 3-2-1 backup warning; database-only backup does not preserve media. Face/location privacy and public sharing need scrutiny.
+- **Research notes:** `research/2026-10-27-ytdlp-immich.md`.
+
 ## Entry format
 
 ### Project / Tool Name

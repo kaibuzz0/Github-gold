@@ -48,3 +48,7 @@ A transcript mention is a lead, not proof. GitHub popularity is also not proof. 
 ## Access check — 2026-10-24
 
 Exact-ID web searches for all six seed playlist identifiers returned no indexed playlist or transcript material during this research batch. No video metadata, transcript content or GitHub discoveries were attributed to those searches. The seeds remain queued for direct metadata/subtitle access in a later run; do not infer that videos were viewed or that a playlist was empty.
+
+## Access check — 2026-10-27
+
+Direct requests to seed playlists `PLMI6SBmd587c` and `PLfidXW0BixTc` were throttled; exact-ID searches returned no indexed transcripts. Neither discovery was attributed to video evidence. The other four playlists were not revisited in this batch.
