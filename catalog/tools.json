@@ -2672,7 +2672,10 @@
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
       "source": "research/2026-10-22-sops-mcuboot-promotion-evidence.md",
-      "copy_restriction_note": "MPL-2.0 file-level copyleft; no source copied."
+      "copy_restriction_note": "MPL-2.0 file-level copyleft; no source copied.",
+      "related_projects": [
+        "betterleaks/betterleaks (complementary detection; no tested integration)"
+      ]
     },
     {
       "name": "MCUboot",
@@ -6232,6 +6235,125 @@
         "kiwix/kiwix-build (build support)"
       ],
       "research_notes": "Meson/Ninja C++17, libzim >=9,<10, libkiwix >=14.2,<15, docopt. kiwix-serve defaults to all network interfaces on HTTP port 80; restrict exposure. No source copied."
+    },
+    {
+      "name": "SQLCipher",
+      "repository": "https://github.com/sqlcipher/sqlcipher",
+      "owner": "sqlcipher / Zetetic LLC",
+      "category": [
+        "encrypted-database",
+        "sqlite",
+        "c-library",
+        "local-first",
+        "privacy"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Zetetic 3-clause BSD-style Community Edition; upstream SQLite public domain; crypto providers/build scripts separately licensed",
+      "license_copy_status": "review-file-headers-and-crypto-provider-licenses-before-copy",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Android",
+        "iOS",
+        "WebAssembly (platform-specific builds)"
+      ],
+      "useful_components": [
+        "src/sqlcipher.c — SQLite pager encryption, key derivation, rekey, migration",
+        "src/sqlcipher.h — codec/provider API",
+        "src/crypto_openssl.c — OpenSSL reference provider",
+        "src/crypto_cc.c — CommonCrypto provider",
+        "src/crypto_libtomcrypt.c — LibTomCrypt provider",
+        "test/sqlcipher.test — SQLCipher-specific test-suite manifest",
+        "test/sqlcipher-compatibility.test — backward compatibility tests"
+      ],
+      "verification": [
+        "2026-10-27 inspected README, LICENSE.md, SQLITE_LICENSE.md, CHANGELOG.md, src/sqlcipher.c, src/crypto_openssl.c and test/sqlcipher.test",
+        "Stable v4.20.0 released 2026-10-27 14:15 UTC, updating SQLite baseline to 3.54.1",
+        "SQLCipher-specific Tcl tests are present and documented; public GitHub Actions runs API returned none",
+        "No independent compilation, encryption, migration, rekey, backup restoration, or cryptographic audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v4.20.0 2026-10-27 fixes cipher_migrate deferred error and WebAssembly finalizer; v4.19.0 fixed migration/export escaping and error handling",
+      "source": "GitHub-first 2026-10-27; research/2026-10-27-sqlcipher-betterleaks.md; no playlist evidence",
+      "related_projects": [
+        "SQLite",
+        "OpenSSL",
+        "CommonCrypto",
+        "LibTomCrypt"
+      ],
+      "research_notes": "PROMISING because no passing current encryption-specific tests observed. SQLCipher 4 defaults differ from v1–3; migration, key management, backups and provider selection require testing. Root license does not override file-specific notices. No code copied."
+    },
+    {
+      "name": "Betterleaks",
+      "repository": "https://github.com/betterleaks/betterleaks",
+      "owner": "betterleaks (Zachary Rice and maintainers)",
+      "category": [
+        "defensive-security",
+        "secrets-scanning",
+        "go-cli",
+        "credential-hygiene",
+        "supply-chain"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT at root; dependencies and third-party rules separately licensed",
+      "license_copy_status": "mit-attribution-and-dependency-review",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Go 1.26 for current v2 source",
+        "containers"
+      ],
+      "useful_components": [
+        "scan/scanner.go — reusable concurrent scanner, keyword filtering",
+        "analyze/analyzer.go — optional credential validation and analysis",
+        "config/ — Expr/TOML rule compilation",
+        "sources/ — filesystem, Git, hosted-code and container adapters",
+        "cmd/container.go — container image scan entrypoint",
+        "fingerprint/ — match identifiers",
+        "cmd/generate/config/rules/ — provider-specific detection rules",
+        "examples/ — Go SDK"
+      ],
+      "verification": [
+        "2026-10-27 inspected README, LICENSE, SECURITY.md, go.mod, scanner/analyzer source and .github/workflows/test.yml",
+        "Stable v1.9.0 released 2026-09-29; v2.0.0-rc.4 released 2026-10-20; main develops v2",
+        "2026-10-26 main CI run 40351219706 passed 2/2 Ubuntu and Windows jobs: go build ./..., RE2/stdlib config validation, go test -race ./...",
+        "2026-10-27 feature-branch CI passed but is not main-branch evidence",
+        "No independent build, scan, credential validation, network request or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v1.9.0 stable 2026-09-29; v2.0.0-rc.4 2026-10-20; main cross-platform race-test CI passed 2026-10-26",
+      "source": "GitHub-first 2026-10-27 from Gitleaks ecosystem lead; research/2026-10-27-sqlcipher-betterleaks.md; no playlist evidence",
+      "related_projects": [
+        "gitleaks/gitleaks (historical maintainer ecosystem)",
+        "getsops/sops (complementary, no tested integration)",
+        "expr-lang/expr",
+        "go-git/go-git"
+      ],
+      "research_notes": "V2 main is release-candidate; package managers may still ship v1. Credential validation/analysis makes outbound provider requests only when enabled; custom rules are a trust boundary, revocation is separate and explicit. Protect findings and scan only authorized targets. No code copied."
     }
   ],
   "deferred_or_rejected": [

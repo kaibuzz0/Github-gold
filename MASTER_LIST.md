@@ -1055,7 +1055,7 @@ Suggested tiers:
 - **Maintenance signals:** v3.13.3 released 2026-07-23; main CLI CI passed 17/17 jobs on 2026-10-20; recent commits through 2026-10-20.
 - **Verification performed:** Inspected upstream README, license, source tree, release and GitHub Actions. No independent build, encryption/KMS test or security audit.
 - **Source discovery:** GitHub-first; `research/2026-10-22-sops-mcuboot-promotion-evidence.md` and earlier SOPS component dossiers.
-- **Related projects:** FiloSottile/age; getsops/community.
+- **Related projects:** FiloSottile/age; getsops/community; betterleaks/betterleaks (complementary secret detection; no tested integration).
 - **Caveats / risks:** Endpoint compromise, plaintext at runtime and cloud keyservice permissions remain relevant; CI does not prove cryptographic security.
 - **Research notes:** No third-party implementation code copied.
 
@@ -2301,6 +2301,47 @@ Suggested tiers:
 - **Related projects:** kiwix/libkiwix (direct dependency); openzim/libzim (direct dependency); openzim/zim-tools (complementary); kiwix/kiwix-android (separate client); kiwix/kiwix-build (build support).
 - **Caveats / risks:** Meson/Ninja C++17, libzim >=9,<10, libkiwix >=14.2,<15, docopt. kiwix-serve defaults to all network interfaces on HTTP port 80; restrict exposure. No source copied.
 - **Research notes:** `research/2026-10-27-libarchive-kiwix-tools.md`.
+
+
+### SQLCipher
+
+- **Repository:** https://github.com/sqlcipher/sqlcipher
+- **Author / Org:** sqlcipher / Zetetic LLC.
+- **Category:** encrypted-database / sqlite / c-library / local-first / privacy.
+- **Evidence:** PROMISING — release, source and test suite inspected; successful current CI not established.
+- **Tier / Score:** A / 25 (Utility 5; Working Evidence 3; Reusability 5; Novelty 3; Documentation 5; Maintenance 4).
+- **What it does:** SQLite fork that encrypts database pages on the fly, with key derivation, integrity protection, rekeying and migration.
+- **Why it is valuable:** Reusable embedded encrypted storage for offline-first, mobile and desktop applications.
+- **Useful code/components:** `src/sqlcipher.c` — SQLite pager encryption, key derivation, rekey, migration; `src/sqlcipher.h` — codec/provider API; `src/crypto_openssl.c` — OpenSSL reference provider; `src/crypto_cc.c` — CommonCrypto provider; `src/crypto_libtomcrypt.c` — LibTomCrypt provider; `test/sqlcipher.test` — SQLCipher-specific test-suite manifest; `test/sqlcipher-compatibility.test` — backward compatibility tests.
+- **Install / runtime:** C toolchain and supported cryptographic provider; define SQLITE_HAS_CODEC, SQLITE_EXTRA_INIT=sqlcipher_extra_init, SQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown, SQLITE_TEMP_STORE=2/3 and SQLITE_THREADSAFE=1/2.
+- **Platforms:** Linux, Windows, macOS, Android, iOS, WebAssembly (platform-specific builds).
+- **License:** Zetetic 3-clause BSD-style Community Edition; upstream SQLite public domain; crypto providers/build scripts separately licensed. No third-party source copied.
+- **Maintenance signals:** [v4.20.0](https://github.com/sqlcipher/sqlcipher/releases/tag/v4.20.0) released 2026-10-27; SQLite 3.54.1 baseline, cipher_migrate and WebAssembly fixes.
+- **Verification performed:** 2026-10-27 inspected README, LICENSE.md, SQLITE_LICENSE.md, CHANGELOG.md, src/sqlcipher.c, src/crypto_openssl.c and test/sqlcipher.test; Stable v4.20.0 released 2026-10-27 14:15 UTC, updating SQLite baseline to 3.54.1; SQLCipher-specific Tcl tests are present and documented; public GitHub Actions runs API returned none; No independent compilation, encryption, migration, rekey, backup restoration, or cryptographic audit.
+- **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript attribution.
+- **Related projects:** SQLite; OpenSSL; CommonCrypto; LibTomCrypt.
+- **Caveats / risks:** SQLCipher 4 defaults differ from earlier major versions. Migrate legacy databases explicitly; handle keys and backups securely. Tests are documented but no passing current CI execution was found.
+- **Research notes:** `research/2026-10-27-sqlcipher-betterleaks.md`. Keep PROMISING until reproducible encryption, rekey and backward-compatibility tests are observed.
+
+### Betterleaks
+
+- **Repository:** https://github.com/betterleaks/betterleaks
+- **Author / Org:** betterleaks (Zachary Rice and maintainers).
+- **Category:** defensive-security / secrets-scanning / go-cli / credential-hygiene / supply-chain.
+- **Evidence:** VERIFIED — upstream CI passed; no independent execution.
+- **Tier / Score:** S / 28 (Utility 5; Working Evidence 5; Reusability 5; Novelty 4; Documentation 5; Maintenance 4).
+- **What it does:** Go CLI and embeddable SDK to detect possible exposed secrets in files, Git, hosted code and containers, with optional provider validation and credential analysis.
+- **Why it is valuable:** Reusable scanner with keyword prefilters, concurrent regex engine, Expr rules, provider-specific detection and source adapters.
+- **Useful code/components:** `scan/scanner.go` — reusable concurrent scanner, keyword filtering; `analyze/analyzer.go` — optional credential validation and analysis; `config/` — Expr/TOML rule compilation; `sources/` — filesystem, Git, hosted-code and container adapters; `cmd/container.go` — container image scan entrypoint; `fingerprint/` — match identifiers; `cmd/generate/config/rules/` — provider-specific detection rules; `examples/` — Go SDK.
+- **Install / runtime:** Go 1.26 for current v2 source; go install github.com/betterleaks/betterleaks/v2@latest or make build. Package managers may still ship v1.
+- **Platforms:** Linux, Windows, macOS, Go 1.26 for current v2 source, containers.
+- **License:** MIT at root; dependencies and third-party rules separately licensed. No third-party source copied.
+- **Maintenance signals:** [v1.9.0 stable](https://github.com/betterleaks/betterleaks/releases/tag/v1.9.0) 2026-09-29; [v2.0.0-rc.4](https://github.com/betterleaks/betterleaks/releases/tag/v2.0.0-rc.4) 2026-10-20; [main CI 40351219706](https://github.com/betterleaks/betterleaks/actions/runs/40351219706) passed Ubuntu and Windows builds/config/race-tests 2026-10-26.
+- **Verification performed:** 2026-10-27 inspected README, LICENSE, SECURITY.md, go.mod, scanner/analyzer source and .github/workflows/test.yml; Stable v1.9.0 released 2026-09-29; v2.0.0-rc.4 released 2026-10-20; main develops v2; 2026-10-26 main CI run 40351219706 passed 2/2 Ubuntu and Windows jobs: go build ./..., RE2/stdlib config validation, go test -race ./...; 2026-10-27 feature-branch CI passed but is not main-branch evidence; No independent build, scan, credential validation, network request or security audit.
+- **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript attribution.
+- **Related projects:** gitleaks/gitleaks (maintainer ecosystem); getsops/sops (complementary); expr-lang/expr; go-git/go-git.
+- **Caveats / risks:** Main branch targets v2 release candidate, not stable v2. Validation/analysis can send credentials to providers when enabled; custom rules are a trust boundary. Revocation is separate and explicit. Protect reports.
+- **Research notes:** `research/2026-10-27-sqlcipher-betterleaks.md`. Test false-positive behavior on synthetic fixtures, network validation boundaries, container resource limits and future stable v2 release.
 
 ## Entry format
 

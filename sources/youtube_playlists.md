@@ -56,3 +56,7 @@ Direct requests to seed playlists `PLMI6SBmd587c` and `PLfidXW0BixTc` were throt
 ## Access check — 2026-10-27 (additional seed IDs)
 
 Exact-ID searches for `PLIzKw1zY_ruBUkaijwskxrfApmK_sKPvO` and `PLPKYjlUn3Lxl-XOQ0P0FpIgDZit2rYlE3` returned no indexed playlist or transcript material. No direct viewing or subtitle extraction occurred, and no discoveries were attributed to these playlists.
+
+## Access check — 2026-10-27 (remaining seed IDs)
+
+Exact-ID searches for `PLI99ObbYUvDn_0tkbXsOYB4ApTyHFQxSi` and `PLMy8ocrgmZ9yfqy1-bgSX4q3HPezvTMAr` returned no indexed playlist or transcript material. No video or subtitles were accessed and neither discovery was attributed to video evidence. All six IDs have now been searched at least once; direct metadata/subtitle access remains queued.
