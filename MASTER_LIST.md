@@ -1583,7 +1583,7 @@ Suggested tiers:
 - **Maintenance signals:** 2026-10-24 main commits fix Windows NSIS buffer and skip unit tests when traineddata absent; active multi-platform CI; stable 5.5.3 (2026-07-24).
 - **Verification performed:** 2026-10-24: inspected README, LICENSE, VERSION, doc/tesseract.1.asc, source/API trees, unit tests, and CI workflows; Stable GitHub release 5.5.3 published 2026-07-24; VERSION matches; 2026-10-24 upstream Linux autotools CI 40128395434 passed 4/4; macOS autotools 40127924448 and Windows msys2 40114227579 succeeded; Upstream CMake CI 40025480669 passed 8/8; sanitizer unit tests 40042891468 passed 2/2; CodeQL 40091625811 succeeded; CI invokes sample OCR and make check; no independent build, OCR accuracy test or security audit.
 - **Source discovery:** GitHub-first; no YouTube attribution.
-- **Related projects:** `tesseract-ocr/tessdata`; `tesseract-ocr/tessdata_fast`; `tesseract-ocr/tessdata_best`; `DanBloomberg/leptonica`; `paperless-ngx/paperless-ngx` (downstream Tesseract/OCRmyPDF integration; source inspected 2026-10-27).
+- **Related projects:** `tesseract-ocr/tessdata`; `tesseract-ocr/tessdata_fast`; `tesseract-ocr/tessdata_best`; `DanBloomberg/leptonica`; `paperless-ngx/paperless-ngx` (downstream Tesseract/OCRmyPDF integration; source inspected 2026-10-27).; OCRmyPDF (downstream searchable-PDF pipeline).
 - **Caveats / risks:** Untrusted-image parsing, model licensing, image quality and C API memory ownership require review; upstream CI does not prove accuracy or safety.
 - **Research notes:** research/2026-10-24-tesseract-openscad-promotion.md. OCR engine accepts raster images, not PDFs directly; PDF output supported. Model availability, input image quality and page segmentation affect accuracy. No independent OCR accuracy benchmark. Check traineddata licenses and memory ownership before code extraction.
 
@@ -1762,7 +1762,7 @@ Suggested tiers:
 - **Install / runtime:** Node/npm/webpack and modern browser; `npm install`, `npm start`, `npm run build`. Current `package.json` requires Node >=24.14.1.
 - **Platforms:** Browsers; Linux, macOS and Windows/WSL development hosts.
 - **License:** Apache-2.0 core (`LICENSE.md`); dependency/asset licenses separate. Source headers mention `LICENSES.md`, not found at inspected root.
-- **Maintenance signals:** [Stable v4.3.1](https://github.com/nasa/openmct/releases/tag/v4.3.1) released 2026-08-31; latest inspected master commit 2026-10-07. [e2e-full 40147454572](https://github.com/nasa/openmct/actions/runs/40147454572) FAILED 2026-10-25 at Ubuntu `npm ci`; Playwright tests skipped, Windows cancelled. Workflow uses Node `lts/hydrogen` (18) while package engine requires >=24.14.1. The 2026-10-26 [Ubuntu e2e-full job log](https://github.com/nasa/openmct/actions/runs/40250211098) confirms `npm ci` failed `EBADENGINE`: actual Node v18.20.8, required >=24.14.1. Other workflow failures remain undiagnosed. Subsequent 2026-10-26 UTC [e2e-full 40250211098](https://github.com/nasa/openmct/actions/runs/40250211098) also failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 failed.
+- **Maintenance signals:** [Stable v4.3.1](https://github.com/nasa/openmct/releases/tag/v4.3.1) released 2026-08-31; latest inspected master commit 2026-10-07. [e2e-full 40147454572](https://github.com/nasa/openmct/actions/runs/40147454572) FAILED 2026-10-25 at Ubuntu `npm ci`; Playwright tests skipped, Windows cancelled. Workflow uses Node `lts/hydrogen` (18) while package engine requires >=24.14.1. The 2026-10-26 [Ubuntu e2e-full job log](https://github.com/nasa/openmct/actions/runs/40250211098) confirms `npm ci` failed `EBADENGINE`: actual Node v18.20.8, required >=24.14.1. Other workflow failures remain undiagnosed. Subsequent 2026-10-26 UTC [e2e-full 40250211098](https://github.com/nasa/openmct/actions/runs/40250211098) also failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 failed. 2026-10-27 [e2e-full 40427389616](https://github.com/nasa/openmct/actions/runs/40427389616) Ubuntu log confirms npm ci EBADENGINE (Node 18.20.8 vs required >=24.14.1); no Playwright run.
 - **Verification performed:** README, LICENSE.md, package.json, API.md, telemetry source, e2e workflow and job steps inspected. No local install, browser test or telemetry execution.
 - **Source discovery:** GitHub-first; no YouTube attribution.
 - **Related projects:** `nasa/openmct-tutorial`, `nasa/openmct-map`, `akhenry/openmct-yamcs`; OpenTelemetry Collector is a conceptual neighbor, not confirmed integration.
@@ -2180,6 +2180,47 @@ Suggested tiers:
 - **Related projects:** briar/briar-mailbox, briar/briar-desktop, briar/onionwrapper; Reticulum is a conceptual off-grid alternative, not a proven integration.
 - **Caveats / risks:** GitHub is a mirror; verify canonical GitLab CI and release signatures. Bluetooth/Wi-Fi needs nearby peers; Tor needs internet. Do not infer independently audited encryption from source names.
 - **Research notes:** `research/2026-10-26-paperless-briar.md`. No third-party code copied.
+
+
+### OCRmyPDF
+
+- **Repository:** https://github.com/ocrmypdf/OCRmyPDF
+- **Author / Org:** James R. Barlow and OCRmyPDF contributors
+- **Category:** Offline OCR / PDF/A / document processing / Python CLI and API
+- **Evidence:** VERIFIED (upstream source, tests and CI; no independent execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Adds searchable text layers to scanned PDFs/images with rotation, deskew, PDF/A output and plugin-based processing.
+- **Why it is valuable:** Reusable OCR pipeline, PDF/A validation, hOCR parsing, Python API, extension hooks, resource controls and watcher security components.
+- **Useful code/components:** `src/ocrmypdf/api.py`, `src/ocrmypdf/_pipelines/ocr.py`, `src/ocrmypdf/pdfa.py`, `src/ocrmypdf/hocrtransform/hocr_parser.py`, `src/ocrmypdf/_exec/tesseract.py`, `src/ocrmypdf/pluginspec.py`, `src/ocrmypdf/_watcher_security.py`, `tests/test_pdfa_final_validation.py`, `tests/test_decompression_bomb.py`.
+- **Install / runtime:** Python >=3.11 plus Tesseract and PDF/image native dependencies; CLI or Python API; optional watcher/HEIC extras.
+- **Platforms:** Linux, Windows, macOS.
+- **License:** MPL-2.0 application; README CC-BY-SA-4.0; separate dependency/font and optional HEIC/x265 licenses. Review each file before reuse.
+- **Maintenance signals:** Stable [v17.13.0](https://github.com/ocrmypdf/OCRmyPDF/releases/tag/v17.13.0) 2026-09-28; main manifest 17.13.1 is not a confirmed release. 2026-10-26 [CI 40295734365](https://github.com/ocrmypdf/OCRmyPDF/actions/runs/40295734365) succeeded overall: 21 jobs passed, four experimental Python 3.15 dependency installs failed, one skipped. Python 3.11–3.14, lint and build jobs passed.
+- **Verification performed:** Inspected README, license, manifest, OCR/PDF/A/API/watcher/plugin code, tests and workflow job steps. Python 3.15 install failure traced to onnxruntime 1.31.0 lacking cp315 wheel/sdist; 3.15 marked continue-on-error. No independent OCR or PDF/A validation.
+- **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript evidence.
+- **Related projects:** Tesseract OCR, Paperless-ngx, pikepdf.
+- **Caveats / risks:** Plugin and Pillow image limits are interpreter-global; different concurrent configs need separate processes. Watcher acknowledges TOCTOU/hardlink residual risks. Untrusted PDFs require isolation.
+- **Research notes:** `research/2026-10-27-ocrmypdf-gokrazy.md`. No third-party code copied.
+
+### gokrazy
+
+- **Repository:** https://github.com/gokrazy/gokrazy
+- **Author / Org:** gokrazy contributors
+- **Category:** Minimal Go appliance OS / embedded Linux / Raspberry Pi / edge services
+- **Evidence:** VERIFIED (upstream QEMU boot tests, Go tests and image generation; no physical hardware)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 3)
+- **What it does:** Runs Go programs as minimal Linux appliances with process supervision, a status interface and update support.
+- **Why it is valuable:** Distinctive edge runtime with CI-tested MBR/UEFI boot, modular Go services, authenticated control-plane code and companion image builder.
+- **Useful code/components:** `supervise.go`, `update.go`, `authenticated.go`, `cmd/dhcp/dhcp.go`, `cmd/ntp/ntp.go`, `netlink.go`, `integration/mbrboot/mbrboot_test.go`, `integration/uefiboot/uefiboot_test.go`.
+- **Install / runtime:** Go 1.26 for inspected main source; `gokrazy/tools` supplies `gok` image builder; supported Raspberry Pi or x86_64 PC.
+- **Platforms:** Raspberry Pi supported boards, x86_64 PC (MBR/UEFI); companion CLI builds Linux/macOS/Windows.
+- **License:** BSD-3-Clause core and companion tools; kernel, firmware, EEPROM and dependencies separately licensed.
+- **Maintenance signals:** Core [CI 35105853192](https://github.com/gokrazy/gokrazy/actions/runs/35105853192) passed 2026-09-16 including `go test ./...`, QEMU MBR/UEFI boot and image creation; [feature CI 37527198802](https://github.com/gokrazy/gokrazy/actions/runs/37527198802) passed 2026-10-06. Companion [tools CI 40385840520](https://github.com/gokrazy/tools/actions/runs/40385840520) passed Windows/macOS/Ubuntu 2026-10-26. No GitHub Releases in core.
+- **Verification performed:** Inspected README, license, Go manifest, supervision/auth/update source, tests, CI YAML and job log; QEMU `TestMBRBoot` and `TestUEFIBoot` explicitly passed. No physical device boot, remote update or security audit.
+- **Source discovery:** GitHub-first 2026-10-27; no transcript attribution.
+- **Related projects:** `gokrazy/tools`, `gokrazy/internal`, `gokrazy/kernel`, `gokrazy/firmware`.
+- **Caveats / risks:** No stable core release tag; firmware/kernel provenance and licenses separate. Review HTTPS/Basic auth, management exposure and update/rollback before deployment.
+- **Research notes:** `research/2026-10-27-ocrmypdf-gokrazy.md`. No third-party code copied.
 
 ## Entry format
 

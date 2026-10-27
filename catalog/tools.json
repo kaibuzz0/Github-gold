@@ -4152,7 +4152,8 @@
         "tesseract-ocr/tessdata_fast",
         "tesseract-ocr/tessdata_best",
         "DanBloomberg/leptonica",
-        "paperless-ngx/paperless-ngx (downstream OCR integration via OCRmyPDF)"
+        "paperless-ngx/paperless-ngx (downstream OCR integration via OCRmyPDF)",
+        "ocrmypdf/OCRmyPDF (searchable PDF orchestration using Tesseract)"
       ],
       "research_notes": "OCR engine accepts raster images, not PDFs directly; PDF output supported. Model availability, input image quality and page segmentation affect accuracy. No independent OCR accuracy benchmark. Check traineddata licenses and memory ownership before code extraction."
     },
@@ -4668,11 +4669,12 @@
         "No independent install, browser or telemetry tests",
         "2026-10-26 UTC scheduled e2e-full run 40250211098 failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 also failed. No passing full e2e test established; cause not newly verified.",
         "2026-10-26 inspected upstream e2e-full 40250211098 Ubuntu job 121340243471 logs: npm ci failed EBADENGINE; required Node >=24.14.1, actual v18.20.8/npm 10.8.2. Confirms install failure cause, no Playwright e2e executed.",
-        "2026-10-27 UTC e2e-full 40427389616 Ubuntu failed at npm ci, Windows cancelled; e2e-perf 40424992380 failed at npm ci; no Playwright execution confirmed"
+        "2026-10-27 UTC e2e-full 40427389616 Ubuntu failed at npm ci, Windows cancelled; e2e-perf 40424992380 failed at npm ci; no Playwright execution confirmed",
+        "2026-10-27 inspected e2e-full 40427389616 Ubuntu job 121936441613 logs: npm ci EBADENGINE, required Node >=24.14.1, actual v18.20.8/npm 10.8.2; Windows cancelled; Playwright never ran."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "maintenance_signals": "Stable v4.3.1 (2026-08-31). 2026-10-26 e2e-full 40250211098 failed Ubuntu npm ci EBADENGINE (Node v18.20.8 vs required >=24.14.1); Windows cancelled. e2e-perf 40248391927 and pr-platform 40247907640 also failed; causes not established. 2026-10-27 UTC e2e-full 40427389616 and e2e-perf 40424992380 failed at npm ci.",
+      "maintenance_signals": "Stable v4.3.1 (2026-08-31). 2026-10-26 e2e-full 40250211098 failed Ubuntu npm ci EBADENGINE (Node v18.20.8 vs required >=24.14.1); Windows cancelled. e2e-perf 40248391927 and pr-platform 40247907640 also failed; causes not established. 2026-10-27 UTC e2e-full 40427389616 and e2e-perf 40424992380 failed at npm ci. 2026-10-27 e2e-full 40427389616 Ubuntu log confirms Node 18.20.8 vs >=24.14.1 EBADENGINE; no Playwright.",
       "source": "GitHub-first; research/2026-10-25-ghidra-openmct.md",
       "related_projects": [
         "nasa/openmct-tutorial",
@@ -5869,6 +5871,126 @@
         "markqvist/Reticulum (conceptual off-grid alternative; no verified integration)"
       ],
       "research_notes": "GitHub is a mirror, canonical upstream on GitLab. Source contains tests and CI configuration, but successful runtime/CI not established: retain PROMISING. Bluetooth/Wi-Fi requires nearby peers; Tor requires internet connectivity. Privacy and threat-model claims require independent audit; no third-party code copied."
+    },
+    {
+      "name": "OCRmyPDF",
+      "repository": "https://github.com/ocrmypdf/OCRmyPDF",
+      "owner": "James R. Barlow and OCRmyPDF contributors",
+      "category": [
+        "offline-ocr",
+        "pdf-processing",
+        "document-archiving",
+        "python",
+        "pdfa",
+        "cli"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MPL-2.0 core; README CC-BY-SA-4.0; optional HEIC/x265 and other dependencies separately licensed",
+      "license_copy_status": "mpl-attribution-and-third-party-review-before-copy",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Python >=3.11; Tesseract and native PDF/image dependencies"
+      ],
+      "useful_components": [
+        "src/ocrmypdf/api.py — embeddable OCR API and concurrency guards",
+        "src/ocrmypdf/_pipelines/ocr.py — OCR orchestration",
+        "src/ocrmypdf/pdfa.py — PDF/A conversion and validation",
+        "src/ocrmypdf/hocrtransform/hocr_parser.py — hOCR parser",
+        "src/ocrmypdf/_exec/tesseract.py — OCR engine bridge",
+        "src/ocrmypdf/pluginspec.py — extension hooks",
+        "src/ocrmypdf/_watcher_security.py — watcher isolation checks",
+        "tests/test_pdfa_final_validation.py and tests/test_decompression_bomb.py — regression tests"
+      ],
+      "verification": [
+        "2026-10-27 inspected README, LICENSE, pyproject, OCR API, PDF/A, hOCR, watcher, plugin source, tests and CI workflow",
+        "Stable v17.13.0 published 2026-09-28; main pyproject 17.13.1 not confirmed released",
+        "2026-10-26 main CI 40295734365 succeeded overall: 21 jobs passed, four experimental Python 3.15 dependency-install failures, one skipped",
+        "Python 3.11-3.14 test matrices passed Linux/macOS/Windows; lint, wheels and Docker builds passed",
+        "2026-10-26 Python 3.15 job 121481326829 failed install because onnxruntime 1.31.0 lacked cp315 wheel/sdist; 3.15 marked continue-on-error",
+        "No independent OCR execution, PDF/A compliance validation or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v17.13.0 2026-09-28; 2026-10-26 main CI 40295734365 success with experimental Python 3.15 dependency-install failures. Main manifest 17.13.1 is not a verified release.",
+      "source": "GitHub-first 2026-10-27; research/2026-10-27-ocrmypdf-gokrazy.md; no YouTube transcript attribution",
+      "related_projects": [
+        "tesseract-ocr/tesseract (OCR engine)",
+        "paperless-ngx/paperless-ngx (document ingestion consumer)",
+        "pikepdf/pikepdf (PDF/A processing)"
+      ],
+      "research_notes": "API plugin state and Pillow image limits are interpreter-global; differing concurrent configurations should run in separate processes. Watcher security documents residual TOCTOU and hardlink risks. Fonts/docs/HEIC and native dependencies need license review; no code copied."
+    },
+    {
+      "name": "gokrazy",
+      "repository": "https://github.com/gokrazy/gokrazy",
+      "owner": "gokrazy contributors",
+      "category": [
+        "embedded-linux",
+        "go",
+        "minimal-appliance-os",
+        "raspberry-pi",
+        "edge-computing",
+        "system-supervision"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 4,
+        "maintenance": 3
+      },
+      "license": "BSD-3-Clause core; firmware, kernel, EEPROM assets and Go dependencies separately licensed",
+      "license_copy_status": "bsd-attribution-and-companion-binary-license-review",
+      "platforms": [
+        "Supported Raspberry Pi devices",
+        "x86_64 PC / MBR or UEFI",
+        "Go 1.26 for inspected main branch",
+        "Linux/QEMU upstream CI"
+      ],
+      "useful_components": [
+        "supervise.go — service supervision and buffered syslog",
+        "update.go — update and boot partition handling",
+        "authenticated.go — Unix-socket fallback and HTTP Basic auth",
+        "cmd/dhcp/dhcp.go — DHCP service",
+        "cmd/ntp/ntp.go — NTP service",
+        "netlink.go — interface management",
+        "integration/mbrboot/mbrboot_test.go — MBR boot test",
+        "integration/uefiboot/uefiboot_test.go — UEFI boot test"
+      ],
+      "verification": [
+        "2026-10-27 inspected README, BSD-3-Clause LICENSE, go.mod, runtime supervision, update, authentication, integration tests and CI YAML",
+        "2026-09-16 main CI 35105853192 passed gofmt, go test -v ./..., QEMU tests and disk-image creation",
+        "2026-09-16 CI job log confirms QEMU TestMBRBoot passed (37.06s) and TestUEFIBoot passed (20.48s)",
+        "2026-10-06 feature CI 37527198802 passed; 2026-10-26 companion gokrazy/tools CI 40385840520 passed Windows/macOS/Ubuntu",
+        "No GitHub Releases entries in core; no independent physical boot, update or security testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Core main CI 35105853192 passed 2026-09-16 including QEMU boot; feature CI 37527198802 passed 2026-10-06; companion tools CI 40385840520 passed 2026-10-26 on three OSes. No tagged core release verified.",
+      "source": "GitHub-first 2026-10-27; research/2026-10-27-ocrmypdf-gokrazy.md; no transcript attribution",
+      "related_projects": [
+        "gokrazy/tools (gok image builder)",
+        "gokrazy/internal (shared device utilities)",
+        "gokrazy/kernel (prebuilt kernel)",
+        "gokrazy/firmware (Pi firmware)"
+      ],
+      "research_notes": "Core runtime and gokrazy/tools image builder are distinct. Basic-auth/Unix-socket management code inspected; deployment TLS, remote update rollback and supply-chain provenance need review. No code copied."
     }
   ],
   "deferred_or_rejected": [
