@@ -4151,7 +4151,8 @@
         "tesseract-ocr/tessdata",
         "tesseract-ocr/tessdata_fast",
         "tesseract-ocr/tessdata_best",
-        "DanBloomberg/leptonica"
+        "DanBloomberg/leptonica",
+        "paperless-ngx/paperless-ngx (downstream OCR integration via OCRmyPDF)"
       ],
       "research_notes": "OCR engine accepts raster images, not PDFs directly; PDF output supported. Model availability, input image quality and page segmentation affect accuracy. No independent OCR accuracy benchmark. Check traineddata licenses and memory ownership before code extraction."
     },
@@ -5748,6 +5749,126 @@
         "FreeCAD/FreeCAD (complementary mechanical CAD)"
       ],
       "research_notes": "Canonical development and CI at gitlab.com/kicad/code/kicad; GitHub is mirror. Official 10.0.7 changelog includes archive filename validation and DRC/zone fixes. No code copied. Follow CI, file-format fuzzing and export correctness."
+    },
+    {
+      "name": "Paperless-ngx",
+      "repository": "https://github.com/paperless-ngx/paperless-ngx",
+      "owner": "paperless-ngx",
+      "category": [
+        "self-hosting",
+        "document-management",
+        "offline-ocr",
+        "document-search",
+        "python",
+        "django"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "GPL-3.0 core; OCRmyPDF, Tesseract, Ghostscript, frontend and other dependencies have separate notices",
+      "license_copy_status": "copyleft-review-and-dependency-license-audit-before-copy",
+      "platforms": [
+        "Linux server",
+        "Docker/Compose",
+        "web browser client",
+        "amd64 and arm64 container builds"
+      ],
+      "useful_components": [
+        "src/documents/consumer.py — ingestion and document lifecycle",
+        "src/paperless/parsers/tesseract.py — OCRmyPDF/Tesseract parser integration",
+        "src/documents/classifier.py — metadata classification",
+        "src/documents/search/ — document search",
+        "src/documents/permissions.py — document access control",
+        "src/documents/tests/test_permission_filtering_security.py — authorization regression tests",
+        "src/documents/export/ — document export",
+        "docker/compose/ — self-hosted deployment templates"
+      ],
+      "verification": [
+        "2026-10-27 UTC inspected README, LICENSE, pyproject.toml, source parser, consumer, permissions tests, workflows and GitHub releases",
+        "Stable v3.3.4 released 2026-10-22; release notes describe security dependency updates for certifi, Pillow and aiohttp",
+        "2026-10-27 upstream Backend Tests run 40424424887 succeeded: Python 3.11, 3.12, 3.13, 3.14, typing and gate jobs",
+        "2026-10-27 upstream CodeQL run 40424425034 passed Python and JavaScript; Docker Build 40424424910 passed amd64, arm64 and manifest jobs",
+        "The inspected passing workflows ran on fix/14557 PR branch, not confirmed current dev head; frontend run 40424424907 succeeded but tests/build were skipped because frontend unchanged",
+        "No independent installation, OCR accuracy measurement, document-import test, or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v3.3.4 2026-10-22 security dependency release; recent 2026-10-27 PR-branch backend, CodeQL and Docker CI passed; unrelated l10n_dev workflows returned action_required, not equivalent to failing tests.",
+      "source": "GitHub-first 2026-10-26 CDT; research/2026-10-26-paperless-briar.md; YouTube playlist pages throttled, no transcript attribution",
+      "related_projects": [
+        "tesseract-ocr/tesseract (OCR engine via OCRmyPDF)",
+        "ocrmypdf/OCRmyPDF (document OCR pipeline)",
+        "paperless-ngx/builder (companion container tooling)"
+      ],
+      "research_notes": "Upstream warns that documents are stored unencrypted at rest; keep deployment on trusted host, restrict access and maintain backups. Treat OCR input and archive files as untrusted. Security-related dependency releases matter; no third-party source copied."
+    },
+    {
+      "name": "Briar Android",
+      "repository": "https://github.com/briar/briar",
+      "owner": "Briar Project (GitHub mirror; canonical code.briarproject.org/briar/briar)",
+      "category": [
+        "offline-messaging",
+        "peer-to-peer",
+        "android",
+        "bluetooth",
+        "tor",
+        "emergency-communications"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 4,
+        "maintenance": 3
+      },
+      "license": "GPL-3.0-or-later for inspected project; submodules and third-party cryptographic/Tor dependencies require individual review",
+      "license_copy_status": "copyleft-and-submodule-license-review-before-copy",
+      "platforms": [
+        "Android 5.0+ (minSdk 21)",
+        "Android SDK 35 build",
+        "Java 17 / Gradle build environment",
+        "Bluetooth, local Wi-Fi and Tor transports"
+      ],
+      "useful_components": [
+        "bramble-core/src/main/java/org/briarproject/bramble/crypto/ — message and transport crypto components",
+        "bramble-core/src/main/java/org/briarproject/bramble/sync/ — message synchronization",
+        "bramble-android/src/main/java/org/briarproject/bramble/plugin/bluetooth/ — Bluetooth transport",
+        "bramble-android/src/main/java/org/briarproject/bramble/plugin/tcp/ — LAN transport",
+        "bramble-core/src/main/java/org/briarproject/bramble/plugin/file/ — removable drive/mailbox transports",
+        "bramble-core/src/test/java/org/briarproject/bramble/sync/SyncIntegrationTest.java — sync test source",
+        "bramble-core/src/test/java/org/briarproject/bramble/mailbox/ — mailbox tests",
+        "briar-headless/ — headless component"
+      ],
+      "verification": [
+        "2026-10-27 UTC inspected GitHub mirror README, LICENSE.txt, .gitlab-ci.yml, Gradle manifests, source tree and test classes",
+        "Official briarproject.org lists Android release 1.5.22 dated 2026-10-13; mirror October 9 commit bumped version to 1.5.22 and updated Tor to 0.4.9.14",
+        "Build manifest specifies minSdk 21, targetSdk 35 and Java 17; GitLab CI defines Gradle build, checks, Android emulator and reproducibility tasks",
+        "Canonical GitLab CI pipeline success was not accessible/verified; GitHub mirror has no GitHub release objects",
+        "No independent APK build, Bluetooth/Wi-Fi/Tor messaging, mailbox sync, cryptographic audit or reproducibility check"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Official Android release 1.5.22 (2026-10-13); GitHub mirror last inspected commit 2026-10-09; canonical GitLab pipeline results not verified.",
+      "source": "GitHub-first 2026-10-26 CDT, verified against official briarproject.org release; research/2026-10-26-paperless-briar.md; no YouTube transcript attribution",
+      "related_projects": [
+        "briar/briar-mailbox (companion offline mailbox)",
+        "briar/briar-desktop (companion desktop client)",
+        "briar/onionwrapper (Tor support)",
+        "markqvist/Reticulum (conceptual off-grid alternative; no verified integration)"
+      ],
+      "research_notes": "GitHub is a mirror, canonical upstream on GitLab. Source contains tests and CI configuration, but successful runtime/CI not established: retain PROMISING. Bluetooth/Wi-Fi requires nearby peers; Tor requires internet connectivity. Privacy and threat-model claims require independent audit; no third-party code copied."
     }
   ],
   "deferred_or_rejected": [

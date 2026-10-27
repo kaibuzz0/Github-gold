@@ -1583,7 +1583,7 @@ Suggested tiers:
 - **Maintenance signals:** 2026-10-24 main commits fix Windows NSIS buffer and skip unit tests when traineddata absent; active multi-platform CI; stable 5.5.3 (2026-07-24).
 - **Verification performed:** 2026-10-24: inspected README, LICENSE, VERSION, doc/tesseract.1.asc, source/API trees, unit tests, and CI workflows; Stable GitHub release 5.5.3 published 2026-07-24; VERSION matches; 2026-10-24 upstream Linux autotools CI 40128395434 passed 4/4; macOS autotools 40127924448 and Windows msys2 40114227579 succeeded; Upstream CMake CI 40025480669 passed 8/8; sanitizer unit tests 40042891468 passed 2/2; CodeQL 40091625811 succeeded; CI invokes sample OCR and make check; no independent build, OCR accuracy test or security audit.
 - **Source discovery:** GitHub-first; no YouTube attribution.
-- **Related projects:** `tesseract-ocr/tessdata`; `tesseract-ocr/tessdata_fast`; `tesseract-ocr/tessdata_best`; `DanBloomberg/leptonica`.
+- **Related projects:** `tesseract-ocr/tessdata`; `tesseract-ocr/tessdata_fast`; `tesseract-ocr/tessdata_best`; `DanBloomberg/leptonica`; `paperless-ngx/paperless-ngx` (downstream Tesseract/OCRmyPDF integration; source inspected 2026-10-27).
 - **Caveats / risks:** Untrusted-image parsing, model licensing, image quality and C API memory ownership require review; upstream CI does not prove accuracy or safety.
 - **Research notes:** research/2026-10-24-tesseract-openscad-promotion.md. OCR engine accepts raster images, not PDFs directly; PDF output supported. Model availability, input image quality and page segmentation affect accuracy. No independent OCR accuracy benchmark. Check traineddata licenses and memory ownership before code extraction.
 
@@ -2140,6 +2140,46 @@ Suggested tiers:
 - **Caveats / risks:** GitHub is a mirror, upstream contributions on GitLab. Untrusted design/archive files, plugin behavior and engineering output require review.
 - **Research notes:** `research/2026-10-26-joplin-kicad-maintenance.md`. No code copied.
 
+
+### Paperless-ngx
+
+- **Repository:** https://github.com/paperless-ngx/paperless-ngx
+- **Author / Org:** paperless-ngx
+- **Category:** Self-hosted document management / OCR / search / archiving / Django
+- **Evidence:** VERIFIED (upstream release, source and CI; no independent deployment)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Imports, OCR-processes, classifies and indexes documents into a searchable self-hosted archive.
+- **Why it is valuable:** Practical ingestion, OCR, classification, document permissions, workflows and export architecture with real multi-platform container builds.
+- **Useful code/components:** `src/documents/consumer.py` (ingestion); `src/paperless/parsers/tesseract.py` (OCRmyPDF/Tesseract); `src/documents/classifier.py`; `src/documents/search/`; `src/documents/permissions.py`; `src/documents/tests/test_permission_filtering_security.py`; `src/documents/export/`; `docker/compose/`.
+- **Install / runtime:** Docker Compose recommended; Python >=3.11 for source builds, Django/Celery, database/Redis and OCR/PDF dependencies. Browser client.
+- **Platforms:** Linux self-hosting; amd64/arm64 container builds; modern web browsers.
+- **License:** GPL-3.0 root; separate OCRmyPDF/Tesseract/Ghostscript and other dependency notices. No source copied.
+- **Maintenance signals:** Stable [v3.3.4](https://github.com/paperless-ngx/paperless-ngx/releases/tag/v3.3.4) (2026-10-22) addresses certifi/Pillow/aiohttp-related dependency security issues. 2026-10-27 UTC upstream [Backend Tests 40424424887](https://github.com/paperless-ngx/paperless-ngx/actions/runs/40424424887) passed Python 3.11–3.14; [CodeQL 40424425034](https://github.com/paperless-ngx/paperless-ngx/actions/runs/40424425034) passed JS/Python; [Docker Build 40424424910](https://github.com/paperless-ngx/paperless-ngx/actions/runs/40424424910) passed amd64/arm64/manifest. These passing runs were on `fix/14557`, not a confirmed current `dev` head.
+- **Verification performed:** Inspected README, root license, Python manifest, ingestion/OCR/permission source, regression test source, release and upstream job conclusions. Frontend workflow succeeded but its frontend test/build jobs were skipped due to no frontend changes. No independent OCR, install, backup/restore or security tests.
+- **Source discovery:** GitHub-first 2026-10-26 CDT; no YouTube transcript attribution.
+- **Related projects:** Tesseract OCR and OCRmyPDF (OCR dependencies); paperless-ngx/builder.
+- **Caveats / risks:** Upstream warns document contents are stored in clear text at rest; do not host on untrusted infrastructure. Secure access, backups, untrusted document parsing and third-party licenses need review.
+- **Research notes:** `research/2026-10-26-paperless-briar.md`. No third-party code copied.
+
+### Briar Android
+
+- **Repository:** https://github.com/briar/briar
+- **Author / Org:** Briar Project; canonical https://code.briarproject.org/briar/briar (GitHub mirror)
+- **Category:** Offline messaging / Android / Bluetooth / Wi-Fi / Tor / emergency communications
+- **Evidence:** PROMISING (official release and source/test structure; passing CI and runtime not independently confirmed)
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 3)
+- **What it does:** Peer-to-peer encrypted messaging and synchronization over nearby Bluetooth/Wi-Fi, or Tor when internet is available.
+- **Why it is valuable:** Modular offline-first message synchronization, cryptographic transport, Android radio adapters, mailbox and headless integration.
+- **Useful code/components:** `bramble-core/src/main/java/org/briarproject/bramble/crypto/`, `bramble-core/src/main/java/org/briarproject/bramble/sync/`, `bramble-android/src/main/java/org/briarproject/bramble/plugin/bluetooth/`, `bramble-android/src/main/java/org/briarproject/bramble/plugin/tcp/`, `bramble-core/src/main/java/org/briarproject/bramble/plugin/file/`, `bramble-core/src/test/java/org/briarproject/bramble/sync/SyncIntegrationTest.java`, `bramble-core/src/test/java/org/briarproject/bramble/mailbox/`, `briar-headless/`.
+- **Install / runtime:** Official Android app/APK; source uses Gradle, Java 17, Android SDK 35; minSdk 21 (Android 5.0). Bluetooth/Wi-Fi or Tor networking as available.
+- **Platforms:** Android 5.0+; Java/Gradle headless components.
+- **License:** GPL-3.0-or-later in inspected `LICENSE.txt`; submodules and third-party Tor/crypto dependencies require separate license review. No source copied.
+- **Maintenance signals:** Official [Briar 1.5.22](https://www.briarproject.org/) dated 2026-10-13; October 9 GitHub mirror commit updated version and Tor 0.4.9.14. `.gitlab-ci.yml` specifies Gradle, emulator and reproducibility jobs, but no passing canonical GitLab pipeline was inspected. GitHub mirror has no release objects.
+- **Verification performed:** Inspected README, license, Gradle Android build configuration, cryptographic/transport/sync source paths and test suite; official release page. No independent APK build, Bluetooth/Wi-Fi/Tor message delivery, reproducible build or security audit.
+- **Source discovery:** GitHub-first 2026-10-26 CDT, checked against official Briar site; no YouTube transcript attribution.
+- **Related projects:** briar/briar-mailbox, briar/briar-desktop, briar/onionwrapper; Reticulum is a conceptual off-grid alternative, not a proven integration.
+- **Caveats / risks:** GitHub is a mirror; verify canonical GitLab CI and release signatures. Bluetooth/Wi-Fi needs nearby peers; Tor needs internet. Do not infer independently audited encryption from source names.
+- **Research notes:** `research/2026-10-26-paperless-briar.md`. No third-party code copied.
 
 ## Entry format
 
