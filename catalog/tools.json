@@ -1131,7 +1131,10 @@
       "research_priority": "high",
       "source_discovery": "GitHub-first discovery; research/2026-08-20-local-ai-crdt.md",
       "caveats": "MIT source licensing is permissive, but model weights and third-party dependencies/backends may have separate terms.",
-      "related_projects": ["ggml-org/ggml","ggml-org/llama.cpp (shared ggml, talk-llama example)"]
+      "related_projects": [
+        "ggml-org/ggml",
+        "ggml-org/llama.cpp (shared ggml, talk-llama example)"
+      ]
     },
     {
       "name": "Loro",
@@ -1676,7 +1679,11 @@
       "research_priority": "high",
       "copy_restriction_note": "Nushell semantics differ materially from POSIX shells and some commands/design details may evolve. Plugins, packages, integrations, and separately maintained ecosystem repositories require independent license checks.",
       "source": "GitHub-first discovery; research/2026-08-22-structured-shell.md",
-      "related_projects": ["nushell/reedline","nushell/nushell.github.io","jqlang/jq (complementary JSON CLI; no integration asserted)"]
+      "related_projects": [
+        "nushell/reedline",
+        "nushell/nushell.github.io",
+        "jqlang/jq (complementary JSON CLI; no integration asserted)"
+      ]
     },
     {
       "name": "Reedline",
@@ -4659,11 +4666,12 @@
         "Workflow uses Node lts/hydrogen (18) despite engine >=24.14.1; root cause unconfirmed",
         "No independent install, browser or telemetry tests",
         "2026-10-26 UTC scheduled e2e-full run 40250211098 failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 also failed. No passing full e2e test established; cause not newly verified.",
-        "2026-10-26 inspected upstream e2e-full 40250211098 Ubuntu job 121340243471 logs: npm ci failed EBADENGINE; required Node >=24.14.1, actual v18.20.8/npm 10.8.2. Confirms install failure cause, no Playwright e2e executed."
+        "2026-10-26 inspected upstream e2e-full 40250211098 Ubuntu job 121340243471 logs: npm ci failed EBADENGINE; required Node >=24.14.1, actual v18.20.8/npm 10.8.2. Confirms install failure cause, no Playwright e2e executed.",
+        "2026-10-27 UTC e2e-full 40427389616 Ubuntu failed at npm ci, Windows cancelled; e2e-perf 40424992380 failed at npm ci; no Playwright execution confirmed"
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "maintenance_signals": "Stable v4.3.1 (2026-08-31). 2026-10-26 e2e-full 40250211098 failed Ubuntu npm ci EBADENGINE (Node v18.20.8 vs required >=24.14.1); Windows cancelled. e2e-perf 40248391927 and pr-platform 40247907640 also failed; causes not established.",
+      "maintenance_signals": "Stable v4.3.1 (2026-08-31). 2026-10-26 e2e-full 40250211098 failed Ubuntu npm ci EBADENGINE (Node v18.20.8 vs required >=24.14.1); Windows cancelled. e2e-perf 40248391927 and pr-platform 40247907640 also failed; causes not established. 2026-10-27 UTC e2e-full 40427389616 and e2e-perf 40424992380 failed at npm ci.",
       "source": "GitHub-first; research/2026-10-25-ghidra-openmct.md",
       "related_projects": [
         "nasa/openmct-tutorial",
@@ -4671,7 +4679,7 @@
         "akhenry/openmct-yamcs",
         "open-telemetry/opentelemetry-collector (conceptual only)"
       ],
-      "research_notes": "PROMISING until e2e execution confirmed. LICENSES.md referenced in source but not found at root. Investigate CI Node mismatch, WebSocket reconnect and CouchDB security. No code copied. 2026-10-26 UTC maintenance recheck: e2e-full, e2e-perf and pr-platform still failing; preserve PROMISING/25 pending diagnosed root cause and passing end-to-end run. 2026-10-26 job log confirms Node engine mismatch as Ubuntu e2e-full npm ci failure cause. Update CI Node to >=24.14.1 and rerun e2e before promotion."
+      "research_notes": "PROMISING until e2e execution confirmed. LICENSES.md referenced in source but not found at root. Investigate CI Node mismatch, WebSocket reconnect and CouchDB security. No code copied. 2026-10-26 UTC maintenance recheck: e2e-full, e2e-perf and pr-platform still failing; preserve PROMISING/25 pending diagnosed root cause and passing end-to-end run. 2026-10-26 job log confirms Node engine mismatch as Ubuntu e2e-full npm ci failure cause. Update CI Node to >=24.14.1 and rerun e2e before promotion. New 2026-10-27 CI failures remain at install; prior Node engine mismatch confirmed 2026-10-26, latest failure logs not analyzed for exact cause."
     },
     {
       "name": "Zigbee2MQTT",
@@ -5624,6 +5632,122 @@
         "nushell/nushell (complementary JSON CLI; no direct integration)"
       ],
       "research_notes": "jq-1.8.2 release addresses parser, memory safety, path-depth and DoS CVEs. Check deployed version for untrusted JSON. No source copied."
+    },
+    {
+      "name": "Joplin",
+      "repository": "https://github.com/laurent22/joplin",
+      "owner": "laurent22 / Joplin SAS",
+      "category": [
+        "offline-first",
+        "notes",
+        "encrypted-sync",
+        "productivity",
+        "markdown",
+        "cli"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "AGPL-3.0-or-later default; packages/server/LICENSE.md separately Joplin Server Personal Use License; logos/icons all rights reserved",
+      "license_copy_status": "review-per-directory-license-server-restricted-no-logo-reuse",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Android",
+        "iOS",
+        "CLI"
+      ],
+      "useful_components": [
+        "packages/lib/services/synchronizer/ — synchronization and conflict/E2EE tests",
+        "packages/lib/services/e2ee/EncryptionService.ts and crypto.ts",
+        "packages/lib/services/interop/ — Markdown/ENEX/Obsidian/OneNote/JEX import-export",
+        "packages/lib/services/search/SearchEngine.ts",
+        "packages/app-cli/ terminal client",
+        "packages/app-mobile/ React Native mobile client"
+      ],
+      "verification": [
+        "2026-10-26 README, root and server licenses, sync/E2EE/interop/search source and tests inspected",
+        "Stable v3.7.21 released 2026-09-25",
+        "2026-10-26 upstream CI 40406257789 passed 7/7 jobs",
+        "2026-10-27 UTC UI 40423856061 passed 3/3 and Android APK 40423856058 passed",
+        "2026-10-27 UTC later CI 40423856055 failed macOS Intel packages/utils/ipc.test.ts:67 (expected pong; received []); 4 other jobs passed, 2 cancelled",
+        "No independent installation, E2EE validation, sync or security testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 3.7.21 2026-09-25; upstream CI 40406257789 passed; subsequent 40423856055 macOS IPC assertion failed while UI and Android jobs passed; cause unknown",
+      "source": "GitHub-first 2026-10-26; research/2026-10-26-joplin-kicad-maintenance.md; playlist fetch throttled",
+      "related_projects": [
+        "syncthing/syncthing (conceptual sync comparison)",
+        "restic/restic (complementary backup)"
+      ],
+      "research_notes": "Server personal-use license overrides AGPL root for packages/server. Logos/icons reserved. Follow IPC test, plugin permissions, MCP/API exposure, sync conflict handling. No code copied."
+    },
+    {
+      "name": "KiCad Source Mirror",
+      "repository": "https://github.com/KiCad/kicad-source-mirror",
+      "owner": "KiCad Development Team",
+      "category": [
+        "eda",
+        "electronics",
+        "pcb-design",
+        "schematic-capture",
+        "gerber",
+        "hardware-design"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 3
+      },
+      "license": "Majority GPL-3.0-or-later per LICENSE.README; thirdparty and selected geometry/math files have MIT/BSD/Apache/Boost/ISC licenses",
+      "license_copy_status": "file-by-file-copyleft-and-third-party-review",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "useful_components": [
+        "eeschema/connection_graph.cpp schematic connectivity",
+        "eeschema/erc/ electrical rule checking",
+        "pcbnew/board.cpp and board_loader.cpp PCB model",
+        "pcbnew/autorouter/ footprint placement components",
+        "api/proto/board and api/proto/schematic API schemas",
+        "qa/tests/pcbnew and qa/tests/eeschema regression tests",
+        "gerbview/ Gerber viewer"
+      ],
+      "verification": [
+        "2026-10-26 inspected README, LICENSE, LICENSE.README, source, QA, API, .gitlab-ci.yml",
+        "Official KiCad 10.0.7 announced 2026-10-07; GitHub release artifacts published 2026-10-16",
+        "GitHub mirror tracks canonical GitLab upstream; GitHub PRs not accepted",
+        "GitLab CI configuration has build/test stages and Linux/Windows/macOS includes; passing application CI run not inspected",
+        "GitHub Actions only dependency/redirect tasks, not application build CI",
+        "No independent EDA build, DRC, export, schematic simulation or hardware test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 10.0.7 released October 2026; 10.0.8 RC1 announced 2026-10-22; GitLab CI outcomes unverified",
+      "source": "GitHub-first and official KiCad release notes 2026-10-26; research/2026-10-26-joplin-kicad-maintenance.md; no transcript attribution",
+      "related_projects": [
+        "LibrePCB/LibrePCB (alternative EDA)",
+        "FreeCAD/FreeCAD (complementary mechanical CAD)"
+      ],
+      "research_notes": "Canonical development and CI at gitlab.com/kicad/code/kicad; GitHub is mirror. Official 10.0.7 changelog includes archive filename validation and DRC/zone fixes. No code copied. Follow CI, file-format fuzzing and export correctness."
     }
   ],
   "deferred_or_rejected": [

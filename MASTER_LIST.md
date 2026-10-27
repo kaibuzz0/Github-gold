@@ -1767,7 +1767,7 @@ Suggested tiers:
 - **Source discovery:** GitHub-first; no YouTube attribution.
 - **Related projects:** `nasa/openmct-tutorial`, `nasa/openmct-map`, `akhenry/openmct-yamcs`; OpenTelemetry Collector is a conceptual neighbor, not confirmed integration.
 - **Caveats / risks:** No passing current full e2e execution verified. Review plugin input sanitization, WebSocket reconnection, CouchDB permissions and packaged licenses.
-- **Research notes:** `research/2026-10-25-ghidra-openmct.md`. Rechecked 2026-10-26 UTC: three scheduled workflows remain failed. Node mismatch confirmed by Ubuntu `EBADENGINE` log as the e2e-full `npm ci` cause. Keep PROMISING/25; update CI Node >=24.14.1 and require passing Playwright e2e before promotion.
+- **Research notes:** `research/2026-10-25-ghidra-openmct.md`. 2026-10-27 UTC: [e2e-full 40427389616](https://github.com/nasa/openmct/actions/runs/40427389616) failed Ubuntu `npm ci` (Windows cancelled); [e2e-perf 40424992380](https://github.com/nasa/openmct/actions/runs/40424992380) failed at `npm ci`. Previous Node mismatch confirmed, latest exact failure cause not independently checked. Rechecked 2026-10-26 UTC: three scheduled workflows remain failed. Node mismatch confirmed by Ubuntu `EBADENGINE` log as the e2e-full `npm ci` cause. Keep PROMISING/25; update CI Node >=24.14.1 and require passing Playwright e2e before promotion.
 
 ### Zigbee2MQTT
 
@@ -2098,6 +2098,48 @@ Suggested tiers:
 - **Related projects:** nushell/nushell (complementary structured-data shell, not direct integration).
 - **Caveats / risks:** jq-1.8.2 addresses multiple parser/memory-safety, path-depth and DoS CVEs. Patch deployments processing untrusted JSON. Bundled components have additional licenses.
 - **Research notes:** Follow parser fuzzing, deep-input limits, regex engine configuration and embedded libjq use. No code copied.
+
+
+### Joplin
+
+- **Repository:** https://github.com/laurent22/joplin
+- **Author / Org:** Laurent Cozic / Joplin SAS
+- **Category:** Offline-first Markdown notes / encrypted sync / productivity / CLI
+- **Evidence:** VERIFIED (upstream CI; no independent runtime execution)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Offline-first Markdown notes and tasks with cross-platform sync, E2EE, search, import/export and plugins.
+- **Why it is valuable:** Reusable sync/conflict handling, encrypted content, indexing, import/export, mobile and CLI components.
+- **Useful code/components:** `packages/lib/services/synchronizer/` (including E2EE/conflict tests), `packages/lib/services/e2ee/EncryptionService.ts`, `packages/lib/services/interop/`, `packages/lib/services/search/SearchEngine.ts`, `packages/app-cli/`, `packages/app-mobile/`.
+- **Install / runtime:** Official desktop/mobile packages; development uses Node/Yarn monorepo and native mobile toolchains.
+- **Platforms:** Linux, Windows, macOS, Android, iOS, CLI.
+- **License:** Root AGPL-3.0-or-later **except overrides**; `packages/server/LICENSE.md` is separate Joplin Server Personal Use License; branding assets reserved.
+- **Maintenance signals:** Stable [v3.7.21](https://github.com/laurent22/joplin/releases/tag/v3.7.21) 2026-09-25. [CI 40406257789](https://github.com/laurent22/joplin/actions/runs/40406257789) passed 7/7 jobs 2026-10-26; [UI tests 40423856061](https://github.com/laurent22/joplin/actions/runs/40423856061) passed 3/3 and [Android build 40423856058](https://github.com/laurent22/joplin/actions/runs/40423856058) passed 2026-10-27 UTC. Later [CI 40423856055](https://github.com/laurent22/joplin/actions/runs/40423856055) failed macOS Intel `packages/utils/ipc.test.ts:67` (expected pong, received no response), with 4 other jobs passed and 2 cancelled.
+- **Verification performed:** README, root/server licenses, source and tests, release and upstream job logs inspected. No independent sync, E2EE, Android runtime or security audit.
+- **Source discovery:** GitHub-first 2026-10-26; no YouTube transcript attribution.
+- **Related projects:** Syncthing and restic (conceptual/complementary, not proven integrations).
+- **Caveats / risks:** Server license differs from root; branding restricted; plugin trust and MCP/API exposure require review; intermittent macOS IPC test failure.
+- **Research notes:** `research/2026-10-26-joplin-kicad-maintenance.md`. No third-party code copied.
+
+### KiCad Source Mirror
+
+- **Repository:** https://github.com/KiCad/kicad-source-mirror
+- **Author / Org:** KiCad Development Team; canonical upstream https://gitlab.com/kicad/code/kicad
+- **Category:** Electronics EDA / schematic capture / PCB layout / Gerber / hardware design
+- **Evidence:** PROMISING (official release, source and test infrastructure; passing application CI not inspected)
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 3)
+- **What it does:** Cross-platform schematic and PCB design with connectivity/ERC, DRC, Gerber viewing and automation APIs.
+- **Why it is valuable:** Reusable EDA connectivity, layout, geometry, file-format and test infrastructure.
+- **Useful code/components:** `eeschema/connection_graph.cpp`, `eeschema/erc/`, `pcbnew/board.cpp`, `pcbnew/board_loader.cpp`, `pcbnew/autorouter/` (placement, not complete general autorouter), `api/proto/board/`, `api/proto/schematic/`, `qa/tests/pcbnew/`, `gerbview/`.
+- **Install / runtime:** Official packages; source build uses CMake/C++/wxWidgets and native dependencies.
+- **Platforms:** Linux, Windows, macOS.
+- **License:** Majority GPL-3.0-or-later per `LICENSE.README`; third-party portions MIT/BSD/Apache/Boost/ISC; file-by-file review required.
+- **Maintenance signals:** Official [10.0.7 release announcement](https://www.kicad.org/blog/2026/10/KiCad-10.0.7-Release/) 2026-10-07; GitHub artifacts 2026-10-16; 10.0.8 RC1 announced 2026-10-22. `.gitlab-ci.yml` defines build/test pipelines but passing GitLab run not checked; mirror GitHub Actions are not application CI.
+- **Verification performed:** README, licensing, source/API/QA trees, build configuration and official release inspected. No independent build, DRC, Gerber export or fabrication.
+- **Source discovery:** GitHub-first and official KiCad release notes; no YouTube attribution.
+- **Related projects:** LibrePCB (alternative), FreeCAD (complementary; no tested interoperability).
+- **Caveats / risks:** GitHub is a mirror, upstream contributions on GitLab. Untrusted design/archive files, plugin behavior and engineering output require review.
+- **Research notes:** `research/2026-10-26-joplin-kicad-maintenance.md`. No code copied.
+
 
 ## Entry format
 
