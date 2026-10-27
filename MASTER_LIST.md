@@ -201,7 +201,7 @@ Suggested tiers:
 - **Maintenance signals:** 3.8.0 (2026-08-13); main CI 39216346633 succeeded 5/5 cross-platform jobs (2026-10-19). Version 3.8.0 improved zimcheck link/metadata validation, zimsplit sizing and zimwriterfs URL parsing.
 - **Verification performed:** 2026-10-21 inspected README, license, source/build layout, release metadata and upstream CI. GPL-3.0-or-later and third-party dependencies need license review; no independent archive build/validation.
 - **Source discovery:** Independent offline-knowledge/archival pass.
-- **Related projects:** openzim/libzim; Kiwix readers; kiwix/kiwix-android; kiwix/kiwix-desktop; kiwix/kiwix-js.
+- **Related projects:** openzim/libzim; Kiwix readers; kiwix/kiwix-android; kiwix/kiwix-desktop; kiwix/kiwix-js; kiwix/kiwix-tools (offline search/serve/manage).
 - **Caveats / risks:** GPL copyleft obligations apply to covered reused code; `zimwriterfs` has multiple third-party dependencies that require separate license review.
 - **Research notes:** research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md. GPL-3.0-or-later and third-party dependencies need license review; no independent archive build/validation.
 
@@ -1357,7 +1357,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable release 9.8.2 published 2026-08-13; 2026-10-19 merged random-entry off-by-one fix. Upstream main CI 39279529888 passed all 23 jobs on 2026-10-19; cross-compilation does not imply on-device runtime testing.
 - **Verification performed:** Inspected README, root license declaration, Meson configuration, public headers, recent commits, release and upstream CI job outcomes. No independent parsing, writing, search, fuzz or performance tests.
 - **Source discovery:** GitHub-first recursive research from existing `openzim/zim-tools`; `research/2026-09-13-libzim-zim-offline-archive-library.md`.
-- **Related projects:** openzim/zim-tools, openzim/zim-testing-suite, Kiwix readers.; `kiwix/java-libkiwix` (Android JNI binding).
+- **Related projects:** openzim/zim-tools, openzim/zim-testing-suite, Kiwix readers; `kiwix/java-libkiwix` (Android JNI binding); `kiwix/kiwix-tools` (offline ZIM search/serve/manage).
 - **Caveats / risks:** GPL copyleft affects embedding; optional Xapian changes available APIs; hostile ZIM files may present parser/decompression/resource-exhaustion risks requiring further testing.
 - **Research notes:** `research/2026-10-23-nvda-libzim-promotion.md`. No third-party code copied.
 
@@ -2261,6 +2261,46 @@ Suggested tiers:
 - **Related projects:** immich-app/devtools, PostgreSQL, FFmpeg; no claimed direct integration.
 - **Caveats / risks:** AGPL-3.0 network copyleft; third-party/model rights. Official 3-2-1 backup warning; database-only backup does not preserve media. Face/location privacy and public sharing need scrutiny.
 - **Research notes:** `research/2026-10-27-ytdlp-immich.md`.
+
+### libarchive
+
+- **Repository:** https://github.com/libarchive/libarchive
+- **Author / Org:** libarchive
+- **Category:** archival / c-library / compression / format-parsing / cli-tools
+- **Evidence:** VERIFIED (upstream CI and source inspection; no independent execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Portable C archive reader/writer and implementations of bsdtar, bsdcpio, bsdcat and bsdunzip.
+- **Why it is valuable:** Embeddable archive parsing, streaming compression, metadata handling and multi-format interoperability.
+- **Useful code/components:** `libarchive/archive_read_support_format_zip.c — ZIP reader`; `libarchive/archive_read_support_format_7zip.c — 7z reader`; `libarchive/archive_read_support_format_tar.c — tar reader`; `libarchive/archive_read_support_filter_zstd.c — Zstandard filter`; `libarchive/archive_entry.c — entry metadata`; `examples/minitar/minitar.c — embedding example`; `tar/ — bsdtar`; `unzip/ — bsdunzip`; `libarchive/test/ — regression fixtures`.
+- **Install / runtime:** CMake or Autotools C build; compression and crypto dependencies vary by configuration.
+- **Platforms:** Linux, Windows, macOS, FreeBSD, Alpine Linux.
+- **License:** Permissive two-clause BSD-style notice for most source; UC Regents, public-domain, BLAKE2 and build-script exceptions. No third-party source copied.
+- **Maintenance signals:** [v3.8.10](https://github.com/libarchive/libarchive/releases/tag/v3.8.10) released 2026-10-14; [CI](https://github.com/libarchive/libarchive/actions/runs/40530777935) 20/20 passed 2026-10-27; [CodeQL](https://github.com/libarchive/libarchive/actions/runs/40530777979) passed.
+- **Verification performed:** 2026-10-27 inspected README, COPYING, SECURITY.md, source, examples, test tree and CI workflow; Stable v3.8.10 released 2026-10-14; 2026-10-27 master CI 40530777935 passed 20/20 jobs with build/test stages on Ubuntu, Alpine, Windows, FreeBSD and macOS; 2026-10-27 master CodeQL 40530777979 passed; PR CIFuzz workflow exists; No independent compilation, extraction, fuzzing or security audit.
+- **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript attribution.
+- **Related projects:** bsdtar, bsdcpio, bsdcat, bsdunzip (same repository).
+- **Caveats / risks:** Individual source-file license headers govern reuse. Malformed archives, traversal, symlinks and decompression bombs require deployment safeguards; no code copied.
+- **Research notes:** `research/2026-10-27-libarchive-kiwix-tools.md`.
+
+### Kiwix Tools
+
+- **Repository:** https://github.com/kiwix/kiwix-tools
+- **Author / Org:** kiwix
+- **Category:** offline-knowledge / zim-format / http-server / search / cli-tools
+- **Evidence:** VERIFIED (upstream CI and source inspection; no independent execution)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Provides offline ZIM HTTP serving (kiwix-serve), full-text search (kiwix-search) and library management (kiwix-manage).
+- **Why it is valuable:** Completes the existing offline ZIM ecosystem with practical search and local multi-device HTTP access.
+- **Useful code/components:** `src/server/kiwix-serve.cpp — offline ZIM HTTP serving, bind controls`; `src/searcher/kiwix-search.cpp — full-text search and suggestions`; `src/manager/kiwix-manage.cpp — ZIM library XML/OPDS catalog`; `meson.build — dependency constraints and C++17 build`; `docker/ — container packaging`.
+- **Install / runtime:** Meson/Ninja C++17; libzim >=9,<10, libkiwix >=14.2,<15, docopt; official Docker image.
+- **Platforms:** Linux x86_64 dynamic/static, Windows x64, POSIX, Docker.
+- **License:** GPL-3.0-or-later per source headers; root COPYING GPLv3; dependencies separate. No third-party source copied.
+- **Maintenance signals:** [3.8.2](https://github.com/kiwix/kiwix-tools/releases/tag/3.8.2) released 2026-03-02; [CI](https://github.com/kiwix/kiwix-tools/actions/runs/36844685289) 3/3 passed 2026-10-01 (Linux builds, Windows build/tests).
+- **Verification performed:** 2026-10-27 inspected README, COPYING, C++ server/searcher/manager source, Meson manifest and CI workflow; Stable 3.8.2 released 2026-03-02; 2026-10-01 main CI 36844685289 passed 3/3 jobs: Linux dynamic/static compile and Windows compile plus Meson tests; 2026-10-26 scheduled 40272845437 passed only Actions analysis, not a runtime test; No independent HTTP serving, ZIM search, LAN security or Docker deployment.
+- **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript attribution.
+- **Related projects:** kiwix/libkiwix (direct dependency); openzim/libzim (direct dependency); openzim/zim-tools (complementary); kiwix/kiwix-android (separate client); kiwix/kiwix-build (build support).
+- **Caveats / risks:** Meson/Ninja C++17, libzim >=9,<10, libkiwix >=14.2,<15, docopt. kiwix-serve defaults to all network interfaces on HTTP port 80; restrict exposure. No source copied.
+- **Research notes:** `research/2026-10-27-libarchive-kiwix-tools.md`.
 
 ## Entry format
 

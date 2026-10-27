@@ -52,3 +52,7 @@ Exact-ID web searches for all six seed playlist identifiers returned no indexed 
 ## Access check — 2026-10-27
 
 Direct requests to seed playlists `PLMI6SBmd587c` and `PLfidXW0BixTc` were throttled; exact-ID searches returned no indexed transcripts. Neither discovery was attributed to video evidence. The other four playlists were not revisited in this batch.
+
+## Access check — 2026-10-27 (additional seed IDs)
+
+Exact-ID searches for `PLIzKw1zY_ruBUkaijwskxrfApmK_sKPvO` and `PLPKYjlUn3Lxl-XOQ0P0FpIgDZit2rYlE3` returned no indexed playlist or transcript material. No direct viewing or subtitle extraction occurred, and no discoveries were attributed to these playlists.

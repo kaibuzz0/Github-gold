@@ -435,7 +435,10 @@
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "research_notes": "research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md"
+      "research_notes": "research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md",
+      "related_projects": [
+        "kiwix/kiwix-tools — offline ZIM search, serving and library management"
+      ]
     },
     {
       "name": "ntfy",
@@ -2466,7 +2469,9 @@
       "research_priority": "high",
       "copy_restriction_note": "No source copied. External browsers, yt-dlp, wget, plugins and captured content have separate licenses/rights; untrusted replay and cookies require isolation.",
       "source": "GitHub-first; research/2026-09-02-archivebox-self-hosted-web-preservation-runtime.md; 2026-10-20 release correction",
-      "related_projects": ["yt-dlp/yt-dlp — upstream optional media downloader; integration not independently tested"]
+      "related_projects": [
+        "yt-dlp/yt-dlp — upstream optional media downloader; integration not independently tested"
+      ]
     },
     {
       "name": "abx-dl",
@@ -3485,7 +3490,8 @@
         "kiwix/kiwix-build",
         "Kiwix readers",
         "kiwix/kiwix-android",
-        "kiwix/java-libkiwix"
+        "kiwix/java-libkiwix",
+        "kiwix/kiwix-tools — offline ZIM search, serving and library management"
       ],
       "research_notes": "research/2026-10-23-nvda-libzim-promotion.md; Meson/Ninja C++17 build with liblzma, ICU, Zstd and optional Xapian; disabling Xapian removes search APIs. Some upstream tests can require substantial memory. Review parser resource exhaustion and GPL obligations before embedding."
     },
@@ -5993,8 +5999,240 @@
       ],
       "research_notes": "Core runtime and gokrazy/tools image builder are distinct. Basic-auth/Unix-socket management code inspected; deployment TLS, remote update rollback and supply-chain provenance need review. No code copied."
     },
-    {"name":"yt-dlp","repository":"https://github.com/yt-dlp/yt-dlp","owner":"yt-dlp","category":["media-archiving","python-cli","metadata-extraction","subtitles","offline-preservation"],"evidence":"VERIFIED","tier":"S","score":29,"score_breakdown":{"utility":5,"working_evidence":5,"reusability":5,"novelty":4,"documentation":5,"maintenance":5},"license":"Unlicense root; optional dependencies and media have independent rights","license_copy_status":"root-unlicense-review-dependencies-and-content-rights","platforms":["Linux","Windows","macOS","Python >=3.11","Android/Termux with compatible tools"],"useful_components":["yt_dlp/extractor/common.py — extractor/metadata base","yt_dlp/downloader/http.py — HTTP range, resume, retry","yt_dlp/networking/ — request handlers","yt_dlp/plugins.py — plugin discovery","yt_dlp/YoutubeDL.py — embeddable API/orchestration","yt_dlp/postprocessor/ — media transforms","test/ — tests"],"verification":["2026-10-27 inspected README, LICENSE, pyproject.toml, extractor, downloader, plugin and orchestration source","Stable 2026.10.26 released 2026-10-26 22:25 UTC","2026-10-26 upstream Core Tests 40404432725: 13/13 jobs passed Linux/Windows Python 3.11–3.15/PyPy","Quick Test 40404432887: 2/2 jobs passed; CodeQL 40404432831 passed","Later Core Tests 40409938717 skipped; not a passing run","No independent download, subtitle extraction, installation or security test"],"hardware_tested_by_github_gold":false,"research_priority":"high","maintenance_signals":"Stable release 2026.10.26; multi-version core tests and CodeQL passed 2026-10-26","source":"GitHub-first 2026-10-27; research/2026-10-27-ytdlp-immich.md; no playlist transcript evidence","related_projects":["ArchiveBox/ArchiveBox (external downloader)","ArchiveBox/abx-dl (capture orchestration)","FFmpeg (optional postprocessing)"],"research_notes":"Authorized archiving only; respect rights and terms. Plugins execute code and auth cookies are sensitive. No code copied."},
-    {"name":"Immich","repository":"https://github.com/immich-app/immich","owner":"immich-app","category":["self-hosting","photo-video-archiving","mobile-backup","local-machine-learning","media-management"],"evidence":"PROMISING","tier":"A","score":25,"score_breakdown":{"utility":5,"working_evidence":3,"reusability":5,"novelty":3,"documentation":5,"maintenance":4},"license":"AGPL-3.0 root; ML models, assets and dependencies separately licensed","license_copy_status":"agpl-copyleft-and-third-party-review-before-copy","platforms":["Linux/Docker server","web browsers","Android","iOS","PostgreSQL/Redis","Python ML service"],"useful_components":["server/src/services/asset.service.ts — asset permissions/lifecycle","server/src/services/duplicate.service.ts — duplicate resolution","server/src/services/database-backup.service.ts — scheduled database backup","server/src/services/search.service.ts — search","machine-learning/immich_ml/pipeline.py — CLIP, face and OCR pipeline","server/src/services/*.spec.ts — unit tests","mobile/ — mobile client"],"verification":["2026-10-27 inspected README, AGPL license, server manifest, asset/duplicate/backup/ML source and tests","Stable v3.3.5 released 2026-10-21","2026-10-27 main CodeQL 40492780574 and static analysis 40492780708 passed","Test workflow 40492780438 failed overall: server test/lint passed; SQL and e2e failed GHCR image-pull toomanyrequests; medium tests lacked postgres image","Mobile workflow 40492780707 gate passed but Android/iOS build-and-sign jobs skipped","No independent deployment, mobile upload, ML inference, database restore or e2e tests"],"hardware_tested_by_github_gold":false,"research_priority":"high","maintenance_signals":"2026-10-21 stable v3.3.5; 2026-10-27 server unit/lint, CodeQL and static analysis passed; full e2e blocked by registry throttling","source":"GitHub-first 2026-10-27; research/2026-10-27-ytdlp-immich.md; no playlist transcript evidence","related_projects":["immich-app/devtools (CI)","PostgreSQL","FFmpeg"],"research_notes":"PROMISING pending clean integrated CI. Official 3-2-1 backup warning; DB backup is not full media backup. Face/location privacy and ML model licenses require review. No code copied."}
+    {
+      "name": "yt-dlp",
+      "repository": "https://github.com/yt-dlp/yt-dlp",
+      "owner": "yt-dlp",
+      "category": [
+        "media-archiving",
+        "python-cli",
+        "metadata-extraction",
+        "subtitles",
+        "offline-preservation"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Unlicense root; optional dependencies and media have independent rights",
+      "license_copy_status": "root-unlicense-review-dependencies-and-content-rights",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Python >=3.11",
+        "Android/Termux with compatible tools"
+      ],
+      "useful_components": [
+        "yt_dlp/extractor/common.py — extractor/metadata base",
+        "yt_dlp/downloader/http.py — HTTP range, resume, retry",
+        "yt_dlp/networking/ — request handlers",
+        "yt_dlp/plugins.py — plugin discovery",
+        "yt_dlp/YoutubeDL.py — embeddable API/orchestration",
+        "yt_dlp/postprocessor/ — media transforms",
+        "test/ — tests"
+      ],
+      "verification": [
+        "2026-10-27 inspected README, LICENSE, pyproject.toml, extractor, downloader, plugin and orchestration source",
+        "Stable 2026.10.26 released 2026-10-26 22:25 UTC",
+        "2026-10-26 upstream Core Tests 40404432725: 13/13 jobs passed Linux/Windows Python 3.11–3.15/PyPy",
+        "Quick Test 40404432887: 2/2 jobs passed; CodeQL 40404432831 passed",
+        "Later Core Tests 40409938717 skipped; not a passing run",
+        "No independent download, subtitle extraction, installation or security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable release 2026.10.26; multi-version core tests and CodeQL passed 2026-10-26",
+      "source": "GitHub-first 2026-10-27; research/2026-10-27-ytdlp-immich.md; no playlist transcript evidence",
+      "related_projects": [
+        "ArchiveBox/ArchiveBox (external downloader)",
+        "ArchiveBox/abx-dl (capture orchestration)",
+        "FFmpeg (optional postprocessing)"
+      ],
+      "research_notes": "Authorized archiving only; respect rights and terms. Plugins execute code and auth cookies are sensitive. No code copied."
+    },
+    {
+      "name": "Immich",
+      "repository": "https://github.com/immich-app/immich",
+      "owner": "immich-app",
+      "category": [
+        "self-hosting",
+        "photo-video-archiving",
+        "mobile-backup",
+        "local-machine-learning",
+        "media-management"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "AGPL-3.0 root; ML models, assets and dependencies separately licensed",
+      "license_copy_status": "agpl-copyleft-and-third-party-review-before-copy",
+      "platforms": [
+        "Linux/Docker server",
+        "web browsers",
+        "Android",
+        "iOS",
+        "PostgreSQL/Redis",
+        "Python ML service"
+      ],
+      "useful_components": [
+        "server/src/services/asset.service.ts — asset permissions/lifecycle",
+        "server/src/services/duplicate.service.ts — duplicate resolution",
+        "server/src/services/database-backup.service.ts — scheduled database backup",
+        "server/src/services/search.service.ts — search",
+        "machine-learning/immich_ml/pipeline.py — CLIP, face and OCR pipeline",
+        "server/src/services/*.spec.ts — unit tests",
+        "mobile/ — mobile client"
+      ],
+      "verification": [
+        "2026-10-27 inspected README, AGPL license, server manifest, asset/duplicate/backup/ML source and tests",
+        "Stable v3.3.5 released 2026-10-21",
+        "2026-10-27 main CodeQL 40492780574 and static analysis 40492780708 passed",
+        "Test workflow 40492780438 failed overall: server test/lint passed; SQL and e2e failed GHCR image-pull toomanyrequests; medium tests lacked postgres image",
+        "Mobile workflow 40492780707 gate passed but Android/iOS build-and-sign jobs skipped",
+        "No independent deployment, mobile upload, ML inference, database restore or e2e tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "2026-10-21 stable v3.3.5; 2026-10-27 server unit/lint, CodeQL and static analysis passed; full e2e blocked by registry throttling",
+      "source": "GitHub-first 2026-10-27; research/2026-10-27-ytdlp-immich.md; no playlist transcript evidence",
+      "related_projects": [
+        "immich-app/devtools (CI)",
+        "PostgreSQL",
+        "FFmpeg"
+      ],
+      "research_notes": "PROMISING pending clean integrated CI. Official 3-2-1 backup warning; DB backup is not full media backup. Face/location privacy and ML model licenses require review. No code copied."
+    },
+    {
+      "name": "libarchive",
+      "repository": "https://github.com/libarchive/libarchive",
+      "owner": "libarchive",
+      "category": [
+        "archival",
+        "c-library",
+        "compression",
+        "format-parsing",
+        "cli-tools"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Permissive two-clause BSD-style notice for most source; UC Regents, public-domain, BLAKE2 and build-script exceptions",
+      "license_copy_status": "file-level-license-and-attribution-review-before-copy",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "FreeBSD",
+        "Alpine Linux"
+      ],
+      "useful_components": [
+        "libarchive/archive_read_support_format_zip.c — ZIP reader",
+        "libarchive/archive_read_support_format_7zip.c — 7z reader",
+        "libarchive/archive_read_support_format_tar.c — tar reader",
+        "libarchive/archive_read_support_filter_zstd.c — Zstandard filter",
+        "libarchive/archive_entry.c — entry metadata",
+        "examples/minitar/minitar.c — embedding example",
+        "tar/ — bsdtar",
+        "unzip/ — bsdunzip",
+        "libarchive/test/ — regression fixtures"
+      ],
+      "verification": [
+        "2026-10-27 inspected README, COPYING, SECURITY.md, source, examples, test tree and CI workflow",
+        "Stable v3.8.10 released 2026-10-14",
+        "2026-10-27 master CI 40530777935 passed 20/20 jobs with build/test stages on Ubuntu, Alpine, Windows, FreeBSD and macOS",
+        "2026-10-27 master CodeQL 40530777979 passed; PR CIFuzz workflow exists",
+        "No independent compilation, extraction, fuzzing or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v3.8.10 (2026-10-14); master CI 40530777935 20/20 passed and CodeQL 40530777979 passed 2026-10-27",
+      "source": "GitHub-first 2026-10-27; research/2026-10-27-libarchive-kiwix-tools.md; no playlist transcript evidence",
+      "related_projects": [
+        "bsdtar, bsdcpio, bsdcat, bsdunzip (same repository)"
+      ],
+      "research_notes": "Individual source-file license headers govern reuse. Malformed archives, traversal, symlinks and decompression bombs require deployment safeguards; no code copied."
+    },
+    {
+      "name": "Kiwix Tools",
+      "repository": "https://github.com/kiwix/kiwix-tools",
+      "owner": "kiwix",
+      "category": [
+        "offline-knowledge",
+        "zim-format",
+        "http-server",
+        "search",
+        "cli-tools"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "GPL-3.0-or-later per source headers; root COPYING GPLv3; dependencies separate",
+      "license_copy_status": "gpl-copyleft-and-dependency-review-before-copy",
+      "platforms": [
+        "Linux x86_64 dynamic/static",
+        "Windows x64",
+        "POSIX",
+        "Docker"
+      ],
+      "useful_components": [
+        "src/server/kiwix-serve.cpp — offline ZIM HTTP serving, bind controls",
+        "src/searcher/kiwix-search.cpp — full-text search and suggestions",
+        "src/manager/kiwix-manage.cpp — ZIM library XML/OPDS catalog",
+        "meson.build — dependency constraints and C++17 build",
+        "docker/ — container packaging"
+      ],
+      "verification": [
+        "2026-10-27 inspected README, COPYING, C++ server/searcher/manager source, Meson manifest and CI workflow",
+        "Stable 3.8.2 released 2026-03-02",
+        "2026-10-01 main CI 36844685289 passed 3/3 jobs: Linux dynamic/static compile and Windows compile plus Meson tests",
+        "2026-10-26 scheduled 40272845437 passed only Actions analysis, not a runtime test",
+        "No independent HTTP serving, ZIM search, LAN security or Docker deployment"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "3.8.2 (2026-03-02); main CI 36844685289 3/3 passed 2026-10-01; scheduled analysis succeeded 2026-10-26",
+      "source": "Recursive GitHub-first Kiwix/ZIM ecosystem 2026-10-27; research/2026-10-27-libarchive-kiwix-tools.md",
+      "related_projects": [
+        "kiwix/libkiwix (direct dependency)",
+        "openzim/libzim (direct dependency)",
+        "openzim/zim-tools (complementary)",
+        "kiwix/kiwix-android (separate client)",
+        "kiwix/kiwix-build (build support)"
+      ],
+      "research_notes": "Meson/Ninja C++17, libzim >=9,<10, libkiwix >=14.2,<15, docopt. kiwix-serve defaults to all network interfaces on HTTP port 80; restrict exposure. No source copied."
+    }
   ],
   "deferred_or_rejected": [
     {
