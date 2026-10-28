@@ -105,7 +105,7 @@ Suggested tiers:
 - **Caveats / risks:** Documented curl-to-Bash installer adds a third-party APT repository and downloads its signing key without a pinned fingerprint in install.sh. Authenticate script and key before use; patched Android-tools submodule has separate licenses.
 - **Research notes:** Upstream-only scoring audit: `research/2026-10-22-legacy-four-scoring-audit.md`. No third-party source copied.
 
-### ESP32-S3 Remote ID Add-on (`esp-remoteid`)
+### ESP32-S3 Remote ID Add-on
 
 - **Repository:** https://github.com/peinser/esp-remoteid
 - **Author / Org:** Peinser BV / peinser
@@ -382,7 +382,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable v5.6.0 released 2026-10-15. Master commit 93477ace (2026-10-20) adds --encrypt-files alignment validation, not necessarily in v5.6.0. Upstream CI 39435542641 passed 7/7 host test/stub-check jobs (Python 3.10-3.15); build CI 39435542027 passed six platform builds, release step skipped.
 - **Verification performed:** 2026-10-21 inspected README, LICENSE, pyproject.toml, loader/image source, commits, release and CI; no independent flash, provisioning or runtime test.
 - **Source discovery:** Embedded/Android tooling pass.
-- **Related projects:** ESP-IDF; Espressif flasher stubs and provisioning tooling.
+- **Related projects:** ESP-IDF; Espressif flasher stubs and provisioning tooling; esp-rs/esp-hal (complementary Rust bare-metal HAL, not a dependency).
 - **Caveats / risks:** GPL-2.0-or-later; check bundled stub/dependency licenses. Host CI is not hardware validation; eFuse/provisioning can be irreversible.
 - **Research notes:** See `research/2026-10-21-termux-esptool-reticulum-maintenance.md` for source evidence and verification boundaries.
 
@@ -2502,6 +2502,46 @@ Suggested tiers:
 - **Related projects:** jgm/pandoc-types; jgm/citeproc; pandoc/lua-filters; pandoc/actions.
 - **Caveats / risks:** Format conversion can lose unsupported semantics; the DOCX reader itself documents incomplete features. 3.13 changes YAML parsing behavior; migration testing advised. Lua filters and external converters can execute code. GPL obligations apply to reuse.
 - **Research notes:** `research/2026-10-28-fd-pandoc.md`. Current-head CI not established; no source copied.
+
+### Piper (Open Home Foundation)
+
+- **Repository:** https://github.com/OHF-Voice/piper1-gpl
+- **Author / Org:** Open Home Foundation / OHF-Voice.
+- **Category:** offline text-to-speech / accessibility / local AI / Python / C/C++.
+- **Evidence:** VERIFIED (older upstream release CI, not current-head or independent execution).
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4).
+- **What it does:** Local neural TTS using eSpeak-NG and ONNX Runtime, with Python, HTTP and C/C++ APIs.
+- **Why it is valuable:** Offline speech for assistive technology, disconnected devices and local assistants; encoder/decoder splitting enables lower-latency audio chunks.
+- **Useful code/components:** `src/piper/voice.py` (synthesis), `src/piper/http_server.py` (Flask API), `libpiper/include/piper.h` (C ABI), `docs/STREAMING.md` (streaming), `docs/VOICES.md` (model terms).
+- **Install / runtime:** `pip install piper-tts`, matching `.onnx`/`.onnx.json` voice files, ONNX Runtime; optional CUDA; CMake for libpiper.
+- **Platforms:** Linux, Windows and macOS (v1.8.0 wheel artifacts).
+- **License:** GPL-3.0 (`COPYING`); voice models have independent MODEL_CARD licenses; dependencies separately licensed.
+- **Maintenance signals:** [v1.8.0](https://github.com/OHF-Voice/piper1-gpl/releases/tag/v1.8.0) published 2026-09-04; [main commit 74ac24e](https://github.com/OHF-Voice/piper1-gpl/commit/74ac24e7e8e2e57a5e1fada5505c74e3d9c1843a) 2026-10-23. [v1.5.0 publish CI](https://github.com/OHF-Voice/piper1-gpl/actions/runs/29609618090) 14/14 jobs passed 2026-07-17, **before v1.8.0 and new streaming**.
+- **Verification performed:** Inspected README, GPL, voice and HTTP sources, C header, docs, test workflow, release and upstream CI. No local synthesis, latency, model-license or security testing.
+- **Source discovery:** GitHub-first accessibility/offline research; no transcript attribution.
+- **Related projects:** espeak-ng, ONNX Runtime, rhasspy/piper-voices, Home Assistant, NVDA (upstream mentions use, integration unverified).
+- **Caveats / risks:** Flask server defaults to `0.0.0.0:5000`; restrict network exposure. Individual voices may restrict redistribution. README seeks maintainers.
+- **Research notes:** `research/2026-10-28-piper-esp-hal.md`. No upstream code copied.
+
+### esp-hal (Espressif Rust HAL)
+
+- **Repository:** https://github.com/esp-rs/esp-hal
+- **Author / Org:** esp-rs / Espressif Rust contributors.
+- **Category:** embedded Rust / ESP32 / `no_std` / peripheral drivers.
+- **Evidence:** PROMISING (mixed upstream hardware-in-loop evidence; no independent hardware tests).
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4).
+- **What it does:** Bare-metal Rust HAL for ESP32 chips with blocking/async drivers, GPIO, I2C and companion runtime support.
+- **Why it is valuable:** Reusable typed peripheral ownership, chip-aware driver abstractions and examples for embedded projects.
+- **Useful code/components:** `esp-hal/src/lib.rs` (ownership), `esp-hal/src/gpio/mod.rs`, `esp-hal/src/i2c/master/mod.rs`, `esp-rtos/src/lib.rs`, `hil-test/README.md`, `examples/README.md`.
+- **Install / runtime:** Rust >=1.95 for inspected 1.2.0 manifest; RISC-V/Xtensa toolchains, chip features, compatible ESP32 and probe/serial interface.
+- **Platforms:** ESP32, C2/C3/C5/C6/C61, H2, P4, S2/S3 and v1.2.0-supported S31; peripheral coverage varies.
+- **License:** MIT OR Apache-2.0 (`LICENSE-MIT`, `LICENSE-APACHE`, Cargo manifest); dependency/radio firmware terms separate.
+- **Maintenance signals:** [v1.2.0](https://github.com/esp-rs/esp-hal/releases/tag/esp-hal-v1.2.0) 2026-09-03; [main commit 5c0820c](https://github.com/esp-rs/esp-hal/commit/5c0820cf9e2be0a49719bd71c30e7a45cae48134) 2026-10-27. [2026-09-10 merge-group CI](https://github.com/esp-rs/esp-hal/actions/runs/34454713435): 22 success, 4 HIL failures, 3 skipped. Successful aggregator does not mean all HIL passed.
+- **Verification performed:** Inspected README, manifests, licenses, HAL/GPIO/I2C/RTOS source, HIL docs, examples and per-job CI. No independent build, flash or board tests.
+- **Source discovery:** GitHub-first embedded Rust research; no transcript attribution.
+- **Related projects:** esp-rs/esp-generate, esp-rs/espflash, esp-rs/esp-pacs, esp-rs/esp-idf (different stack), espressif/esptool (host flasher), probe-rs.
+- **Caveats / risks:** Unstable APIs can break on minor releases; hardware support varies by chip. HIL failures need investigation.
+- **Research notes:** `research/2026-10-28-piper-esp-hal.md`. No upstream code copied.
 
 ## Entry format
 
