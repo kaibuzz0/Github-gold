@@ -4680,11 +4680,12 @@
         "2026-10-26 UTC scheduled e2e-full run 40250211098 failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 also failed. No passing full e2e test established; cause not newly verified.",
         "2026-10-26 inspected upstream e2e-full 40250211098 Ubuntu job 121340243471 logs: npm ci failed EBADENGINE; required Node >=24.14.1, actual v18.20.8/npm 10.8.2. Confirms install failure cause, no Playwright e2e executed.",
         "2026-10-27 UTC e2e-full 40427389616 Ubuntu failed at npm ci, Windows cancelled; e2e-perf 40424992380 failed at npm ci; no Playwright execution confirmed",
-        "2026-10-27 inspected e2e-full 40427389616 Ubuntu job 121936441613 logs: npm ci EBADENGINE, required Node >=24.14.1, actual v18.20.8/npm 10.8.2; Windows cancelled; Playwright never ran."
+        "2026-10-27 inspected e2e-full 40427389616 Ubuntu job 121936441613 logs: npm ci EBADENGINE, required Node >=24.14.1, actual v18.20.8/npm 10.8.2; Windows cancelled; Playwright never ran.",
+        "2026-10-28 UTC e2e-full 40608853694 Ubuntu job 122555106241 log confirms npm ci EBADENGINE: Node v18.20.8 vs required >=24.14.1; Windows cancelled, Playwright not executed. e2e-perf 40607018153 failed npm ci, exact cause not separately checked."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "maintenance_signals": "Stable v4.3.1 (2026-08-31). 2026-10-26 e2e-full 40250211098 failed Ubuntu npm ci EBADENGINE (Node v18.20.8 vs required >=24.14.1); Windows cancelled. e2e-perf 40248391927 and pr-platform 40247907640 also failed; causes not established. 2026-10-27 UTC e2e-full 40427389616 and e2e-perf 40424992380 failed at npm ci. 2026-10-27 e2e-full 40427389616 Ubuntu log confirms Node 18.20.8 vs >=24.14.1 EBADENGINE; no Playwright.",
+      "maintenance_signals": "Stable v4.3.1 (2026-08-31). 2026-10-26 e2e-full 40250211098 failed Ubuntu npm ci EBADENGINE (Node v18.20.8 vs required >=24.14.1); Windows cancelled. e2e-perf 40248391927 and pr-platform 40247907640 also failed; causes not established. 2026-10-27 UTC e2e-full 40427389616 and e2e-perf 40424992380 failed at npm ci. 2026-10-27 e2e-full 40427389616 Ubuntu log confirms Node 18.20.8 vs >=24.14.1 EBADENGINE; no Playwright. 2026-10-28 UTC e2e-full 40608853694 failed npm ci due to confirmed Node engine mismatch; e2e-perf 40607018153 failed npm ci.",
       "source": "GitHub-first; research/2026-10-25-ghidra-openmct.md",
       "related_projects": [
         "nasa/openmct-tutorial",
@@ -4692,7 +4693,7 @@
         "akhenry/openmct-yamcs",
         "open-telemetry/opentelemetry-collector (conceptual only)"
       ],
-      "research_notes": "PROMISING until e2e execution confirmed. LICENSES.md referenced in source but not found at root. Investigate CI Node mismatch, WebSocket reconnect and CouchDB security. No code copied. 2026-10-26 UTC maintenance recheck: e2e-full, e2e-perf and pr-platform still failing; preserve PROMISING/25 pending diagnosed root cause and passing end-to-end run. 2026-10-26 job log confirms Node engine mismatch as Ubuntu e2e-full npm ci failure cause. Update CI Node to >=24.14.1 and rerun e2e before promotion. New 2026-10-27 CI failures remain at install; prior Node engine mismatch confirmed 2026-10-26, latest failure logs not analyzed for exact cause."
+      "research_notes": "PROMISING until e2e execution confirmed. LICENSES.md referenced in source but not found at root. Investigate CI Node mismatch, WebSocket reconnect and CouchDB security. No code copied. 2026-10-26 UTC maintenance recheck: e2e-full, e2e-perf and pr-platform still failing; preserve PROMISING/25 pending diagnosed root cause and passing end-to-end run. 2026-10-26 job log confirms Node engine mismatch as Ubuntu e2e-full npm ci failure cause. Update CI Node to >=24.14.1 and rerun e2e before promotion. New 2026-10-27 CI failures remain at install; prior Node engine mismatch confirmed 2026-10-26, latest failure logs not analyzed for exact cause. Keep PROMISING/A25 until compatible Node CI and Playwright success."
     },
     {
       "name": "Zigbee2MQTT",
@@ -6354,6 +6355,122 @@
         "go-git/go-git"
       ],
       "research_notes": "V2 main is release-candidate; package managers may still ship v1. Credential validation/analysis makes outbound provider requests only when enabled; custom rules are a trust boundary, revocation is separate and explicit. Protect findings and scan only authorized targets. No code copied."
+    },
+    {
+      "name": "Cosign",
+      "repository": "https://github.com/sigstore/cosign",
+      "owner": "Sigstore",
+      "category": [
+        "software-supply-chain",
+        "artifact-signing",
+        "oci-registry",
+        "provenance"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 root; dependencies separate",
+      "license_copy_status": "preserve-apache-notices-review-dependencies",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "OCI registries",
+        "Go 1.27 current main"
+      ],
+      "useful_components": [
+        "cmd/cosign/cli/verify/verify.go — certificate identity and signature verification",
+        "cmd/cosign/cli/verify/verify_attestation.go — attestations",
+        "cmd/cosign/cli/verify/verify_bundle.go — bundle verification",
+        "pkg/oci/remote/remote.go — OCI registry access",
+        "pkg/cosign/bundle/types/ — bundle types",
+        "pkg/policy/attestation.go — attestation policy"
+      ],
+      "verification": [
+        "2026-10-27 inspected README, LICENSE, go.mod, verification/OCI source, releases and CI",
+        "Stable v3.1.4 published 2026-10-20; main go.mod specifies Go 1.27",
+        "2026-10-26 main CI-Tests 40262470330 passed 6/6 Linux/macOS/Windows and E2E jobs; main E2E 40262470331 passed 5/5 registry/KMS/PKCS#11 jobs; CodeQL 40262470324 passed",
+        "2026-10-27/28 UTC conformance nightlies 40428072278 and 40609410330 succeeded",
+        "No independent signing, verification, registry or security testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v3.1.4 2026-10-20; main CI 6/6, E2E 5/5 and CodeQL passed 2026-10-26; nightly conformance succeeded 2026-10-27/28 UTC",
+      "source": "GitHub-first 2026-10-27; research/2026-10-27-cosign-task-openmct.md; no playlist evidence",
+      "related_projects": [
+        "sigstore/fulcio",
+        "sigstore/rekor",
+        "sigstore/sigstore-go",
+        "google/go-containerregistry",
+        "in-toto/in-toto-golang"
+      ],
+      "research_notes": "Verify signer identity, OIDC issuer, trust roots and artifact digest; signature validity alone is insufficient. Review network dependencies and third-party licenses. No source copied."
+    },
+    {
+      "name": "Task",
+      "repository": "https://github.com/go-task/task",
+      "owner": "go-task / Andrey Nering and maintainers",
+      "category": [
+        "developer-tooling",
+        "task-runner",
+        "build-automation",
+        "go-cli"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT root; dependencies separate",
+      "license_copy_status": "mit-preserve-notice-review-dependencies",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Go 1.26.4 current main"
+      ],
+      "useful_components": [
+        "executor.go — task execution",
+        "compiler.go — Taskfile compilation",
+        "taskfile/node_git.go — remote Git Taskfile and private cache",
+        "taskfile/node_http.go — HTTP Taskfile",
+        "internal/fingerprint/sources_checksum.go — source fingerprinting",
+        "watch.go — file watcher",
+        "taskfile/ast/ — AST",
+        "testdata/ — fixtures"
+      ],
+      "verification": [
+        "2026-10-27 inspected README, LICENSE, go.mod, source, remote Git loader, checksum implementation and tests",
+        "Stable v3.54.0 published 2026-10-01; current main go.mod specifies Go 1.26.4",
+        "2026-10-27 Renovate branch CI 40605488694 passed 16/16 jobs: Go 1.26/1.27 builds, Linux/macOS/Windows tests, lint, docs, schema and vulnerability checks (not main branch)",
+        "2026-10-28 UTC nightly release succeeded; not stable release evidence",
+        "No independent build, Taskfile execution, remote import or security testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v3.54.0 stable 2026-10-01; Renovate-branch CI 40605488694 16/16 passed 2026-10-27; nightly 2026-10-28 UTC succeeded",
+      "source": "GitHub-first 2026-10-27; research/2026-10-27-cosign-task-openmct.md; no playlist evidence",
+      "related_projects": [
+        "go-task/template",
+        "go-task/slim-sprig",
+        "mvdan.cc/sh/v3",
+        "chainguard-dev/git-urls"
+      ],
+      "research_notes": "Taskfiles execute arbitrary commands with caller privileges. Pin/review remote includes. Git loader rejects insecure HTTP unless explicitly enabled and uses private cache, but is not a sandbox. No source copied."
     }
   ],
   "deferred_or_rejected": [

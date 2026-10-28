@@ -1767,7 +1767,7 @@ Suggested tiers:
 - **Source discovery:** GitHub-first; no YouTube attribution.
 - **Related projects:** `nasa/openmct-tutorial`, `nasa/openmct-map`, `akhenry/openmct-yamcs`; OpenTelemetry Collector is a conceptual neighbor, not confirmed integration.
 - **Caveats / risks:** No passing current full e2e execution verified. Review plugin input sanitization, WebSocket reconnection, CouchDB permissions and packaged licenses.
-- **Research notes:** `research/2026-10-25-ghidra-openmct.md`. 2026-10-27 UTC: [e2e-full 40427389616](https://github.com/nasa/openmct/actions/runs/40427389616) failed Ubuntu `npm ci` (Windows cancelled); [e2e-perf 40424992380](https://github.com/nasa/openmct/actions/runs/40424992380) failed at `npm ci`. Previous Node mismatch confirmed, latest exact failure cause not independently checked. Rechecked 2026-10-26 UTC: three scheduled workflows remain failed. Node mismatch confirmed by Ubuntu `EBADENGINE` log as the e2e-full `npm ci` cause. Keep PROMISING/25; update CI Node >=24.14.1 and require passing Playwright e2e before promotion.
+- **Research notes:** 2026-10-28 UTC [e2e-full 40608853694](https://github.com/nasa/openmct/actions/runs/40608853694) Ubuntu npm ci EBADENGINE: Node v18.20.8 vs required >=24.14.1; Windows cancelled; no Playwright. [e2e-perf 40607018153](https://github.com/nasa/openmct/actions/runs/40607018153) failed npm ci (cause not independently checked). Retain PROMISING/A25. `research/2026-10-25-ghidra-openmct.md`. 2026-10-27 UTC: [e2e-full 40427389616](https://github.com/nasa/openmct/actions/runs/40427389616) failed Ubuntu `npm ci` (Windows cancelled); [e2e-perf 40424992380](https://github.com/nasa/openmct/actions/runs/40424992380) failed at `npm ci`. Previous Node mismatch confirmed, latest exact failure cause not independently checked. Rechecked 2026-10-26 UTC: three scheduled workflows remain failed. Node mismatch confirmed by Ubuntu `EBADENGINE` log as the e2e-full `npm ci` cause. Keep PROMISING/25; update CI Node >=24.14.1 and require passing Playwright e2e before promotion.
 
 ### Zigbee2MQTT
 
@@ -2342,6 +2342,46 @@ Suggested tiers:
 - **Related projects:** gitleaks/gitleaks (maintainer ecosystem); getsops/sops (complementary); expr-lang/expr; go-git/go-git.
 - **Caveats / risks:** Main branch targets v2 release candidate, not stable v2. Validation/analysis can send credentials to providers when enabled; custom rules are a trust boundary. Revocation is separate and explicit. Protect reports.
 - **Research notes:** `research/2026-10-27-sqlcipher-betterleaks.md`. Test false-positive behavior on synthetic fixtures, network validation boundaries, container resource limits and future stable v2 release.
+
+### Cosign
+
+- **Repository:** https://github.com/sigstore/cosign
+- **Author / Org:** Sigstore
+- **Category:** software-supply-chain / artifact-signing / oci-registry / provenance
+- **Evidence:** VERIFIED (upstream CI, not independently executed)
+- **Tier / Score:** S / 29 (utility 5 + working evidence 5 + reusability 5 + novelty 5 + documentation 5 + maintenance 4)
+- **What it does:** Signs and verifies OCI images and artifacts with keys, keyless certificates, KMS, transparency logs and attestations.
+- **Why it is valuable:** Reusable artifact authenticity and provenance controls.
+- **Useful code/components:** `cmd/cosign/cli/verify/verify.go` — certificate identity and signature verification; `cmd/cosign/cli/verify/verify_attestation.go` — attestations; `cmd/cosign/cli/verify/verify_bundle.go` — bundle verification; `pkg/oci/remote/remote.go` — OCI registry access; `pkg/cosign/bundle/types/` — bundle types; `pkg/policy/attestation.go` — attestation policy.
+- **Install / runtime:** Release binaries for Linux/macOS/Windows; current main source Go 1.27; registry or offline bundle as applicable.
+- **Platforms:** Linux, macOS, Windows, OCI registries, Go 1.27 current main.
+- **License:** Apache-2.0 root; dependencies separate. No source copied.
+- **Maintenance signals:** [v3.1.4](https://github.com/sigstore/cosign/releases/tag/v3.1.4) 2026-10-20; [main CI](https://github.com/sigstore/cosign/actions/runs/40262470330) 6/6, [main E2E](https://github.com/sigstore/cosign/actions/runs/40262470331) 5/5 and [CodeQL](https://github.com/sigstore/cosign/actions/runs/40262470324) passed 2026-10-26.
+- **Verification performed:** 2026-10-27 inspected README, LICENSE, go.mod, verification/OCI source, releases and CI; Stable v3.1.4 published 2026-10-20; main go.mod specifies Go 1.27; 2026-10-26 main CI-Tests 40262470330 passed 6/6 Linux/macOS/Windows and E2E jobs; main E2E 40262470331 passed 5/5 registry/KMS/PKCS#11 jobs; CodeQL 40262470324 passed; 2026-10-27/28 UTC conformance nightlies 40428072278 and 40609410330 succeeded; No independent signing, verification, registry or security testing.
+- **Source discovery:** GitHub-first; no YouTube transcript evidence.
+- **Related projects:** sigstore/fulcio; sigstore/rekor; sigstore/sigstore-go; google/go-containerregistry; in-toto/in-toto-golang.
+- **Caveats / risks:** Enforce expected certificate identity, issuer and trusted roots; cryptographic signature validity alone is not sufficient.
+- **Research notes:** `research/2026-10-27-cosign-task-openmct.md`.
+
+### Task
+
+- **Repository:** https://github.com/go-task/task
+- **Author / Org:** go-task / Andrey Nering and maintainers
+- **Category:** developer-tooling / task-runner / build-automation / go-cli
+- **Evidence:** VERIFIED (upstream CI, not independently executed)
+- **Tier / Score:** S / 28 (utility 5 + working evidence 5 + reusability 5 + novelty 3 + documentation 5 + maintenance 5)
+- **What it does:** Cross-platform YAML Taskfile runner with dependencies, variables, source checksums, file watching and remote includes.
+- **Why it is valuable:** Portable build/test/release automation and reusable scheduling/fingerprint code.
+- **Useful code/components:** `executor.go` — task execution; `compiler.go` — Taskfile compilation; `taskfile/node_git.go` — remote Git Taskfile and private cache; `taskfile/node_http.go` — HTTP Taskfile; `internal/fingerprint/sources_checksum.go` — source fingerprinting; `watch.go` — file watcher; `taskfile/ast/` — AST; `testdata/` — fixtures.
+- **Install / runtime:** Published binaries and package managers; current main Go 1.26.4; Taskfile.yml configuration.
+- **Platforms:** Linux, macOS, Windows, Go 1.26.4 current main.
+- **License:** MIT root; dependencies separate. No source copied.
+- **Maintenance signals:** [v3.54.0](https://github.com/go-task/task/releases/tag/v3.54.0) stable 2026-10-01; [CI](https://github.com/go-task/task/actions/runs/40605488694) 16/16 passed 2026-10-27 on Renovate branch (not main); nightly 2026-10-28 UTC not stable.
+- **Verification performed:** 2026-10-27 inspected README, LICENSE, go.mod, source, remote Git loader, checksum implementation and tests; Stable v3.54.0 published 2026-10-01; current main go.mod specifies Go 1.26.4; 2026-10-27 Renovate branch CI 40605488694 passed 16/16 jobs: Go 1.26/1.27 builds, Linux/macOS/Windows tests, lint, docs, schema and vulnerability checks (not main branch); 2026-10-28 UTC nightly release succeeded; not stable release evidence; No independent build, Taskfile execution, remote import or security testing.
+- **Source discovery:** GitHub-first; no YouTube transcript evidence.
+- **Related projects:** go-task/template; go-task/slim-sprig; mvdan.cc/sh/v3; chainguard-dev/git-urls.
+- **Caveats / risks:** Untrusted Taskfiles run arbitrary commands with user privileges. Review and pin remote includes; HTTPS is not sandboxing.
+- **Research notes:** `research/2026-10-27-cosign-task-openmct.md`.
 
 ## Entry format
 
