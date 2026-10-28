@@ -6661,7 +6661,7 @@
         "sharkdp/fd",
         "Genivia/ugrep"
       ],
-      "research_notes": "research/2026-10-28-ripgrep-tauri-immich.md; default ignore rules can silently omit matches, and optional PCRE2 has different resource/performance behavior. No code copied."
+      "research_notes": "research/2026-10-28-ripgrep-tauri-immich.md; default ignore rules can silently omit matches, and optional PCRE2 has different resource/performance behavior. No code copied. 2026-10-28 ecosystem check: fd 10.5.0 consumes the ripgrep ecosystem's `ignore` and `globset` crates (per fd Cargo.toml); fd is a separate CLI, not an embedded ripgrep component. See research/2026-10-28-fd-pandoc.md."
     },
     {
       "name": "Tauri",
@@ -6726,6 +6726,124 @@
         "tauri-apps/plugins-workspace"
       ],
       "research_notes": "research/2026-10-28-ripgrep-tauri-immich.md. Audit finding is in example tooling, not proof of exploitability in Tauri runtime. System webview and plugin capabilities define a critical security boundary. No code copied."
+    },
+    {
+      "name": "fd",
+      "repository": "https://github.com/sharkdp/fd",
+      "owner": "sharkdp / David Peter and fd contributors",
+      "category": [
+        "developer-tooling",
+        "filesystem-search",
+        "rust-cli",
+        "parallel-traversal",
+        "automation"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT OR Apache-2.0 (Cargo.toml, LICENSE-MIT, LICENSE-APACHE); dependencies separate",
+      "license_copy_status": "permissive-dual-license-preserve-attribution-review-dependencies",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Rust 1.90+ for inspected source",
+        "Termux/Android not independently tested"
+      ],
+      "useful_components": [
+        "src/walk.rs — parallel ignore-aware filesystem traversal, bounded channels, result buffering",
+        "src/exec/mod.rs — one-by-one and batch command execution templates",
+        "src/exec/command.rs — external command invocation and output buffering",
+        "src/sanitize.rs — TTY output sanitization of control and bidi characters",
+        "src/main.rs — CLI pattern/glob and filesystem search orchestration",
+        "tests/tests.rs — integration fixtures and filesystem edge cases"
+      ],
+      "verification": [
+        "2026-10-28 inspected README, Cargo.toml, LICENSE-MIT, LICENSE-APACHE, src/walk.rs, src/exec/mod.rs, src/sanitize.rs and tests/tests.rs",
+        "Stable v10.5.0 released 2026-08-26; release notes describe terminal output sanitization, exact match and timestamp handling",
+        "2026-09-09 upstream PR CICD run 34198170327: 18 successful jobs, one skipped Winget publication; lint, MSRV, Linux/macOS/Windows build matrix. PR run, not latest master.",
+        "2026-10-28 latest inspected master commit b7a0a29d; no current-head CI result established",
+        "No independent binary execution, command invocation, filesystem traversal benchmark or security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v10.5.0 2026-08-26; latest inspected master commit 2026-10-28; upstream PR CI 18 passed/1 skipped 2026-09-09, not current master.",
+      "source": "GitHub-first follow-up from ripgrep ecosystem 2026-10-28; no YouTube transcript evidence.",
+      "related_projects": [
+        "BurntSushi/ripgrep",
+        "BurntSushi/ripgrep/crates/ignore",
+        "BurntSushi/ripgrep/crates/globset",
+        "sharkdp/bat"
+      ],
+      "research_notes": "research/2026-10-28-fd-pandoc.md. Uses ripgrep ecosystem's ignore and globset Rust crates as dependencies; distinct filesystem filename finder, not a fork or ripgrep runtime integration. -x/-X execute arbitrary external programs and must not be used blindly on untrusted paths. No code copied."
+    },
+    {
+      "name": "Pandoc",
+      "repository": "https://github.com/jgm/pandoc",
+      "owner": "John MacFarlane / jgm and contributors",
+      "category": [
+        "document-conversion",
+        "haskell",
+        "document-ast",
+        "markup-parsers",
+        "automation",
+        "archival"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "GPL-2.0-or-later (pandoc.cabal, pandoc-cli.cabal, COPYING.md); dependencies and filters separate",
+      "license_copy_status": "copyleft-gpl-2-or-later-review-compatibility-and-dependencies",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Haskell/GHC 9.6+ for inspected CI matrix",
+        "external TeX/HTML engines for PDF output when applicable"
+      ],
+      "useful_components": [
+        "src/Text/Pandoc/Readers/Markdown.hs — Markdown reader and YAML metadata parsing",
+        "src/Text/Pandoc/Readers/Docx.hs — DOCX reader",
+        "src/Text/Pandoc/Writers/Docx.hs — DOCX writer",
+        "src/Text/Pandoc/Writers/EPUB.hs — EPUB2/EPUB3 writer",
+        "pandoc-lua-engine/src/Text/Pandoc/Lua.hs — Lua filter entry points",
+        "pandoc-cli/pandoc-cli.cabal — CLI, Lua and optional server build flags",
+        "test/Tests/Readers/Markdown.hs — Markdown reader test suite"
+      ],
+      "verification": [
+        "2026-10-28 inspected README, pandoc.cabal, pandoc-cli.cabal, COPYING.md, selected Markdown/DOCX/EPUB reader/writer sources, Lua engine and test suite",
+        "Stable 3.13 published 2026-10-26; release changes include YAML 1.2 parsing behavior and error reporting",
+        "2026-09-29 upstream main CI run 36603069136: 8/8 jobs passed, including GHC matrix, Linux Stack and Windows; predates 3.13",
+        "2026-10-28 latest inspected main commit 60725b8 fixes EPUB date normalization; no 3.13/current-head CI run confirmed",
+        "No independent document conversion, PDF generation, parser fuzzing, Lua filter execution or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 3.13 released 2026-10-26; upstream main CI 8/8 passed 2026-09-29 (older revision); source commits 2026-10-28.",
+      "source": "Independent GitHub-first document interoperability research 2026-10-28; no YouTube transcript evidence.",
+      "related_projects": [
+        "jgm/pandoc-types",
+        "jgm/citeproc",
+        "pandoc/lua-filters",
+        "pandoc/actions"
+      ],
+      "research_notes": "research/2026-10-28-fd-pandoc.md. Some conversions are lossy; source DOCX reader lists partially implemented entities. PDF requires separate engines. Lua filters and external converters execute code. GPL-2.0-or-later compatibility must be reviewed before reuse. No code copied."
     }
   ],
   "deferred_or_rejected": [

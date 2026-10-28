@@ -2439,7 +2439,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable [15.2.0](https://github.com/BurntSushi/ripgrep/releases/tag/15.2.0) released 2026-07-15 with ignore matching and traversal fixes. [2026-10-28 master CI](https://github.com/BurntSushi/ripgrep/actions/runs/40612963042) passed 23/23 jobs including OS/architecture tests, docs, fuzz-target compilation and benchmark test.
 - **Verification performed:** README, manifests, license, source tree, ignore walker and upstream CI inspected; no independent execution, performance measurement or fuzzing.
 - **Source discovery:** GitHub-first; no transcript attribution.
-- **Related projects:** BurntSushi/regex-automata; BurntSushi/aho-corasick; sharkdp/fd; Genivia/ugrep.
+- **Related projects:** BurntSushi/regex-automata; BurntSushi/aho-corasick; sharkdp/fd (separate CLI using ripgrep's ignore/globset crates); Genivia/ugrep.
 - **Caveats / risks:** Default ignore/hidden/binary filtering may omit results; `rg -uuu` disables automatic filters. Optional PCRE2 behavior and untrusted text/resource limits require evaluation.
 - **Research notes:** `research/2026-10-28-ripgrep-tauri-immich.md`.
 
@@ -2462,6 +2462,46 @@ Suggested tiers:
 - **Related projects:** tauri-apps/wry; tauri-apps/tao; tauri-apps/create-tauri-app; tauri-apps/tauri-action; tauri-apps/plugins-workspace.
 - **Caveats / risks:** Frontend-to-Rust IPC permission scope and third-party plugin trust are security-critical. System webview behavior differs by OS. Passing PR core tests do not clear dev-branch JS audit finding or establish mobile runtime execution.
 - **Research notes:** `research/2026-10-28-ripgrep-tauri-immich.md`.
+
+### fd
+
+- **Repository:** https://github.com/sharkdp/fd
+- **Author / Org:** sharkdp / David Peter and contributors
+- **Category:** developer-tooling / filesystem-search / Rust CLI / parallel traversal / automation
+- **Evidence:** VERIFIED (upstream PR CI, not independently executed)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Parallel, ignore-aware filename and directory finder with regex/glob matching, filters, and optional external command execution.
+- **Why it is valuable:** Reusable Rust traversal and command scheduling patterns; complements ripgrep's content search while sharing its ignore/globset library ecosystem.
+- **Useful code/components:** `src/walk.rs` parallel traversal; `src/exec/mod.rs` command templates; `src/exec/command.rs` command runner; `src/sanitize.rs` TTY-safe filename output; `src/main.rs` CLI; `tests/tests.rs` filesystem integration fixtures.
+- **Install / runtime:** Official binaries or package manager; `cargo install fd-find` with Rust >=1.90 for inspected source. Package command may be `fdfind` on Debian-based systems.
+- **Platforms:** Linux, macOS, Windows; Android/Termux not independently verified.
+- **License:** MIT OR Apache-2.0 in Cargo.toml and LICENSE-MIT/LICENSE-APACHE; dependencies separately licensed. No source copied.
+- **Maintenance signals:** Stable [v10.5.0](https://github.com/sharkdp/fd/releases/tag/v10.5.0) released 2026-08-26. [2026-09-09 PR CICD](https://github.com/sharkdp/fd/actions/runs/34198170327) had 18 successful jobs, one skipped publication job (not current master). Latest inspected master commit [b7a0a29](https://github.com/sharkdp/fd/commit/b7a0a29d07c3d0e9e0a41155019acada08831a6c) on 2026-10-28.
+- **Verification performed:** Inspected README, manifest, two licenses, traversal, execution, sanitization, tests, release and upstream CI job conclusions. No independent binary execution or benchmarks.
+- **Source discovery:** GitHub-first follow-up from ripgrep ecosystem; no transcript attribution.
+- **Related projects:** BurntSushi/ripgrep (shared ignore/globset dependencies); sharkdp/bat.
+- **Caveats / risks:** Hidden/ignored files are excluded by default. `-x`/`-X` execute user-specified commands; do not run untrusted command templates. Filename sanitization on terminal output is not a security boundary for arbitrary subprocesses.
+- **Research notes:** `research/2026-10-28-fd-pandoc.md`. Upstream PR CI predates latest master; no source copied.
+
+### Pandoc
+
+- **Repository:** https://github.com/jgm/pandoc
+- **Author / Org:** John MacFarlane / jgm and contributors
+- **Category:** document-conversion / Haskell / document AST / markup parsing / archival
+- **Evidence:** VERIFIED (upstream main CI, not independently executed)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 4)
+- **What it does:** Haskell document-conversion library and CLI supporting Markdown, DOCX, HTML, EPUB, LaTeX, Typst and many other input/output formats via a shared document representation.
+- **Why it is valuable:** Source readers/writers, document transformation APIs, Lua filters and format-independent conversion pipelines enable archiving, documentation migration and publishing.
+- **Useful code/components:** `src/Text/Pandoc/Readers/Markdown.hs`; `src/Text/Pandoc/Readers/Docx.hs`; `src/Text/Pandoc/Writers/Docx.hs`; `src/Text/Pandoc/Writers/EPUB.hs`; `pandoc-lua-engine/src/Text/Pandoc/Lua.hs`; `pandoc-cli/pandoc-cli.cabal`; `test/Tests/Readers/Markdown.hs`.
+- **Install / runtime:** Prebuilt binaries or Haskell Cabal/Stack; inspected CI tests GHC 9.6–9.14. PDF output requires external engines (e.g. TeX) depending on selected format.
+- **Platforms:** Linux, macOS, Windows.
+- **License:** GPL-2.0-or-later in Cabal manifests and COPYING.md; check dependency and Lua filter licenses. No source copied.
+- **Maintenance signals:** [3.13 release](https://github.com/jgm/pandoc/releases/tag/3.13) published 2026-10-26. [2026-09-29 main CI](https://github.com/jgm/pandoc/actions/runs/36603069136) had 8/8 successful jobs; this predates 3.13. [2026-10-28 main commit](https://github.com/jgm/pandoc/commit/60725b8673fb0783ea109fb7d76b9f9ef600b89c) fixes EPUB date handling.
+- **Verification performed:** Inspected README, Cabal manifests, GPL license, reader/writer/Lua sources, tests, 3.13 release and CI jobs. No independent conversion, PDF, filter execution or parser fuzzing.
+- **Source discovery:** Independent GitHub-first research; no transcript attribution.
+- **Related projects:** jgm/pandoc-types; jgm/citeproc; pandoc/lua-filters; pandoc/actions.
+- **Caveats / risks:** Format conversion can lose unsupported semantics; the DOCX reader itself documents incomplete features. 3.13 changes YAML parsing behavior; migration testing advised. Lua filters and external converters can execute code. GPL obligations apply to reuse.
+- **Research notes:** `research/2026-10-28-fd-pandoc.md`. Current-head CI not established; no source copied.
 
 ## Entry format
 
