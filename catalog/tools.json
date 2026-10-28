@@ -6847,7 +6847,134 @@
       "research_notes": "research/2026-10-28-fd-pandoc.md. Some conversions are lossy; source DOCX reader lists partially implemented entities. PDF requires separate engines. Lua filters and external converters execute code. GPL-2.0-or-later compatibility must be reviewed before reuse. No code copied."
     },
     {"name":"Piper","repository":"https://github.com/OHF-Voice/piper1-gpl","owner":"OHF-Voice / Open Home Foundation","category":["offline-tts","accessibility","local-ai","python","c-cpp"],"evidence":"VERIFIED","tier":"S","score":27,"score_breakdown":{"utility":5,"working_evidence":4,"reusability":5,"novelty":4,"documentation":5,"maintenance":4},"license":"GPL-3.0 (COPYING); pretrained voice models have separate MODEL_CARD terms","license_copy_status":"copyleft-and-voice-model-licenses-review-before-reuse","platforms":["Linux","Windows","macOS","Python and ONNX Runtime","C/C++ with CMake"],"useful_components":["src/piper/voice.py — ONNX phoneme synthesis and audio chunks","src/piper/http_server.py — Flask HTTP endpoint","libpiper/include/piper.h — streaming C ABI","docs/STREAMING.md — split encoder/decoder","docs/VOICES.md — voice model and licensing guidance"],"verification":["README, COPYING, Python API, HTTP and voice sources, C API, docs and PR test workflow inspected 2026-10-28","v1.8.0 published 2026-09-04; latest main commit 74ac24e dated 2026-10-23","v1.5.0 upstream publish workflow 29609618090 passed 14/14 jobs on 2026-07-17 across Linux, Windows and macOS; predates v1.8.0 and current streaming","No independent synthesis, model licensing, audio quality or security test"],"hardware_tested_by_github_gold":false,"research_priority":"high","maintenance_signals":"v1.8.0 2026-09-04; main commit 2026-10-23; older release CI 14/14; README requests maintainers.","source":"GitHub-first offline accessibility pass 2026-10-28; no video transcripts.","related_projects":["espeak-ng/espeak-ng","microsoft/onnxruntime","rhasspy/piper-voices","home-assistant/addons","nvaccess/nvda (mentioned upstream, direct integration unverified)"],"research_notes":"research/2026-10-28-piper-esp-hal.md. GPL source does not license each voice checkpoint. HTTP default binds 0.0.0.0:5000; restrict exposure. Latest streaming code lacks cited current-head CI. No code copied."},
-    {"name":"esp-hal","repository":"https://github.com/esp-rs/esp-hal","owner":"esp-rs / Espressif Rust","category":["embedded-rust","esp32","no-std","hardware-abstraction","device-drivers"],"evidence":"PROMISING","tier":"A","score":25,"score_breakdown":{"utility":5,"working_evidence":3,"reusability":5,"novelty":4,"documentation":4,"maintenance":4},"license":"MIT OR Apache-2.0 (both root license files and esp-hal/Cargo.toml); firmware/dependencies separate","license_copy_status":"permissive-dual-license-preserve-notices-review-radio-firmware","platforms":["ESP32/C2/C3/C5/C6/C61/H2/P4/S2/S3/S31","RISC-V/Xtensa","Rust >=1.95 for inspected esp-hal 1.2.0"],"useful_components":["esp-hal/src/lib.rs — peripheral ownership","esp-hal/src/gpio/mod.rs — GPIO and interconnect","esp-hal/src/i2c/master/mod.rs — I2C master","esp-rtos/src/lib.rs — runtime","hil-test/README.md — physical hardware tests","examples/README.md — chip-specific cargo xtask builds"],"verification":["README, Cargo manifests, LICENSE-MIT/APACHE, HAL/GPIO/I2C/RTOS source, HIL docs, examples and CI inspected 2026-10-28","esp-hal-v1.2.0 released 2026-09-03; main 5c0820c dated 2026-10-27","2026-09-10 merge-group CI 34454713435 had 22 successful, 4 failed HIL and 3 skipped jobs; ci-result aggregator succeeded despite failures","No independent build, flash, hardware or radio test"],"hardware_tested_by_github_gold":false,"research_priority":"high","maintenance_signals":"v1.2.0 2026-09-03; active main 2026-10-27; mixed 2026-09-10 hardware CI.","source":"GitHub-first embedded Rust pass 2026-10-28; no video transcripts.","related_projects":["esp-rs/esp-generate","esp-rs/espflash","esp-rs/esp-pacs","esp-rs/esp-idf (distinct stack)","espressif/esptool (complementary host flasher)","probe-rs/probe-rs"],"research_notes":"research/2026-10-28-piper-esp-hal.md. Unstable APIs and chip feature coverage vary; HIL failures warrant follow-up. No source copied."}
+    {"name":"esp-hal","repository":"https://github.com/esp-rs/esp-hal","owner":"esp-rs / Espressif Rust","category":["embedded-rust","esp32","no-std","hardware-abstraction","device-drivers"],"evidence":"PROMISING","tier":"A","score":25,"score_breakdown":{"utility":5,"working_evidence":3,"reusability":5,"novelty":4,"documentation":4,"maintenance":4},"license":"MIT OR Apache-2.0 (both root license files and esp-hal/Cargo.toml); firmware/dependencies separate","license_copy_status":"permissive-dual-license-preserve-notices-review-radio-firmware","platforms":["ESP32/C2/C3/C5/C6/C61/H2/P4/S2/S3/S31","RISC-V/Xtensa","Rust >=1.95 for inspected esp-hal 1.2.0"],"useful_components":["esp-hal/src/lib.rs — peripheral ownership","esp-hal/src/gpio/mod.rs — GPIO and interconnect","esp-hal/src/i2c/master/mod.rs — I2C master","esp-rtos/src/lib.rs — runtime","hil-test/README.md — physical hardware tests","examples/README.md — chip-specific cargo xtask builds"],"verification":["README, Cargo manifests, LICENSE-MIT/APACHE, HAL/GPIO/I2C/RTOS source, HIL docs, examples and CI inspected 2026-10-28","esp-hal-v1.2.0 released 2026-09-03; main 5c0820c dated 2026-10-27","2026-09-10 merge-group CI 34454713435 had 22 successful, 4 failed HIL and 3 skipped jobs; ci-result aggregator succeeded despite failures","No independent build, flash, hardware or radio test"],"hardware_tested_by_github_gold":false,"research_priority":"high","maintenance_signals":"v1.2.0 2026-09-03; active main 2026-10-27; mixed 2026-09-10 hardware CI.","source":"GitHub-first embedded Rust pass 2026-10-28; no video transcripts.","related_projects":["esp-rs/esp-generate","esp-rs/espflash","esp-rs/esp-pacs","esp-rs/esp-idf (distinct stack)","espressif/esptool (complementary host flasher)","probe-rs/probe-rs"],"research_notes":"research/2026-10-28-piper-esp-hal.md. Unstable APIs and chip feature coverage vary; HIL failures warrant follow-up. No source copied."},
+    {
+      "name": "Pion WebRTC",
+      "repository": "https://github.com/pion/webrtc",
+      "owner": "Pion community",
+      "category": [
+        "webrtc",
+        "peer-to-peer",
+        "realtime-communications",
+        "go",
+        "media-transport"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT (root LICENSE and SPDX headers); Pion modules and transitive dependencies have separate notices",
+      "license_copy_status": "mit-preserve-copyright-and-license-review-dependencies",
+      "platforms": [
+        "Go >=1.24 (go.mod)",
+        "Linux",
+        "Windows",
+        "macOS",
+        "FreeBSD",
+        "Android/iOS Go integration",
+        "WebAssembly (JS build)"
+      ],
+      "useful_components": [
+        "peerconnection.go — PeerConnection negotiation, state and transport lifecycle",
+        "datachannel.go — ordered/unordered DataChannels",
+        "settingengine.go — ICE networking, DTLS and replay-protection configuration",
+        "interceptor.go — NACK, RTCP reports, TWCC and media statistics integration",
+        "examples/ice-restart — connectivity recovery example",
+        "examples/data-channels-flow-control — backpressure example",
+        "e2e/e2e_test.go — browser audio interoperability tests"
+      ],
+      "verification": [
+        "Inspected README, DESIGN.md, LICENSE, go.mod, PeerConnection, SettingEngine, interceptor, examples and E2E source on 2026-10-28",
+        "v4.2.26 released 2026-10-28 on commit 0e35f8059c; release workflow 40727408015 passed",
+        "2026-10-28 main-head Test workflow 40727255754 passed 9/9 jobs (Go 1.26/1.27, macOS, Windows, i386, WASM)",
+        "2026-10-28 main-head browser interoperability workflow 40727255162 passed 5/5 jobs (Chrome Linux/Windows, Firefox, Safari, Edge); Browser E2E 40727254729 passed 1/1; examples 40727253980 passed 1/1; Fuzz 40727255601 passed 1/1 (workflow success is not proof of exhaustive fuzz coverage)",
+        "No independent WebRTC session, mobile, NAT traversal, load or security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v4.2.26 2026-10-28; main-head 0e35f8059c and passing Test, browser interoperability, browser E2E, examples and fuzz workflows on 2026-10-28.",
+      "source": "GitHub-first realtime peer connectivity research 2026-10-28; no video transcript attribution.",
+      "related_projects": [
+        "pion/ice — ICE NAT traversal (v4 pinned by WebRTC go.mod; upstream ICE README now describes v5)",
+        "pion/turn — embeddable TURN client/server",
+        "pion/interceptor — RTP feedback and congestion-control interceptors",
+        "pion/datachannel — SCTP data channels",
+        "pion/rtp",
+        "pion/srtp",
+        "pion/example-webrtc-applications"
+      ],
+      "research_notes": "research/2026-10-28-pion-webrtc-tree-sitter.md. Pion transports media/data but does not supply application signaling or identity policy. Review STUN/TURN trust, exposed ICE addresses, disabling fingerprint/replay protection and resource limits. No upstream code copied."
+    },
+    {
+      "name": "Tree-sitter",
+      "repository": "https://github.com/tree-sitter/tree-sitter",
+      "owner": "tree-sitter / Max Brunsfeld and contributors",
+      "category": [
+        "incremental-parsing",
+        "parser-generator",
+        "developer-tooling",
+        "c",
+        "rust",
+        "webassembly"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT (root LICENSE; Cargo workspace license); individual language grammars and external dependencies separately licensed",
+      "license_copy_status": "mit-preserve-copyright-and-license-review-grammars",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "illumos",
+        "Rust CLI >=1.90 (current master Cargo workspace)",
+        "portable C runtime",
+        "JavaScript/WebAssembly binding"
+      ],
+      "useful_components": [
+        "lib/src/parser.c — incremental C parsing runtime",
+        "lib/src/get_changed_ranges.c — incremental edit-diff range calculation",
+        "lib/src/query.c — structural query engine",
+        "lib/include/tree_sitter/api.h — public C API and grammar ABI range 13–15",
+        "crates/generate/src/generate.rs — grammar-to-parser generator",
+        "crates/highlight/src/highlight.rs — query-driven syntax highlighting",
+        "lib/binding_web — WebAssembly/JavaScript bindings",
+        "crates/cli/README.md — grammar generate, test and parse commands"
+      ],
+      "verification": [
+        "Inspected README, MIT LICENSE, Cargo workspace, C API, incremental runtime source, generator, highlighting, CLI and WASM docs, CI definitions on 2026-10-28",
+        "Stable v0.27.1 released 2026-10-08; current master Cargo workspace identifies 0.28.0 development (do not treat as stable release)",
+        "2026-10-28 master CI 40640264375 passed 15/15 jobs including checks, consistency, 12 target builds and undefined-behaviour sanitizer job; sanitizer workflow invokes UBSAN and ASAN tests",
+        "JavaScript grammar repository tree-sitter/tree-sitter-javascript inspected for grammar.js and MIT header; Python grammar repository existence checked; no independent parser generation or parse execution",
+        "No independent fuzzing, malicious grammar execution, parser correctness, benchmark or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v0.27.1 2026-10-08; master commit ad067fddf7 2026-10-28; master CI 40640264375 passed 15/15 including sanitizer job.",
+      "source": "GitHub-first incremental parsing and reusable compiler tooling research 2026-10-28; no video transcript attribution.",
+      "related_projects": [
+        "tree-sitter/tree-sitter-javascript — grammar.js and queries",
+        "tree-sitter/tree-sitter-python — companion language grammar",
+        "tree-sitter/tree-sitter-rust — follow-up grammar lead",
+        "tree-sitter/tree-sitter-cli — CLI lives within this monorepo, not a separate canonical entry"
+      ],
+      "research_notes": "research/2026-10-28-pion-webrtc-tree-sitter.md. Language ABI 13–15 per current C header; older grammar compatibility is not forward compatibility. Parser generation needs Node.js; grammar test/parse commands need C/C++ compiler; native grammars are executable code and should not be loaded from untrusted sources. No source copied."
+    }
   ],
   "deferred_or_rejected": [
     {

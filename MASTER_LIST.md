@@ -2543,6 +2543,47 @@ Suggested tiers:
 - **Caveats / risks:** Unstable APIs can break on minor releases; hardware support varies by chip. HIL failures need investigation.
 - **Research notes:** `research/2026-10-28-piper-esp-hal.md`. No upstream code copied.
 
+
+### Pion WebRTC
+
+- **Repository:** https://github.com/pion/webrtc
+- **Author / Org:** Pion community.
+- **Category:** WebRTC / peer-to-peer / realtime communications / Go / media transport.
+- **Evidence:** VERIFIED (upstream main-head test, browser interoperability and E2E evidence; no independent execution).
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5).
+- **What it does:** Pure-Go WebRTC PeerConnection implementation for encrypted audio/video and DataChannels, with ICE, DTLS/SRTP, RTP/RTCP and SCTP modules.
+- **Why it is valuable:** Embeddable real-time communications for local-first collaboration, remote sensors, robotics and browser-to-Go connections without native media transport libraries.
+- **Useful code/components:** `peerconnection.go` (negotiation and lifecycle), `datachannel.go` (data transport), `settingengine.go` (ICE/DTLS controls), `interceptor.go` (NACK/RTCP/TWCC), `examples/ice-restart`, `examples/data-channels-flow-control`, `e2e/e2e_test.go`.
+- **Install / runtime:** Go modules `github.com/pion/webrtc/v4` (go.mod requires Go >=1.24); application must implement signaling and may require trusted STUN/TURN infrastructure.
+- **Platforms:** Linux, Windows, macOS, FreeBSD, Android/iOS Go integrations, WebAssembly (JS build); actual deployment support depends on target networking/browser.
+- **License:** MIT root and SPDX source headers; review dependent Pion modules and third-party notices. No source copied.
+- **Maintenance signals:** [v4.2.26](https://github.com/pion/webrtc/releases/tag/v4.2.26) released 2026-10-28 from main commit 0e35f8059c. Same-head [Test](https://github.com/pion/webrtc/actions/runs/40727255754) **9/9 passed**, [browser interoperability](https://github.com/pion/webrtc/actions/runs/40727255162) **5/5 passed** (Chrome Linux/Windows, Firefox, Safari, Edge), [browser E2E](https://github.com/pion/webrtc/actions/runs/40727254729) **1/1 passed**, [examples](https://github.com/pion/webrtc/actions/runs/40727253980) **1/1 passed**, and [fuzz workflow](https://github.com/pion/webrtc/actions/runs/40727255601) **1/1 passed**; [release](https://github.com/pion/webrtc/actions/runs/40727408015) succeeded.
+- **Verification performed:** Inspected README, DESIGN, MIT LICENSE, go.mod, PeerConnection, SettingEngine, interceptor and examples/E2E sources; inspected per-job upstream CI. No independent sessions, devices, network traversal, performance or security tests.
+- **Source discovery:** Independent GitHub-first connectivity research; no transcript attribution.
+- **Related projects:** pion/ice (v4 pinned by current go.mod), pion/turn, pion/interceptor, pion/datachannel, pion/rtp, pion/srtp, pion/example-webrtc-applications.
+- **Caveats / risks:** Signaling and application authorization are not supplied. ICE can reveal IP information; TURN relays need authentication, limits and monitoring. Do not disable DTLS fingerprint verification or replay protection without a defensible threat model. Passing fuzz workflow is not proof of exhaustive fuzz coverage.
+- **Research notes:** `research/2026-10-28-pion-webrtc-tree-sitter.md`. No third-party implementation copied.
+
+### Tree-sitter
+
+- **Repository:** https://github.com/tree-sitter/tree-sitter
+- **Author / Org:** tree-sitter / Max Brunsfeld and contributors.
+- **Category:** incremental parsing / parser generator / developer tooling / C / Rust / WebAssembly.
+- **Evidence:** VERIFIED (upstream current-master multi-platform CI and sanitizer test evidence; no independent execution).
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5).
+- **What it does:** Generates language parsers and incrementally maintains concrete syntax trees after source edits; exposes structural queries, syntax highlighting, native C API, Rust CLI and WebAssembly bindings.
+- **Why it is valuable:** Reusable parsing engine for editors, refactoring tools, static analysis, code navigation, indexing and browser-based developer tools.
+- **Useful code/components:** `lib/src/parser.c` (incremental runtime), `lib/src/get_changed_ranges.c` (edit differences), `lib/src/query.c` (structural queries), `lib/include/tree_sitter/api.h` (C API and ABI), `crates/generate/src/generate.rs` (generator), `crates/highlight/src/highlight.rs` (syntax highlighting), `lib/binding_web` (WASM), `crates/cli/README.md` (CLI).
+- **Install / runtime:** Prebuilt CLI or `cargo install --locked tree-sitter-cli`; current master workspace specifies Rust >=1.90. Grammar generation requires Node.js; grammar parse/test commands require a C/C++ compiler. Embeddable C runtime is dependency-free.
+- **Platforms:** Linux, Windows, macOS, illumos and WebAssembly, with target-specific build/test coverage.
+- **License:** MIT root/Cargo workspace; each grammar and third-party dependency must be reviewed separately. No source copied.
+- **Maintenance signals:** [v0.27.1](https://github.com/tree-sitter/tree-sitter/releases/tag/v0.27.1) released 2026-10-08; current master workspace already reports **0.28.0 development**, not a stable release. [2026-10-28 master CI](https://github.com/tree-sitter/tree-sitter/actions/runs/40640264375) **15/15 passed**, including checks, cross-platform builds, and sanitizer job invoking ASAN/UBSAN tests.
+- **Verification performed:** Inspected README, MIT LICENSE, Cargo manifests, C API, changed-range source, grammar generator, highlighting module, CLI/WASM docs, CI definitions and per-job results. No independent parser generation, fuzzing, grammar execution or security audit.
+- **Source discovery:** Independent GitHub-first parsing-tool research; no transcript attribution.
+- **Related projects:** tree-sitter/tree-sitter-javascript (inspected grammar.js), tree-sitter/tree-sitter-python (companion grammar), tree-sitter/tree-sitter-rust (follow-up lead).
+- **Caveats / risks:** Native grammar modules execute compiled code; do not load untrusted grammars without isolation. Current header supports language ABI versions 13–15 and does not guarantee forward compatibility. Grammar licenses differ. Test coverage is not proof of immunity to malformed inputs.
+- **Research notes:** `research/2026-10-28-pion-webrtc-tree-sitter.md`. No third-party implementation copied.
+
 ## Entry format
 
 ### Project / Tool Name
