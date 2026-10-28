@@ -6114,11 +6114,12 @@
         "2026-10-27 main CodeQL 40492780574 and static analysis 40492780708 passed",
         "Test workflow 40492780438 failed overall: server test/lint passed; SQL and e2e failed GHCR image-pull toomanyrequests; medium tests lacked postgres image",
         "Mobile workflow 40492780707 gate passed but Android/iOS build-and-sign jobs skipped",
-        "No independent deployment, mobile upload, ML inference, database restore or e2e tests"
+        "No independent deployment, mobile upload, ML inference, database restore or e2e tests",
+        "2026-10-28 PR mobile-passkey branches: Test runs 40653312777 and 40653532254 succeeded, but server/web/ML E2E and medium tests were SKIPPED; End-to-End Tests Success gate success is not actual E2E execution."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "maintenance_signals": "2026-10-21 stable v3.3.5; 2026-10-27 server unit/lint, CodeQL and static analysis passed; full e2e blocked by registry throttling",
+      "maintenance_signals": "2026-10-21 stable v3.3.5; 2026-10-27 server unit/lint, CodeQL and static analysis passed; full e2e blocked by registry throttling 2026-10-28 PR mobile passkey Test workflows passed selected mobile/schema/API jobs; full E2E and server tests were skipped (runs 40653312777, 40653532254).",
       "source": "GitHub-first 2026-10-27; research/2026-10-27-ytdlp-immich.md; no playlist transcript evidence",
       "related_projects": [
         "immich-app/devtools (CI)",
@@ -6601,6 +6602,130 @@
         "nats-io/nats-general"
       ],
       "research_notes": "v2.15.2 fixes OCSP certificate-serial binding, auth callout connection restrictions, snapshot limits, leaf-node MQTT ACL and MQTT OCSP behavior. Review 2.15 upgrade notes, TLS/accounts and backup/failover. No code copied. research/2026-10-28-maplibre-native-nats-server.md"
+    },
+    {
+      "name": "ripgrep",
+      "repository": "https://github.com/BurntSushi/ripgrep",
+      "owner": "BurntSushi / Andrew Gallant",
+      "category": [
+        "developer-tooling",
+        "text-search",
+        "rust-cli",
+        "regex",
+        "filesystem-traversal"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT OR Unlicense (root and inspected crates)",
+      "license_copy_status": "permissive-dual-license-review-dependency-licenses",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Rust 1.96+ for current source",
+        "additional CI cross-targets"
+      ],
+      "useful_components": [
+        "crates/ignore/src/walk.rs — parallel filesystem walking with ignore filtering",
+        "crates/ignore/src/gitignore.rs — gitignore matching",
+        "crates/globset/src/glob.rs — glob matching",
+        "crates/searcher/src/searcher/ — line-oriented search/mmap",
+        "crates/regex/src/matcher.rs — regex matcher",
+        "crates/pcre2/src/matcher.rs — optional PCRE2 integration",
+        "crates/printer/src/json.rs — machine-readable search output",
+        "crates/core/search.rs — CLI search orchestration",
+        "tests/tests.rs — integration test harness"
+      ],
+      "verification": [
+        "2026-10-28 inspected README, Cargo.toml, LICENSE-MIT, ignore crate README, source tree and search walker",
+        "Stable 15.2.0 published 2026-07-15; fixes ignore handling and traversal performance",
+        "2026-10-28 master CI run 40612963042: 23/23 jobs passed including Linux, Windows, macOS, ARM, RISC-V, s390x, WASM, documentation, benchmark and fuzz-target compilation",
+        "No independent binary execution, benchmark replication, PCRE2 fuzzing or security testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v15.2.0 (2026-07-15); master CI 23/23 passed 2026-10-28 (run 40612963042).",
+      "source": "GitHub-first 2026-10-28; no YouTube transcript evidence.",
+      "related_projects": [
+        "BurntSushi/regex-automata",
+        "BurntSushi/aho-corasick",
+        "sharkdp/fd",
+        "Genivia/ugrep"
+      ],
+      "research_notes": "research/2026-10-28-ripgrep-tauri-immich.md; default ignore rules can silently omit matches, and optional PCRE2 has different resource/performance behavior. No code copied."
+    },
+    {
+      "name": "Tauri",
+      "repository": "https://github.com/tauri-apps/tauri",
+      "owner": "tauri-apps / Tauri Programme",
+      "category": [
+        "cross-platform",
+        "desktop-apps",
+        "mobile-apps",
+        "rust",
+        "webview",
+        "application-framework"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 OR MIT (workspace and inspected tauri crate); dependencies separate",
+      "license_copy_status": "permissive-dual-license-review-dependency-and-webview-licenses",
+      "platforms": [
+        "Windows 10+",
+        "macOS 10.15+",
+        "Linux with WebKitGTK 4.1 (Tauri v2)",
+        "Android (supported toolchain/device constraints)",
+        "iOS",
+        "Rust 1.90+ for inspected dev workspace"
+      ],
+      "useful_components": [
+        "crates/tauri/src/ipc/authority.rs — IPC authorization",
+        "crates/tauri/src/ipc/protocol.rs — webview IPC transport",
+        "crates/tauri-utils/src/acl/ — capabilities and permission resolution",
+        "crates/tauri-runtime-wry/src/webview.rs — native webview runtime",
+        "crates/tauri/src/plugin.rs — plugin lifecycle",
+        "crates/tauri-bundler/src/bundle/ — platform packaging",
+        "crates/tauri-codegen/ — embedded asset/config generation",
+        "packages/api/ — JS/TS frontend bridge",
+        "packages/api-e2e/test/specs/ — integration fixtures"
+      ],
+      "verification": [
+        "2026-10-28 inspected README, ARCHITECTURE.md, Cargo.toml, tauri crate LICENSE-MIT, source tree, IPC/ACL code and releases",
+        "Stable tauri-v2.12.5 published 2026-10-21 (monorepo publishes individual crates)",
+        "2026-10-27 PR branch ipc-introspection core workflow 40530165720: 10/10 jobs passed across Windows, Linux, macOS, Android cross-build and iOS cross-build; not dev-branch or physical device verification",
+        "2026-10-28 dev audit 40609767411: Rust audit passed; JS pnpm audit failed on one LOW-severity deepmerge advisory GHSA-gcqx-w48m-w2h4 through examples/api>@sveltejs/vite-plugin-svelte>deepmerge",
+        "No independent app build, device deployment, signed updater, permissions bypass or end-to-end security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "tauri-v2.12.5 released 2026-10-21; PR core CI 10/10 passed 2026-10-27; dev JS dependency audit failed 2026-10-28 on one low-severity advisory.",
+      "source": "GitHub-first 2026-10-28; no YouTube transcript evidence.",
+      "related_projects": [
+        "tauri-apps/wry",
+        "tauri-apps/tao",
+        "tauri-apps/create-tauri-app",
+        "tauri-apps/tauri-action",
+        "tauri-apps/plugins-workspace"
+      ],
+      "research_notes": "research/2026-10-28-ripgrep-tauri-immich.md. Audit finding is in example tooling, not proof of exploitability in Tauri runtime. System webview and plugin capabilities define a critical security boundary. No code copied."
     }
   ],
   "deferred_or_rejected": [

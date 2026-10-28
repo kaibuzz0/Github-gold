@@ -2255,7 +2255,7 @@ Suggested tiers:
 - **Install / runtime:** Docker server with PostgreSQL and Redis; optional ML service, Android/iOS apps and browser.
 - **Platforms:** Linux/Docker server, web browsers, Android, iOS, PostgreSQL/Redis, Python ML service.
 - **License:** AGPL-3.0 root; ML models, assets and dependencies separately licensed. No source copied.
-- **Maintenance signals:** Stable [v3.3.5](https://github.com/immich-app/immich/releases/tag/v3.3.5) published 2026-10-21. 2026-10-27 [CodeQL](https://github.com/immich-app/immich/actions/runs/40492780574) and [static analysis](https://github.com/immich-app/immich/actions/runs/40492780708) passed; [Test](https://github.com/immich-app/immich/actions/runs/40492780438) failed overall. Server test/lint passed; SQL/e2e GHCR image pulls throttled (`toomanyrequests`), medium tests lacked PostgreSQL image. Mobile build-and-sign jobs were skipped.
+- **Maintenance signals:** Stable [v3.3.5](https://github.com/immich-app/immich/releases/tag/v3.3.5) published 2026-10-21. 2026-10-27 [CodeQL](https://github.com/immich-app/immich/actions/runs/40492780574) and [static analysis](https://github.com/immich-app/immich/actions/runs/40492780708) passed; [Test](https://github.com/immich-app/immich/actions/runs/40492780438) failed overall. Server test/lint passed; SQL/e2e GHCR image pulls throttled (`toomanyrequests`), medium tests lacked PostgreSQL image. Mobile build-and-sign jobs were skipped. On 2026-10-28, [mobile passkey PR Test 1](https://github.com/immich-app/immich/actions/runs/40653312777) and [Test 2](https://github.com/immich-app/immich/actions/runs/40653532254) succeeded for selected mobile/schema/API jobs, but web/server/ML E2E and medium tests were SKIPPED; green `End-to-End Tests Success` gate does not prove E2E execution.
 - **Verification performed:** README, license, package manifest, source and upstream CI logs inspected; no local deployment, mobile upload, backup restore, ML inference or e2e test.
 - **Source discovery:** GitHub-first 2026-10-27; playlist pages throttled, no transcript attribution.
 - **Related projects:** immich-app/devtools, PostgreSQL, FFmpeg; no claimed direct integration.
@@ -2422,6 +2422,46 @@ Suggested tiers:
 - **Related projects:** nats-io/nats.go; nats-io/natscli; nats-io/nkeys; nats-io/jwt; nats-io/nats-general.
 - **Caveats / risks:** v2.15.2 fixes OCSP binding, auth callout restrictions, snapshot limits and MQTT/leafnode ACLs. Read 2.15 upgrade guide; test backup and failover; secure listeners.
 - **Research notes:** `research/2026-10-28-maplibre-native-nats-server.md`. No third-party code copied.
+
+### ripgrep
+
+- **Repository:** https://github.com/BurntSushi/ripgrep
+- **Author / Org:** BurntSushi / Andrew Gallant
+- **Category:** developer-tooling / text-search / rust-cli / regex / filesystem-traversal
+- **Evidence:** VERIFIED (upstream CI, not independently executed)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Fast recursive line-oriented regex search with .gitignore-aware filtering, optional PCRE2 and structured output.
+- **Why it is valuable:** Portable CLI and independently reusable Rust crates for filesystem walking, ignore/glob parsing, search and result formatting.
+- **Useful code/components:** `crates/ignore/src/walk.rs` (parallel walker); `crates/ignore/src/gitignore.rs`; `crates/globset/src/glob.rs`; `crates/searcher/src/searcher/`; `crates/regex/src/matcher.rs`; `crates/pcre2/src/matcher.rs`; `crates/printer/src/json.rs`; `crates/core/search.rs`; `tests/tests.rs`.
+- **Install / runtime:** Official release binaries, package managers or Cargo; current source specifies Rust >=1.96; PCRE2 optional.
+- **Platforms:** Linux, macOS, Windows; CI also covers multiple ARM, RISC-V, s390x and WASM targets.
+- **License:** MIT OR Unlicense; inspected root LICENSE-MIT and per-crate notices. Dependencies separately licensed; no source copied.
+- **Maintenance signals:** Stable [15.2.0](https://github.com/BurntSushi/ripgrep/releases/tag/15.2.0) released 2026-07-15 with ignore matching and traversal fixes. [2026-10-28 master CI](https://github.com/BurntSushi/ripgrep/actions/runs/40612963042) passed 23/23 jobs including OS/architecture tests, docs, fuzz-target compilation and benchmark test.
+- **Verification performed:** README, manifests, license, source tree, ignore walker and upstream CI inspected; no independent execution, performance measurement or fuzzing.
+- **Source discovery:** GitHub-first; no transcript attribution.
+- **Related projects:** BurntSushi/regex-automata; BurntSushi/aho-corasick; sharkdp/fd; Genivia/ugrep.
+- **Caveats / risks:** Default ignore/hidden/binary filtering may omit results; `rg -uuu` disables automatic filters. Optional PCRE2 behavior and untrusted text/resource limits require evaluation.
+- **Research notes:** `research/2026-10-28-ripgrep-tauri-immich.md`.
+
+### Tauri
+
+- **Repository:** https://github.com/tauri-apps/tauri
+- **Author / Org:** tauri-apps / Tauri Programme
+- **Category:** cross-platform / desktop-apps / mobile-apps / rust / webview / application-framework
+- **Evidence:** VERIFIED (upstream PR core CI, not independently executed)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Rust-backed desktop/mobile app framework combining system webviews with HTML/JS/CSS frontends, native APIs, capabilities and packaging.
+- **Why it is valuable:** Reusable webview/IPC and ACL architecture, native plugin framework, app bundling and cross-platform Rust/TypeScript bridge.
+- **Useful code/components:** `crates/tauri/src/ipc/authority.rs`; `crates/tauri/src/ipc/protocol.rs`; `crates/tauri-utils/src/acl/`; `crates/tauri-runtime-wry/src/webview.rs`; `crates/tauri/src/plugin.rs`; `crates/tauri-bundler/src/bundle/`; `crates/tauri-codegen/`; `packages/api/`; `packages/api-e2e/test/specs/`.
+- **Install / runtime:** Rust >=1.90 in inspected dev workspace, Node/package manager for JS frontend, OS-specific build tools and system webviews; Linux Tauri v2 requires WebKitGTK 4.1. Desktop updater is not a mobile updater.
+- **Platforms:** Windows 10+, macOS 10.15+, Linux, Android, iOS; check per-target SDK and device minimums.
+- **License:** Apache-2.0 OR MIT declared in Cargo workspace and inspected `crates/tauri/LICENSE-MIT`; dependencies, plugins and webviews separately licensed. No code copied.
+- **Maintenance signals:** [tauri-v2.12.5](https://github.com/tauri-apps/tauri/releases/tag/tauri-v2.12.5) published 2026-10-21. [2026-10-27 PR core CI](https://github.com/tauri-apps/tauri/actions/runs/40530165720) passed 10/10 Linux/Windows/macOS tests and Android/iOS cross-builds. [2026-10-28 dev Audit](https://github.com/tauri-apps/tauri/actions/runs/40609767411) failed JS audit (one LOW `deepmerge` advisory GHSA-gcqx-w48m-w2h4 via example Svelte tooling); Rust audit passed.
+- **Verification performed:** README, architecture, manifest, license, IPC/ACL source, upstream release and CI/audit logs inspected; no independent app build, device test, signed updater or security audit.
+- **Source discovery:** GitHub-first; no transcript attribution.
+- **Related projects:** tauri-apps/wry; tauri-apps/tao; tauri-apps/create-tauri-app; tauri-apps/tauri-action; tauri-apps/plugins-workspace.
+- **Caveats / risks:** Frontend-to-Rust IPC permission scope and third-party plugin trust are security-critical. System webview behavior differs by OS. Passing PR core tests do not clear dev-branch JS audit finding or establish mobile runtime execution.
+- **Research notes:** `research/2026-10-28-ripgrep-tauri-immich.md`.
 
 ## Entry format
 
