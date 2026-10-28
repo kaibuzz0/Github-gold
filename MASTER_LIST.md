@@ -2503,7 +2503,7 @@ Suggested tiers:
 - **Caveats / risks:** Format conversion can lose unsupported semantics; the DOCX reader itself documents incomplete features. 3.13 changes YAML parsing behavior; migration testing advised. Lua filters and external converters can execute code. GPL obligations apply to reuse.
 - **Research notes:** `research/2026-10-28-fd-pandoc.md`. Current-head CI not established; no source copied.
 
-### Piper (Open Home Foundation)
+### Piper
 
 - **Repository:** https://github.com/OHF-Voice/piper1-gpl
 - **Author / Org:** Open Home Foundation / OHF-Voice.
@@ -2523,7 +2523,7 @@ Suggested tiers:
 - **Caveats / risks:** Flask server defaults to `0.0.0.0:5000`; restrict network exposure. Individual voices may restrict redistribution. README seeks maintainers.
 - **Research notes:** `research/2026-10-28-piper-esp-hal.md`. No upstream code copied.
 
-### esp-hal (Espressif Rust HAL)
+### esp-hal
 
 - **Repository:** https://github.com/esp-rs/esp-hal
 - **Author / Org:** esp-rs / Espressif Rust contributors.
