@@ -1095,7 +1095,7 @@ Suggested tiers:
 - **Maintenance signals:** Latest inspected main commit 2026-09-16 (Python pmtiles 3.8.1); 2026-10-19 PR CI run 39281511827 passed build_app and test. No root GitHub Releases; packages published separately.
 - **Verification performed:** README, LICENSE, V3 spec, CI and source structure inspected; upstream PR tests passed. No independent archive, range-read, browser or security tests.
 - **Source discovery:** GitHub-first offline-mapping ecosystem; `research/2026-09-05-protomaps-pmtiles-single-file-offline-map-archive.md` and `research/2026-10-22-pmtiles-go-pmtiles-promotion.md`.
-- **Related projects:** protomaps/go-pmtiles; MapLibre; Planetiler; Protomaps Basemaps.
+- **Related projects:** protomaps/go-pmtiles; maplibre/maplibre-native (native `PMTilesFileSource`; Android APK assets); Planetiler; Protomaps Basemaps.
 - **Caveats / risks:** Range/CORS and untrusted archive parsing require validation. Large-object corruption or replacement affects a whole map. Map-data licenses independent. CI uses mutable Action tags.
 - **Research notes:** No third-party implementation code or map data copied.
 
@@ -2382,6 +2382,46 @@ Suggested tiers:
 - **Related projects:** go-task/template; go-task/slim-sprig; mvdan.cc/sh/v3; chainguard-dev/git-urls.
 - **Caveats / risks:** Untrusted Taskfiles run arbitrary commands with user privileges. Review and pin remote includes; HTTPS is not sandboxing.
 - **Research notes:** `research/2026-10-27-cosign-task-openmct.md`.
+
+### MapLibre Native
+
+- **Repository:** https://github.com/maplibre/maplibre-native
+- **Author / Org:** MapLibre
+- **Category:** offline-mapping / geospatial / gpu-rendering / cpp / android / ios
+- **Evidence:** VERIFIED — upstream CI, not independent execution
+- **Tier / Score:** S / 29 (utility 5 + working evidence 5 + reusability 5 + novelty 5 + documentation 5 + maintenance 4)
+- **What it does:** Cross-platform C++ GPU vector-map renderer with programmable styles, offline cache and native PMTiles reading.
+- **Why it is valuable:** Provides production-grade rendering, style evaluation and disconnected map components for custom field applications.
+- **Useful code/components:** src/mln/renderer/renderer.cpp and render_orchestrator.cpp — GPU rendering; src/mln/style/expression/ — style evaluation; src/mln/tile/ — vector/raster tiles; platform/default/src/mln/storage/pmtiles_file_source.cpp — native PMTiles reader; platform/default/src/mln/storage/offline_database.cpp — offline SQLite cache; bin/offline.cpp — offline CLI; include/mln/plugin/plugin_api.h — experimental native plugins; render-test/ and expression-test/ — regression fixtures.
+- **Install / runtime:** Android Gradle, iOS Swift package/CocoaPods or native C++ build; supply licensed offline tiles/styles/glyphs/sprites.
+- **Platforms:** Android, iOS (v7 requires >=15.5), Linux, Windows, macOS, Node.js, Qt/Compose companions.
+- **License:** BSD-2-Clause root; third-party notices in LICENSES.core.md/vendor; map data separately licensed.
+- **Maintenance signals:** Android v13.7.1 2026-10-15; iOS v7.0.0 2026-10-28; main platform CI passed 2026-10-27.
+- **Verification performed:** [Android main 10/10](https://github.com/maplibre/maplibre-native/actions/runs/40603579515), [iOS main 6/6](https://github.com/maplibre/maplibre-native/actions/runs/40603579220), [Linux main 6/6](https://github.com/maplibre/maplibre-native/actions/runs/40603579610) passed 2026-10-27. Separate [pr-linux-tests](https://github.com/maplibre/maplibre-native/actions/runs/40632794426) benchmark/bloat jobs failed 2026-10-28. Inspected source, licenses and release notes; no independent builds, deployment or security audits.
+- **Source discovery:** GitHub-first; previous research dossier and 2026-10-28 follow-up; no transcript attribution.
+- **Related projects:** protomaps/PMTiles; protomaps/go-pmtiles; maplibre/maplibre-compose; maplibre/maplibre-native-qt.
+- **Caveats / risks:** iOS v7 raises minimum to 15.5 and changes Objective-C header. Experimental native plugins require special builds. Validate untrusted tile/PMTiles inputs; no offline map data bundled.
+- **Research notes:** `research/2026-10-28-maplibre-native-nats-server.md`. No third-party code copied.
+
+### NATS Server
+
+- **Repository:** https://github.com/nats-io/nats-server
+- **Author / Org:** NATS.io
+- **Category:** distributed-messaging / jetstream / pub-sub / edge / go-server
+- **Evidence:** VERIFIED — upstream CI, not independent execution
+- **Tier / Score:** S / 29 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 5 + maintenance 5)
+- **What it does:** Subject-based broker supporting request/reply, account isolation, MQTT, leaf nodes, clustering and JetStream durable replicated streams.
+- **Why it is valuable:** Reusable implementation of edge messaging, Raft consensus, persistence, flow control and authorization.
+- **Useful code/components:** server/jetstream.go and jetstream_cluster.go — durable streams; server/stream.go and consumer.go — delivery/ack state; server/filestore.go, memstore.go, store.go — storage; server/raft.go and raft_transport.go — consensus; server/leafnode.go, route.go, gateway.go — edge topology; server/auth.go and auth_callout.go — authorization; server/mqtt.go — MQTT; server/monitor.go — monitoring.
+- **Install / runtime:** Official binaries/container or Go build; configure TLS, accounts, monitoring restrictions and JetStream storage.
+- **Platforms:** Linux, macOS, Windows, containers, Raspberry Pi-class Linux, main Go 1.26.0/toolchain 1.26.10.
+- **License:** Apache-2.0 root; dependencies and client SDKs separately licensed.
+- **Maintenance signals:** v2.15.2 2026-10-26; main CI 21/21 2026-10-26; long JetStream and govulncheck 2026-10-27.
+- **Verification performed:** [Main NATS Server Tests 21/21](https://github.com/nats-io/nats-server/actions/runs/40365928969) passed 2026-10-26; [Long JetStream Tests](https://github.com/nats-io/nats-server/actions/runs/40507265134) and [govulncheck](https://github.com/nats-io/nats-server/actions/runs/40459212504) passed 2026-10-27. Inspected source, licenses and release notes; no independent builds, deployment or security audits.
+- **Source discovery:** GitHub-first; previous research dossier and 2026-10-28 follow-up; no transcript attribution.
+- **Related projects:** nats-io/nats.go; nats-io/natscli; nats-io/nkeys; nats-io/jwt; nats-io/nats-general.
+- **Caveats / risks:** v2.15.2 fixes OCSP binding, auth callout restrictions, snapshot limits and MQTT/leafnode ACLs. Read 2.15 upgrade guide; test backup and failover; secure listeners.
+- **Research notes:** `research/2026-10-28-maplibre-native-nats-server.md`. No third-party code copied.
 
 ## Entry format
 

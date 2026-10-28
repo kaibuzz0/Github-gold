@@ -2769,12 +2769,17 @@
       "verification": [
         "2026-10-22 inspected README, LICENSE, spec, source structure and CI workflow",
         "2026-10-19 PR CI run 39281511827: build_app and test jobs passed, including JS, Python, rio-pmtiles, C++ compilation and Cloudflare tests",
-        "2026-09-16 inspected latest main commit; no root GitHub Releases; no independent builds or archive/range/map tests"
+        "2026-09-16 inspected latest main commit; no root GitHub Releases; no independent builds or archive/range/map tests",
+        "2026-10-28 inspected MapLibre Native pmtiles_file_source.cpp and Android v13.7.1 release: APK-bundled PMTiles support; not independently tested."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
       "source": "GitHub-first offline-mapping ecosystem; research/2026-09-05-protomaps-pmtiles-single-file-offline-map-archive.md; research/2026-10-22-pmtiles-go-pmtiles-promotion.md",
-      "copy_restriction_note": "No source copied. Preserve BSD-3-Clause notices; map data and samples carry separate rights. HTTP range/CORS and untrusted archive metadata need validation."
+      "copy_restriction_note": "No source copied. Preserve BSD-3-Clause notices; map data and samples carry separate rights. HTTP range/CORS and untrusted archive metadata need validation.",
+      "related_projects": [
+        "protomaps/go-pmtiles",
+        "maplibre/maplibre-native (native PMTilesFileSource; APK assets)"
+      ]
     },
     {
       "name": "go-pmtiles",
@@ -6471,6 +6476,131 @@
         "chainguard-dev/git-urls"
       ],
       "research_notes": "Taskfiles execute arbitrary commands with caller privileges. Pin/review remote includes. Git loader rejects insecure HTTP unless explicitly enabled and uses private cache, but is not a sandbox. No source copied."
+    },
+    {
+      "name": "MapLibre Native",
+      "repository": "https://github.com/maplibre/maplibre-native",
+      "owner": "MapLibre",
+      "category": [
+        "offline-mapping",
+        "geospatial",
+        "gpu-rendering",
+        "cpp",
+        "android",
+        "ios"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "BSD-2-Clause root; third-party notices in LICENSES.core.md/vendor; map data separately licensed",
+      "license_copy_status": "preserve-bsd-notices-review-vendor-and-map-data",
+      "platforms": [
+        "Android",
+        "iOS (v7 requires >=15.5)",
+        "Linux",
+        "Windows",
+        "macOS",
+        "Node.js",
+        "Qt/Compose companions"
+      ],
+      "useful_components": [
+        "src/mln/renderer/renderer.cpp and render_orchestrator.cpp — GPU rendering",
+        "src/mln/style/expression/ — style evaluation",
+        "src/mln/tile/ — vector/raster tiles",
+        "platform/default/src/mln/storage/pmtiles_file_source.cpp — native PMTiles reader",
+        "platform/default/src/mln/storage/offline_database.cpp — offline SQLite cache",
+        "bin/offline.cpp — offline CLI",
+        "include/mln/plugin/plugin_api.h — experimental native plugins",
+        "render-test/ and expression-test/ — regression fixtures"
+      ],
+      "verification": [
+        "2026-10-28 inspected README, ARCHITECTURE.md, LICENSE.md, LICENSES.core.md, source tree, releases and CI",
+        "Android v13.7.1 released 2026-10-15; iOS v7.0.0 released 2026-10-28 01:30 UTC",
+        "2026-10-27 main Android CI 40603579515 passed 10/10; iOS CI 40603579220 passed 6/6; Linux CI 40603579610 passed 6/6",
+        "2026-10-28 pr-linux-tests 40632794426 failed benchmark/bloat jobs, distinct from passing platform CI",
+        "No independent builds, device execution, archive rendering or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Android v13.7.1 2026-10-15; iOS v7.0.0 2026-10-28; main platform CI passed 2026-10-27",
+      "source": "GitHub-first; prior research/2026-09-05-maplibre-native-offline-cross-platform-map-renderer.md; no video transcript",
+      "related_projects": [
+        "protomaps/PMTiles",
+        "protomaps/go-pmtiles",
+        "maplibre/maplibre-compose",
+        "maplibre/maplibre-native-qt"
+      ],
+      "research_notes": "Android v13.7.1 adds pmtiles://asset:// APK-bundled PMTiles; offline requires licensed map assets. iOS v7 requires >=15.5 and MapLibre.h instead of Mapbox.h. Plugin API experimental. No code copied. research/2026-10-28-maplibre-native-nats-server.md"
+    },
+    {
+      "name": "NATS Server",
+      "repository": "https://github.com/nats-io/nats-server",
+      "owner": "NATS.io",
+      "category": [
+        "distributed-messaging",
+        "jetstream",
+        "pub-sub",
+        "edge",
+        "go-server"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Apache-2.0 root; dependencies and client SDKs separately licensed",
+      "license_copy_status": "preserve-apache-license-and-notices-review-dependencies",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "containers",
+        "Raspberry Pi-class Linux",
+        "main Go 1.26.0/toolchain 1.26.10"
+      ],
+      "useful_components": [
+        "server/jetstream.go and jetstream_cluster.go — durable streams",
+        "server/stream.go and consumer.go — delivery/ack state",
+        "server/filestore.go, memstore.go, store.go — storage",
+        "server/raft.go and raft_transport.go — consensus",
+        "server/leafnode.go, route.go, gateway.go — edge topology",
+        "server/auth.go and auth_callout.go — authorization",
+        "server/mqtt.go — MQTT",
+        "server/monitor.go — monitoring"
+      ],
+      "verification": [
+        "2026-10-28 inspected README, LICENSE, SECURITY.md, RELEASES.md, go.mod, source/test tree and release notes",
+        "v2.15.2 and v2.14.9 released 2026-10-26; v2.15.2 includes OCSP, auth, snapshot and MQTT fixes",
+        "2026-10-26 main NATS Server Tests 40365928969 passed 21/21 including Raft, JetStream, storage, MQTT, JWT, Windows and lint",
+        "2026-10-27 main Long JetStream Tests 40507265134 passed; govulncheck 40459212504 passed",
+        "No independent server execution, failover, storage or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v2.15.2 2026-10-26; main CI 21/21 2026-10-26; long JetStream and govulncheck 2026-10-27",
+      "source": "GitHub-first; prior research/2026-09-03-nats-server-messaging-jetstream-edge-runtime.md; no video transcript",
+      "related_projects": [
+        "nats-io/nats.go",
+        "nats-io/natscli",
+        "nats-io/nkeys",
+        "nats-io/jwt",
+        "nats-io/nats-general"
+      ],
+      "research_notes": "v2.15.2 fixes OCSP certificate-serial binding, auth callout connection restrictions, snapshot limits, leaf-node MQTT ACL and MQTT OCSP behavior. Review 2.15 upgrade notes, TLS/accounts and backup/failover. No code copied. research/2026-10-28-maplibre-native-nats-server.md"
     }
   ],
   "deferred_or_rejected": [
