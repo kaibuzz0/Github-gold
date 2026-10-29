@@ -402,7 +402,7 @@ Suggested tiers:
 - **Maintenance signals:** v4.1.1 published 2026-09-04; commits through 2026-10-19. Upstream Tests 39186829907, Lint 39186829863 and CodeQL 39186829827 all passed 2026-10-19.
 - **Verification performed:** Inspected README, BUILDING.rst, REUSE/SPDX licensing, Java module tree and test workflow. Upstream Gradle unit tests, lint and CodeQL passed; no independent Android build, backup/restore or privileged-device test.
 - **Source discovery:** Embedded/Android tooling pass.
-- **Related projects:** Android package manager APIs, ADB, APK analysis and backup ecosystems.
+- **Related projects:** Android package manager APIs, ADB, APK analysis and backup ecosystems; ImranR98/Obtainium (complementary upstream APK release tracking and installation, not the same inspection scope).
 - **Caveats / risks:** Primary app GPL-3.0-or-later with file-level SPDX exceptions; review each file and submodule before copying. Privileged operations can alter user data; use on owned devices with backups.
 - **Research notes:** Upstream-only scoring audit: `research/2026-10-22-legacy-four-scoring-audit.md`. No third-party source copied.
 
@@ -2419,7 +2419,7 @@ Suggested tiers:
 - **Maintenance signals:** v2.15.2 2026-10-26; main CI 21/21 2026-10-26; long JetStream and govulncheck 2026-10-27.
 - **Verification performed:** [Main NATS Server Tests 21/21](https://github.com/nats-io/nats-server/actions/runs/40365928969) passed 2026-10-26; [Long JetStream Tests](https://github.com/nats-io/nats-server/actions/runs/40507265134) and [govulncheck](https://github.com/nats-io/nats-server/actions/runs/40459212504) passed 2026-10-27. Inspected source, licenses and release notes; no independent builds, deployment or security audits.
 - **Source discovery:** GitHub-first; previous research dossier and 2026-10-28 follow-up; no transcript attribution.
-- **Related projects:** nats-io/nats.go; nats-io/natscli; nats-io/nkeys; nats-io/jwt; nats-io/nats-general.
+- **Related projects:** nats-io/nats.go; nats-io/natscli; nats-io/nkeys; nats-io/jwt; nats-io/nats-general; benbjohnson/litestream (NATS JetStream Object Store replication backend, not NATS server core).
 - **Caveats / risks:** v2.15.2 fixes OCSP binding, auth callout restrictions, snapshot limits and MQTT/leafnode ACLs. Read 2.15 upgrade guide; test backup and failover; secure listeners.
 - **Research notes:** `research/2026-10-28-maplibre-native-nats-server.md`. No third-party code copied.
 
@@ -2787,6 +2787,46 @@ Suggested tiers:
 - **Caveats / risks:** Protect root tokens, unseal/recovery keys, storage and backups; enforce TLS, scoped policies and audit controls. Only `api/v2` and `sdk/v2` are supported imports; do not depend on the root application module. MPL-2.0 file-level copyleft applies to covered modifications.
 - **Research notes:** `research/2026-10-29-atuin-openbao.md`. No third-party source copied.
 
+
+### Obtainium
+
+- **Repository:** https://github.com/ImranR98/Obtainium
+- **Author / Org:** ImranR98
+- **Category:** Android / APK updates / release discovery / package installation / supply-chain inspection
+- **Evidence:** VERIFIED — upstream APK build and release artifacts; not independently device-tested
+- **Tier / Score:** S / 26 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Tracks Android app releases directly from upstream forges, package repositories and configured sources, then downloads and offers APK installation/update flows.
+- **Why it is valuable:** A practical reference for release discovery, asset selection, APK signature awareness and source-specific update logic outside centralized app stores.
+- **Useful code/components:** `lib/app_sources/{github,gitlab,fdroid,codeberg}.dart`; `lib/providers/apps_provider_updates.dart`; `lib/installers/{stock,shizuku,root}_installer.dart`; `lib/utils/signing_cert_utils.dart`; `lib/services/pinned_certificates.dart`; `test/{github_release_filter,pinned_certificates}_test.dart`.
+- **Install / runtime:** Android app; Flutter >=3.44.0 and Dart SDK ^3.12.0 for source builds; prebuilt Android APK assets for v1.7.3.
+- **Platforms:** Android, including arm64-v8a, armeabi-v7a and universal release APKs.
+- **License:** GPL-3.0 root LICENSE.txt; pinned package-installer forks and dependencies require separate license review.
+- **Maintenance signals:** v1.7.3 released 2026-10-25 with APKs and checksums; [Build and Release workflow](https://github.com/ImranR98/Obtainium/actions/runs/40148046321) succeeded on 2026-10-25. Main commit fcd1807 from 2026-10-25.
+- **Verification performed:** Inspected README, LICENSE.txt, pubspec.yaml, source/test tree, v1.7.3 assets and release workflow. The workflow built unsigned APKs and created a draft release; signing happens separately. No independent install/update test, signing check, or demonstrated execution of the repository's integration tests.
+- **Source discovery:** GitHub-first; no accessible YouTube transcript evidence.
+- **Related projects:** MuntashirAkon/AppManager (complementary package inspection); ImranR98/Obtainium-Wiki; ImranR98/apps.obtainium.imranr.dev.
+- **Caveats / risks:** Untrusted APK sources, asset-selection rules, signer changes and certificate rotation are supply-chain risks. A published checksum does not itself authenticate an untrusted release. Check signing lineage and permissions before installation; GPL-3.0 obligations apply to reuse.
+- **Research notes:** `research/2026-10-29-obtainium-litestream.md`. Verified here means upstream build/release evidence, not independently validated safe updating.
+
+### Litestream
+
+- **Repository:** https://github.com/benbjohnson/litestream
+- **Author / Org:** benbjohnson
+- **Category:** SQLite / disaster recovery / incremental replication / cloud storage / Go
+- **Evidence:** PROMISING — mixed current-main integration CI, successful PR-specific tests
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** Incrementally replicates SQLite database changes to files or remote storage, with restoration and optional SQLite VFS functionality.
+- **Why it is valuable:** A composable SQLite recovery architecture with multiple backend implementations and explicit WAL/restore test infrastructure.
+- **Useful code/components:** `db.go`, `wal_reader.go`, `replica_client.go`, `s3/replica_client.go`, `nats/replica_client.go`, `cmd/litestream/restore.go`, `vfs.go`, `src/litestream-vfs.c`, `tests/integration/`.
+- **Install / runtime:** Go 1.26.0/toolchain go1.26.10 on inspected main; packaged binaries and containers; SQLite and configured file/S3/NATS/other replica destination.
+- **Platforms:** Linux amd64/arm64/armv6/armv7; macOS amd64/arm64. Windows binaries are offered but explicitly unsupported in v0.5.17 release notes.
+- **License:** Apache-2.0 root LICENSE; review dependency and backend SDK notices before copying code.
+- **Maintenance signals:** Stable v0.5.17 released 2026-08-31. 2026-10-29 [PR core workflow](https://github.com/benbjohnson/litestream/actions/runs/40930723107) passed unit/VFS and several backend jobs; [PR quick integration workflow](https://github.com/benbjohnson/litestream/actions/runs/40930723154) passed with long/scenario jobs skipped. [Current-main workflow](https://github.com/benbjohnson/litestream/actions/runs/40929579845) failed GCP and S3 integration jobs.
+- **Verification performed:** Inspected README, LICENSE, go.mod, source/test tree, release, CI job outcomes and exact NATS JetStream backend source. No independent replication, restore, crash recovery or security test. Successful PR jobs use SHA 8004de3, not the failing main SHA fb9c163.
+- **Source discovery:** GitHub-first; no accessible YouTube transcript evidence.
+- **Related projects:** nats-io/nats-server and nats-io/nats.go (JetStream Object Store client backend); superfly/ltx; kopia/kopia (complementary backup architecture).
+- **Caveats / risks:** Current-main S3/GCP integration failures prevent VERIFIED promotion. S3/R2/Azure/GCP live jobs were skipped in the successful PR core run. Upstream README notes an `_litestream_lock` table is added to source DB; do not assume byte-identical source. Exercise point-in-time restores and cloud credential isolation.
+- **Research notes:** `research/2026-10-29-obtainium-litestream.md`. No code copied.
 
 ## Entry format
 

@@ -967,7 +967,11 @@
         "novelty": 4,
         "documentation": 5,
         "maintenance": 5
-      }
+      },
+      "related_projects": [
+        "ImranR98/Obtainium (complementary upstream APK release/update manager; not the same package-inspection scope)"
+      ],
+      "research_notes": " Related research: research/2026-10-29-obtainium-litestream.md; no direct integration asserted."
     },
     {
       "name": "Caddy",
@@ -6609,9 +6613,10 @@
         "nats-io/natscli",
         "nats-io/nkeys",
         "nats-io/jwt",
-        "nats-io/nats-general"
+        "nats-io/nats-general",
+        "benbjohnson/litestream (JetStream Object Store replica backend; client integration, not server-core functionality)"
       ],
-      "research_notes": "v2.15.2 fixes OCSP certificate-serial binding, auth callout connection restrictions, snapshot limits, leaf-node MQTT ACL and MQTT OCSP behavior. Review 2.15 upgrade notes, TLS/accounts and backup/failover. No code copied. research/2026-10-28-maplibre-native-nats-server.md"
+      "research_notes": "v2.15.2 fixes OCSP certificate-serial binding, auth callout connection restrictions, snapshot limits, leaf-node MQTT ACL and MQTT OCSP behavior. Review 2.15 upgrade notes, TLS/accounts and backup/failover. No code copied. research/2026-10-28-maplibre-native-nats-server.md Litestream NATS backend nats/replica_client.go and 2026-10-29 PR test evidence: research/2026-10-29-obtainium-litestream.md."
     },
     {
       "name": "ripgrep",
@@ -7719,6 +7724,122 @@
         "openbao/openbao-helm — deployment ecosystem, not inspected this run"
       ],
       "research_notes": "research/2026-10-29-atuin-openbao.md. Production requires strong authn/authz, TLS, audited policies, unseal/recovery key custody, protected storage and backups. Development -dev mode is unsafe for production. MPL-2.0 file-level obligations; no code copied."
+    },
+    {
+      "name": "Obtainium",
+      "repository": "https://github.com/ImranR98/Obtainium",
+      "owner": "ImranR98",
+      "category": [
+        "android",
+        "app-updates",
+        "release-automation",
+        "apk-installation",
+        "supply-chain-inspection"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 26,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 4,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "GPL-3.0 root LICENSE.txt; pinned Flutter plugin forks and dependencies require separate review",
+      "license_copy_status": "copyleft-review-file-and-dependency-licenses-before-reuse",
+      "platforms": [
+        "Android; Flutter >=3.44.0; Dart SDK ^3.12.0",
+        "arm64-v8a, armeabi-v7a, and universal APK release assets"
+      ],
+      "useful_components": [
+        "lib/app_sources/github.dart and gitlab.dart — upstream release parsing and filtering",
+        "lib/app_sources/fdroid.dart and codeberg.dart — alternate release sources",
+        "lib/providers/apps_provider_updates.dart — update orchestration",
+        "lib/installers/{stock,shizuku,root}_installer.dart — privilege-aware APK installation",
+        "lib/utils/signing_cert_utils.dart — APK signing certificate SHA-256 extraction",
+        "lib/services/pinned_certificates.dart — certificate pin management",
+        "test/github_release_filter_test.dart and test/pinned_certificates_test.dart — unit-test sources"
+      ],
+      "verification": [
+        "README, GPL-3.0 license, pubspec.yaml, Android manifest and source/test tree inspected 2026-10-29",
+        "v1.7.3 published 2026-10-25 with downloadable Android APKs and hashes",
+        "2026-10-25 Build and Release run 40148046321 passed APK build and draft-release creation; workflow produces unsigned APKs and signing is separate",
+        "No independent install, update, signature validation or Android device testing; Flutter integration test files exist but were not shown executed in the inspected release workflow"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v1.7.3 2026-10-25; release build succeeded 2026-10-25; latest inspected main commit fcd1807 (2026-10-25)",
+      "source": "GitHub-first; no YouTube transcript evidence",
+      "related_projects": [
+        "MuntashirAkon/AppManager",
+        "ImranR98/Obtainium-Wiki",
+        "ImranR98/apps.obtainium.imranr.dev"
+      ],
+      "research_notes": "research/2026-10-29-obtainium-litestream.md. Upstream build and release evidence support artifact availability, not end-to-end secure updating. APK source trust, package signing lineage, pinned certificates, install permissions and third-party APK supply-chain risks require explicit review. No third-party source copied."
+    },
+    {
+      "name": "Litestream",
+      "repository": "https://github.com/benbjohnson/litestream",
+      "owner": "benbjohnson",
+      "category": [
+        "sqlite",
+        "disaster-recovery",
+        "incremental-backup",
+        "object-storage",
+        "go",
+        "replication"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 root LICENSE; dependencies separately licensed",
+      "license_copy_status": "apache-license-attribution-and-notice-review-required",
+      "platforms": [
+        "Linux amd64/arm64/armv6/armv7",
+        "macOS amd64/arm64",
+        "Windows binaries offered but unsupported",
+        "Go 1.26.0; toolchain go1.26.10 on inspected main"
+      ],
+      "useful_components": [
+        "db.go and wal_reader.go — SQLite WAL replication and parsing",
+        "replica.go and replica_client.go — replication abstraction",
+        "s3/replica_client.go — S3-compatible object storage backend",
+        "nats/replica_client.go — NATS JetStream Object Store backend",
+        "gs/replica_client.go, abs/replica_client.go, webdav/replica_client.go, sftp/replica_client.go — alternate backends",
+        "cmd/litestream/restore.go — point-in-time restore CLI",
+        "vfs.go and src/litestream-vfs.c — experimental/optional SQLite VFS",
+        "tests/integration/ and cmd/litestream-vfs/ — integration, VFS, stress and fuzz test sources"
+      ],
+      "verification": [
+        "README, Apache-2.0 license, go.mod, source/test tree and v0.5.17 release inspected 2026-10-29",
+        "v0.5.17 released 2026-08-31; release notes explicitly warn Windows is unsupported",
+        "2026-10-29 PR SHA 8004de3: Commit workflow 40930723107 passed core unit, VFS, MinIO, NATS, WebDAV, SFTP and mock-S3 tests; S3/R2/Azure/GCP live jobs skipped",
+        "2026-10-29 main SHA fb9c163: Commit workflow 40929579845 failed GCP and S3 integration jobs despite other jobs passing; no current-main all-green claim",
+        "2026-10-29 PR integration workflow 40930723154 passed quick tests, but long-running and scenario tests were skipped; upgrade workflow 40930723142 passed",
+        "No independent SQLite backup, point-in-time restore, network deployment or corruption recovery test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v0.5.17 2026-08-31; 2026-10-29 mixed main integration CI and successful PR-specific core/quick integration/upgrade workflows",
+      "source": "GitHub-first; no YouTube transcript evidence",
+      "related_projects": [
+        "nats-io/nats-server",
+        "nats-io/nats.go",
+        "superfly/ltx",
+        "kopia/kopia",
+        "mattn/go-sqlite3"
+      ],
+      "research_notes": "research/2026-10-29-obtainium-litestream.md. Verify continuous replication and real restore correctness against crashes and cloud disconnects; S3/GCP current-main CI failures block VERIFIED promotion. Source DB gets an _litestream_lock table; do not assume byte-identical source. No code copied."
     }
   ],
   "deferred_or_rejected": [
