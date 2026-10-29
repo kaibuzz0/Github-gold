@@ -2701,9 +2701,51 @@ Suggested tiers:
 - **Maintenance signals:** Stable release 0.29.5 published 2026-09-16; current main JS manifest reports 314.1.0-dev.0. [2026-10-29 PR CI](https://github.com/pyodide/pyodide/actions/runs/40829974568) had 13 passing jobs and one skipped. [2026-10-29 main CI](https://github.com/pyodide/pyodide/actions/runs/40838830915) FAILED: macOS linker undefined `mpd_*` symbols; downstream browser jobs skipped, Ubuntu core build passed.
 - **Verification performed:** Inspected README, MPL license, package manifest, Python/JS/C source layout, release metadata, CI job summaries and failed macOS build logs. No independent browser execution or package test.
 - **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript attribution.
-- **Related projects:** pyodide/micropip, python/cpython, emscripten-core/emsdk; Wasmtime is a different WebAssembly runtime model.
+- **Related projects:** pyodide/micropip, python/cpython, emscripten-core/emsdk; Wasmtime is a different WebAssembly runtime model. sqlite-vec has a separate Pyodide extension build artifact, **not** verified runtime integration.
 - **Caveats / risks:** Current main CI failure prevents VERIFIED classification. Enforce CPU/memory limits, browser permission boundaries, CSP, trusted package origins and third-party wheel licensing. WebAssembly alone is not a complete security boundary.
 - **Research notes:** `research/2026-10-29-go-git-pyodide.md`.
+
+
+### sqlite-vec
+
+- **Repository:** https://github.com/asg017/sqlite-vec
+- **Author / Org:** Alex Garcia (asg017)
+- **Category:** SQLite / embedded vector search / local-first AI / C extension
+- **Evidence:** PROMISING
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 3)
+- **What it does:** Implements float32, int8 and binary-vector storage and nearest-neighbor queries inside SQLite using a loadable C extension and vec0 virtual tables.
+- **Why it is valuable:** Offline vector retrieval in existing SQLite apps, without requiring a separate vector server; language bindings and small-device build targets.
+- **Useful code/components:** `sqlite-vec.c` (virtual table, KNN and distance functions), `sqlite-vec-ivf*.c` (experimental IVF), `sqlite-vec-rescore.c`, `ARCHITECTURE.md` (shadow tables/query planner), `bindings/{python,rust,go}/`, `tests/test-knn-distance-constraints.py` and `tests/test-cache-finalize.py`.
+- **Install / runtime:** SQLite with loadable extension enabled, or packaged Python (`pip install sqlite-vec`), Node.js, Rust or Go bindings. Android/iOS extension artifacts cross-built upstream; no device execution established.
+- **Platforms:** Linux, macOS, Windows, Android/iOS cross-builds, Wasm/Emscripten; Pyodide build artifact.
+- **License:** MIT OR Apache-2.0 root license files; review binding/package/dependency notices before reuse. No code copied.
+- **Maintenance signals:** [Stable v0.1.9](https://github.com/asg017/sqlite-vec/releases/tag/v0.1.9) 2026-03-31; [v0.1.10-alpha.4](https://github.com/asg017/sqlite-vec/releases/tag/v0.1.10-alpha.4) 2026-05-18; latest main commit observed 2026-05-18. [Main Test CI](https://github.com/asg017/sqlite-vec/actions/runs/26018140783) passed 16 jobs, skipped one on 2026-05-18. Desktop build jobs run pytest; mobile jobs cross-compile.
+- **Verification performed:** Inspected README, license files, C source, Makefile, architecture, tests and CI workflow/jobs. No independent extension loading, vector benchmark, device run or security audit.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript attribution.
+- **Related projects:** asg017/sqlite-vss (predecessor), asg017/sqlite-rembed (embedding companion), asg017/sqlite-ecosystem, Pyodide build target (not runtime-tested).
+- **Caveats / risks:** Explicitly pre-v1 with breaking-change warning; latest release is alpha. Brute-force KNN and experimental IVF require accuracy/resource benchmarks. Extension loading expands SQLite's native-code trust boundary; do not expose untrusted SQL or unbounded query inputs.
+- **Research notes:** `research/2026-10-29-sqlite-vec-ratatui.md`.
+
+### Ratatui
+
+- **Repository:** https://github.com/ratatui/ratatui
+- **Author / Org:** Ratatui maintainers
+- **Category:** Rust / terminal user interfaces / dashboard components / no_std
+- **Evidence:** VERIFIED (upstream)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Builds cross-platform terminal interfaces with layout, buffers, widgets, event backends and optional no_std support.
+- **Why it is valuable:** Reusable modular TUI framework for local-first dashboards, offline/terminal tools and low-resource frontends.
+- **Useful code/components:** `ratatui-core/src/buffer/` (cell rendering), `ratatui-core/src/layout/` (constraint solver), `ratatui-core/src/widgets/` (widget traits), `ratatui-widgets/src/` (charts/tables/scrollbars), `ratatui-crossterm/`, `ratatui-termion/`, `ratatui-termina/`, `ratatui-termwiz/`, `ratatui-macros/`.
+- **Install / runtime:** `cargo add ratatui`; Rust >=1.88.0 per current workspace; select compatible terminal backend. no_std requires disabling default features and choosing alloc/backend/layout-cache support.
+- **Platforms:** Linux, macOS, Windows; embedded/no_std with suitable backend. Termux not independently tested.
+- **License:** MIT; preserve original copyright/license, review dependencies. No code copied.
+- **Maintenance signals:** [Stable ratatui-v0.30.2](https://github.com/ratatui/ratatui/releases/tag/ratatui-v0.30.2) 2026-06-19; main updated 2026-10-28. [2026-10-28 main CI](https://github.com/ratatui/ratatui/actions/runs/40630817143) passed 34/34 jobs including Linux/macOS/Windows, no_std build, backend tests and cargo-deny.
+- **Verification performed:** Inspected README, architecture, Cargo manifests, root MIT license, core layout/widget modules, upstream release and main CI job list. No independent TUI, mobile, microcontroller or security tests.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript attribution.
+- **Related projects:** ratatui/templates, ratatui/awesome-ratatui, ratatui/mousefood (embedded backend), tui-rs predecessor, Crossterm and kasuari dependencies.
+- **Caveats / risks:** 0.30 modular crate migration may affect imports/features. no_std targets need layout-cache/critical-section consideration. Applications must safely restore terminal raw mode and sanitize untrusted text/escape sequences.
+- **Research notes:** `research/2026-10-29-sqlite-vec-ratatui.md`.
+
 
 ## Entry format
 

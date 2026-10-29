@@ -7462,9 +7462,138 @@
         "emscripten-core/emsdk — WebAssembly build toolchain",
         "python/cpython — upstream Python runtime",
         "pyodide/micropip — browser-side package installer",
-        "bytecodealliance/wasmtime — different WebAssembly runtime architecture"
+        "bytecodealliance/wasmtime — different WebAssembly runtime architecture",
+        "asg017/sqlite-vec — separately built Pyodide-side extension artifact; runtime integration not established"
       ],
-      "research_notes": "research/2026-10-29-go-git-pyodide.md. Do not promote to VERIFIED until current-main macOS build and downstream integration tests pass. Pyodide is not a general security sandbox; review package origins, CSP/worker boundaries, CPU/memory budgets and third-party wheel licenses. No source copied."
+      "research_notes": "research/2026-10-29-go-git-pyodide.md. Do not promote to VERIFIED until current-main macOS build and downstream integration tests pass. Pyodide is not a general security sandbox; review package origins, CSP/worker boundaries, CPU/memory budgets and third-party wheel licenses. No source copied. 2026-10-29: sqlite-vec upstream build-pyodide CI job 26018140783 passed as a build artifact only; no loaded Pyodide extension/runtime test, no change to PROMISING/A25."
+    },
+    {
+      "name": "sqlite-vec",
+      "repository": "https://github.com/asg017/sqlite-vec",
+      "owner": "Alex Garcia (asg017)",
+      "category": [
+        "sqlite",
+        "vector-search",
+        "local-first",
+        "c-extension",
+        "embeddings",
+        "offline-ai"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 3
+      },
+      "license": "MIT OR Apache-2.0 (root LICENSE-MIT and LICENSE-APACHE); packaged bindings and dependencies separately reviewed",
+      "license_copy_status": "dual-permissive-retain-copyright-license-and-notice-review-bindings-and-dependencies",
+      "platforms": [
+        "SQLite loadable extension",
+        "Linux x86_64/aarch64",
+        "macOS x86_64/arm64",
+        "Windows x86_64",
+        "Android cross-built (not device-tested)",
+        "iOS cross-built (not device-tested)",
+        "Wasm/Emscripten",
+        "Python, Node.js, Rust and Go bindings"
+      ],
+      "useful_components": [
+        "sqlite-vec.c — SQLite extension, vec0 virtual table, vector distances and query planning",
+        "sqlite-vec-ivf.c, sqlite-vec-ivf-kmeans.c — experimental IVF indexing and clustering (not production-validated)",
+        "sqlite-vec-rescore.c — vector reranking support",
+        "ARCHITECTURE.md — vec0 shadow-table storage and query-plan idxStr layout",
+        "bindings/python/, bindings/rust/, bindings/go/ — language adapters",
+        "tests/test-knn-distance-constraints.py, tests/test-ivf*.py, tests/test-cache-finalize.py — regression coverage",
+        ".github/workflows/test.yaml — cross-platform extension builds, pytest and Pyodide artifact build"
+      ],
+      "verification": [
+        "2026-10-29 inspected README, ARCHITECTURE.md, sqlite-vec.c, Makefile, root MIT and Apache-2.0 license files, test tree and workflow",
+        "Stable v0.1.9 published 2026-03-31; latest v0.1.10-alpha.4 prerelease published 2026-05-18; README explicitly warns pre-v1 breaking changes",
+        "2026-05-18 upstream main Test run 26018140783: 16 successful jobs and one intentionally skipped; Linux/macOS/Windows build jobs invoke make test-loadable (pytest), Android/iOS are cross-builds only",
+        "Same upstream run includes successful wasm32-emscripten and build-pyodide jobs, but no actual browser/Pyodide runtime execution established",
+        "No independent extension load, KNN accuracy test, Android execution, fuzzing or security audit performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v0.1.9 2026-03-31; alpha v0.1.10-alpha.4 and latest main commit 2026-05-18. Main Test workflow 26018140783 passed 16 jobs, skipped one; no more recent main commit observed as of 2026-10-29.",
+      "source": "GitHub-first embedded-database/vector-search discovery 2026-10-29 UTC; no YouTube transcript evidence.",
+      "related_projects": [
+        "asg017/sqlite-vss — predecessor",
+        "asg017/sqlite-rembed — embedding-generation companion",
+        "asg017/sqlite-ecosystem — related SQLite extensions",
+        "pyodide/pyodide — upstream sqlite-vec build-pyodide artifact target, runtime integration not established",
+        "duckdb/duckdb — alternative analytical database, not an extension dependency"
+      ],
+      "research_notes": "research/2026-10-29-sqlite-vec-ratatui.md. Extension loading requires deliberate SQLite configuration; restrict untrusted SQL and file access. Brute-force KNN, experimental IVF, memory growth and query bounds require benchmarking and limits. Pre-v1 APIs can break; inspect bindings and notices before copying. No upstream source copied."
+    },
+    {
+      "name": "Ratatui",
+      "repository": "https://github.com/ratatui/ratatui",
+      "owner": "Ratatui maintainers",
+      "category": [
+        "rust",
+        "terminal-ui",
+        "developer-tooling",
+        "cross-platform",
+        "embedded",
+        "no-std",
+        "dashboards"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT (root LICENSE and Cargo workspace); dependencies separately licensed",
+      "license_copy_status": "mit-permissive-retain-license-and-copyright-review-dependencies",
+      "platforms": [
+        "Rust >=1.88.0 (workspace MSRV)",
+        "Linux",
+        "macOS",
+        "Windows",
+        "no_std targets with alloc and a compatible backend; device use not verified",
+        "Termux possible via compatible Rust terminal backend, not independently tested"
+      ],
+      "useful_components": [
+        "ratatui-core/src/buffer/ — cell buffer and rendering diff infrastructure",
+        "ratatui-core/src/layout/ — constraint layout engine (kasuari/Cassowary)",
+        "ratatui-core/src/widgets/ — Widget and StatefulWidget contracts",
+        "ratatui-widgets/src/ — charts, tables, paragraphs, lists, scrollbars, gauges",
+        "ratatui-crossterm/, ratatui-termion/, ratatui-termina/, ratatui-termwiz/ — terminal backends",
+        "ratatui-macros/ — text and layout convenience macros",
+        "examples/ and ARCHITECTURE.md — runnable application examples and modular crate design"
+      ],
+      "verification": [
+        "2026-10-29 inspected README, MIT LICENSE, ARCHITECTURE.md, Cargo.toml, ratatui/Cargo.toml, ratatui-core/src/lib.rs, layout and widgets modules",
+        "Stable ratatui-v0.30.2 released 2026-06-19; current main commit 2026-10-28 documents no_std layout-cache behavior",
+        "2026-10-28 upstream main Continuous Integration run 40630817143: 34/34 jobs succeeded including Linux/macOS/Windows, Rust 1.88, docs, library tests, no_std build, backend tests and cargo-deny advisories",
+        "2026-10-28 PR CI 40657794625 separately passed 34/34, not used as current-main proof",
+        "No independent TUI run, microcontroller build, Termux compatibility test, terminal escape handling or security audit performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable ratatui-v0.30.2 2026-06-19; main updated 2026-10-28. Main CI 40630817143 passed 34/34 jobs; cargo-deny advisory and license checks passed on that commit.",
+      "source": "GitHub-first Rust terminal-interface and no_std tooling discovery 2026-10-29 UTC; no YouTube transcript evidence.",
+      "related_projects": [
+        "ratatui/templates — application templates",
+        "ratatui/awesome-ratatui — downstream projects",
+        "ratatui/mousefood — no_std/embedded backend",
+        "fdehau/tui-rs — predecessor fork",
+        "crossterm-rs/crossterm — default terminal backend",
+        "lithdew/kasuari — layout solver dependency"
+      ],
+      "research_notes": "research/2026-10-29-sqlite-vec-ratatui.md. Modularized in 0.30; Rust 1.88 MSRV and backend feature selection matter. Default features are not suitable for no_std; use default-features=false and consider layout-cache and critical-section. Untrusted terminal output, Unicode width, raw-mode cleanup and backend-specific behavior require application tests. No upstream code copied."
     }
   ],
   "deferred_or_rejected": [
