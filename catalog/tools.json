@@ -1692,7 +1692,8 @@
       "related_projects": [
         "nushell/reedline",
         "nushell/nushell.github.io",
-        "jqlang/jq (complementary JSON CLI; no integration asserted)"
+        "jqlang/jq (complementary JSON CLI; no integration asserted)",
+        "atuinsh/atuin — supported Nushell shell-history integration; Atuin has separate local database/sync model"
       ]
     },
     {
@@ -2681,7 +2682,8 @@
       "source": "research/2026-10-22-sops-mcuboot-promotion-evidence.md",
       "copy_restriction_note": "MPL-2.0 file-level copyleft; no source copied.",
       "related_projects": [
-        "betterleaks/betterleaks (complementary detection; no tested integration)"
+        "betterleaks/betterleaks (complementary detection; no tested integration)",
+        "openbao/openbao — complementary centralized dynamic-secrets service; no direct integration verified"
       ]
     },
     {
@@ -7594,6 +7596,129 @@
         "lithdew/kasuari — layout solver dependency"
       ],
       "research_notes": "research/2026-10-29-sqlite-vec-ratatui.md. Modularized in 0.30; Rust 1.88 MSRV and backend feature selection matter. Default features are not suitable for no_std; use default-features=false and consider layout-cache and critical-section. Untrusted terminal output, Unicode width, raw-mode cleanup and backend-specific behavior require application tests. No upstream code copied."
+    },
+    {
+      "name": "Atuin",
+      "repository": "https://github.com/atuinsh/atuin",
+      "owner": "atuinsh / Atuin maintainers",
+      "category": [
+        "terminal",
+        "shell-history",
+        "sqlite",
+        "local-first",
+        "encrypted-sync",
+        "rust",
+        "developer-tooling"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE and Cargo workspace; dependencies separately licensed)",
+      "license_copy_status": "mit-permissive-retain-copyright-license-review-crates-and-dependencies",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Bash",
+        "Zsh",
+        "Fish",
+        "Nushell",
+        "Xonsh",
+        "PowerShell",
+        "Termux not independently verified"
+      ],
+      "useful_components": [
+        "crates/atuin-client/src/history/{capture.rs,store.rs,builder.rs} — shell command capture and history storage",
+        "crates/atuin-client/src/record/{sqlite_store.rs,sync/} — local SQLite record storage and sync",
+        "crates/atuin-client/src/tui/ — interactive terminal history search",
+        "crates/atuin-server/src/{router.rs,handlers/,db/} — optional self-hosted sync service",
+        "crates/atuin-client/tests/e2e_sync.rs and tests/shells/ — upstream integration test sources",
+        "crates/atuin-history/src/{sort.rs,stats.rs} — reusable history ordering and statistics"
+      ],
+      "verification": [
+        "2026-10-29 inspected README, LICENSE, Cargo workspace, Rust toolchain, source modules and upstream tests",
+        "Stable v18.24.3 published 2026-10-29; main SHA 4532ceacd860885c2310ab8fab92a1bc00d6d7e8",
+        "2026-10-28 upstream Windows run 40611984554: 2/2 jobs passed; unit-test step ran cargo test and check job ran cargo check variants, on an earlier main SHA 876aa50ecaee8393f57a0dbb9aaf528076aad40e",
+        "2026-10-29 main Docker build run 40801883907 passed but is build evidence, not a shell-history or encrypted-sync integration test",
+        "Primary cross-platform CI is Buildkite; Buildkite results and current release end-to-end tests were not independently inspected",
+        "No independent shell integration, history capture, sync decryption, key recovery or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v18.24.3 2026-10-29; current main 4532ceac; upstream Windows cargo test/check passed on 2026-10-28 earlier commit; main Docker build passed 2026-10-29; full Buildkite matrix not independently assessed.",
+      "source": "GitHub-first terminal/local-first workflow discovery, 2026-10-29; no playlist transcript evidence",
+      "related_projects": [
+        "nushell/nushell — supported shell integration, not a dependency of Nushell core",
+        "atuinsh/atuin — separate self-hosted server modules in same repository",
+        "ratatui/ratatui — comparable Rust TUI ecosystem, not a declared integration"
+      ],
+      "research_notes": "research/2026-10-29-atuin-openbao.md. Command history can contain passwords/tokens; end-to-end encryption does not remove local plaintext/history exposure. Treat upstream security statements as claims, not a cryptographic audit. Review remote installer before executing; Rust toolchain 1.98.0 pinned, workspace rust-version 1.95.0. No third-party code copied."
+    },
+    {
+      "name": "OpenBao",
+      "repository": "https://github.com/openbao/openbao",
+      "owner": "OpenBao / OpenSSF community",
+      "category": [
+        "secrets-management",
+        "dynamic-credentials",
+        "pki",
+        "encryption",
+        "self-hosting",
+        "go",
+        "defensive-security"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MPL-2.0 (root LICENSE; retained historical HashiCorp copyright; dependencies separately licensed)",
+      "license_copy_status": "mpl-2-file-level-copyleft-and-attribution-review-required",
+      "platforms": [
+        "Go 1.27.3 pinned for source builds",
+        "Linux/server deployments",
+        "Docker and Kubernetes via ecosystem tooling",
+        "Go API and SDK libraries"
+      ],
+      "useful_components": [
+        "api/client.go, api/kv_v2.go, api/lifetime_watcher.go — supported client, KV v2 and lease lifecycle helpers",
+        "sdk/ — supported Go SDK for plugin and backend integrations",
+        "internal/vault/{barrier/,seal/,expiration.go,token_store.go,policy/} — encryption barrier, sealing, lease expiry, tokens and authorization reference implementations (internal, not supported imports)",
+        "internal/builtin/{credential/,logical/,database/} — authentication, secret engines and database integrations",
+        "internal/vault/{audit.go,audit_broker.go,raft.go} — audit and replicated-storage internals",
+        ".github/workflows/{ci.yml,test-go.yml} — test matrices and race detection"
+      ],
+      "verification": [
+        "2026-10-29 inspected README, MPL-2.0 LICENSE, API/SDK source tree, internal vault/builtin modules, pinned Go version and workflows",
+        "Stable v2.7.2 published 2026-10-26 (v2.6.5 also published for maintenance line)",
+        "2026-10-29 main SHA 159a64c9a08be548eef7939449e336e97cd878b7: CI run 40850965740 succeeded 39/39 jobs including Go tests and race-detection matrices; linter run 40850965627 succeeded",
+        "CI covers Go test suites; no independent cluster failover, unseal recovery, PKI issuance, live database credential rotation or penetration test",
+        "README explicitly supports importing api/v2 and sdk/v2; importing the root application module is not supported"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v2.7.2 released 2026-10-26; main updated 2026-10-29; 39/39 main CI jobs passed including Go race tests; recent earlier main commits also had CI failures, so treat success as commit-specific.",
+      "source": "GitHub-first secrets infrastructure and API/SDK discovery, 2026-10-29; no playlist transcript evidence",
+      "related_projects": [
+        "getsops/sops — complementary encrypted-file configuration, not an OpenBao integration",
+        "hashicorp/vault — historical upstream lineage and architectural comparison",
+        "openbao/openbao-helm — deployment ecosystem, not inspected this run"
+      ],
+      "research_notes": "research/2026-10-29-atuin-openbao.md. Production requires strong authn/authz, TLS, audited policies, unseal/recovery key custody, protected storage and backups. Development -dev mode is unsafe for production. MPL-2.0 file-level obligations; no code copied."
     }
   ],
   "deferred_or_rejected": [

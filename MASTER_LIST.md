@@ -664,7 +664,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable 0.116.1 published 2026-10-04; 2026-10-16 commits correct plugin-input lifetime, MCP visibility and number formatting.
 - **Verification performed:** official README inspected; root MIT license inspected; repository metadata inspected; CI/nightly and release surfaces inspected; 0.114.1 release dated 2026-07-11 observed upstream; August 2026 ecosystem maintenance observed; not independently built, benchmarked, or cross-platform tested by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
 - **Source discovery:** GitHub-first discovery; research/2026-08-22-structured-shell.md
-- **Related projects:** nushell/reedline; nushell/nushell.github.io; jqlang/jq (complementary JSON CLI; no integration asserted).
+- **Related projects:** nushell/reedline; nushell/nushell.github.io; jqlang/jq (complementary JSON CLI; no integration asserted); atuinsh/atuin (supported Nushell history integration; not a Nushell core dependency).
 - **Caveats / risks:** Nushell semantics differ materially from POSIX shells and some commands/design details may evolve. Plugins, packages, integrations, and separately maintained ecosystem repositories require independent license checks. No third-party implementation code copied.
 - **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
 
@@ -1055,7 +1055,7 @@ Suggested tiers:
 - **Maintenance signals:** v3.13.3 released 2026-07-23; main CLI CI passed 17/17 jobs on 2026-10-20; recent commits through 2026-10-20.
 - **Verification performed:** Inspected upstream README, license, source tree, release and GitHub Actions. No independent build, encryption/KMS test or security audit.
 - **Source discovery:** GitHub-first; `research/2026-10-22-sops-mcuboot-promotion-evidence.md` and earlier SOPS component dossiers.
-- **Related projects:** FiloSottile/age; getsops/community; betterleaks/betterleaks (complementary secret detection; no tested integration).
+- **Related projects:** FiloSottile/age; getsops/community; betterleaks/betterleaks (complementary secret detection; no tested integration); openbao/openbao (centralized dynamic secrets comparison; no integration verified).
 - **Caveats / risks:** Endpoint compromise, plaintext at runtime and cloud keyservice permissions remain relevant; CI does not prove cryptographic security.
 - **Research notes:** No third-party implementation code copied.
 
@@ -2745,6 +2745,47 @@ Suggested tiers:
 - **Related projects:** ratatui/templates, ratatui/awesome-ratatui, ratatui/mousefood (embedded backend), tui-rs predecessor, Crossterm and kasuari dependencies.
 - **Caveats / risks:** 0.30 modular crate migration may affect imports/features. no_std targets need layout-cache/critical-section consideration. Applications must safely restore terminal raw mode and sanitize untrusted text/escape sequences.
 - **Research notes:** `research/2026-10-29-sqlite-vec-ratatui.md`.
+
+
+### Atuin
+
+- **Repository:** https://github.com/atuinsh/atuin
+- **Author / Org:** Atuin maintainers / atuinsh.
+- **Category:** Rust / local-first shell history / SQLite / optional encrypted synchronization / terminal UI.
+- **Evidence:** VERIFIED (upstream tests and releases; not independently executed).
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4).
+- **What it does:** Records searchable shell-command history and context in local SQLite, with optional encrypted cross-device synchronization and a self-hosted server.
+- **Why it is valuable:** Modular shell-history capture, offline search, sync and TUI components useful in local-first developer workflows.
+- **Useful code/components:** `crates/atuin-client/src/history/{capture.rs,store.rs}`; `crates/atuin-client/src/record/{sqlite_store.rs,sync/}`; `crates/atuin-client/src/tui/`; `crates/atuin-server/src/{handlers/,db/}`; `crates/atuin-client/tests/e2e_sync.rs`; `crates/atuin-history/src/{sort.rs,stats.rs}`.
+- **Install / runtime:** Upstream binaries or Rust toolchain; pinned toolchain 1.98.0, workspace MSRV 1.95.0. Sync is optional. Review remote install scripts before use.
+- **Platforms:** Linux/macOS/Windows; Bash, Zsh, Fish, Nushell, Xonsh and PowerShell integrations. Termux not independently tested.
+- **License:** MIT at root/workspace; dependencies separately licensed.
+- **Maintenance signals:** Stable v18.24.3 published 2026-10-29; main updated 2026-10-29. [Earlier main Windows run](https://github.com/atuinsh/atuin/actions/runs/40611984554) passed 2/2 jobs with `cargo test` and `cargo check` on 2026-10-28; [current main Docker build](https://github.com/atuinsh/atuin/actions/runs/40801883907) passed 2026-10-29, but is not a sync test. Main CI also uses Buildkite, not fully inspected.
+- **Verification performed:** Inspected README, LICENSE, Cargo workspace, source, test layout, releases and GitHub Actions. No independent shell hook, sync, key recovery, terminal or cryptographic test.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript evidence.
+- **Related projects:** nushell/nushell (supported integration); atuinsh/atuin server modules; ratatui/ratatui (comparable TUI ecosystem, not direct integration).
+- **Caveats / risks:** History can capture credentials and sensitive command arguments; encryption claims do not prove complete endpoint secrecy. Verify backup/key recovery and sync server trust; remote installation scripts need review.
+- **Research notes:** `research/2026-10-29-atuin-openbao.md`. No upstream source copied.
+
+### OpenBao
+
+- **Repository:** https://github.com/openbao/openbao
+- **Author / Org:** OpenBao / OpenSSF community.
+- **Category:** Go / secrets management / dynamic credentials / PKI / audit / self-hosting.
+- **Evidence:** VERIFIED (upstream main Go tests and race detection; not independently deployed).
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5).
+- **What it does:** Centralizes secret storage, dynamic credentials, encryption-as-a-service, leasing, renewal, revocation and access audit.
+- **Why it is valuable:** Production-oriented security infrastructure with reusable Go API and SDK modules and extensive tests; useful comparison to encrypted-file approaches.
+- **Useful code/components:** `api/client.go`, `api/kv_v2.go`, `api/lifetime_watcher.go`; supported `sdk/`; internal `internal/vault/{barrier/,seal/,expiration.go,token_store.go,policy/,audit.go,raft.go}`; `internal/builtin/{credential/,logical/,database/}`; Go test/race CI.
+- **Install / runtime:** Published binaries/containers or Go source (`.go-version` pins 1.27.3). `go build -o bin/bao .`; `-dev` mode is not for production.
+- **Platforms:** Server-oriented Go builds, Linux and containers; Go API/SDK consumers.
+- **License:** MPL-2.0, retaining historical HashiCorp copyright; dependencies have separate terms.
+- **Maintenance signals:** Stable v2.7.2 published 2026-10-26; 2026-10-29 [main CI](https://github.com/openbao/openbao/actions/runs/40850965740) passed 39/39 jobs including Go tests and race-detection matrix; [main linter](https://github.com/openbao/openbao/actions/runs/40850965627) passed. Earlier commits had CI failures, so this evidence is commit-specific.
+- **Verification performed:** Inspected README, root license, API/SDK, internal vault/builtin modules, Go toolchain and CI job steps. No independent HA failover, secret issuance, key rotation, unseal recovery or security audit.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript evidence.
+- **Related projects:** getsops/sops (encrypted-file configuration comparison, no integration verified); hashicorp/vault (historical upstream); OpenBao API/SDK modules.
+- **Caveats / risks:** Protect root tokens, unseal/recovery keys, storage and backups; enforce TLS, scoped policies and audit controls. Only `api/v2` and `sdk/v2` are supported imports; do not depend on the root application module. MPL-2.0 file-level copyleft applies to covered modifications.
+- **Research notes:** `research/2026-10-29-atuin-openbao.md`. No third-party source copied.
 
 
 ## Entry format
