@@ -644,7 +644,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable v1.11.2 published 2026-09-22; commits on 2026-10-16 add tunnel framing tests and certificate validation fixes.
 - **Verification performed:** repository metadata inspected; official README inspected; root license metadata inspected; recent maintenance commits inspected; 2026-08-21 native Go fips140 support observed; 2026-08-21 TUN offload work observed; 2026-08-20 fail-closed IPv6 parsing fix observed; 2026-08-20 32-bit CA command memory-safety fix observed; not independently deployed, built, tested, benchmarked, fuzzed, cryptographically audited, or FIPS-validated by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
 - **Source discovery:** GitHub-first and recursive networking research; research/2026-08-22-nebula-overlay-networking.md
-- **Related projects:** Defined Networking mobile clients; WireGuard and Tailscale as architectural comparisons.
+- **Related projects:** Defined Networking mobile clients; WireGuard and Tailscale as architectural comparisons; yggdrasil-network/yggdrasil-go — self-arranging encrypted IPv6 routing comparison (different trust/authorization model).
 - **Caveats / risks:** Private-network infrastructure is security-sensitive; catalog inclusion is not an audit. Direct paths depend on NAT/firewall topology, CA key handling is critical, companion mobile code is separate, and FIPS build support is not blanket deployment compliance. No third-party implementation code copied.
 - **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
 
@@ -2600,7 +2600,7 @@ Suggested tiers:
 - **Maintenance signals:** [Stable v50.0.0](https://github.com/bytecodealliance/wasmtime/releases/tag/v50.0.0) 2026-10-20; [main merge-group CI](https://github.com/bytecodealliance/wasmtime/actions/runs/40740727895) 2026-10-28: 190 pass, 3 skip; [cargo audit](https://github.com/bytecodealliance/wasmtime/actions/runs/40792277264) 2026-10-29 passed.
 - **Verification performed:** Inspected 2026-10-29 README, LICENSE, Cargo.toml, SECURITY.md, runtime config/store/limits/component and WASI source; Stable v50.0.0 released 2026-10-20; 2026-10-28 main merge-group CI run 40740727895 succeeded: 190 passed, 3 skipped, 0 failed jobs; 2026-10-29 cargo-audit run 40792277264 passed (upstream, not an independent audit); No independent Wasm execution, build, sandbox penetration test or benchmark.
 - **Source discovery:** GitHub-first WebAssembly runtime research 2026-10-29 UTC; no video transcript attribution.
-- **Related projects:** Cranelift (same monorepo); bytecodealliance/wasm-tools (follow-up); WASI and WebAssembly Component Model.
+- **Related projects:** Cranelift (same monorepo); bytecodealliance/wasm-tools — VERIFIED/S29 companion binary validation, WIT/component and fuzz tooling (2026-10-29 upstream CI); WASI and WebAssembly Component Model.
 - **Caveats / risks:** Wasm execution is not a complete sandbox without controlled host capabilities. Restrict WASI filesystem/network access and callbacks; set fuel/epoch and resource budgets.
 - **Research notes:** `research/2026-10-29-wasmtime-zstandard.md`.
 
@@ -2623,6 +2623,47 @@ Suggested tiers:
 - **Related projects:** libarchive/libarchive — Zstandard filter; Cyan4973/FiniteStateEntropy — entropy coding; RFC 8878; facebook/zstd — historical alias.
 - **Caveats / risks:** Untrusted compressed data may exhaust resources; enforce output/CPU/memory budgets and validate dictionaries, checksums and errors. Dev v1.6.0 docs are not stable release evidence.
 - **Research notes:** `research/2026-10-29-wasmtime-zstandard.md`.
+
+
+### wasm-tools
+
+- **Repository:** https://github.com/bytecodealliance/wasm-tools
+- **Author / Org:** Bytecode Alliance
+- **Category:** WebAssembly / parser and validator / WIT / component model / Rust tooling / fuzzing
+- **Evidence:** VERIFIED (upstream source and CI; no independent execution)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** CLI and reusable Rust libraries for parsing, validating, printing, generating, transforming, and analyzing WebAssembly modules and components.
+- **Why it is valuable:** Modular, composable toolchain for Wasm inspection, compatibility checks, WIT interfaces, and fuzz-test input generation, complementary to runtime Wasmtime.
+- **Useful code/components:** `crates/wasmparser/src/parser.rs` — incremental parser; `crates/wasmparser/src/validator.rs` — validator; `crates/wasm-encoder/` — encoder; `crates/wat/`, `crates/wast/` — text formats; `crates/wit-parser/`, `crates/wit-component/src/lib.rs` — WIT/component tooling; `crates/wasm-smith/`, `crates/wasm-mutate/`, `crates/wasm-shrink/` — fuzz tooling; `crates/c-api/` — native bindings.
+- **Install / runtime:** `cargo install --locked wasm-tools` or release artifacts; Rust workspace MSRV 1.88.0 at inspected head. Linux, macOS and Windows.
+- **Platforms:** Rust CLI/libraries, C API, supported Wasm targets; CI includes multiple native architectures and WASI.
+- **License:** Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT (workspace manifest); source files and dependencies require separate review. No code copied.
+- **Maintenance signals:** [Stable v1.262.0](https://github.com/bytecodealliance/wasm-tools/releases/tag/v1.262.0) 2026-10-13; [2026-10-28 merge-group CI](https://github.com/bytecodealliance/wasm-tools/actions/runs/40611648736) 34 passed, one skipped (release-tag gate), including C API, fuzz, platform and WASM tests.
+- **Verification performed:** Inspected README, root Cargo manifest, license files, wasmparser parser/validator, wit-component API, fuzz directory and CI jobs; no independent parser execution, fuzz campaign, build or security audit.
+- **Source discovery:** GitHub-first recursive Wasmtime ecosystem follow-up 2026-10-29; no playlist transcript attribution.
+- **Related projects:** bytecodealliance/wasmtime; bytecodealliance/wit-bindgen; WebAssembly/component-model.
+- **Caveats / risks:** Parsing/validation is not execution sandboxing or trust authorization. Bound untrusted input size and resource consumption; proposal/component compatibility and third-party crate licensing matter.
+- **Research notes:** `research/2026-10-29-wasm-tools-yggdrasil.md`.
+
+### Yggdrasil IPv6 Overlay
+
+- **Repository:** https://github.com/yggdrasil-network/yggdrasil-go
+- **Author / Org:** Yggdrasil Network contributors
+- **Category:** Encrypted IPv6 overlay / self-arranging routing / Go / peer-to-peer / private networking
+- **Evidence:** VERIFIED (upstream source and release CI; no independent deployment)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 4 + Novelty 5 + Documentation 4 + Maintenance 4)
+- **What it does:** Experimental, encrypted IPv6 overlay that runs over IPv4 or IPv6 links and lets IPv6-capable applications communicate between configured peers.
+- **Why it is valuable:** Distinct self-arranging routing design and reusable encrypted node, peer transport, local discovery, TUN and admin components.
+- **Useful code/components:** `src/core/core.go` — node and Ironwood integration; `src/core/link_quic.go` — QUIC peer transport; `src/core/link_tls.go`, `link_ws.go` — peer transports; `src/config/config.go` — Ed25519 identity; `src/admin/admin.go` — JSON control socket; `src/tun/tun.go` — TUN; `src/multicast/` — discovery; `src/address/` — key-derived IPv6.
+- **Install / runtime:** Go >=1.26; `./build` or release packages; create configuration and provision peers. TUN setup typically requires elevated networking capability.
+- **Platforms:** Linux, macOS, Windows, FreeBSD, OpenBSD, OpenWrt; IPv6 applications over IPv4/IPv6 underlay.
+- **License:** LGPL-3.0 with explicit special static/dynamic linking exception; preserve terms and notices; review dependencies separately. No code copied.
+- **Maintenance signals:** [Stable v0.5.15](https://github.com/yggdrasil-network/yggdrasil-go/releases/tag/v0.5.15) 2026-10-24; [2026-10-24 release CI](https://github.com/yggdrasil-network/yggdrasil-go/actions/runs/40102009196) passed 13/13 lint, analysis, platform test and BSD cross-build jobs; two parallel runs cancelled.
+- **Verification performed:** Inspected README, license, go.mod, core/QUIC/admin/config/TUN source and CI; no independent peer session, routing stress test, hardware test or security audit.
+- **Source discovery:** GitHub-first encrypted-overlay networking research 2026-10-29; no playlist transcript attribution.
+- **Related projects:** Arceliar/ironwood (MPL-2.0 dependency), slackhq/nebula (architectural comparison), WireGuard TUN ecosystem, Reticulum.
+- **Caveats / risks:** **Admin API lacks built-in authentication** (`src/admin/admin.go` TODO), and supports TCP listeners: restrict access, preferably to protected local Unix sockets. Protect private keys, review peer exposure and topology, and treat experimental routing as unaudited.
+- **Research notes:** `research/2026-10-29-wasm-tools-yggdrasil.md`.
 
 ## Entry format
 
