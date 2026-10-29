@@ -7330,11 +7330,12 @@
         "Stable v0.5.15 released 2026-10-24; Go 1.26 required by release notes and go.mod",
         "2026-10-24 release CI run 40102009196 succeeded 13/13 jobs: lint, CodeQL, Linux/macOS/Windows build-and-test on Go 1.26/1.27, FreeBSD/OpenBSD cross-builds and aggregator",
         "Two parallel release-triggered runs were cancelled; passing run 40102009196 is the positive test evidence",
-        "No independent network deployment, peer discovery, NAT traversal, routing stress test or cryptographic audit"
+        "No independent network deployment, peer discovery, NAT traversal, routing stress test or cryptographic audit",
+        "2026-10-29 maintenance: develop go.mod pins github.com/Arceliar/ironwood v0.0.0-20261023231900-0712eccbb962; inspected upstream Ironwood 2026-10-23 commit 0712ecc including low-order/identity public-key validation fix. Dependency pin confirmed; no independent security regression test."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "maintenance_signals": "v0.5.15 published 2026-10-24; release CI 40102009196 passed 13/13; packaging run 40102062103 succeeded. Development remains experimental per README.",
+      "maintenance_signals": "v0.5.15 published 2026-10-24; release CI 40102009196 passed 13/13; packaging run 40102062103 succeeded. Development remains experimental per README. Develop go.mod pins Ironwood 0712ecc (2026-10-23 public-key validation fix); release inclusion not established.",
       "source": "GitHub-first independent encrypted-overlay networking research 2026-10-29 UTC; no YouTube transcript attribution.",
       "related_projects": [
         "Arceliar/ironwood — MPL-2.0 routing/encryption dependency; inspect separately",
@@ -7342,7 +7343,128 @@
         "WireGuard/wireguard-go — TUN-related dependency ecosystem",
         "markqvist/Reticulum — heterogeneous transport comparison"
       ],
-      "research_notes": "research/2026-10-29-wasm-tools-yggdrasil.md. src/admin/admin.go explicitly says TODO: Add authentication and permits TCP listener; never expose admin socket publicly. Restrict to local Unix socket or tightly controlled access, protect private keys, pin peers, limit untrusted node-info and traffic, and treat experimental routing as non-audited. No source copied."
+      "research_notes": "research/2026-10-29-wasm-tools-yggdrasil.md. src/admin/admin.go explicitly says TODO: Add authentication and permits TCP listener; never expose admin socket publicly. Restrict to local Unix socket or tightly controlled access, protect private keys, pin peers, limit untrusted node-info and traffic, and treat experimental routing as non-audited. No source copied. Follow-up 2026-10-29: develop now pins Ironwood 0712ecc with low-order/identity public-key checks; this is source-level dependency evidence, not proof that v0.5.15 ships the fix. See research/2026-10-29-go-git-pyodide.md."
+    },
+    {
+      "name": "go-git",
+      "repository": "https://github.com/go-git/go-git",
+      "owner": "go-git maintainers",
+      "category": [
+        "git",
+        "go-library",
+        "repository-automation",
+        "version-control",
+        "developer-tooling",
+        "in-memory-storage"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 (root LICENSE); go-billy, crypto, SSH and other dependencies separately licensed",
+      "license_copy_status": "apache-2-preserve-license-notice-and-attribution-review-dependencies",
+      "platforms": [
+        "Go >=1.26 for current v6 main module",
+        "Linux",
+        "macOS",
+        "Windows",
+        "JS/Wasm and WASI targets covered by upstream CI; functionality may vary"
+      ],
+      "useful_components": [
+        "repository.go, worktree.go — high-level clone, checkout, commit and worktree APIs",
+        "plumbing/ — Git objects, references, packfiles, protocol formats and revision walking",
+        "plumbing/transport/http/ — HTTP transport and credential-safe error rendering",
+        "storage/memory/ and storage/filesystem/ — interchangeable object/reference storage",
+        "storage/storer.go and EXTENDING.md — custom storer extension points",
+        "_examples/ — clone, push, sparse checkout, in-memory and custom transport examples",
+        "go-git/go-billy — companion filesystem abstraction (separate repository)"
+      ],
+      "verification": [
+        "2026-10-29 inspected README, Apache-2.0 LICENSE, go.mod, EXTENDING.md, plumbing/transport/http/common.go, storage and example source trees",
+        "Stable v5.19.3 released 2026-10-04; v6.0.0-beta.1 is a prerelease; main go.mod declares github.com/go-git/go-git/v6 and Go 1.26",
+        "2026-10-28 upstream PR Test workflow 40742346033 passed 10/10 Linux/macOS/Windows/JS/WASI jobs on ref-lockfile-stack SHA 5436d34; not a current-main CI run",
+        "Same PR SHA: Git Compatibility 40742345031, CodeQL 40742345055, CIFuzz 40742345067 and PR Validation 40742345674 passed (upstream only)",
+        "No independent clone, Git object parsing, transport interoperability, fuzzing or security tests were performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v5.19.3 2026-10-04; v6.0.0-beta.1 same date; main 2026-10-23 tree-mode compatibility fixes; 2026-10-28 PR CI 10/10 pass (not main).",
+      "source": "GitHub-first recursive developer-tooling discovery 2026-10-29 UTC; no YouTube transcript evidence.",
+      "related_projects": [
+        "go-git/go-billy — pluggable filesystem",
+        "go-git/go-git-fixtures — test fixtures",
+        "git/git — reference Git implementation",
+        "FluxCD and Gitea — README-reported ecosystem usage, not independently evaluated"
+      ],
+      "research_notes": "research/2026-10-29-go-git-pyodide.md. Prefer stable v5 API for production until v6 stabilizes. Untrusted repositories and packfiles need resource limits; constrain network credentials, redirect handling and SSH host verification. v5.19.3 release notes mention HTTP credential containment across redirects. No upstream code copied."
+    },
+    {
+      "name": "Pyodide",
+      "repository": "https://github.com/pyodide/pyodide",
+      "owner": "Pyodide contributors",
+      "category": [
+        "webassembly",
+        "python-runtime",
+        "browser",
+        "scientific-computing",
+        "offline-apps",
+        "javascript-interoperability"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 5,
+        "documentation": 4,
+        "maintenance": 3
+      },
+      "license": "MPL-2.0 (root LICENSE and src/js/package.json); CPython, packages and native dependencies carry separate terms",
+      "license_copy_status": "mpl-2-file-level-copyleft-preserve-license-and-modification-notices-review-python-and-wheel-licenses",
+      "platforms": [
+        "Modern WebAssembly-capable browsers",
+        "Node.js",
+        "JavaScript/TypeScript",
+        "Emscripten/Wasm",
+        "Browser Web Workers where configured"
+      ],
+      "useful_components": [
+        "cpython/ — patched CPython WebAssembly port",
+        "src/core/pyproxy.c and src/core/pyproxy.ts — Python objects exposed to JavaScript",
+        "src/core/js2python.c and src/core/python2js.c — cross-language value conversion",
+        "src/js/load-package.ts and src/js/installer.ts — package loading and dependency handling",
+        "src/js/memory-limit.ts — bounded WebAssembly heap allocation",
+        "src/py/pyodide/webloop.py — browser event-loop integration",
+        "packages/ — Python wheel port recipes and build metadata",
+        "src/js/pyodide.ts and src/js/api.ts — runtime bootstrap and public API"
+      ],
+      "verification": [
+        "2026-10-29 inspected README, repository-structure.md, MPL-2.0 LICENSE, src/js/package.json, Python/JS/C source layout and CI jobs/logs",
+        "Stable 0.29.5 release published 2026-09-16; current main JS package manifest says 314.1.0-dev.0, not a stable release",
+        "2026-10-29 upstream PR workflow 40829974568 passed 13 jobs and skipped one SciPy matrix job, including macOS/Linux core builds, Safari core test, command-line, Deno/Bun and DB integration tests",
+        "2026-10-29 main push workflow 40838830915 FAILED: macOS core build linker reports undefined mpd_* symbols, while Ubuntu core build passed; downstream browser/runtime jobs were skipped",
+        "No independent browser interpreter, package install, scientific calculation, offline app or sandbox test was performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 0.29.5 released 2026-09-16; main updated 2026-10-29; successful PR CI 40829974568 contrasted with failed main CI 40838830915 (macOS linker undefined mpd_*).",
+      "source": "GitHub-first independent WebAssembly scientific-computing research 2026-10-29 UTC; no YouTube transcript evidence.",
+      "related_projects": [
+        "emscripten-core/emsdk — WebAssembly build toolchain",
+        "python/cpython — upstream Python runtime",
+        "pyodide/micropip — browser-side package installer",
+        "bytecodealliance/wasmtime — different WebAssembly runtime architecture"
+      ],
+      "research_notes": "research/2026-10-29-go-git-pyodide.md. Do not promote to VERIFIED until current-main macOS build and downstream integration tests pass. Pyodide is not a general security sandbox; review package origins, CSP/worker boundaries, CPU/memory budgets and third-party wheel licenses. No source copied."
     }
   ],
   "deferred_or_rejected": [

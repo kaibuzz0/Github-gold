@@ -2663,7 +2663,47 @@ Suggested tiers:
 - **Source discovery:** GitHub-first encrypted-overlay networking research 2026-10-29; no playlist transcript attribution.
 - **Related projects:** Arceliar/ironwood (MPL-2.0 dependency), slackhq/nebula (architectural comparison), WireGuard TUN ecosystem, Reticulum.
 - **Caveats / risks:** **Admin API lacks built-in authentication** (`src/admin/admin.go` TODO), and supports TCP listeners: restrict access, preferably to protected local Unix sockets. Protect private keys, review peer exposure and topology, and treat experimental routing as unaudited.
-- **Research notes:** `research/2026-10-29-wasm-tools-yggdrasil.md`.
+- **Research notes:** `research/2026-10-29-wasm-tools-yggdrasil.md`. Follow-up 2026-10-29: develop go.mod pins Ironwood 0712ecc (2026-10-23 low-order/identity public-key validation fix); release inclusion and independent regression testing not established. See research/2026-10-29-go-git-pyodide.md.
+
+### go-git
+
+- **Repository:** https://github.com/go-git/go-git
+- **Author / Org:** go-git maintainers
+- **Category:** Pure-Go Git library / version-control automation / extensible storage
+- **Evidence:** VERIFIED (upstream)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Implements Git repository operations in pure Go, with porcelain and plumbing APIs and interchangeable object storage/filesystems.
+- **Why it is valuable:** Enables embedded Git operations, in-memory repositories, custom storage backends and cross-platform automation without shelling out to Git for every operation.
+- **Useful code/components:** `repository.go`, `worktree.go`; `plumbing/` object/pack/protocol parsers; `plumbing/transport/http/`; `storage/memory/`, `storage/filesystem/`; `EXTENDING.md` storer/transport interfaces; `_examples/` including sparse checkout and custom HTTP.
+- **Install / runtime:** Stable v5 module for production; current v6 main uses Go >=1.26 and import `github.com/go-git/go-git/v6`. v6.0.0-beta.1 is prerelease.
+- **Platforms:** Go-supported Linux, macOS, Windows; JS/Wasm and WASI have upstream CI coverage with feature limitations.
+- **License:** Apache-2.0; dependency and companion-project licenses separately reviewed before reuse.
+- **Maintenance signals:** Stable v5.19.3 published 2026-10-04; v6.0.0-beta.1 published same day. October 23 tree-mode compatibility commits. [2026-10-28 PR Test CI](https://github.com/go-git/go-git/actions/runs/40742346033) passed 10/10 jobs; same PR CodeQL, CIFuzz and Git Compatibility workflows passed. These are not main-branch results.
+- **Verification performed:** Inspected README, license, Go module, extensibility docs, transport source, storage, examples, release and CI jobs. No independent Git clone, parser execution, fuzzing or security audit.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript attribution.
+- **Related projects:** go-git/go-billy filesystem abstraction; go-git/go-git-fixtures; git/git; README-reported Gitea and Flux integrations.
+- **Caveats / risks:** Stable v5 versus prerelease v6 API compatibility. Treat remote Git data as untrusted; bound packfile and repository resource use, verify SSH host keys, and constrain credentials/redirects. v5.19.3 notes a credential-redirect containment fix.
+- **Research notes:** `research/2026-10-29-go-git-pyodide.md`.
+
+### Pyodide
+
+- **Repository:** https://github.com/pyodide/pyodide
+- **Author / Org:** Pyodide contributors
+- **Category:** WebAssembly / Python in browser / offline scientific computing / JavaScript interoperability
+- **Evidence:** PROMISING
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 3)
+- **What it does:** Runs CPython compiled to WebAssembly in browsers and Node.js, with JavaScript/Python interop and browser-compatible Python packages.
+- **Why it is valuable:** Reusable local Python execution for browser-based analysis, education, offline apps, and client-side scientific tools without a remote Python server.
+- **Useful code/components:** `cpython/` CPython port; `src/core/pyproxy.c`, `js2python.c`, `python2js.c` bridge; `src/js/load-package.ts` package loading; `src/js/memory-limit.ts` bounded heap; `src/py/pyodide/webloop.py` event loop; `packages/` port recipes.
+- **Install / runtime:** Hosted or self-hosted Pyodide distribution; npm package or browser loader; pure Python wheels via micropip; compiled extensions need compatible Pyodide-built wheels and WebAssembly browser support.
+- **Platforms:** Modern browsers, Web Workers where configured, Node.js; Emscripten/WebAssembly.
+- **License:** MPL-2.0 for repository; CPython, scientific packages and bundled third-party wheels have separate licenses.
+- **Maintenance signals:** Stable release 0.29.5 published 2026-09-16; current main JS manifest reports 314.1.0-dev.0. [2026-10-29 PR CI](https://github.com/pyodide/pyodide/actions/runs/40829974568) had 13 passing jobs and one skipped. [2026-10-29 main CI](https://github.com/pyodide/pyodide/actions/runs/40838830915) FAILED: macOS linker undefined `mpd_*` symbols; downstream browser jobs skipped, Ubuntu core build passed.
+- **Verification performed:** Inspected README, MPL license, package manifest, Python/JS/C source layout, release metadata, CI job summaries and failed macOS build logs. No independent browser execution or package test.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript attribution.
+- **Related projects:** pyodide/micropip, python/cpython, emscripten-core/emsdk; Wasmtime is a different WebAssembly runtime model.
+- **Caveats / risks:** Current main CI failure prevents VERIFIED classification. Enforce CPU/memory limits, browser permission boundaries, CSP, trusted package origins and third-party wheel licensing. WebAssembly alone is not a complete security boundary.
+- **Research notes:** `research/2026-10-29-go-git-pyodide.md`.
 
 ## Entry format
 
