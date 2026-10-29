@@ -6183,7 +6183,8 @@
       "maintenance_signals": "v3.8.10 (2026-10-14); master CI 40530777935 20/20 passed and CodeQL 40530777979 passed 2026-10-27",
       "source": "GitHub-first 2026-10-27; research/2026-10-27-libarchive-kiwix-tools.md; no playlist transcript evidence",
       "related_projects": [
-        "bsdtar, bsdcpio, bsdcat, bsdunzip (same repository)"
+        "bsdtar, bsdcpio, bsdcat, bsdunzip (same repository)",
+        "meta/zstd — upstream codec used by libarchive Zstandard filter"
       ],
       "research_notes": "Individual source-file license headers govern reuse. Malformed archives, traversal, symlinks and decompression bombs require deployment safeguards; no code copied."
     },
@@ -6974,6 +6975,129 @@
         "tree-sitter/tree-sitter-cli — CLI lives within this monorepo, not a separate canonical entry"
       ],
       "research_notes": "research/2026-10-28-pion-webrtc-tree-sitter.md. Language ABI 13–15 per current C header; older grammar compatibility is not forward compatibility. Parser generation needs Node.js; grammar test/parse commands need C/C++ compiler; native grammars are executable code and should not be loaded from untrusted sources. No source copied."
+    },
+    {
+      "name": "Wasmtime",
+      "repository": "https://github.com/bytecodealliance/wasmtime",
+      "owner": "Bytecode Alliance",
+      "category": [
+        "webassembly",
+        "runtime",
+        "sandboxed-execution",
+        "wasi",
+        "rust",
+        "c-api"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "Apache-2.0 WITH LLVM-exception (root Cargo.toml); root LICENSE Apache-2.0; dependencies separate",
+      "license_copy_status": "preserve-license-llvm-exception-and-attribution",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "x86_64",
+        "aarch64",
+        "other cross-compile targets"
+      ],
+      "useful_components": [
+        "crates/wasmtime/src/config.rs — engine features",
+        "crates/wasmtime/src/runtime/store.rs — Store and fuel",
+        "crates/wasmtime/src/runtime/limits.rs — ResourceLimiter",
+        "crates/wasmtime/src/runtime/component/mod.rs — component model",
+        "crates/wasi/src/lib.rs — WASI host",
+        "crates/wasi-http/src/lib.rs — wasi:http",
+        "cranelift/ — compiler backend",
+        "pulley/ — interpreter",
+        "crates/c-api/ — C embedding"
+      ],
+      "verification": [
+        "Inspected 2026-10-29 README, LICENSE, Cargo.toml, SECURITY.md, runtime config/store/limits/component and WASI source",
+        "Stable v50.0.0 released 2026-10-20",
+        "2026-10-28 main merge-group CI run 40740727895 succeeded: 190 passed, 3 skipped, 0 failed jobs",
+        "2026-10-29 cargo-audit run 40792277264 passed (upstream, not an independent audit)",
+        "No independent Wasm execution, build, sandbox penetration test or benchmark"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v50.0.0 2026-10-20; main merge-group CI 40740727895: 190 pass, 3 skip; cargo audit 40792277264 passed 2026-10-29.",
+      "source": "GitHub-first WebAssembly runtime research 2026-10-29 UTC; no video transcript attribution.",
+      "related_projects": [
+        "Cranelift (same monorepo)",
+        "bytecodealliance/wasm-tools (follow-up)",
+        "WASI and WebAssembly Component Model"
+      ],
+      "research_notes": "research/2026-10-29-wasmtime-zstandard.md. Limit host-granted WASI filesystem/network access and callbacks; enforce fuel/epoch and memory/table/instance budgets. Security advisories matter. No source copied."
+    },
+    {
+      "name": "Zstandard",
+      "repository": "https://github.com/meta/zstd",
+      "owner": "Meta Platforms (historical facebook/zstd redirects here)",
+      "category": [
+        "compression",
+        "c-library",
+        "streaming",
+        "dictionary-compression",
+        "archival",
+        "cli-tools"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "BSD-style OR GPLv2 (root LICENSE, COPYING and lib/zstd.h); user selects one",
+      "license_copy_status": "choose-compatible-option-and-preserve-notices",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Android NDK",
+        "other C targets subject to build constraints"
+      ],
+      "useful_components": [
+        "lib/zstd.h — public C streaming API",
+        "lib/zdict.h — dictionary API",
+        "lib/compress/zstdmt_compress.c — multithreaded compressor",
+        "lib/compress/zstd_compress.c — compression core",
+        "lib/decompress/zstd_decompress.c — decoder",
+        "lib/dictBuilder/fastcover.c — dictionary training",
+        "programs/ — zstd CLI",
+        "tests/ — regression and fuzz infrastructure"
+      ],
+      "verification": [
+        "Inspected 2026-10-29 canonical meta/zstd README, LICENSE, COPYING, API headers, codec source, tests and CI workflows",
+        "Stable v1.5.7 released 2025-02-19; dev SHA 49cf51799e committed 2026-10-06",
+        "2026-10-19 dev-long-tests PR run 39212353135 passed 30/30 jobs on macos14 branch, not current dev",
+        "2026-10-29 nightly run 40794889524 passed 1/1 regression job on dev SHA 49cf51799e",
+        "Other recent dev push workflows action_required are not passing CI; no independent codec run or benchmark"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v1.5.7 2025-02-19; dev SHA 49cf51799e 2026-10-06; PR long tests 39212353135 30/30 pass; dev nightly 40794889524 1/1 pass.",
+      "source": "GitHub-first codec/archival research 2026-10-29 UTC; facebook/zstd renamed to meta/zstd; no playlist transcript attribution.",
+      "related_projects": [
+        "libarchive/libarchive — Zstandard filter",
+        "Cyan4973/FiniteStateEntropy — entropy coding",
+        "RFC 8878",
+        "facebook/zstd — historical alias"
+      ],
+      "research_notes": "research/2026-10-29-wasmtime-zstandard.md. Bound decompressed output, memory and CPU for untrusted input; check dictionary provenance and checksums. Dev docs describing v1.6.0 are not a stable release. No source copied."
     }
   ],
   "deferred_or_rejected": [

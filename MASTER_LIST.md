@@ -2278,7 +2278,7 @@ Suggested tiers:
 - **Maintenance signals:** [v3.8.10](https://github.com/libarchive/libarchive/releases/tag/v3.8.10) released 2026-10-14; [CI](https://github.com/libarchive/libarchive/actions/runs/40530777935) 20/20 passed 2026-10-27; [CodeQL](https://github.com/libarchive/libarchive/actions/runs/40530777979) passed.
 - **Verification performed:** 2026-10-27 inspected README, COPYING, SECURITY.md, source, examples, test tree and CI workflow; Stable v3.8.10 released 2026-10-14; 2026-10-27 master CI 40530777935 passed 20/20 jobs with build/test stages on Ubuntu, Alpine, Windows, FreeBSD and macOS; 2026-10-27 master CodeQL 40530777979 passed; PR CIFuzz workflow exists; No independent compilation, extraction, fuzzing or security audit.
 - **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript attribution.
-- **Related projects:** bsdtar, bsdcpio, bsdcat, bsdunzip (same repository).
+- **Related projects:** bsdtar, bsdcpio, bsdcat, bsdunzip (same repository); [Zstandard](https://github.com/meta/zstd) provides the codec used by `archive_read_support_filter_zstd.c` (upstream integration; not independently tested).
 - **Caveats / risks:** Individual source-file license headers govern reuse. Malformed archives, traversal, symlinks and decompression bombs require deployment safeguards; no code copied.
 - **Research notes:** `research/2026-10-27-libarchive-kiwix-tools.md`.
 
@@ -2583,6 +2583,46 @@ Suggested tiers:
 - **Related projects:** tree-sitter/tree-sitter-javascript (inspected grammar.js), tree-sitter/tree-sitter-python (companion grammar), tree-sitter/tree-sitter-rust (follow-up lead).
 - **Caveats / risks:** Native grammar modules execute compiled code; do not load untrusted grammars without isolation. Current header supports language ABI versions 13–15 and does not guarantee forward compatibility. Grammar licenses differ. Test coverage is not proof of immunity to malformed inputs.
 - **Research notes:** `research/2026-10-28-pion-webrtc-tree-sitter.md`. No third-party implementation copied.
+
+### Wasmtime
+
+- **Repository:** https://github.com/bytecodealliance/wasmtime
+- **Author / Org:** Bytecode Alliance
+- **Category:** webassembly / runtime / sandboxed-execution / wasi / rust / c-api
+- **Evidence:** VERIFIED (upstream source and CI; no independent execution)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Standalone and embeddable WebAssembly runtime for Wasm modules, components and WASI.
+- **Why it is valuable:** Cross-platform runtime for portable applications, host-controlled plugins and component interoperability.
+- **Useful code/components:** `crates/wasmtime/src/config.rs` — engine features; `crates/wasmtime/src/runtime/store.rs` — Store and fuel; `crates/wasmtime/src/runtime/limits.rs` — ResourceLimiter; `crates/wasmtime/src/runtime/component/mod.rs` — component model; `crates/wasi/src/lib.rs` — WASI host; `crates/wasi-http/src/lib.rs` — wasi:http; `cranelift/` — compiler backend; `pulley/` — interpreter; `crates/c-api/` — C embedding.
+- **Install / runtime:** Official release CLI or Rust/Cargo build; embed through Rust or C API; accepts compiled Wasm modules/components.
+- **Platforms:** Linux, macOS, Windows, x86_64, aarch64, other cross-compile targets.
+- **License:** Apache-2.0 WITH LLVM-exception (root Cargo.toml); root LICENSE Apache-2.0; dependencies separate. No upstream code copied.
+- **Maintenance signals:** [Stable v50.0.0](https://github.com/bytecodealliance/wasmtime/releases/tag/v50.0.0) 2026-10-20; [main merge-group CI](https://github.com/bytecodealliance/wasmtime/actions/runs/40740727895) 2026-10-28: 190 pass, 3 skip; [cargo audit](https://github.com/bytecodealliance/wasmtime/actions/runs/40792277264) 2026-10-29 passed.
+- **Verification performed:** Inspected 2026-10-29 README, LICENSE, Cargo.toml, SECURITY.md, runtime config/store/limits/component and WASI source; Stable v50.0.0 released 2026-10-20; 2026-10-28 main merge-group CI run 40740727895 succeeded: 190 passed, 3 skipped, 0 failed jobs; 2026-10-29 cargo-audit run 40792277264 passed (upstream, not an independent audit); No independent Wasm execution, build, sandbox penetration test or benchmark.
+- **Source discovery:** GitHub-first WebAssembly runtime research 2026-10-29 UTC; no video transcript attribution.
+- **Related projects:** Cranelift (same monorepo); bytecodealliance/wasm-tools (follow-up); WASI and WebAssembly Component Model.
+- **Caveats / risks:** Wasm execution is not a complete sandbox without controlled host capabilities. Restrict WASI filesystem/network access and callbacks; set fuel/epoch and resource budgets.
+- **Research notes:** `research/2026-10-29-wasmtime-zstandard.md`.
+
+### Zstandard
+
+- **Repository:** https://github.com/meta/zstd
+- **Author / Org:** Meta Platforms (historical facebook/zstd redirects here)
+- **Category:** compression / c-library / streaming / dictionary-compression / archival / cli-tools
+- **Evidence:** VERIFIED (upstream source and CI; no independent execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Reference C library and CLI for Zstandard lossless compression, streaming and dictionary-coded data.
+- **Why it is valuable:** Reusable interoperable compression for storage, archives, data pipelines and constrained systems (RFC 8878).
+- **Useful code/components:** `lib/zstd.h` — public C streaming API; `lib/zdict.h` — dictionary API; `lib/compress/zstdmt_compress.c` — multithreaded compressor; `lib/compress/zstd_compress.c` — compression core; `lib/decompress/zstd_decompress.c` — decoder; `lib/dictBuilder/fastcover.c` — dictionary training; `programs/` — zstd CLI; `tests/` — regression and fuzz infrastructure.
+- **Install / runtime:** C toolchain; make builds CLI/library and make check runs smoke tests; CMake, Meson and Windows options documented.
+- **Platforms:** Linux, macOS, Windows, Android NDK, other C targets subject to build constraints.
+- **License:** BSD-style OR GPLv2 (root LICENSE, COPYING and lib/zstd.h); user selects one. No upstream code copied.
+- **Maintenance signals:** [Stable v1.5.7](https://github.com/meta/zstd/releases/tag/v1.5.7) 2025-02-19; [2026-10-19 PR long tests](https://github.com/meta/zstd/actions/runs/39212353135) 30/30 passed (different branch); [2026-10-29 dev nightly regression](https://github.com/meta/zstd/actions/runs/40794889524) 1/1 passed.
+- **Verification performed:** Inspected 2026-10-29 canonical meta/zstd README, LICENSE, COPYING, API headers, codec source, tests and CI workflows; Stable v1.5.7 released 2025-02-19; dev SHA 49cf51799e committed 2026-10-06; 2026-10-19 dev-long-tests PR run 39212353135 passed 30/30 jobs on macos14 branch, not current dev; 2026-10-29 nightly run 40794889524 passed 1/1 regression job on dev SHA 49cf51799e; Other recent dev push workflows action_required are not passing CI; no independent codec run or benchmark.
+- **Source discovery:** GitHub-first codec/archival research 2026-10-29 UTC; facebook/zstd renamed to meta/zstd; no playlist transcript attribution.
+- **Related projects:** libarchive/libarchive — Zstandard filter; Cyan4973/FiniteStateEntropy — entropy coding; RFC 8878; facebook/zstd — historical alias.
+- **Caveats / risks:** Untrusted compressed data may exhaust resources; enforce output/CPU/memory budgets and validate dictionaries, checksums and errors. Dev v1.6.0 docs are not stable release evidence.
+- **Research notes:** `research/2026-10-29-wasmtime-zstandard.md`.
 
 ## Entry format
 
