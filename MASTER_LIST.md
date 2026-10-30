@@ -3052,6 +3052,47 @@ Suggested tiers:
 - **Caveats / risks:** Copyleft obligations and dependency licenses; exposed HTTP service requires bind restrictions; inspect untrusted ZIM parsing, downloads, memory limits and packaging failure before production deployment.
 - **Research notes:** `research/2026-10-30-accesskit-libkiwix.md`. No source copied.
 
+
+### Dire Wolf
+
+- **Repository:** https://github.com/wb2osz/direwolf
+- **Author / Org:** John Langner (WB2OSZ)
+- **Category:** Amateur packet radio / APRS / AX.25 / audio DSP / KISS TNC / off-grid communications
+- **Evidence:** PROMISING — upstream dev build evidence, but published stable release predates documented security fixes
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 4 + Documentation 5 + Maintenance 3)
+- **What it does:** Software soundcard modem and terminal-node-controller replacement for AX.25/APRS packet radio; includes APRS IGate, digipeater, tracker, telemetry, FX.25 and IL2P FEC.
+- **Why it is valuable:** Reusable modem, packet framing, radio-to-network bridging and error-correction code for resilient communications; interfaces with existing KISS applications and commodity soundcards.
+- **Useful code/components:** `src/demod_afsk.c` / `src/demod_9600.c` DSP; `src/ax25_pad.c` / `src/ax25_link.c` AX.25; `src/kiss_frame.c` / `src/kissnet.c` / `src/kissserial.c` KISS; `src/fx25_*.c` and `src/il2p_*.c` FEC; `src/igate.c`, `src/digipeater.c`, `src/telemetry.c`; `test/CMakeLists.txt` and `test/scripts/`.
+- **Install / runtime:** CMake-based C build on Linux/macOS/Windows. Soundcard and compatible radio required for live RF; ALSA, PortAudio, Hamlib, GPSD and other integrations vary by host.
+- **Platforms:** Linux (including Raspberry Pi), Windows, macOS; RF hardware optional for software-only frame/test tooling.
+- **License:** GPL-2.0-or-later per C source headers; root `LICENSE` contains GPLv2; `external/LICENSE` warns of BSD, GPL and other bundled component terms.
+- **Maintenance signals:** Latest published non-prerelease **1.8.1 (2025-11-13)**; master CMake declares **1.8.2 Development** with May 2026 CVE backports, not a published 1.8.2 release. Dev commit `4edb377` (2026-10-16) [build CI](https://github.com/wb2osz/direwolf/actions/runs/38972134998) passed 5/5 Windows/macOS/Ubuntu jobs; the workflow marks the test step `continue-on-error: true`. Master CodeQL C++/Python succeeded 2026-10-29.
+- **Verification performed:** Inspected README, source headers, bundled licenses, CMake, modem/KISS/IGate source tree, test harness and dated Actions runs. No independent compilation, radio transmission, packet decoding or security testing.
+- **Source discovery:** GitHub-first APRS and offline communications research, 2026-10-30; no video evidence.
+- **Related projects:** wb2osz/hrot; Reticulum KISS interface (interoperability lead only); Xastir; APRS-IS.
+- **Caveats / risks:** **Security-critical:** stable 1.8.1 predates fixes documented in upstream `CHANGES.md` for KISS buffer overflow **CVE-2025-34457** and MIC-E packet crash **CVE-2025-34458**; verify actual patch inclusion before deployment and isolate untrusted KISS/TCP endpoints. Radio transmission is subject to local licensing and spectrum rules. Copyleft and bundled notices apply.
+- **Research notes:** `research/2026-10-30-direwolf-sqlite-utils.md`. No source copied.
+
+### sqlite-utils
+
+- **Repository:** https://github.com/simonw/sqlite-utils
+- **Author / Org:** Simon Willison
+- **Category:** Local-first SQLite / Python CLI / structured-data ingestion / schema migrations / full-text search
+- **Evidence:** VERIFIED — upstream tests and releases; no independent runtime test; current-main full test matrix has a known failure
+- **Tier / Score:** S / 26 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 4)
+- **What it does:** Python library and CLI for importing CSV/TSV/JSON into SQLite, querying files in memory, evolving table schemas, adding FTS, running migrations and extending behavior with plugins.
+- **Why it is valuable:** Composable, portable, low-infrastructure data-processing primitives for research collections, local archives, offline analytics and automated ETL.
+- **Useful code/components:** `sqlite_utils/db.py` Database/Table and FTS; `sqlite_utils/cli.py` import/query/export; `sqlite_utils/migrations.py`; `sqlite_utils/plugins.py` / `hookspecs.py`; `sqlite_utils/create_table_parser.py`; `sqlite_utils/utils.py`; extensive `tests/` including migrations, FTS, streaming and transformations.
+- **Install / runtime:** `pip install sqlite-utils`; Python **>=3.10** and bundled dependencies; optional SpatiaLite/NumPy for selected features.
+- **Platforms:** Python 3.10+ on Linux, macOS and Windows; Termux not independently verified.
+- **License:** Apache-2.0 per root LICENSE and `pyproject.toml`; dependencies and plugins have their own licenses.
+- **Maintenance signals:** Stable **4.2.1 (2026-08-13)** fixes a 4.2 missing-dependency regression. [2026-09-22 main Test](https://github.com/simonw/sqlite-utils/actions/runs/35768210531) succeeded; [2026-10-11 SQLite-version tests](https://github.com/simonw/sqlite-utils/actions/runs/38097836285) and [coverage](https://github.com/simonw/sqlite-utils/actions/runs/38097836249) succeeded. **2026-10-11 full Test failed** in macOS Python 3.14 `ty` type checking, cancelling much of the matrix ([run](https://github.com/simonw/sqlite-utils/actions/runs/38097836294)). Main CodeQL succeeded 2026-10-30.
+- **Verification performed:** Inspected README, package manifest, license, source modules, tests and CI. Upstream evidence only; no independent database operations, migration, install, plugin or performance tests.
+- **Source discovery:** GitHub-first local data tooling, 2026-10-30; no video evidence.
+- **Related projects:** simonw/datasette; simonw/csvs-to-sqlite; simonw/db-to-sqlite; sqlite-fts4; Miller as complementary CLI (not direct integration).
+- **Caveats / risks:** Plugins run arbitrary Python code, SQLite extensions and SQL need trust boundaries, and migrations should be tested against backups. Passing CodeQL/coverage does not imply a green full test matrix.
+- **Research notes:** `research/2026-10-30-direwolf-sqlite-utils.md`. No source copied.
+
 ## Entry format
 
 ### Project / Tool Name

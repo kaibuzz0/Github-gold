@@ -8500,6 +8500,127 @@
         "kiwix/kiwix-android (reader)"
       ],
       "research_notes": "research/2026-10-30-accesskit-libkiwix.md. Requires Meson/Ninja, C++17, ICU, libzim with Xapian, pugixml, curl, microhttpd, zlib, Xapian and mustache header; aria2 at runtime. HTTP serving needs explicit bind/exposure controls; untrusted ZIM parsing and downloader behavior need review. No source copied."
+    },
+    {
+      "name": "Dire Wolf",
+      "repository": "https://github.com/wb2osz/direwolf",
+      "owner": "wb2osz",
+      "category": [
+        "amateur-radio",
+        "aprs",
+        "ax25",
+        "soundcard-modem",
+        "kiss-tnc",
+        "off-grid-communications",
+        "c"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 4,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 3
+      },
+      "license": "GPL-2.0-or-later per C source headers; root LICENSE contains GPLv2; bundled external components include BSD, GPL and other licenses",
+      "license_copy_status": "gpl-copyleft-and-bundled-third-party-license-review-before-reuse",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Raspberry Pi/Linux with soundcard and compatible radio"
+      ],
+      "useful_components": [
+        "src/demod_afsk.c, src/demod_9600.c, src/dsp.c — audio DSP modem decoding",
+        "src/ax25_pad.c, src/ax25_link.c — AX.25 frame and link-layer handling",
+        "src/kiss_frame.c, src/kissnet.c, src/kissserial.c — KISS framing and TCP/serial interfaces",
+        "src/fx25_encode.c, src/fx25_rec.c — FX.25 forward error correction",
+        "src/il2p_codec.c, src/il2p_header.c — IL2P encoding and decoding",
+        "src/igate.c, src/digipeater.c, src/telemetry.c — APRS network bridge, repeaters and telemetry",
+        "test/CMakeLists.txt and test/scripts/ — CTest/unit and synthetic modem regression harnesses"
+      ],
+      "verification": [
+        "2026-10-30 inspected README, CMakeLists, root and bundled license notices, src tree, test CMake and CI workflow",
+        "Latest published non-prerelease 1.8.1 dated 2025-11-13; master declares 1.8.2 Development with May 2026 backports for CVE-2025-34457 and CVE-2025-34458; no 1.8.2 GitHub release found",
+        "2026-10-16 dev commit 4edb377 CI build run 38972134998 passed five Windows/macOS/Ubuntu jobs with build and test steps successful; workflow marks test step continue-on-error, so this is not a mandatory test gate",
+        "2026-10-29 master CodeQL C++ run 40900328790 and Python run 40900568816 succeeded; these are static-analysis checks, not a master build",
+        "No independent build, modem decode, radio transmission, KISS interoperability or security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 1.8.1 (2025-11-13); master 1.8.2 Development (2026-05-19) contains CVE backports; dev commit 4edb377 (2026-10-16) passed cross-platform build workflow; 2026-10-29 master CodeQL passed.",
+      "source": "GitHub-first APRS/off-grid radio research 2026-10-30; no YouTube transcript attribution",
+      "related_projects": [
+        "markqvist/Reticulum (KISS TNC interoperability lead, not independently tested)",
+        "wb2osz/hrot (companion radio IoT proposal)",
+        "Xastir (upstream-listed APRS client)",
+        "APRS-IS (gateway protocol ecosystem)"
+      ],
+      "research_notes": "research/2026-10-30-direwolf-sqlite-utils.md. WARNING: stable 1.8.1 predates upstream May 2026 backports for KISS buffer overflow CVE-2025-34457 and MIC-E crash CVE-2025-34458; verify exact patch commit before deployment, isolate untrusted KISS/network interfaces. RF transmit requires local licensing/regulatory compliance. No source copied."
+    },
+    {
+      "name": "sqlite-utils",
+      "repository": "https://github.com/simonw/sqlite-utils",
+      "owner": "simonw",
+      "category": [
+        "sqlite",
+        "local-first",
+        "data-processing",
+        "cli",
+        "python",
+        "schema-migration",
+        "full-text-search"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 26,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 per root LICENSE and pyproject.toml; runtime dependencies and plugins separately licensed",
+      "license_copy_status": "permissive-preserve-apache-license-notices-review-dependencies",
+      "platforms": [
+        "Python 3.10+ on Linux",
+        "macOS",
+        "Windows",
+        "other Python-supported hosts; Termux not independently tested"
+      ],
+      "useful_components": [
+        "sqlite_utils/db.py — Database/Table APIs, schema transformations, safe identifier quoting, FTS configuration",
+        "sqlite_utils/cli.py — JSON/CSV/TSV ingestion, query, conversion and export commands",
+        "sqlite_utils/migrations.py — ordered Python-based schema/data migrations",
+        "sqlite_utils/plugins.py and hookspecs.py — pluggy-based extension registration",
+        "sqlite_utils/create_table_parser.py — CREATE TABLE constraint parsing and rewriting",
+        "sqlite_utils/utils.py — row streaming, type inference, format detection",
+        "tests/test_transform.py, test_fts.py, test_cli_memory.py, test_migrations.py — regression coverage"
+      ],
+      "verification": [
+        "2026-10-30 inspected README, Apache-2.0 license, pyproject.toml (Python >=3.10, package version 4.2.1), source modules, extensive tests and CI workflow",
+        "Stable release 4.2.1 dated 2026-08-13 fixes missing typing_extensions dependency in 4.2",
+        "2026-09-22 main Test workflow 35768210531 succeeded; first page of 30 jobs all succeeded, no claim about any additional jobs",
+        "2026-10-11 main Test SQLite versions run 38097836285 and coverage run 38097836249 passed; 2026-10-11 main full Test run 38097836294 FAILED in macOS Python 3.14 ty type-check step, many matrix jobs cancelled",
+        "2026-10-30 main CodeQL run 41001821939 passed; no independent import, database migration, file ingest or plugin execution"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Release 4.2.1 (2026-08-13); main commit 9c66baf (2026-10-11); CodeQL 2026-10-30 passed; 2026-10-11 main full Test failed ty check while SQLite version and coverage workflows passed.",
+      "source": "GitHub-first local-data/CLI research 2026-10-30; no YouTube transcript attribution",
+      "related_projects": [
+        "simonw/datasette (SQLite browsing and publishing)",
+        "simonw/csvs-to-sqlite (data import ecosystem)",
+        "simonw/db-to-sqlite (database export ecosystem)",
+        "sqlite-fts4 (declared dependency)",
+        "johnkerl/miller (complementary structured-data CLI; no direct integration claimed)"
+      ],
+      "research_notes": "research/2026-10-30-direwolf-sqlite-utils.md. CLI and plugin entry points execute locally supplied SQL/Python; restrict untrusted extensions, verify file inputs, test migrations against backups, and do not infer current-main full CI health from coverage/CodeQL alone. No source copied."
     }
   ],
   "deferred_or_rejected": [
@@ -8510,6 +8631,10 @@
     {
       "repository": "https://github.com/colonelpanichacks/Remote-ID-Spoofer",
       "reason": "Primary purpose is Remote ID spoofing; not promoted under defensive/interoperability catalog scope."
+    },
+    {
+      "repository": "https://github.com/pocketbase/pocketbase",
+      "reason": "Deferred 2026-10-30: GitHub repository is archived and README states development moved to https://ganigeorgiev.com/pocketbase/pocketbase. Do not present the old GitHub URL as an actively maintained upstream. Reassess new host, provenance, license and release evidence before cataloging."
     }
   ]
 }
