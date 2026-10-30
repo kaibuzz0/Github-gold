@@ -8209,7 +8209,7 @@
         "ocrmypdf/OCRmyPDF (complementary dedicated OCR/PDF-A pipeline, not a tested integration)",
         "paperless-ngx/paperless-ngx (complementary document archive, not a tested integration)"
       ],
-      "research_notes": "research/2026-10-30-ruff-markitdown-merkle-tree.md. SECURITY: current ZIP converter iterates archive entries and uses unbounded zipObj.read(entry) into BytesIO, including recursive conversion; restrict untrusted archives, size/depth/count and time externally until mitigated. Conversion may fetch URLs or call paid Azure/LLM services if enabled; plugins execute Python. No code copied."
+      "research_notes": "research/2026-10-30-ruff-markitdown-merkle-tree.md. SECURITY: current ZIP converter iterates archive entries and uses unbounded zipObj.read(entry) into BytesIO, including recursive conversion; restrict untrusted archives, size/depth/count and time externally until mitigated. Conversion may fetch URLs or call paid Azure/LLM services if enabled; plugins execute Python. No code copied. As of 2026-10-30, markitdown PRs #2296 and #2050 remain open/unmerged; no released ZIP mitigation established."
     },
     {
       "name": "OpenZeppelin Merkle Tree",
@@ -8264,6 +8264,119 @@
         "ethereum-cryptography (Keccak dependency)"
       ],
       "research_notes": "research/2026-10-30-ruff-markitdown-merkle-tree.md. Standard trees double-hash ABI-encoded leaves; multiproof ordering and replay prevention are application responsibilities. Simple trees require careful prehash design. Not a Solana SPL token implementation. No code copied."
+    },
+    {
+      "name": "mise",
+      "repository": "https://github.com/jdx/mise",
+      "owner": "jdx",
+      "category": [
+        "developer-tooling",
+        "version-management",
+        "environment-configuration",
+        "task-automation",
+        "supply-chain-security"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT root; dependencies and tool packages installed by mise have their own licenses",
+      "license_copy_status": "mit-permissive-preserve-notice-review-dependencies-and-downloaded-tools",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "shell and CI integrations"
+      ],
+      "useful_components": [
+        "src/cli/ — install, exec, run, lock, trust, bootstrap, task and shell integration commands",
+        "crates/mise-config/ — configuration loading and settings",
+        "crates/mise-dotenv/ — environment file handling",
+        "crates/mise-sigstore/ — Sigstore verification helpers",
+        "crates/mise-lsp/ — mise.toml editor language server",
+        "crates/mise-bootstrap/ — machine bootstrap support",
+        "crates/mise-shim/ — executable shim implementation",
+        "crates/mise-cache-core/ — cache infrastructure"
+      ],
+      "verification": [
+        "2026-10-30 inspected upstream README, root MIT license, Cargo.toml, src/cli/mod.rs, crates/mise-sigstore/Cargo.toml, test.yml and test-impl.yml",
+        "Confirmed v2026.10.24 tag Cargo.toml and CHANGELOG entry dated 2026-10-30; root crate declares Rust 1.95 minimum; current source is not independently compiled",
+        "2026-10-26 successful upstream release-branch test workflow 40394685264 included Ubuntu/Windows builds, macOS/Windows unit and e2e, Linux e2e, lint and gate; this predates v2026.10.24 and is not a test of that tag",
+        "No independent installation, execution, tool download, signature validation or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v2026.10.24 tagged 2026-10-30; ongoing frequent releases and security/trust hardening; successful prior-release CI on 2026-10-26.",
+      "source": "GitHub-first 2026-10-30; YouTube seed PLMI6SBmd587c direct access throttled",
+      "related_projects": [
+        "jdx/mise-action (official GitHub Actions setup companion)",
+        "astral-sh/uv and astral-sh/ruff (installable tool ecosystem, not a direct dependency)",
+        "sharkdp/hyperfine (used in mise release-note performance comparison; not a runtime dependency)"
+      ],
+      "research_notes": "research/2026-10-30-mise-hyperfine.md. Trusting unreviewed mise.toml, task hooks, installers or remote tool sources can execute code; use lockfiles, provenance/checksum verification and minimal privileges. Root library is explicitly not a stable public API. No code copied."
+    },
+    {
+      "name": "hyperfine",
+      "repository": "https://github.com/sharkdp/hyperfine",
+      "owner": "sharkdp",
+      "category": [
+        "developer-tooling",
+        "cli",
+        "benchmarking",
+        "performance-analysis",
+        "rust"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 4,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT OR Apache-2.0; both root license texts inspected; dependencies separately licensed",
+      "license_copy_status": "dual-permissive-preserve-selected-license-notices-review-dependencies",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Rust-supported command-line hosts"
+      ],
+      "useful_components": [
+        "src/benchmark/scheduler.rs — command execution orchestration and intermediate exports",
+        "src/benchmark/ — benchmark result and executor components",
+        "src/parameter/ — parameter scans and command variation",
+        "src/outlier_detection/ — statistical outlier analysis",
+        "src/timer/ and src/metric/ — timing and measurement",
+        "src/export/ — JSON/CSV/Markdown and other result export",
+        "src/shell_syntax/ — explicit shell syntax handling",
+        "tests/ and CI workflow — cross-platform regression coverage"
+      ],
+      "verification": [
+        "2026-10-30 inspected README, Cargo.toml, both root licenses, src/main.rs, src/benchmark/scheduler.rs and CICD.yml",
+        "Latest inspected stable release v1.20.0 dated 2025-11-18; current master Cargo.toml is version 2.0.0 but no v2.0.0 published release established",
+        "2026-10-12 exact master commit c516152 upstream CICD run 38224324422 succeeded; 13 platform build jobs plus formatting and minimum Rust checks; this is not proof of a stable 2.0 release",
+        "No independent benchmark execution, timing accuracy validation, install, performance comparison or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "medium",
+      "maintenance_signals": "Master c516152 on 2026-10-12; 2026-10-12 upstream CICD success; active October PRs; stable v1.20.0 from 2025-11-18, v2 development manifest.",
+      "source": "GitHub-first 2026-10-30; follow-up ecosystem lead from mise performance notes",
+      "related_projects": [
+        "jdx/mise (2026.10.11 release notes use hyperfine for comparative timings)",
+        "sharkdp/bat and sharkdp/fd (same author's Rust CLI ecosystem; not dependencies)"
+      ],
+      "research_notes": "research/2026-10-30-mise-hyperfine.md. Benchmarks execute arbitrary supplied commands and may be destructive; do not run untrusted commands. CPU frequency, caching, thermal state, shell startup, warmups and parameter order affect measurements. Development v2 has potential breaking changes; pin stable v1.20.0 for reproducibility. No code copied."
     }
   ],
   "deferred_or_rejected": [
