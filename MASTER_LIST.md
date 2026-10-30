@@ -2280,7 +2280,7 @@ Suggested tiers:
 - **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript attribution.
 - **Related projects:** bsdtar, bsdcpio, bsdcat, bsdunzip (same repository); [Zstandard](https://github.com/meta/zstd) provides the codec used by `archive_read_support_filter_zstd.c` (upstream integration; not independently tested).
 - **Caveats / risks:** Individual source-file license headers govern reuse. Malformed archives, traversal, symlinks and decompression bombs require deployment safeguards; no code copied.
-- **Research notes:** `research/2026-10-27-libarchive-kiwix-tools.md`.
+- **Research notes:** `research/2026-10-27-libarchive-kiwix-tools.md`. 2026-10-30 dependency check: libkiwix stable 14.2.1, development manifest 14.3.0; same-commit libkiwix CI passed 11/11, Debian-unstable packaging failed. These results do not independently rebuild kiwix-tools; see `research/2026-10-30-accesskit-libkiwix.md`.
 
 ### Kiwix Tools
 
@@ -3010,6 +3010,47 @@ Suggested tiers:
 - **Related projects:** [mise](https://github.com/jdx/mise) (documentation-based benchmarking relationship), other sharkdp Rust CLIs.
 - **Caveats / risks:** Runs arbitrary commands, including preparation hooks; never benchmark untrusted commands. Results vary with CPU load, caches, thermal state and shell behavior; v2 may change CLI/output schemas.
 - **Research notes:** `research/2026-10-30-mise-hyperfine.md`. No code copied.
+
+
+### AccessKit
+
+- **Repository:** https://github.com/AccessKit/accesskit
+- **Author / Org:** AccessKit contributors
+- **Category:** Accessibility / cross-platform UI toolkit integration / Rust
+- **Evidence:** VERIFIED — upstream multi-platform CI and source inspection; no independent assistive-technology test
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Bridges a semantic UI tree to native screen-reader and assistive-technology APIs on Windows, macOS, Unix, Android and iOS.
+- **Why it is valuable:** Provides reusable accessibility semantics for custom-rendered or immediate-mode interfaces, with one tree model and platform-specific adapters.
+- **Useful code/components:** `accesskit/src/lib.rs` Node/Role/TreeUpdate/Action schema; `accesskit_consumer/src/tree.rs` retained tree; `accesskit_consumer/src/text.rs` text ranges; `adapters/{unix,windows,macos,android,ios,winit}/` bridges; consumer unit tests.
+- **Install / runtime:** Rust workspace requires Rust 1.87+; integrate the platform-specific crate and supply stable node IDs, incremental tree updates and action handling.
+- **Platforms:** Windows, macOS, Linux/Unix AT-SPI, Android, iOS; winit integration.
+- **License:** Workspace MIT OR Apache-2.0; winit adapter Apache-2.0; Chromium-derived portions carry separate BSD-style notice in `LICENSE.chromium`.
+- **Maintenance signals:** Core crate manifest 0.25.2; latest inspected per-crate `accesskit_winit` release 0.34.2 on 2026-10-25; [main CI 40233340615](https://github.com/AccessKit/accesskit/actions/runs/40233340615) passed 26/26 cross-platform test, lint, docs and license-check jobs on 2026-10-25.
+- **Verification performed:** Inspected README, ARCHITECTURE, Cargo manifests, license files, schema, consumer test fixtures, adapter layout and CI job results; no independent screen-reader, build or device testing.
+- **Source discovery:** GitHub-first accessibility research, 2026-10-30; no YouTube transcript attribution.
+- **Related projects:** NVDA (complementary Windows screen-reader ecosystem, no direct integration claimed); winit; AT-SPI; Chromium accessibility schema.
+- **Caveats / risks:** Upstream says rich text/hypertext support is incomplete; test actual screen readers and focus/action behavior. Changed nodes must supply complete properties; preserve license notices for Chromium-derived material.
+- **Research notes:** `research/2026-10-30-accesskit-libkiwix.md`. No code copied.
+
+### libkiwix
+
+- **Repository:** https://github.com/kiwix/libkiwix
+- **Author / Org:** Kiwix
+- **Category:** Offline knowledge / ZIM libraries / HTTP serving / C++ / search
+- **Evidence:** VERIFIED — upstream CI and source inspection; no independent offline serving or recovery test
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Implements shared library, search, catalog, download and embedded HTTP-server functionality for Kiwix offline readers and tools.
+- **Why it is valuable:** Reusable offline knowledge-serving infrastructure and a directly consumed library in the already-cataloged Kiwix/ZIM ecosystem.
+- **Useful code/components:** `src/library.cpp` library/filter management; `src/manager.cpp` persistence; `src/server.cpp` and `src/server/internalServer.cpp` HTTP serving; `src/opds_catalog.cpp` OPDS; `src/search_renderer.cpp` search; `src/downloader.cpp`/ `src/aria2.cpp` downloads; `test/` suites.
+- **Install / runtime:** Meson/Ninja C++17; ICU, libzim >=9.4,<10 with Xapian, pugixml, curl, microhttpd, zlib, Xapian, mustache header; aria2 runtime.
+- **Platforms:** Linux, macOS, Windows; Android and iOS cross-build targets (not independently device-tested).
+- **License:** GPL-3.0-or-later per Meson and source headers; third-party dependencies have separate terms.
+- **Maintenance signals:** [Stable 14.2.1](https://github.com/kiwix/libkiwix/releases/tag/14.2.1) published 2026-05-11; main Meson manifest declares **unreleased 14.3.0**. [2026-10-30 main CI](https://github.com/kiwix/libkiwix/actions/runs/41027777528) passed 11/11 jobs; [same-commit Packages](https://github.com/kiwix/libkiwix/actions/runs/41027777537) failed Debian-unstable while Ubuntu Jammy/Noble packaging passed.
+- **Verification performed:** Inspected README, COPYING, Meson, headers, source map, test sources, workflow definitions and exact job results. Some cross-platform CI legs compile without runtime tests; no independent build or HTTP deployment.
+- **Source discovery:** Recursive GitHub-first follow-up from Kiwix Tools and libzim, 2026-10-30.
+- **Related projects:** kiwix/kiwix-tools (direct dependency >=14.2,<15); openzim/libzim; kiwix/java-libkiwix; kiwix/kiwix-build; kiwix/kiwix-android.
+- **Caveats / risks:** Copyleft obligations and dependency licenses; exposed HTTP service requires bind restrictions; inspect untrusted ZIM parsing, downloads, memory limits and packaging failure before production deployment.
+- **Research notes:** `research/2026-10-30-accesskit-libkiwix.md`. No source copied.
 
 ## Entry format
 

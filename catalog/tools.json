@@ -6252,7 +6252,8 @@
         "Stable 3.8.2 released 2026-03-02",
         "2026-10-01 main CI 36844685289 passed 3/3 jobs: Linux dynamic/static compile and Windows compile plus Meson tests",
         "2026-10-26 scheduled 40272845437 passed only Actions analysis, not a runtime test",
-        "No independent HTTP serving, ZIM search, LAN security or Docker deployment"
+        "No independent HTTP serving, ZIM search, LAN security or Docker deployment",
+        "2026-10-30 checked upstream libkiwix dependency: kiwix-tools Meson requires >=14.2,<15; libkiwix stable 14.2.1 and unreleased main 14.3.0 satisfy range; dependency main CI 41027777528 passed, Debian-unstable packaging failed 41027777537. This is dependency evidence, not a kiwix-tools rebuild."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
@@ -6265,7 +6266,7 @@
         "kiwix/kiwix-android (separate client)",
         "kiwix/kiwix-build (build support)"
       ],
-      "research_notes": "Meson/Ninja C++17, libzim >=9,<10, libkiwix >=14.2,<15, docopt. kiwix-serve defaults to all network interfaces on HTTP port 80; restrict exposure. No source copied."
+      "research_notes": "Meson/Ninja C++17, libzim >=9,<10, libkiwix >=14.2,<15, docopt. kiwix-serve defaults to all network interfaces on HTTP port 80; restrict exposure. No source copied. 2026-10-30 dependency check: libkiwix 14.2.1 stable versus main 14.3.0 development; main libkiwix CI passed but Debian-unstable package build failed. See research/2026-10-30-accesskit-libkiwix.md."
     },
     {
       "name": "SQLCipher",
@@ -8377,6 +8378,128 @@
         "sharkdp/bat and sharkdp/fd (same author's Rust CLI ecosystem; not dependencies)"
       ],
       "research_notes": "research/2026-10-30-mise-hyperfine.md. Benchmarks execute arbitrary supplied commands and may be destructive; do not run untrusted commands. CPU frequency, caching, thermal state, shell startup, warmups and parameter order affect measurements. Development v2 has potential breaking changes; pin stable v1.20.0 for reproducibility. No code copied."
+    },
+    {
+      "name": "AccessKit",
+      "repository": "https://github.com/AccessKit/accesskit",
+      "owner": "AccessKit",
+      "category": [
+        "accessibility",
+        "ui-toolkits",
+        "screen-readers",
+        "cross-platform",
+        "rust",
+        "assistive-technology"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT OR Apache-2.0 workspace; winit adapter Apache-2.0; Chromium-derived schema portions retain BSD-style LICENSE.chromium notice",
+      "license_copy_status": "dual-permissive-review-crate-specific-licenses-preserve-chromium-notices",
+      "platforms": [
+        "Windows UI Automation",
+        "macOS accessibility",
+        "Linux/Unix AT-SPI",
+        "Android",
+        "iOS",
+        "winit-based GUI frameworks"
+      ],
+      "useful_components": [
+        "accesskit/src/lib.rs — no_std-capable semantic UI tree, Node/Role/TreeUpdate/Action types",
+        "accesskit_consumer/src/tree.rs — retained tree updates and cross-subtree node management",
+        "accesskit_consumer/src/text.rs — text positions/ranges for assistive technology",
+        "adapters/unix/ — AT-SPI bridge",
+        "adapters/windows/, adapters/macos/, adapters/android/, adapters/ios/ — platform API adapters",
+        "adapters/winit/ — winit event-loop integration",
+        "accesskit_consumer/src/lib.rs — unit-test fixtures for tree filtering and updates"
+      ],
+      "verification": [
+        "2026-10-30 inspected README, ARCHITECTURE.md, workspace and crate Cargo.toml, license files, schema and consumer source, Unix adapter README and platform directories",
+        "2026-10-25 main CI run 40233340615 passed 26/26 jobs: Linux/macOS/Windows/Android/iOS Simulator cargo tests, clippy, docs, formatting and dependency license checks",
+        "2026-10-25 published per-crate accesskit_winit v0.34.2; core accesskit crate manifest v0.25.2; repository is a multi-crate workspace, not one global version",
+        "No independent screen-reader interaction, device accessibility test, build, or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Main commit f302622 2026-10-25; 2026-10-25 main CI 40233340615 26/26 passed; per-crate releases 2026-10-25.",
+      "source": "GitHub-first accessibility infrastructure discovery 2026-10-30; no YouTube transcript evidence",
+      "related_projects": [
+        "nvaccess/nvda (Windows screen-reader ecosystem, not a demonstrated direct integration)",
+        "winit (event-loop integration)",
+        "Chromium accessibility abstraction (schema inspiration; separate BSD-style notice)",
+        "AT-SPI (Unix accessibility protocol)"
+      ],
+      "research_notes": "research/2026-10-30-accesskit-libkiwix.md. Platform adapters have incomplete rich-text/hypertext coverage per upstream README; semantic tree correctness requires live screen-reader testing. Node IDs must be stable and incremental updates must include full changed-node properties. Preserve Chromium-derived notices. No code copied."
+    },
+    {
+      "name": "libkiwix",
+      "repository": "https://github.com/kiwix/libkiwix",
+      "owner": "kiwix",
+      "category": [
+        "offline-knowledge",
+        "zim-format",
+        "embedded-http-server",
+        "library-management",
+        "search",
+        "cpp"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "GPL-3.0-or-later per C++ source headers and Meson GPLv3+; COPYING includes GPLv3; dependencies separately licensed",
+      "license_copy_status": "gpl-copyleft-and-third-party-dependency-review-before-reuse",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Android cross-build",
+        "iOS cross-build"
+      ],
+      "useful_components": [
+        "src/library.cpp and include/library.h — offline ZIM library filtering, book records and search metadata",
+        "src/manager.cpp and include/manager.h — persistent library management",
+        "src/server.cpp and include/server.h — configurable embedded HTTP serving",
+        "src/server/internalServer.cpp and src/server/response.cpp — HTTP request/response handling",
+        "src/opds_catalog.cpp and src/opds_dumper.cpp — OPDS catalog rendering",
+        "src/search_renderer.cpp and src/spelling_correction.cpp — search UI and query assistance",
+        "src/downloader.cpp and src/aria2.cpp — archive download orchestration",
+        "test/server.cpp, test/library.cpp, test/opds_catalog.cpp — upstream tests"
+      ],
+      "verification": [
+        "2026-10-30 inspected README, GPL COPYING, Meson manifest, C++ source manifest, public headers, tests and GitHub Actions workflows",
+        "Stable release 14.2.1 published 2026-05-11; main Meson manifest declares unreleased 14.3.0 — do not confuse main with stable",
+        "2026-10-30 main CI 41027777528 passed 11/11 jobs; Linux/macOS/Windows tests where enabled, Android/iOS targets compile without device runtime tests",
+        "2026-10-30 main Packages workflow 41027777537 failed Debian-unstable packaging; Ubuntu Jammy and Noble jobs passed",
+        "No independent ZIM serving, content integrity, untrusted-archive handling, download, network exposure, device testing or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "2026-10-30 main commit 73845de; same-commit CI 41027777528 passed 11/11; Debian-unstable packaging failed 41027777537. Stable 14.2.1 from 2026-05-11, main 14.3.0 development.",
+      "source": "Recursive GitHub-first discovery from existing Kiwix Tools and libzim entries 2026-10-30",
+      "related_projects": [
+        "kiwix/kiwix-tools (direct consumer; Meson requires libkiwix >=14.2,<15)",
+        "openzim/libzim (direct dependency; requires >=9.4,<10 on main)",
+        "kiwix/kiwix-build (cross-platform dependency builds)",
+        "kiwix/java-libkiwix (JNI binding)",
+        "kiwix/kiwix-android (reader)"
+      ],
+      "research_notes": "research/2026-10-30-accesskit-libkiwix.md. Requires Meson/Ninja, C++17, ICU, libzim with Xapian, pugixml, curl, microhttpd, zlib, Xapian and mustache header; aria2 at runtime. HTTP serving needs explicit bind/exposure controls; untrusted ZIM parsing and downloader behavior need review. No source copied."
     }
   ],
   "deferred_or_rejected": [
