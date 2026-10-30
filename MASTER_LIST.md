@@ -2948,7 +2948,7 @@ Suggested tiers:
 - **Source discovery:** GitHub-first 2026-10-30; no usable YouTube playlist transcript.
 - **Related projects:** In-tree MCP and OCR companions; [OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF) and [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx) as complementary architectures, not tested integrations.
 - **Caveats / risks:** **Untrusted ZIP resource exhaustion:** current `_zip_converter.py` loops through members and calls unbounded `zipObj.read(entry)` into memory, with recursive conversion. Apply external file size, entry count, recursion and time limits; do not treat a pending fix as shipped. Plugins execute Python; URL fetching and optional paid cloud/LLM calls have privacy and cost implications.
-- **Research notes:** `research/2026-10-30-ruff-markitdown-merkle-tree.md`. No source copied.
+- **Research notes:** `research/2026-10-30-ruff-markitdown-merkle-tree.md`. As of 2026-10-30, [ZIP guard PR #2296](https://github.com/microsoft/markitdown/pull/2296) and [PR #2050](https://github.com/microsoft/markitdown/pull/2050) remain open; no shipped mitigation established. No source copied.
 
 ### OpenZeppelin Merkle Tree
 
@@ -2970,6 +2970,46 @@ Suggested tiers:
 - **Caveats / risks:** Standard trees double-hash ABI-encoded leaves; SimpleMerkleTree permits prehashed leaves and needs careful design. Multiproof leaf ordering matters; contracts must prevent claim replay. No current CI evidence; stale maintenance. No automatic cross-chain compatibility.
 - **Research notes:** `research/2026-10-30-ruff-markitdown-merkle-tree.md`. No source copied.
 
+
+### mise
+
+- **Repository:** https://github.com/jdx/mise
+- **Author / Org:** Jeff Dickey / jdx
+- **Category:** Developer tooling / runtime version management / environment configuration / task automation
+- **Evidence:** VERIFIED — upstream release and prior-release successful cross-platform CI; exact current tag not independently tested
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Manages project-scoped developer tools, environment variables, tasks, lockfiles and machine bootstrap through a Rust CLI and `mise.toml`.
+- **Why it is valuable:** Combines reproducible tool versions, task automation, environment handling, bootstrap and supply-chain verification in one composable workflow.
+- **Useful code/components:** `src/cli/` install/exec/lock/trust/run commands; `crates/mise-config/`, `crates/mise-dotenv/`, `crates/mise-sigstore/`, `crates/mise-lsp/`, `crates/mise-bootstrap/`, `crates/mise-shim/`.
+- **Install / runtime:** Published binaries and package managers on Linux/macOS/Windows; source `Cargo.toml` declares Rust 1.95. No independent installation.
+- **Platforms:** Linux, macOS, Windows; shells, editors and CI. Termux unverified.
+- **License:** MIT root; installed tools and dependencies separately licensed.
+- **Maintenance signals:** [v2026.10.24](https://github.com/jdx/mise/releases/tag/v2026.10.24) dated 2026-10-30 in CHANGELOG. [2026-10-26 release-branch test](https://github.com/jdx/mise/actions/runs/40394685264) succeeded with Linux/Windows builds, macOS/Windows unit/E2E, Linux E2E and lint, **not on the latest tag**.
+- **Verification performed:** Inspected README, root LICENSE, Cargo manifest, CLI modules, Sigstore crate manifest, test workflow and prior successful run; no local execution or security audit.
+- **Source discovery:** GitHub-first 2026-10-30; YouTube seed access throttled.
+- **Related projects:** [mise-action](https://github.com/jdx/mise-action), [uv](https://github.com/astral-sh/uv), [hyperfine](https://github.com/sharkdp/hyperfine) (used in upstream release-note benchmarks, not a runtime dependency).
+- **Caveats / risks:** Project configs, task hooks, installers and remote downloads can execute code; inspect before trusting, pin versions and verify artifacts. Root Rust library is not a stable public API.
+- **Research notes:** `research/2026-10-30-mise-hyperfine.md`. No code copied.
+
+### hyperfine
+
+- **Repository:** https://github.com/sharkdp/hyperfine
+- **Author / Org:** David Peter / sharkdp
+- **Category:** CLI benchmarking / performance analysis / Rust developer utilities
+- **Evidence:** VERIFIED — successful upstream CI on inspected master SHA; no independent benchmark execution
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 4 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Benchmarks command execution with warmups, repeated measurements, parameter scans, statistical analysis and export formats.
+- **Why it is valuable:** Reproducible command-comparison workflows, reusable scheduler/timer/export modules, cross-platform testing and explicit shell execution controls.
+- **Useful code/components:** `src/benchmark/scheduler.rs` orchestration; `src/benchmark/` executors; `src/timer/`, `src/metric/`, `src/outlier_detection/`, `src/parameter/`, `src/export/`, `src/shell_syntax/`.
+- **Install / runtime:** [Stable v1.20.0](https://github.com/sharkdp/hyperfine/releases/tag/v1.20.0) (2025-11-18); current development manifest 2.0.0 and Rust 1.97 minimum, **not a confirmed stable v2 release**.
+- **Platforms:** Linux, macOS, Windows; ARM builds in upstream matrix. Android/Termux not tested.
+- **License:** MIT OR Apache-2.0; both root license files inspected.
+- **Maintenance signals:** [2026-10-12 master CI](https://github.com/sharkdp/hyperfine/actions/runs/38224324422) succeeded on SHA `c516152`, including 13 platform build jobs, tests, formatting and minimum Rust checks; active October PR activity.
+- **Verification performed:** Inspected README, Cargo manifest, both licenses, scheduler and main source, CI workflow and successful run; no independent timing measurements.
+- **Source discovery:** GitHub-first 2026-10-30; recursive lead from mise performance notes.
+- **Related projects:** [mise](https://github.com/jdx/mise) (documentation-based benchmarking relationship), other sharkdp Rust CLIs.
+- **Caveats / risks:** Runs arbitrary commands, including preparation hooks; never benchmark untrusted commands. Results vary with CPU load, caches, thermal state and shell behavior; v2 may change CLI/output schemas.
+- **Research notes:** `research/2026-10-30-mise-hyperfine.md`. No code copied.
 
 ## Entry format
 
