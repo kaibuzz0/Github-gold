@@ -2082,7 +2082,10 @@
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
       "copy_restriction_note": "MIT notice preservation applies to covered code; review lib/, hw/ vendor files and LICENSES separately. Upstream 'memory-safe' means no dynamic allocation, not a formal guarantee against C memory bugs. DFU mode, video and PD3 support have upstream WIP limitations; host/device support differs by MCU.",
-      "source": "GitHub-first; research/2026-10-08-tinyusb-embedded-usb-host-device-stack.md; upstream release 0.21.0 and 2026-10-18 maintenance inspection"
+      "source": "GitHub-first; research/2026-10-08-tinyusb-embedded-usb-host-device-stack.md; upstream release 0.21.0 and 2026-10-18 maintenance inspection",
+      "related_projects": [
+        "raspberrypi/pico-sdk (direct TinyUSB Git submodule; no independent hardware validation)"
+      ]
     },
     {
       "name": "LighthouseReckoning",
@@ -5661,7 +5664,8 @@
       "maintenance_signals": "2026-06-20 stable jq-1.8.2; commits 2026-10-25; passing multi-platform CI and Valgrind 2026-10-26",
       "source": "GitHub-first 2026-10-26; research/2026-10-26-llamacpp-jq.md; YouTube throttled",
       "related_projects": [
-        "nushell/nushell (complementary JSON CLI; no direct integration)"
+        "nushell/nushell (complementary JSON CLI; no direct integration)",
+        "johnkerl/miller (CSV/TSV/JSONL streaming complement; no direct integration asserted)"
       ],
       "research_notes": "jq-1.8.2 release addresses parser, memory safety, path-depth and DoS CVEs. Check deployed version for untrusted JSON. No source copied."
     },
@@ -7840,6 +7844,130 @@
         "mattn/go-sqlite3"
       ],
       "research_notes": "research/2026-10-29-obtainium-litestream.md. Verify continuous replication and real restore correctness against crashes and cloud disconnects; S3/GCP current-main CI failures block VERIFIED promotion. Source DB gets an _litestream_lock table; do not assume byte-identical source. No code copied."
+    },
+    {
+      "name": "Miller",
+      "repository": "https://github.com/johnkerl/miller",
+      "owner": "johnkerl",
+      "category": [
+        "structured-data",
+        "csv",
+        "tsv",
+        "jsonl",
+        "streaming",
+        "cli",
+        "go"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "BSD-2-Clause root; pkg/go-csv/LICENSE is a distinct Go Authors BSD-3-Clause notice; dependencies separately licensed",
+      "license_copy_status": "preserve-root-and-file-level-notices",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "other Go-supported platforms not independently tested"
+      ],
+      "useful_components": [
+        "pkg/input/record_reader_csv.go: streaming CSV parser with delimiter validation",
+        "pkg/input/record_reader_json.go: JSON record input",
+        "pkg/output/record_writer_json_jsonl.go: JSON/JSONL output",
+        "pkg/mlrval/mlrmap.go: insertion-ordered record model",
+        "pkg/dsl/cst/: expression DSL evaluation",
+        "pkg/transformers/{join,stats1,reshape,put_or_filter}.go: composable transformations",
+        "pkg/bifs/: statistics, arithmetic, string and date/time builtins",
+        "test/ and regression_test.go: regression harness"
+      ],
+      "verification": [
+        "README, LICENSE.txt, pkg/go-csv/LICENSE, go.mod, source and test tree inspected 2026-10-29",
+        "Stable v6.22.0 published 2026-09-25; current main go.mod declares Go 1.26.10",
+        "2026-10-27 main SHA d035f6f: Miller-Go workflow 40522448049 passed 3/3 Linux/macOS/Windows jobs, each including build, unit and regression tests",
+        "2026-10-27 main CodeQL, lint and Codespell workflows passed",
+        "No independent mlr execution, fuzzing, memory benchmark or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v6.22.0 on 2026-09-25; multi-platform upstream unit/regression CI passed 2026-10-27",
+      "source": "GitHub-first 2026-10-29; no YouTube transcript evidence",
+      "related_projects": [
+        "jqlang/jq (complementary JSON filters)",
+        "nushell/nushell (complementary structured shell)",
+        "johnkerl/lumin (direct Go module dependency)"
+      ],
+      "research_notes": "research/2026-10-29-miller-pico-sdk.md. Many verbs stream; sorting/grouping may buffer. File-level BSD-3-Clause notices apply to pkg/go-csv. No source copied."
+    },
+    {
+      "name": "Raspberry Pi Pico SDK",
+      "repository": "https://github.com/raspberrypi/pico-sdk",
+      "owner": "raspberrypi",
+      "category": [
+        "embedded",
+        "rp2040",
+        "rp2350",
+        "pio",
+        "dma",
+        "microcontroller-sdk",
+        "c-cpp"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "BSD-3-Clause root; separately licensed Git submodules include TinyUSB, CYW43 driver, lwIP, mbedTLS and BTstack",
+      "license_copy_status": "bsd-3-clause-notices-plus-submodule-license-audit",
+      "platforms": [
+        "RP2040 ARM Cortex-M0+",
+        "RP2350 Arm Cortex-M33 and supported RISC-V",
+        "Pico/Pico W/Pico 2/Pico 2 W and supported third-party RP boards",
+        "Linux/macOS/Windows cross-compile hosts with appropriate tools"
+      ],
+      "useful_components": [
+        "src/rp2_common/hardware_pio/pio.c: PIO state-machine allocation",
+        "src/rp2_common/hardware_dma/dma.c: DMA channel/timer allocation",
+        "src/rp2_common/hardware_flash/flash.c: flash operations",
+        "src/rp2_common/pico_multicore/: multicore abstractions",
+        "src/boards/include/boards/: board capability/pin definitions",
+        "src/rp2040/boot_stage2/ and src/rp2350/boot_stage2/: boot code",
+        "pico_sdk_init.cmake and external/pico_sdk_import.cmake: build integration",
+        "test/ and .github/workflows/: test/build infrastructure"
+      ],
+      "verification": [
+        "2026-10-29 inspected README, LICENSE.TXT, .gitmodules, source tree, PIO/DMA source and CMake workflow",
+        "Stable release 2.3.1 published 2026-09-04",
+        "2026-10-29 PR SHA 46ac1d5 CMake run 40919233317 built on self-hosted Linux; Bazel/config/extern-C checks passed",
+        "2026-10-29 develop macOS workflow 40865066254 failed at dependency installation; build steps skipped",
+        "No independent firmware build, CTest execution, board flash, PIO/DMA runtime or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "stable 2.3.1 on 2026-09-04; active October 2026 PR/develop CI; macOS develop dependency install failure remains",
+      "source": "GitHub-first 2026-10-29; no YouTube transcript evidence",
+      "related_projects": [
+        "raspberrypi/pico-examples",
+        "raspberrypi/pico-extras",
+        "hathach/tinyusb (direct submodule)",
+        "georgerobotics/cyw43-driver",
+        "lwip-tcpip/lwip",
+        "Mbed-TLS/mbedtls",
+        "bluekitchen/btstack"
+      ],
+      "research_notes": "research/2026-10-29-miller-pico-sdk.md. Upstream build evidence is not hardware execution. Check chip-specific PIO/DMA/flash behavior and submodule licensing before reuse. No code copied."
     }
   ],
   "deferred_or_rejected": [

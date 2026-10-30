@@ -809,7 +809,7 @@ Suggested tiers:
 - **Maintenance signals:** Official 0.21.0 release published 2026-06-30; upstream commits through 2026-10-18; test and fuzz infrastructure.
 - **Verification performed:** Inspected README.rst, LICENSE, host source, class directories, Ceedling configuration and pre-commit workflow 2026-10-18. Unit-test invocation is commented out in that workflow; fuzz harnesses are configured but not run by GitHub Gold.
 - **Source discovery:** GitHub-first; `research/2026-10-08-tinyusb-embedded-usb-host-device-stack.md`.
-- **Related projects:** Raspberry Pi Pico SDK, ESP-IDF, FreeRTOS, Adafruit TinyUSB integrations.
+- **Related projects:** raspberrypi/pico-sdk (direct TinyUSB Git submodule; not independently hardware-tested), ESP-IDF, FreeRTOS, Adafruit TinyUSB integrations.
 - **Caveats / risks:** Static allocation is not a formal memory-safety guarantee for C. USB host/device availability differs by target; DFU mode, video and PD3 are partly WIP. October 18 HIL recovery tooling changes do not prove stack correctness.
 - **Research notes:** No third-party code copied; no independent firmware build, test execution, fuzzing, hardware enumeration, or security audit.
 
@@ -2095,7 +2095,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable [jq-1.8.2](https://github.com/jqlang/jq/releases/tag/jq-1.8.2) published 2026-06-20 with security fixes; [CI 40382053397](https://github.com/jqlang/jq/actions/runs/40382053397) 24 jobs passed, release job skipped; [Valgrind 40382053249](https://github.com/jqlang/jq/actions/runs/40382053249) and [BSD 40382053191](https://github.com/jqlang/jq/actions/runs/40382053191) passed. Source commits 2026-10-25.
 - **Verification performed:** README, COPYING, SECURITY.md, source, tests, parser fuzz harness, release and CI inspected 2026-10-26. No independent execution or fuzz campaign.
 - **Source discovery:** GitHub-first; `research/2026-10-26-llamacpp-jq.md`. Two YouTube playlists throttled; no transcript attribution.
-- **Related projects:** nushell/nushell (complementary structured-data shell, not direct integration).
+- **Related projects:** nushell/nushell (complementary structured-data shell, not direct integration); johnkerl/miller (CSV/TSV/JSONL streaming CLI; no direct integration asserted).
 - **Caveats / risks:** jq-1.8.2 addresses multiple parser/memory-safety, path-depth and DoS CVEs. Patch deployments processing untrusted JSON. Bundled components have additional licenses.
 - **Research notes:** Follow parser fuzzing, deep-input limits, regex engine configuration and embedded libjq use. No code copied.
 
@@ -2827,6 +2827,47 @@ Suggested tiers:
 - **Related projects:** nats-io/nats-server and nats-io/nats.go (JetStream Object Store client backend); superfly/ltx; kopia/kopia (complementary backup architecture).
 - **Caveats / risks:** Current-main S3/GCP integration failures prevent VERIFIED promotion. S3/R2/Azure/GCP live jobs were skipped in the successful PR core run. Upstream README notes an `_litestream_lock` table is added to source DB; do not assume byte-identical source. Exercise point-in-time restores and cloud credential isolation.
 - **Research notes:** `research/2026-10-29-obtainium-litestream.md`. No code copied.
+
+
+### Miller
+
+- **Repository:** https://github.com/johnkerl/miller
+- **Author / Org:** John Kerl
+- **Category:** Structured data / CSV / TSV / JSONL / CLI / streaming data transformations
+- **Evidence:** VERIFIED — upstream multi-platform build, unit and regression CI; not independently executed
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** `mlr` is a format-aware command-line record transformation engine for filtering, reshaping, joining, aggregation, statistics and conversion of CSV, TSV, JSON and JSON Lines.
+- **Why it is valuable:** Portable data-cleaning engine with reusable readers/writers, insertion-ordered records, expression DSL, streaming transforms and regression coverage.
+- **Useful code/components:** `pkg/input/record_reader_csv.go`, `record_reader_json.go`; `pkg/output/record_writer_json_jsonl.go`; `pkg/mlrval/mlrmap.go`; `pkg/dsl/cst/`; `pkg/transformers/{join,stats1,reshape,put_or_filter}.go`; `pkg/bifs/`; `test/`, `regression_test.go`.
+- **Install / runtime:** Go module `github.com/johnkerl/miller/v6`; executable `mlr`; current main `go.mod` declares Go 1.26.10; `make build` or official packages/binaries.
+- **Platforms:** Linux, macOS, Windows tested upstream; other Go platforms possible, but Termux/Android untested.
+- **License:** BSD-2-Clause root `LICENSE.txt`; `pkg/go-csv/LICENSE` preserves separate Go Authors BSD-3-Clause notice; dependency licenses separate.
+- **Maintenance signals:** [v6.22.0](https://github.com/johnkerl/miller/releases/tag/v6.22.0) released 2026-09-25. [2026-10-27 main Miller-Go CI](https://github.com/johnkerl/miller/actions/runs/40522448049) **3/3 jobs passed** (Linux/macOS/Windows), each with build, unit and regression steps. CodeQL and lint passed separately.
+- **Verification performed:** Inspected README, licenses, go.mod, source and test tree, release and workflow job steps. No independent execution, fuzzing, benchmarking or security audit.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript evidence.
+- **Related projects:** jqlang/jq (JSON filters), nushell/nushell (structured shell), johnkerl/lumin (Go dependency).
+- **Caveats / risks:** Some operations such as sorting and grouping buffer state; streaming is not a blanket bounded-memory guarantee. Inspect prepipe/config trust and file-level notices before reuse.
+- **Research notes:** `research/2026-10-29-miller-pico-sdk.md`. No third-party code copied.
+
+### Raspberry Pi Pico SDK
+
+- **Repository:** https://github.com/raspberrypi/pico-sdk
+- **Author / Org:** Raspberry Pi
+- **Category:** RP2040 / RP2350 / embedded C/C++ / PIO / DMA / firmware SDK
+- **Evidence:** VERIFIED — upstream stable release and successful build CI; not independently hardware-tested
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Official C/C++/assembly libraries and build system for RP-series microcontrollers, covering PIO, DMA, clocks, flash, multicore, USB and wireless integrations.
+- **Why it is valuable:** Reusable low-level peripheral abstractions, extensive board definitions, cross-platform build tooling and companion example ecosystem.
+- **Useful code/components:** `src/rp2_common/hardware_pio/pio.c`; `src/rp2_common/hardware_dma/dma.c`; `src/rp2_common/hardware_flash/flash.c`; `src/rp2_common/pico_multicore/`; `src/boards/include/boards/`; `src/rp2040/boot_stage2/`, `src/rp2350/boot_stage2/`; `pico_sdk_init.cmake`, `external/pico_sdk_import.cmake`.
+- **Install / runtime:** CMake >=3.13, Python 3, appropriate Arm GCC embedded toolchain or RP2350 RISC-V toolchain, initialized Git submodules; choose board using `PICO_BOARD`. Physical RP hardware required to run firmware.
+- **Platforms:** RP2040 Arm Cortex-M0+, RP2350 Arm Cortex-M33 and supported RISC-V targets; Pico/Pico W/Pico 2/Pico 2 W and supported third-party boards. Linux/macOS/Windows build hosts.
+- **License:** BSD-3-Clause root `LICENSE.TXT`; separate licenses for TinyUSB, CYW43 driver, lwIP, mbedTLS, BTstack submodules.
+- **Maintenance signals:** [Stable 2.3.1](https://github.com/raspberrypi/pico-sdk/releases/tag/2.3.1) published 2026-09-04. [2026-10-29 PR CMake CI](https://github.com/raspberrypi/pico-sdk/actions/runs/40919233317) built successfully on self-hosted Linux; PR Bazel/config checks passed. [2026-10-29 develop macOS CI](https://github.com/raspberrypi/pico-sdk/actions/runs/40865066254) failed during dependency installation; build steps skipped.
+- **Verification performed:** Inspected README, LICENSE.TXT, `.gitmodules`, source tree, PIO/DMA implementation, release and CI job steps. No independent build, CTest run, flashing or hardware test.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript evidence.
+- **Related projects:** raspberrypi/pico-examples, raspberrypi/pico-extras, hathach/tinyusb (direct submodule), georgerobotics/cyw43-driver, lwip-tcpip/lwip, Mbed-TLS/mbedtls, bluekitchen/btstack.
+- **Caveats / risks:** CI compilation does not establish board runtime correctness. Flash operations and PIO/DMA require target-specific review. Submodules have separate licensing/security lifecycles.
+- **Research notes:** `research/2026-10-29-miller-pico-sdk.md`. No third-party code copied.
 
 ## Entry format
 
