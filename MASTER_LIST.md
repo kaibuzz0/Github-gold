@@ -544,7 +544,7 @@ Suggested tiers:
 - **Maintenance signals:** 0.13.5 published 2026-10-22 UTC (release notes dated 2026-10-21); updated managed CPython builds after 0.13.4 trust-root removal. Main CI succeeded 2026-10-22 (run 39720666204).
 - **Verification performed:** README, MIT and Apache-2.0 root licenses inspected; uv-resolver source tree and GitHub Actions test workflows inspected; v0.13.1 upstream release published 2026-10-14 inspected; No independent build, install or benchmark.
 - **Source discovery:** GitHub-first; research/2026-08-21-python-tooling.md
-- **Related projects:** Astral Ruff, ty; Python packaging standards.
+- **Related projects:** [Ruff](https://github.com/astral-sh/ruff) (inspected VERIFIED/S29; same Astral ecosystem, usable through `uvx ruff`), ty; Python packaging standards.
 - **Caveats / risks:** Upstream 10–100x speed claims not independently benchmarked. Downloaded interpreters, packages and third-party dependencies have separate licenses and supply-chain risks.
 - **Research notes:** Promoted from READY queue on 2026-10-14. No upstream code copied.
 
@@ -2905,9 +2905,71 @@ Suggested tiers:
 - **Maintenance signals:** [Stable v5.7.0](https://github.com/OpenZeppelin/openzeppelin-contracts/releases/tag/v5.7.0) released **2026-07-29**. [2026-10-30 master checks](https://github.com/OpenZeppelin/openzeppelin-contracts/actions/runs/41000334840) passed **7/7 jobs** (tests, upgradeable tests, coverage, Slither, lint, harnesses, codespell); [Code Quality](https://github.com/OpenZeppelin/openzeppelin-contracts/actions/runs/41000334212) passed.
 - **Verification performed:** Inspected README, MIT license, package manifest, ERC20/AccessControl/ERC1967Proxy/MerkleProof source, tests, audits index and current-master CI. No independent compile, deployment, fuzzing, formal verification or security audit.
 - **Source discovery:** GitHub-first 2026-10-30; no accessible YouTube transcript evidence.
-- **Related projects:** [OpenZeppelin/merkle-tree](https://github.com/OpenZeppelin/merkle-tree) for off-chain proofs; OpenZeppelin upgradeable-contract and upgrades tooling. Off-chain/on-chain Merkle pairing is documented upstream, not independently executed.
+- **Related projects:** [OpenZeppelin Merkle Tree](https://github.com/OpenZeppelin/merkle-tree) (inspected PROMISING/A23; v1.0.8, no passing CI runs established) for off-chain proofs; OpenZeppelin upgradeable-contract and upgrades tooling. Off-chain/on-chain Merkle pairing is documented upstream, not independently executed.
 - **Caveats / risks:** [Repository audit index](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/audits/README.md) lists reports through **v5.6.0**, not v5.7.0; do not infer a version-specific v5.7 audit. The latest master CI is not a test of the exact release tag. Default-admin roles, proxy initialization/storage layout, and Merkle leaf encoding are security-critical. Release notes flag EIP712 and ERC2771Forwarder breaking changes.
 - **Research notes:** `research/2026-10-30-arduinojson-openzeppelin.md`. No source copied.
+
+
+### Ruff
+
+- **Repository:** https://github.com/astral-sh/ruff
+- **Author / Org:** Astral
+- **Category:** Python developer tooling / Rust parser / linter / formatter / editor integrations
+- **Evidence:** VERIFIED — upstream release, source, current-main multi-platform CI; no independent execution
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Rust-based Python linter and formatter with fast incremental checking, automatic fixes, and editor integration.
+- **Why it is valuable:** Modular Python parsing/formatting/rule machinery, broad platform support, and extensive upstream regression, fuzz-build and release validation.
+- **Useful code/components:** `crates/ruff_linter/` rules and diagnostics; `crates/ruff_python_parser/` parser; `crates/ruff_python_formatter/` formatting; `crates/ruff_cache/` incremental caching; `crates/ruff_server/` LSP; `crates/ruff_wasm/`; `fuzz/fuzz_targets/` crash and idempotency harnesses.
+- **Install / runtime:** `uvx ruff@0.17.3 check`, `uvx ruff@0.17.3 format`, pip/pipx or binary installer; Rust toolchain for source builds. Runs as native executable; does not need a Python interpreter to lint.
+- **Platforms:** Linux, macOS, Windows; WebAssembly crate/tooling.
+- **License:** MIT root; preserve notice and inspect dependencies before source reuse.
+- **Maintenance signals:** [0.17.3 release](https://github.com/astral-sh/ruff/releases/tag/0.17.3) 2026-10-27. [2026-10-30 current-main CI](https://github.com/astral-sh/ruff/actions/runs/41016143966) succeeded: **39 jobs passed, seven skipped**; Linux/macOS/Windows cargo tests, WASM test, formatter comparison, fuzz build and cargo-deny among successful jobs. [Daily parser fuzz](https://github.com/astral-sh/ruff/actions/runs/40976955323) succeeded on preceding main SHA.
+- **Verification performed:** Inspected README, MIT license, crates, fuzz harness documentation, releases and current-main CI job results. No independent install, formatting, lint run, benchmark or security audit. Upstream speed claims are not independent measurements.
+- **Source discovery:** GitHub-first 2026-10-30; no accessible playlist transcripts.
+- **Related projects:** [uv](https://github.com/astral-sh/uv) (same org and CLI launcher), [ty](https://github.com/astral-sh/ty), [ruff-vscode](https://github.com/astral-sh/ruff-vscode).
+- **Caveats / risks:** Autofixes may alter semantics; review changes. Internal crates are not guaranteed stable integration APIs. Fuzz *build* success does not prove fuzz execution.
+- **Research notes:** `research/2026-10-30-ruff-markitdown-merkle-tree.md`. No source copied.
+
+### MarkItDown
+
+- **Repository:** https://github.com/microsoft/markitdown
+- **Author / Org:** Microsoft
+- **Category:** Python / document conversion / Markdown / LLM data ingestion / optional cloud OCR
+- **Evidence:** PROMISING — upstream release and 21 successful PR-branch test jobs; archive resource-limit caveat and no confirmed current-main core test
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 3 + Documentation 5 + Maintenance 4)
+- **What it does:** Converts PDF, Word, Excel, PowerPoint, HTML, EPUB, ZIP, images, audio and other inputs into Markdown for analysis pipelines.
+- **Why it is valuable:** Reusable format-specific Python converters, stream/local/URL APIs, test vectors, MCP server, optional OCR plugin, and extensible plugin architecture.
+- **Useful code/components:** `packages/markitdown/src/markitdown/_markitdown.py` converter dispatch; `_base_converter.py` interfaces; `converters/` format readers; `packages/markitdown-mcp/`; `packages/markitdown-ocr/`; `packages/markitdown/tests/`.
+- **Install / runtime:** Python **3.10–3.14**, `pip install 'markitdown[pdf,docx,pptx]'` or opt-in extras; optional ExifTool/FFmpeg and cloud API credentials for some capabilities. Core file conversion can be local; URL and Azure/LLM features use networks.
+- **Platforms:** Python-compatible Linux/Windows; optional dependency/platform support varies.
+- **License:** MIT root; dependencies/plugins and paid cloud services retain their own terms.
+- **Maintenance signals:** [v0.1.9](https://github.com/microsoft/markitdown/releases/tag/v0.1.9) 2026-10-21; [2026-10-28 PR tests](https://github.com/microsoft/markitdown/actions/runs/40717145636) **21/21 passed** across Ubuntu Python 3.10–3.14 and Windows x64/ARM, core/OCR/MCP. PR branch, not current-main or release-tag validation. [2026-10-30 ZIP mitigation branch run](https://github.com/microsoft/markitdown/actions/runs/41026922728) was `action_required`, not a passing fix.
+- **Verification performed:** Inspected README, LICENSE, Python manifest, converter registration, ZIP source, tests and workflow matrix. No independent conversion, archive stress test, OCR or security audit.
+- **Source discovery:** GitHub-first 2026-10-30; no usable YouTube playlist transcript.
+- **Related projects:** In-tree MCP and OCR companions; [OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF) and [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx) as complementary architectures, not tested integrations.
+- **Caveats / risks:** **Untrusted ZIP resource exhaustion:** current `_zip_converter.py` loops through members and calls unbounded `zipObj.read(entry)` into memory, with recursive conversion. Apply external file size, entry count, recursion and time limits; do not treat a pending fix as shipped. Plugins execute Python; URL fetching and optional paid cloud/LLM calls have privacy and cost implications.
+- **Research notes:** `research/2026-10-30-ruff-markitdown-merkle-tree.md`. No source copied.
+
+### OpenZeppelin Merkle Tree
+
+- **Repository:** https://github.com/OpenZeppelin/merkle-tree
+- **Author / Org:** OpenZeppelin
+- **Category:** TypeScript / off-chain Merkle proofs / EVM cryptography / token distribution infrastructure
+- **Evidence:** PROMISING — inspected source and tests; no passing upstream CI run established
+- **Tier / Score:** A / 23 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 2)
+- **What it does:** Builds Ethereum-oriented Merkle trees, serialized trees, single proofs and multiproofs, designed to pair with Solidity MerkleProof.
+- **Why it is valuable:** Off-chain companion to existing OpenZeppelin Contracts; provides reusable standard double-hashed ABI leaves, proof processing, multiproofs and portable tree data.
+- **Useful code/components:** `src/standard.ts` StandardMerkleTree; `src/simple.ts` SimpleMerkleTree; `src/core.ts` multiproof logic; `src/merkletree.ts` construction/serialization; `src/hashes.ts`; `src/*.test.ts`, `test/dumps.test.ts`.
+- **Install / runtime:** Node.js/npm TypeScript/JavaScript; `npm install @openzeppelin/merkle-tree`. Solidity verification requires a separate EVM contract using compatible hashing and leaf encoding.
+- **Platforms:** Node.js and JavaScript tooling for proof creation; Ethereum/EVM contracts for on-chain verification. Not Solana SPL.
+- **License:** MIT root; dependencies such as `@metamask/abi-utils` and `ethereum-cryptography` separately licensed.
+- **Maintenance signals:** [v1.0.8](https://github.com/OpenZeppelin/merkle-tree/releases/tag/v1.0.8) released **2025-02-19**; latest inspected master commit 2025-02-25. AVA tests and a push/PR GitHub Actions workflow are present, but GitHub Actions run list returned **no runs**; no successful CI claimed.
+- **Verification performed:** Inspected README, package manifest, MIT license, StandardMerkleTree source, tests, release and commit history. No independent npm test, proof generation, Solidity round-trip or audit.
+- **Source discovery:** Recursive GitHub-first research from OpenZeppelin Contracts MerkleProof, 2026-10-30.
+- **Related projects:** [OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) Solidity MerkleProof; ABI and Keccak dependencies.
+- **Caveats / risks:** Standard trees double-hash ABI-encoded leaves; SimpleMerkleTree permits prehashed leaves and needs careful design. Multiproof leaf ordering matters; contracts must prevent claim replay. No current CI evidence; stale maintenance. No automatic cross-chain compatibility.
+- **Research notes:** `research/2026-10-30-ruff-markitdown-merkle-tree.md`. No source copied.
+
 
 ## Entry format
 

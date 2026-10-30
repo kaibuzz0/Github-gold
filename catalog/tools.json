@@ -1368,7 +1368,11 @@
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "copy_restriction_note": "Upstream speed claims not independently benchmarked. Downloaded Python versions, packages and dependencies have separate terms and supply-chain risks."
+      "copy_restriction_note": "Upstream speed claims not independently benchmarked. Downloaded Python versions, packages and dependencies have separate terms and supply-chain risks.",
+      "related_projects": [
+        "astral-sh/ruff (VERIFIED/S29; same organization, `uvx ruff` and Python tooling ecosystem; inspected 2026-10-30)"
+      ],
+      "research_notes": " 2026-10-30 cross-linked inspected Ruff; no joint integration test."
     },
     {
       "name": "age",
@@ -8088,11 +8092,178 @@
       "maintenance_signals": "v5.7.0 released 2026-07-29; active master changes 2026-10-30; 7/7 current-master checks passed",
       "source": "GitHub-first 2026-10-30; no accessible YouTube transcript evidence",
       "related_projects": [
-        "OpenZeppelin/merkle-tree (off-chain StandardMerkleTree proof generation, MIT; v1.0.8 2025-02-19)",
+        "OpenZeppelin/merkle-tree (PROMISING/A23; off-chain StandardMerkleTree proof generation; MIT; v1.0.8 2025-02-19; no passing Actions runs established)",
         "OpenZeppelin/openzeppelin-contracts-upgradeable (generated companion; check compatibility)",
         "OpenZeppelin/openzeppelin-upgrades (deployment/upgrade tooling)"
       ],
-      "research_notes": "research/2026-10-30-arduinojson-openzeppelin.md. ERC20.sol does not mint supply by itself; proxy storage layout, role administration and initializer permissions require application-specific audit. This EVM Solidity library is not directly a Solana SPL token implementation. No code copied."
+      "research_notes": "research/2026-10-30-arduinojson-openzeppelin.md. ERC20.sol does not mint supply by itself; proxy storage layout, role administration and initializer permissions require application-specific audit. This EVM Solidity library is not directly a Solana SPL token implementation. No code copied. 2026-10-30 companion Merkle Tree source/tests reviewed; no cross-language round-trip test."
+    },
+    {
+      "name": "Ruff",
+      "repository": "https://github.com/astral-sh/ruff",
+      "owner": "astral-sh",
+      "category": [
+        "python",
+        "developer-tooling",
+        "rust",
+        "linting",
+        "formatting",
+        "parsing"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 29,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT root; dependency and generated-artifact licenses separately reviewed when reused",
+      "license_copy_status": "mit-permissive-preserve-license-notice-review-dependencies",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "WebAssembly tooling"
+      ],
+      "useful_components": [
+        "crates/ruff_linter — rule engine and diagnostics",
+        "crates/ruff_python_parser — Python parser and token handling",
+        "crates/ruff_python_formatter — Python formatting implementation",
+        "crates/ruff_cache — incremental cache",
+        "crates/ruff_server — editor/LSP integration",
+        "crates/ruff_wasm — WebAssembly target",
+        "fuzz/fuzz_targets — parser, fix and formatter fuzz harnesses"
+      ],
+      "verification": [
+        "2026-10-30 inspected upstream README, MIT LICENSE, crates/, fuzz/README.md, release metadata and current-main CI",
+        "Stable 0.17.3 published 2026-10-27; current-main CI 41016143966 (2026-10-30) succeeded with 39 successful jobs and 7 skipped, including cargo tests on Linux/macOS/Windows, WASM, formatter comparison, fuzz build, cargo-deny and package checks",
+        "Fuzz build success is not proof of continuous fuzz execution; separate daily parser fuzz workflow 40976955323 succeeded 2026-10-30 on preceding main SHA",
+        "No independent installation, linting, formatter execution, benchmark or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "0.17.3 2026-10-27; active 2026-10-30 main commit 16cffe4; CI run 41016143966 successful.",
+      "source": "GitHub-first 2026-10-30; two YouTube seed-ID searches yielded no usable playlist/transcript evidence",
+      "related_projects": [
+        "astral-sh/uv (same organization; package manager and uvx Ruff launcher)",
+        "astral-sh/ty (same workspace type checker; distinct product)",
+        "astral-sh/ruff-vscode (editor integration)"
+      ],
+      "research_notes": "research/2026-10-30-ruff-markitdown-merkle-tree.md. Upstream speed/parity claims are not independently benchmarked; autofix should be reviewed; internal crates are not necessarily stable public APIs. No code copied."
+    },
+    {
+      "name": "MarkItDown",
+      "repository": "https://github.com/microsoft/markitdown",
+      "owner": "microsoft",
+      "category": [
+        "document-processing",
+        "python",
+        "markdown",
+        "llm-data-ingestion",
+        "multimodal",
+        "automation"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 4,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT root; optional conversion dependencies and cloud services have separate licenses/terms",
+      "license_copy_status": "mit-permissive-review-optional-dependencies-and-plugins",
+      "platforms": [
+        "Python 3.10–3.14",
+        "Linux",
+        "Windows",
+        "other Python-compatible platforms subject to dependency support"
+      ],
+      "useful_components": [
+        "packages/markitdown/src/markitdown/_markitdown.py — converter registration, stream/local/URL routing",
+        "packages/markitdown/src/markitdown/_base_converter.py — converter interfaces",
+        "packages/markitdown/src/markitdown/converters/ — PDF/DOCX/PPTX/XLSX/HTML/EPUB/ZIP/audio/YouTube conversion modules",
+        "packages/markitdown-mcp/ — MCP integration",
+        "packages/markitdown-ocr/ — optional vision OCR plugin",
+        "packages/markitdown/tests/ — format regression suite"
+      ],
+      "verification": [
+        "2026-10-30 inspected README, MIT LICENSE, package manifest, core converter dispatch, ZIP converter, tests directory and workflows",
+        "Stable v0.1.9 published 2026-10-21; 2026-10-28 PR-branch tests run 40717145636 passed 21/21 Ubuntu Python 3.10–3.14 and Windows x64/ARM jobs across core, OCR and MCP; not current main or exact release tag",
+        "2026-10-30 unmerged fix/zip-bomb-dos-protection workflow 41026922728 returned action_required and did not establish a passing fix",
+        "No independent conversion, network access, OCR, ZIP-bomb stress test or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v0.1.9 released 2026-10-21; latest inspected main commit 7482c09 dated 2026-10-22; green 21-job PR tests on 2026-10-28, but current-main core tests not established.",
+      "source": "GitHub-first 2026-10-30; no accessible playlist transcript evidence",
+      "related_projects": [
+        "microsoft/markitdown packages/markitdown-mcp and markitdown-ocr (in-tree companions)",
+        "ocrmypdf/OCRmyPDF (complementary dedicated OCR/PDF-A pipeline, not a tested integration)",
+        "paperless-ngx/paperless-ngx (complementary document archive, not a tested integration)"
+      ],
+      "research_notes": "research/2026-10-30-ruff-markitdown-merkle-tree.md. SECURITY: current ZIP converter iterates archive entries and uses unbounded zipObj.read(entry) into BytesIO, including recursive conversion; restrict untrusted archives, size/depth/count and time externally until mitigated. Conversion may fetch URLs or call paid Azure/LLM services if enabled; plugins execute Python. No code copied."
+    },
+    {
+      "name": "OpenZeppelin Merkle Tree",
+      "repository": "https://github.com/OpenZeppelin/merkle-tree",
+      "owner": "OpenZeppelin",
+      "category": [
+        "blockchain-infrastructure",
+        "typescript",
+        "cryptography",
+        "merkle-trees",
+        "evm",
+        "proof-generation"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 23,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 2
+      },
+      "license": "MIT root; @metamask/abi-utils and ethereum-cryptography dependencies separately licensed",
+      "license_copy_status": "mit-permissive-preserve-license-notices-review-dependencies",
+      "platforms": [
+        "Node.js/npm TypeScript/JavaScript",
+        "EVM tooling for off-chain proof generation; on-chain verifier lives in separate Solidity library"
+      ],
+      "useful_components": [
+        "src/standard.ts — StandardMerkleTree, ABI leaf encoding, proof/multiproof verification",
+        "src/simple.ts — SimpleMerkleTree for prehashed bytes32 leaves",
+        "src/core.ts — proof and multiproof processing",
+        "src/merkletree.ts — tree construction and serialization",
+        "src/hashes.ts — Keccak256 hashing",
+        "src/*.test.ts and test/dumps.test.ts — AVA and fixtures"
+      ],
+      "verification": [
+        "2026-10-30 inspected README, MIT LICENSE, package.json, src/standard.ts, source tests and .github/workflows/test.yml",
+        "Stable v1.0.8 published 2025-02-19; latest master commit 98ff55d dated 2025-02-25",
+        "AVA test and coverage scripts exist and GitHub Actions test workflow is defined, but repository Actions runs API returned no available runs; no successful CI execution established",
+        "No independent proof generation, Solidity round-trip, installation, contract deployment or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "medium",
+      "maintenance_signals": "Stable 1.0.8 2025-02-19; last inspected commit 2025-02-25; no visible Actions run history; maintenance score intentionally low.",
+      "source": "Recursive GitHub-first discovery from existing OpenZeppelin Contracts MerkleProof component 2026-10-30",
+      "related_projects": [
+        "OpenZeppelin/openzeppelin-contracts (Solidity MerkleProof inclusion/multiproof verifier)",
+        "@metamask/abi-utils (ABI encoding dependency)",
+        "ethereum-cryptography (Keccak dependency)"
+      ],
+      "research_notes": "research/2026-10-30-ruff-markitdown-merkle-tree.md. Standard trees double-hash ABI-encoded leaves; multiproof ordering and replay prevention are application responsibilities. Simple trees require careful prehash design. Not a Solana SPL token implementation. No code copied."
     }
   ],
   "deferred_or_rejected": [
