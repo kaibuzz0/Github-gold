@@ -1867,7 +1867,7 @@ Suggested tiers:
 - **Maintenance signals:** [Stable 2026.10.0](https://github.com/esphome/esphome/releases/tag/2026.10.0) released 2026-10-21; active 2026-10-25 development commits. [Upstream PR CI 40218426253](https://github.com/esphome/esphome/actions/runs/40218426253) completed **28 successful, 2 skipped** jobs on 2026-10-25 (integration tests, C++ tests, component builds, static checks).
 - **Verification performed:** Inspected README, root license, Python manifest, configuration/codegen, API, OTA, safe-mode, MQTT source and CI workflow; inspected upstream CI job results. No independent build, flash, MQTT connection, OTA recovery or device security test.
 - **Source discovery:** GitHub-first; no usable YouTube transcript evidence.
-- **Related projects:** `home-assistant/core` (ecosystem); `Koenkk/zigbee2mqtt` (complementary local IoT bridge, not a direct integration); `esphome/esphome.io` documentation.
+- **Related projects:** `home-assistant/core` (ecosystem); `Koenkk/zigbee2mqtt` (complementary local IoT bridge, not a direct integration); `esphome/esphome.io` documentation; [ArduinoJson](https://github.com/bblanchon/ArduinoJson) 7.4.3 (direct pinned JSON component dependency, source-verified 2026-10-30).
 - **Caveats / risks:** YAML external components are executable build inputs; protect API encryption keys, OTA authentication and device credentials. Firmware reliability and resource use vary by board. GPLv3 obligations apply to C++ runtime reuse. No source copied.
 - **Research notes:** `research/2026-10-25-esphome-gnuradio.md`. Investigate API Noise session handling, OTA rollback and external-component trust.
 
@@ -2868,6 +2868,46 @@ Suggested tiers:
 - **Related projects:** raspberrypi/pico-examples, raspberrypi/pico-extras, hathach/tinyusb (direct submodule), georgerobotics/cyw43-driver, lwip-tcpip/lwip, Mbed-TLS/mbedtls, bluekitchen/btstack.
 - **Caveats / risks:** CI compilation does not establish board runtime correctness. Flash operations and PIO/DMA require target-specific review. Submodules have separate licensing/security lifecycles.
 - **Research notes:** `research/2026-10-29-miller-pico-sdk.md`. No third-party code copied.
+
+### ArduinoJson
+
+- **Repository:** https://github.com/bblanchon/ArduinoJson
+- **Author / Org:** Benoit Blanchon
+- **Category:** Embedded C++ / JSON / MessagePack / IoT parsers
+- **Evidence:** VERIFIED — upstream source, stable release and 7.x CI; no independent embedded execution
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 4)
+- **What it does:** Header-oriented C++11+ JSON and MessagePack serialization/deserialization library for microcontrollers and desktop builds.
+- **Why it is valuable:** Portable parsers, custom allocators, stream adapters and selective JSON filtering, with broad cross-compiler and embedded-target CI.
+- **Useful code/components:** `src/ArduinoJson/Json/JsonDeserializer.hpp` (filtering and nesting controls); `JsonSerializer.hpp`; `src/ArduinoJson/MsgPack/{MsgPackDeserializer,MsgPackSerializer}.hpp`; `src/ArduinoJson/Memory/ResourceManager.hpp`; `src/ArduinoJson/Deserialization/deserialize.hpp`; `examples/JsonFilterExample/`; `extras/tests/`.
+- **Install / runtime:** C++11 or newer; Arduino Library Manager, PlatformIO, ESP-IDF component manager or CMake; hardware only needed for device execution.
+- **Platforms:** AVR, ESP32/ESP8266, SAMD, STM32, nRF52, Teensy and desktop compiler environments (upstream CI covers representative builds, not every device).
+- **License:** MIT, root `LICENSE.txt` (Benoit Blanchon); preserve copyright/license notice.
+- **Maintenance signals:** [Stable v7.4.3](https://github.com/bblanchon/ArduinoJson/releases/tag/v7.4.3) released **2026-03-02** with a documented numeric-string buffer-overrun fix. [2026-08-11 7.x CI](https://github.com/bblanchon/ArduinoJson/actions/runs/31512131312) passed **46/46 jobs**, including compiler matrices, sanitizers, Arduino/ESP-IDF/PlatformIO targets, Valgrind and CodeQL. Alternate experimental-branch failures are not stable-branch failures.
+- **Verification performed:** Inspected upstream source, license, example, tests, CI and release metadata; no independent parsing, fuzzing, build, hardware flash or memory benchmark.
+- **Source discovery:** GitHub-first 2026-10-30; no accessible YouTube transcript evidence.
+- **Related projects:** [ESPHome](https://github.com/esphome/esphome) directly pins ArduinoJson 7.4.3 in `esphome/components/json/__init__.py`; ESP-IDF and PlatformIO upstream CI targets.
+- **Caveats / risks:** Default 7.x `library.properties` still says **7.4.2** while stable release tag v7.4.3 says **7.4.3**; pin explicit release and inspect dependency resolution. Bound nesting, input size and memory; successful host tests are not physical-device tests.
+- **Research notes:** `research/2026-10-30-arduinojson-openzeppelin.md`. No source copied.
+
+### OpenZeppelin Contracts
+
+- **Repository:** https://github.com/OpenZeppelin/openzeppelin-contracts
+- **Author / Org:** OpenZeppelin
+- **Category:** EVM smart contracts / Solidity / token standards / cryptography / access control
+- **Evidence:** VERIFIED — upstream release, source and current-master CI; no independent deployment or security audit
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Reusable Solidity smart-contract implementations for EVM token standards, access policies, upgradeable proxies, governance and cryptographic verification.
+- **Why it is valuable:** Modular, widely reusable components with explicit security warnings, versioning, tests, static analysis and formal-verification infrastructure.
+- **Useful code/components:** `contracts/token/ERC20/ERC20.sol` (requires separate supply mechanism); `contracts/access/AccessControl.sol`; `contracts/proxy/ERC1967/ERC1967Proxy.sol`; `contracts/utils/cryptography/MerkleProof.sol`; `contracts/governance/`; `test/` and `fv/`.
+- **Install / runtime:** `@openzeppelin/contracts` via npm or pinned Foundry dependency; Solidity `^0.8.20` for many modules (some require `^0.8.22`); repository tooling Node.js `^22.12 || ^24 || >=26`. Deployment requires an EVM-compatible chain and appropriate gas.
+- **Platforms:** EVM-compatible networks; Hardhat/Foundry development environments. **Not** a Solana SPL token library.
+- **License:** MIT, root `LICENSE` and SPDX headers; preserve notices and inspect dependencies.
+- **Maintenance signals:** [Stable v5.7.0](https://github.com/OpenZeppelin/openzeppelin-contracts/releases/tag/v5.7.0) released **2026-07-29**. [2026-10-30 master checks](https://github.com/OpenZeppelin/openzeppelin-contracts/actions/runs/41000334840) passed **7/7 jobs** (tests, upgradeable tests, coverage, Slither, lint, harnesses, codespell); [Code Quality](https://github.com/OpenZeppelin/openzeppelin-contracts/actions/runs/41000334212) passed.
+- **Verification performed:** Inspected README, MIT license, package manifest, ERC20/AccessControl/ERC1967Proxy/MerkleProof source, tests, audits index and current-master CI. No independent compile, deployment, fuzzing, formal verification or security audit.
+- **Source discovery:** GitHub-first 2026-10-30; no accessible YouTube transcript evidence.
+- **Related projects:** [OpenZeppelin/merkle-tree](https://github.com/OpenZeppelin/merkle-tree) for off-chain proofs; OpenZeppelin upgradeable-contract and upgrades tooling. Off-chain/on-chain Merkle pairing is documented upstream, not independently executed.
+- **Caveats / risks:** [Repository audit index](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/audits/README.md) lists reports through **v5.6.0**, not v5.7.0; do not infer a version-specific v5.7 audit. The latest master CI is not a test of the exact release tag. Default-admin roles, proxy initialization/storage layout, and Merkle leaf encoding are security-critical. Release notes flag EIP712 and ERC2771Forwarder breaking changes.
+- **Research notes:** `research/2026-10-30-arduinojson-openzeppelin.md`. No source copied.
 
 ## Entry format
 

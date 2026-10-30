@@ -5000,7 +5000,8 @@
         "2026-10-25 inspected README, root mixed-license LICENSE, pyproject.toml, config.py, codegen.py, API/OTA/safe-mode/MQTT component source and ci.yml",
         "Upstream stable 2026.10.0 released 2026-10-21; 2026-10-25 PR #21626 CI run 40218426253 completed 28 success, 2 skipped (30 jobs) including integration, C++ unit, ESP32/ESP8266 builds and lint",
         "Upstream source commits on 2026-10-25 include scheduler correctness and JPEG PSRAM allocation",
-        "No independent YAML-to-firmware generation, flashing, device control, MQTT operation, OTA recovery or security test"
+        "No independent YAML-to-firmware generation, flashing, device control, MQTT operation, OTA recovery or security test",
+        "2026-10-30 esphome/components/json/__init__.py inspected: ArduinoJson 7.4.3 pinned for PlatformIO and ESP-IDF JSON components; no device runtime tested"
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
@@ -5009,7 +5010,8 @@
       "related_projects": [
         "home-assistant/core (ecosystem; not required for standalone device operation)",
         "Koenkk/zigbee2mqtt (complementary local IoT bridge; not a direct integration claim)",
-        "esphome/esphome.io"
+        "esphome/esphome.io",
+        "bblanchon/ArduinoJson (direct 7.4.3 JSON component dependency; esphome/components/json/__init__.py)"
       ],
       "research_notes": "Python package metadata says MIT but root LICENSE explicitly assigns C++ firmware runtime GPLv3: license each extracted file, not the whole repository as MIT. YAML external_components, API encryption, OTA authentication and recovery are security-sensitive. Board/framework-specific build paths vary. No code copied."
     },
@@ -7968,6 +7970,129 @@
         "bluekitchen/btstack"
       ],
       "research_notes": "research/2026-10-29-miller-pico-sdk.md. Upstream build evidence is not hardware execution. Check chip-specific PIO/DMA/flash behavior and submodule licensing before reuse. No code copied."
+    },
+    {
+      "name": "ArduinoJson",
+      "repository": "https://github.com/bblanchon/ArduinoJson",
+      "owner": "bblanchon",
+      "category": [
+        "embedded",
+        "json",
+        "messagepack",
+        "c-plus-plus",
+        "microcontroller",
+        "parsing"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT (LICENSE.txt, copyright Benoit Blanchon); review downstream dependency licenses separately",
+      "license_copy_status": "mit-permissive-preserve-copyright-and-license",
+      "platforms": [
+        "Arduino-compatible microcontrollers",
+        "ESP32 and ESP-IDF",
+        "ESP8266",
+        "AVR",
+        "SAMD",
+        "STM32",
+        "nRF52",
+        "Teensy",
+        "C++11-or-newer host toolchains"
+      ],
+      "useful_components": [
+        "src/ArduinoJson/Json/JsonDeserializer.hpp — recursive JSON parser with nesting limits and selective filtering",
+        "src/ArduinoJson/Json/JsonSerializer.hpp — JSON writer",
+        "src/ArduinoJson/MsgPack/MsgPackDeserializer.hpp and MsgPackSerializer.hpp — MessagePack codec",
+        "src/ArduinoJson/Memory/ResourceManager.hpp — allocator, string pool and variant pool",
+        "src/ArduinoJson/Deserialization/deserialize.hpp — streaming deserialization entry point",
+        "examples/JsonFilterExample/ — filtered parsing example",
+        "extras/tests/ — parser, serializer, allocator, integration and cross-compiler tests"
+      ],
+      "verification": [
+        "2026-10-30 inspected README, MIT LICENSE.txt, source modules, examples, test tree and CI workflow",
+        "Stable tag v7.4.3 released 2026-03-02; release notes identify numeric-string buffer-overrun fix (issue #2220)",
+        "2026-08-11 default 7.x CI run 31512131312 on SHA 1cd478f48 passed 46/46 jobs: GCC, Clang, Xcode, sanitizers, ESP-IDF, Arduino, PlatformIO, Valgrind, CodeQL",
+        "Default 7.x library.properties still declares 7.4.2 while release tag v7.4.3 declares 7.4.3; pin explicit stable tag",
+        "ESPHome esphome/components/json/__init__.py currently pins bblanchon/ArduinoJson 7.4.3 for non-ESP32 and bblanchon/arduinojson 7.4.3 ESP-IDF component",
+        "No independent build, embedded runtime, parser fuzzing, malformed-input test or memory benchmark"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "2026-03-02 stable v7.4.3; 2026-08-11 7.x 46/46 CI passed; recent alternate experimental branches show failures and action_required, not counted as stable-branch CI",
+      "source": "GitHub-first 2026-10-30; no accessible YouTube transcript evidence",
+      "related_projects": [
+        "esphome/esphome (direct pinned ArduinoJson 7.4.3 dependency)",
+        "espressif/esp-idf (upstream CI ESP-IDF integration)",
+        "platformio/platformio-core (upstream CI target)"
+      ],
+      "research_notes": "research/2026-10-30-arduinojson-openzeppelin.md. Use v7.4.3 tag rather than assuming 7.x metadata version matches; upstream security fix warrants version pinning. C++11 required. Limit nesting, input size and memory; no third-party code copied."
+    },
+    {
+      "name": "OpenZeppelin Contracts",
+      "repository": "https://github.com/OpenZeppelin/openzeppelin-contracts",
+      "owner": "OpenZeppelin",
+      "category": [
+        "blockchain-infrastructure",
+        "solidity",
+        "ethereum",
+        "smart-contracts",
+        "cryptography",
+        "access-control",
+        "reusable-libraries"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT root LICENSE; source SPDX MIT; dependencies and audit reports separately governed",
+      "license_copy_status": "mit-permissive-preserve-copyright-and-license",
+      "platforms": [
+        "EVM-compatible networks (contract semantics and gas costs chain-dependent)",
+        "Solidity ^0.8.20 for many modules; some modules require ^0.8.22",
+        "Node.js ^22.12 or ^24 or >=26 for current repository tooling",
+        "Hardhat/Foundry build and testing environments"
+      ],
+      "useful_components": [
+        "contracts/token/ERC20/ERC20.sol — fungible-token accounting and transfer primitive (supply must be implemented separately)",
+        "contracts/access/AccessControl.sol — role-based permissions and admin-role boundaries",
+        "contracts/proxy/ERC1967/ERC1967Proxy.sol — upgradeable delegatecall proxy with initialization guard",
+        "contracts/utils/cryptography/MerkleProof.sol — inclusion and multiproof verification",
+        "contracts/governance/ — governance modules",
+        "test/ and fv/ — Solidity tests and formal-verification harnesses"
+      ],
+      "verification": [
+        "2026-10-30 inspected README, MIT LICENSE, package.json, ERC20, AccessControl, ERC1967Proxy, MerkleProof, test/ and audit index",
+        "Stable v5.7.0 released 2026-07-29; changelog notes breaking EIP712 and ERC2771Forwarder behavior",
+        "2026-10-30 master SHA 5b76c00f CI checks run 41000334840 passed 7/7 jobs: tests, upgradeable tests, coverage, Slither, lint, harnesses and codespell",
+        "2026-10-30 master Code Quality run 41000334212 passed 1/1; current master is not identical to stable v5.7.0 release",
+        "audits/README.md lists published audits through v5.6.0; no v5.7.0 report found in repository index; do not assert that v5.7.0 itself is audited",
+        "No independent Solidity compile, deployment, economic analysis, formal proof or contract security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v5.7.0 released 2026-07-29; active master changes 2026-10-30; 7/7 current-master checks passed",
+      "source": "GitHub-first 2026-10-30; no accessible YouTube transcript evidence",
+      "related_projects": [
+        "OpenZeppelin/merkle-tree (off-chain StandardMerkleTree proof generation, MIT; v1.0.8 2025-02-19)",
+        "OpenZeppelin/openzeppelin-contracts-upgradeable (generated companion; check compatibility)",
+        "OpenZeppelin/openzeppelin-upgrades (deployment/upgrade tooling)"
+      ],
+      "research_notes": "research/2026-10-30-arduinojson-openzeppelin.md. ERC20.sol does not mint supply by itself; proxy storage layout, role administration and initializer permissions require application-specific audit. This EVM Solidity library is not directly a Solana SPL token implementation. No code copied."
     }
   ],
   "deferred_or_rejected": [
