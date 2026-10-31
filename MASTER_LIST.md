@@ -1215,7 +1215,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable v4.4.2 published 2026-08-07 with security fixes; 2026-10-22 main commit prepared v4.5.0-rc3 (not a stable release). 2026-10-22 main Twister 39835122032, CodeQL 39835121878 and docs 39835121990 completed successfully.
 - **Verification performed:** Upstream README, source tree, west manifest, LICENSE, REUSE license guidance, release, commits and GitHub Actions inspected. No independent build, board flashing or security audit.
 - **Source discovery:** GitHub-first; `research/2026-09-07-zephyr-rtos-embedded-kernel-hardware-test-platform.md` and `research/2026-10-23-zephyr-zellij-promotion.md`.
-- **Related projects:** west; BabbleSim; MCUboot; ESPHome; RadioLib; probe-rs; `zmkfirmware/zmk` (ZMK pins a separate Zephyr fork).
+- **Related projects:** west; BabbleSim; MCUboot; ESPHome; RadioLib; probe-rs; `zmkfirmware/zmk` (ZMK pins a separate Zephyr fork); **LVGL** GUI via Zephyr `west.yml` module at `modules/lib/gui/lvgl`, pinned to **zephyrproject-rtos/lvgl** fork commit `c9ffd469` (not upstream `lvgl/lvgl`).
 - **Caveats / risks:** Security advisories affect multiple kernel/protocol paths; CI does not establish all board combinations work. Imported modules may not inherit the root license.
 - **Research notes:** No third-party code copied. Prioritize Twister sharding and devicetree/driver generation as reusable architectural studies.
 
@@ -2701,7 +2701,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable release 0.29.5 published 2026-09-16; current main JS manifest reports 314.1.0-dev.0. [2026-10-29 PR CI](https://github.com/pyodide/pyodide/actions/runs/40829974568) had 13 passing jobs and one skipped. [2026-10-29 main CI](https://github.com/pyodide/pyodide/actions/runs/40838830915) FAILED: macOS linker undefined `mpd_*` symbols; downstream browser jobs skipped, Ubuntu core build passed.
 - **Verification performed:** Inspected README, MPL license, package manifest, Python/JS/C source layout, release metadata, CI job summaries and failed macOS build logs. No independent browser execution or package test.
 - **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript attribution.
-- **Related projects:** pyodide/micropip, python/cpython, emscripten-core/emsdk; Wasmtime is a different WebAssembly runtime model. sqlite-vec has a separate Pyodide extension build artifact, **not** verified runtime integration.
+- **Related projects:** pyodide/micropip, python/cpython, emscripten-core/emsdk; Wasmtime is a different WebAssembly runtime model. sqlite-vec has a separate Pyodide extension build artifact, **not** verified runtime integration. SciPy has a separate Emscripten/Pyodide CI pathway; its 2026-10-30 build completed but pytest plugin import failed on unavailable `os.geteuid` ([upstream SciPy run](https://github.com/scipy/scipy/actions/runs/41117526067)); this is **not** a new Pyodide main-branch CI result.
 - **Caveats / risks:** Current main CI failure prevents VERIFIED classification. Enforce CPU/memory limits, browser permission boundaries, CSP, trusted package origins and third-party wheel licensing. WebAssembly alone is not a complete security boundary.
 - **Research notes:** `research/2026-10-29-go-git-pyodide.md`.
 
@@ -3092,6 +3092,47 @@ Suggested tiers:
 - **Related projects:** simonw/datasette; simonw/csvs-to-sqlite; simonw/db-to-sqlite; sqlite-fts4; Miller as complementary CLI (not direct integration).
 - **Caveats / risks:** Plugins run arbitrary Python code, SQLite extensions and SQL need trust boundaries, and migrations should be tested against backups. Passing CodeQL/coverage does not imply a green full test matrix.
 - **Research notes:** `research/2026-10-30-direwolf-sqlite-utils.md`. No source copied.
+
+### SciPy
+
+- **Repository:** https://github.com/scipy/scipy
+- **Author / Org:** SciPy contributors
+- **Category:** Scientific computing / numerical algorithms / signal processing / optimization / spatial indexing / Python
+- **Evidence:** VERIFIED — upstream stable release, numerical test suites and passing main Linux CI; not independently executed
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Provides numerical integration, optimization, statistics, sparse matrix and graph routines, spatial algorithms, FFTs, signal/image processing and scientific utilities built around NumPy.
+- **Why it is valuable:** Broad, well-tested numerical building blocks for scientific software, robotics, DSP, engineering analysis, optimization and local Python applications.
+- **Useful code/components:** `scipy/signal/_peak_finding.py`, `_spectral_py.py`; `scipy/spatial/_ckdtree.pyx`; `scipy/optimize/_linprog_highs.py`, `_milp.py`; `scipy/sparse/csgraph/`; `scipy/integrate/`, `scipy/fft/`; associated `tests/` suites.
+- **Install / runtime:** Stable v1.18.1 requires Python >=3.12 and NumPy >=2.0,<2.8; binary wheels via pip/conda where supported, or Meson/Cython/compiled native dependencies for source builds. Current main is unreleased 2.0.0.dev0.
+- **Platforms:** Linux, macOS, Windows; Emscripten/Pyodide build pathway is experimental and its latest inspected CI failed.
+- **License:** BSD-3-Clause core `LICENSE.txt`; `LICENSES_bundled.txt` and subproject/file-level notices identify separately licensed native components.
+- **Maintenance signals:** [Stable v1.18.1](https://github.com/scipy/scipy/releases/tag/v1.18.1) released 2026-08-21. [2026-10-30 main Linux CI](https://github.com/scipy/scipy/actions/runs/41117526122) passed 15/15 jobs and [CodeQL](https://github.com/scipy/scipy/actions/runs/41117526068) passed. [Same-commit Emscripten/Pyodide CI](https://github.com/scipy/scipy/actions/runs/41117526067) failed after build during pytest plugin import (`os.geteuid` unavailable); [2026-10-27 earlier run](https://github.com/scipy/scipy/actions/runs/40562698528) succeeded.
+- **Verification performed:** Inspected README, stable and main package manifests, core and bundled licenses, source and test trees, CI job steps and failed WebAssembly test logs. No independent numerical execution, wheel build or security audit.
+- **Source discovery:** GitHub-first scientific-computing research 2026-10-30; no YouTube transcript attribution.
+- **Related projects:** numpy/numpy (runtime dependency); pyodide/pyodide (WebAssembly integration test pathway); ERGO-Code/HiGHS (optimization subproject); scientific-python/array-api-compat (bundled compatibility layer).
+- **Caveats / risks:** Platform/ABI compatibility and numerical tolerance require testing; Emscripten test failure is not a failure of stable native SciPy. Inspect bundled native-code licenses and constrain untrusted input sizes.
+- **Research notes:** `research/2026-10-30-scipy-lvgl.md`. No third-party code copied.
+
+### LVGL
+
+- **Repository:** https://github.com/lvgl/lvgl
+- **Author / Org:** LVGL contributors
+- **Category:** Embedded graphical interfaces / C / microcontrollers / display drivers / Zephyr / ESP-IDF
+- **Evidence:** VERIFIED — upstream release and 12/12 passing main build/test jobs; not independently flashed or rendered on hardware
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Portable C graphical user interface engine for microcontrollers and MPUs, with widgets, layouts, drawing backends, animations, input handling and platform adapters.
+- **Why it is valuable:** Composable embedded UI primitives with simulator, test, ESP-IDF and Zephyr integration for low-resource displays, local control panels and industrial interfaces.
+- **Useful code/components:** `src/core/lv_obj.c`, `lv_obj_event.c`; `src/display/lv_display.c`; `src/draw/lv_draw.c`; `src/widgets/`; `src/layouts/flex/`; `src/indev/lv_indev.c`; `src/drivers/`; `examples/`; `tests/main.py`; `idf_component.yml`; `zephyr/module.yml`.
+- **Install / runtime:** Portable C source via CMake, Arduino library, ESP-IDF component or Zephyr module. Requires display/input drivers and target-specific RAM/flash; upstream README suggests ~100 KB RAM and 200–300 KB flash for a typical UI, not a guaranteed per-project bound.
+- **Platforms:** ESP32/ESP-IDF, Arduino-capable MCUs, Zephyr, NuttX, Linux, Windows and desktop simulation; actual driver/hardware support varies.
+- **License:** MIT core (`LICENCE.txt`); `COPYRIGHTS.md` and `sbom/` record bundled third-party code, fonts and demo assets. Optional LVGL Pro editor is separately licensed.
+- **Maintenance signals:** [Stable v9.6.0](https://github.com/lvgl/lvgl/releases/tag/v9.6.0) released 2026-09-16. [2026-10-30 master Build and Test](https://github.com/lvgl/lvgl/actions/runs/41121901026) passed 12/12 jobs, including ESP-IDF ESP32-S3 compile and 32/64-bit tests. [Emulated performance run](https://github.com/lvgl/lvgl/actions/runs/41121901043) failed 64-bit Docker image pull (runner disk full), while 32-bit succeeded; [docs build](https://github.com/lvgl/lvgl/actions/runs/41121901212) failed at doxymark npm installation (`Unexpected token '?'`).
+- **Verification performed:** Inspected README, MIT license, bundled-license inventory, manifests, source modules, tests and CI job logs. Confirmed Zephyr's `west.yml` pins **zephyrproject-rtos/lvgl fork** commit `c9ffd469`, not upstream lvgl/lvgl; no independent runtime/display tests.
+- **Source discovery:** GitHub-first embedded-UI discovery 2026-10-30; no YouTube transcript attribution.
+- **Related projects:** zephyrproject-rtos/zephyr (west LVGL module); zephyrproject-rtos/lvgl (pinned fork); espressif/esp-idf (ESP-IDF component); lvgl/lv_micropython; lvgl/lv_port_esp32.
+- **Caveats / risks:** Runner disk and npm tooling failures do not prove core GUI failure, but leave CI partially red. Validate RAM/flash, hardware rendering, input event handling, driver safety and fork/version compatibility. Third-party assets have separate licenses.
+- **Research notes:** `research/2026-10-30-scipy-lvgl.md`. No third-party code copied.
+
 
 ## Entry format
 

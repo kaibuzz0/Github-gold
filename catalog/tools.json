@@ -3116,7 +3116,8 @@
         "2026-10-23 inspected upstream README.rst, root LICENSE, README.license, LICENSES/ listing, repository tree, west.yml, releases and recent commits",
         "Stable release v4.4.2 published 2026-08-07 contains extensive security/bug fixes; 2026-10-22 commit marks 4.5.0-rc3 (not stable)",
         "2026-10-22 main push Run tests with twister 39835122032 completed success; CodeQL 39835121878 and Documentation Build 39835121990 succeeded",
-        "No independent build, test execution, hardware flashing or security audit"
+        "No independent build, test execution, hardware flashing or security audit",
+        "2026-10-30 confirmed main west.yml LVGL module path modules/lib/gui/lvgl and pinned Zephyr fork commit c9ffd469; modules/lvgl/Kconfig enables LVGL; no independent GUI firmware execution"
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
@@ -3124,7 +3125,8 @@
       "copy_restriction_note": "No source copied. Check SPDX and west modules individually; stable v4.4.2 security advisories demonstrate meaningful kernel/protocol attack surface. Upstream CI success is not per-board hardware validation.",
       "related_projects": [
         "zmkfirmware/zmk",
-        "zmkfirmware/zephyr"
+        "zmkfirmware/zephyr",
+        "lvgl/lvgl — embedded GUI upstream; Zephyr west.yml pins separate zephyrproject-rtos/lvgl fork commit c9ffd4692de246eb911c7ba49b78a331b2c63c74"
       ]
     },
     {
@@ -7470,7 +7472,8 @@
         "Stable 0.29.5 release published 2026-09-16; current main JS package manifest says 314.1.0-dev.0, not a stable release",
         "2026-10-29 upstream PR workflow 40829974568 passed 13 jobs and skipped one SciPy matrix job, including macOS/Linux core builds, Safari core test, command-line, Deno/Bun and DB integration tests",
         "2026-10-29 main push workflow 40838830915 FAILED: macOS core build linker reports undefined mpd_* symbols, while Ubuntu core build passed; downstream browser/runtime jobs were skipped",
-        "No independent browser interpreter, package install, scientific calculation, offline app or sandbox test was performed"
+        "No independent browser interpreter, package install, scientific calculation, offline app or sandbox test was performed",
+        "2026-10-30 independent upstream SciPy main Emscripten/Pyodide workflow 41117526067 built then failed when pytest plugin imported unavailable os.geteuid; this is SciPy integration evidence, not a Pyodide current-main rerun"
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
@@ -7481,9 +7484,10 @@
         "python/cpython — upstream Python runtime",
         "pyodide/micropip — browser-side package installer",
         "bytecodealliance/wasmtime — different WebAssembly runtime architecture",
-        "asg017/sqlite-vec — separately built Pyodide-side extension artifact; runtime integration not established"
+        "asg017/sqlite-vec — separately built Pyodide-side extension artifact; runtime integration not established",
+        "scipy/scipy — scientific computing dependency with an upstream Emscripten/Pyodide CI pathway; 2026-10-30 test failed on pytest plugin os.geteuid import"
       ],
-      "research_notes": "research/2026-10-29-go-git-pyodide.md. Do not promote to VERIFIED until current-main macOS build and downstream integration tests pass. Pyodide is not a general security sandbox; review package origins, CSP/worker boundaries, CPU/memory budgets and third-party wheel licenses. No source copied. 2026-10-29: sqlite-vec upstream build-pyodide CI job 26018140783 passed as a build artifact only; no loaded Pyodide extension/runtime test, no change to PROMISING/A25."
+      "research_notes": "research/2026-10-29-go-git-pyodide.md. Do not promote to VERIFIED until current-main macOS build and downstream integration tests pass. Pyodide is not a general security sandbox; review package origins, CSP/worker boundaries, CPU/memory budgets and third-party wheel licenses. No source copied. 2026-10-29: sqlite-vec upstream build-pyodide CI job 26018140783 passed as a build artifact only; no loaded Pyodide extension/runtime test, no change to PROMISING/A25. 2026-10-30: SciPy integration CI failure traced to pytest plugin os.geteuid import in WebAssembly; see research/2026-10-30-scipy-lvgl.md."
     },
     {
       "name": "sqlite-vec",
@@ -8621,6 +8625,137 @@
         "johnkerl/miller (complementary structured-data CLI; no direct integration claimed)"
       ],
       "research_notes": "research/2026-10-30-direwolf-sqlite-utils.md. CLI and plugin entry points execute locally supplied SQL/Python; restrict untrusted extensions, verify file inputs, test migrations against backups, and do not infer current-main full CI health from coverage/CodeQL alone. No source copied."
+    },
+    {
+      "name": "SciPy",
+      "repository": "https://github.com/scipy/scipy",
+      "owner": "scipy",
+      "category": [
+        "scientific-computing",
+        "numerical-methods",
+        "signal-processing",
+        "optimization",
+        "spatial-indexing",
+        "python",
+        "c-cpp-fortran"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "BSD-3-Clause at root; LICENSES_bundled.txt documents separately licensed numerical and C/C++ dependencies",
+      "license_copy_status": "bsd-3-clause-retain-notices-review-bundled-subprojects-and-file-level-licenses",
+      "platforms": [
+        "Python >=3.12 (stable v1.18.1)",
+        "NumPy >=2.0,<2.8 on stable v1.18.1",
+        "Linux",
+        "macOS",
+        "Windows",
+        "Pyodide/Emscripten build pathway under investigation, not currently passing"
+      ],
+      "useful_components": [
+        "scipy/signal/_peak_finding.py and _spectral_py.py — peak detection and spectral analysis",
+        "scipy/spatial/_ckdtree.pyx and scipy/spatial/tests/test_kdtree.py — spatial nearest-neighbor search",
+        "scipy/optimize/_linprog_highs.py and _milp.py — optimization and mixed-integer programming interfaces",
+        "scipy/sparse/csgraph/ — sparse graph algorithms",
+        "scipy/integrate/ and scipy/fft/ — numerical integration and Fourier transforms",
+        "scipy/signal/tests/, scipy/optimize/tests/ — regression and numerical-correctness tests",
+        "pyproject.toml and meson.build — Meson/Cython/NumPy build and platform packaging"
+      ],
+      "verification": [
+        "2026-10-30 inspected README.rst, BSD LICENSE.txt, LICENSES_bundled.txt, v1.18.1 and main pyproject.toml, source/test directories and upstream GitHub Actions jobs",
+        "Stable v1.18.1 released 2026-08-21; stable tag requires Python >=3.12 and NumPy >=2.0,<2.8; current main declares unreleased 2.0.0.dev0",
+        "2026-10-30 main Linux tests run 41117526122 passed 15/15 jobs including tests on Python variants, aarch64, free-threaded and build scenarios; main CodeQL 41117526068 passed",
+        "2026-10-30 main Emscripten/Pyodide run 41117526067 FAILED after building: pytest plugin import raised ImportError for os.geteuid under WebAssembly; not evidence that stable SciPy or core Linux tests failed",
+        "2026-10-27 earlier main Emscripten/Pyodide run 40562698528 succeeded; recent failure is a regression/integration concern",
+        "No independent numerical computation, wheel build, Pyodide execution, fuzzing, benchmark or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v1.18.1 (2026-08-21); main 2.0.0.dev0. Main Linux 15/15 and CodeQL passed 2026-10-30; Emscripten/Pyodide failed pytest plugin os.geteuid import on same SHA.",
+      "source": "GitHub-first numerical/scientific-computing discovery 2026-10-30; no YouTube transcript attribution",
+      "related_projects": [
+        "numpy/numpy (runtime dependency)",
+        "pyodide/pyodide (Emscripten/Pyodide build and test pathway; latest integration test failed)",
+        "ERGO-Code/HiGHS (vendored optimization subproject)",
+        "scientific-python/array-api-compat (bundled subproject)"
+      ],
+      "research_notes": "research/2026-10-30-scipy-lvgl.md. Distinguish v1.18.1 release from 2.0.0.dev0 on main; tests and wheel compatibility are platform-dependent. Review numerical tolerances, untrusted data sizes, native-code dependencies, and bundled licenses before reuse. No upstream code copied."
+    },
+    {
+      "name": "LVGL",
+      "repository": "https://github.com/lvgl/lvgl",
+      "owner": "lvgl",
+      "category": [
+        "embedded-ui",
+        "graphics",
+        "microcontrollers",
+        "display-drivers",
+        "rtos",
+        "c",
+        "esp32"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT for LVGL core (LICENCE.txt); COPYRIGHTS.md and sbom/ document bundled third-party code, codecs, font and demo-asset licenses",
+      "license_copy_status": "mit-preserve-notices-and-audit-bundled-third-party-fonts-assets-and-code",
+      "platforms": [
+        "Microcontrollers and MPUs with supported display/input hardware",
+        "ESP-IDF/ESP32",
+        "Arduino",
+        "Zephyr",
+        "NuttX",
+        "Linux",
+        "Windows",
+        "SDL/desktop simulator"
+      ],
+      "useful_components": [
+        "src/core/lv_obj.c and lv_obj_event.c — widget object/event lifecycle",
+        "src/display/lv_display.c and src/draw/lv_draw.c — display management and draw pipeline",
+        "src/widgets/ and src/layouts/flex/ — reusable widgets and responsive layout",
+        "src/indev/lv_indev.c — input device abstraction",
+        "src/drivers/ — SDL, Wayland, X11, Windows, NuttX and other backends",
+        "examples/ and tests/src/test_cases/ — example interfaces and screenshot/regression tests",
+        "idf_component.yml and zephyr/module.yml — ESP-IDF and Zephyr integration metadata",
+        "tests/main.py and tests/benchmark_emu.py — build, test and emulated benchmark harnesses"
+      ],
+      "verification": [
+        "2026-10-30 inspected README.md, MIT LICENCE.txt, COPYRIGHTS.md, library.properties, idf_component.yml, zephyr/module.yml, src/widgets/drivers/draw/layout directories, examples and tests README",
+        "Stable v9.6.0 released 2026-09-16; library.properties on master declares 9.6.0",
+        "2026-10-30 master Build and Test run 41121901026 passed all 12 jobs: Linux/Windows configurations, 32/64-bit tests, ESP-IDF ESP32-S3 compile and NuttX build; no hardware execution established",
+        "2026-10-30 master Emulated Performance Test 41121901043 FAILED in 64-bit Docker image pull with no space left on device; 32-bit benchmark succeeded",
+        "2026-10-30 master Build Docs 41121901212 FAILED at doxymark npm install with Unexpected token '?'; no indication core library tests failed",
+        "Zephyr main west.yml pins zephyrproject-rtos/lvgl fork at c9ffd4692de246eb911c7ba49b78a331b2c63c74; this commit exists in Zephyr fork, not upstream lvgl/lvgl; no runtime interoperability test",
+        "No independent firmware build, display rendering, touchscreen, physical-board, memory or performance test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 9.6.0 (2026-09-16); 2026-10-30 master Build and Test 12/12 passed; same-commit docs and 64-bit emulated benchmark failed on tooling/disk space.",
+      "source": "GitHub-first embedded UI discovery 2026-10-30, recursively traced into Zephyr module fork; no YouTube transcript attribution",
+      "related_projects": [
+        "zephyrproject-rtos/zephyr (west manifest includes LVGL module)",
+        "zephyrproject-rtos/lvgl (Zephyr-maintained fork, pinned by west manifest)",
+        "espressif/esp-idf (supported ESP-IDF component build)",
+        "lvgl/lv_micropython (MicroPython binding)",
+        "lvgl/lv_port_esp32 (ESP32 port)"
+      ],
+      "research_notes": "research/2026-10-30-scipy-lvgl.md. MIT core does not cover every bundled codec/font/demo asset or optional LVGL Pro editor; assess memory budgets, display drivers, event handling, version/fork compatibility and embedded device tests before production use. No upstream code copied."
     }
   ],
   "deferred_or_rejected": [
