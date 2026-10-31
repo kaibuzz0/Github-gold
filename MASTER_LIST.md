@@ -31,14 +31,14 @@ Suggested tiers:
 - **Author / Org:** Meshtastic
 - **Category:** LoRa / mesh networking / embedded firmware / off-grid communications
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 4)
 - **What it does:** Official firmware for the Meshtastic decentralized LoRa mesh network. Supports text messaging, location sharing, telemetry, and communication without cellular or internet infrastructure.
 - **Why it is valuable:** Mature multi-platform firmware with active development, build/flashing instructions, tests/CI signals, and support for ESP32, nRF52, RP2040/RP2350, and Linux-class targets.
 - **Useful code/components:** mesh routing; LoRa transport; position modules; packet handling; node database; telemetry; Wi-Fi/HTTP/TLS support; hardware variants.
 - **Install / runtime:** Build from source or flash supported hardware with official Meshtastic tooling.
 - **Platforms:** ESP32, nRF52, RP2040/RP2350, Linux.
 - **License:** GPL-3.0.
-- **Maintenance signals:** Multiple commits observed on 2026-08-18/19 fixing routing, position-channel behavior, device builds, and TLS memory recovery; README exposes CI status.
+- **Maintenance signals:** Latest GitHub non-prerelease v2.7.26.54e0d8d published 2026-06-24; develop CI succeeded 2026-10-21 (run 39633190319). A 2026-10-22 signing-policy commit postdates inspected CI.
 - **Verification performed:** README, license, and recent commit history inspected. Not hardware-tested by GitHub Gold.
 - **Source discovery:** GitHub-first discovery.
 - **Related projects:** meshtastic/Meshtastic-Android; meshtastic/python; meshtastic/web; meshtastic/protobufs; ShakataGaNai/awesome-meshtastic.
@@ -51,19 +51,19 @@ Suggested tiers:
 - **Author / Org:** colonelpanichacks
 - **Category:** ESP32-S3 / passive radio observation / BLE / Wi-Fi / PCAP / drone Remote ID
 - **Evidence:** PROMISING
-- **Tier / Score:** A / 24
+- **Tier / Score:** A / 24 (Utility 5 + Working Evidence 2 + Reusability 4 + Novelty 5 + Documentation 5 + Maintenance 3)
 - **What it does:** Multi-mode firmware for the Seeed Studio XIAO ESP32-S3. Its README documents BLE target detection, RSSI foxhunting, passive Wi-Fi observation, Wi-Fi PCAP, Remote ID monitoring, and passive BLE advertising capture.
 - **Why it is valuable:** Combines several reusable embedded-radio ideas behind one small device and exposes browser flashing, dashboards, USB-CDC command protocols, packet capture, persistence, and modular firmware selection.
-- **Useful code/components:** boot selector; BLE signature matching; RSSI proximity feedback; Wi-Fi promiscuous capture; PCAP streaming; Wireshark helpers; Open Drone ID parsing; USB-CDC protocol; SPIFFS persistence; browser flasher.
+- **Useful code/components:** `src/mode_manager.cpp`, `src/mode_detector.cpp`, `src/mode_flockyou_promiscious.cpp`, `src/mode_blesniff.cpp`, `src/mode_pcap.cpp`
 - **Install / runtime:** Browser flashing plus Python/esptool flashing are documented upstream.
 - **Platforms:** Seeed Studio XIAO ESP32-S3 plus desktop/browser companion tooling.
 - **License:** UNKNOWN — no root LICENSE found during inspection.
-- **Maintenance signals:** Active commits observed on 2026-08-18, including BLE SNIFF fixes and flasher updates.
-- **Verification performed:** README and recent history inspected; root LICENSE lookup returned 404. No hardware test performed.
+- **Maintenance signals:** Latest inspected source commit 2026-10-11 updated Mode 7 binary and web flasher. GitHub Pages deployment 38178185526 passed, but no firmware build/test workflow was found; no latest tagged release was available.
+- **Verification performed:** Inspected README, PlatformIO manifest, src/ modes, shipped firmware, October commits, and Actions runs. No independent flashing or BLE/Wi-Fi test; passing Pages deployment does not verify firmware.
 - **Source discovery:** GitHub-first discovery.
 - **Related projects:** colonelpanichacks/flock-you; colonelpanichacks/ouispy-pcap; colonelpanichacks/ouispy-blesniff; colonelpanichacks/Oui-Spy-UniPwn.
-- **Caveats / risks:** Do not copy or redistribute source into GitHub Gold until licensing/permission is established. Cataloged for defensive, interoperability, research, and situational-awareness use.
-- **Research notes:** High-priority component map once license status is resolved.
+- **Caveats / risks:** Root license UNKNOWN: do not copy source until permission is established. Device-identification signatures and RSSI can produce false positives; use only for authorized passive observation.
+- **Research notes:** Upstream-only scoring audit: `research/2026-10-22-legacy-four-scoring-audit.md`. No third-party source copied.
 
 ### Termux Tools
 
@@ -71,19 +71,19 @@ Suggested tiers:
 - **Author / Org:** Termux
 - **Category:** Android / Termux / shell utilities / package infrastructure
 - **Evidence:** VERIFIED
-- **Tier / Score:** A / 25
+- **Tier / Score:** A / 25 (Utility 5, Working Evidence 4, Reusability 5, Novelty 3, Documentation 4, Maintenance 4)
 - **What it does:** Official scripts and small programs shipped in Termux's core `termux-tools` package.
 - **Why it is valuable:** Upstream infrastructure and a strong reference for Android shell patterns, package tooling, mirror selection, environment setup, and compact utilities.
-- **Useful code/components:** `scripts/`; `src/`; mirror selection infrastructure; properties initialization; login/environment helpers.
+- **Useful code/components:** `scripts/pkg.in`, `scripts/termux-change-repo.in`, `scripts/termux-backup.in`, `scripts/termux-restore.in`, `scripts/termux-fix-shebang.in`, `src/cmd.c`, `mirrors/`
 - **Install / runtime:** Distributed through Termux package infrastructure; source includes build files.
 - **Platforms:** Android / Termux.
 - **License:** GPL-3.0.
-- **Maintenance signals:** Official Termux organization with active repository/issue surface.
-- **Verification performed:** Official README and COPYING inspected. No Android execution performed by GitHub Gold.
+- **Maintenance signals:** Stable v1.48.0 released 2025-11-29; latest inspected master commit 05c857ee (2026-10-16) adds South American mirror. Upstream build CI 38838597990 passed its single Autotools build/install job (2026-10-16); mirror-update workflow success is not software test evidence.
+- **Verification performed:** 2026-10-21 inspected README, COPYING, scripts/pkg.in, scripts/termux-change-repo.in, source layout, release, commit and CI workflow; no independent Android device testing.
 - **Source discovery:** Termux ecosystem pass.
 - **Related projects:** termux/termux-app; termux/termux-packages; termux/termux-api.
-- **Caveats / risks:** GPL obligations apply to covered copied/modified code.
-- **Research notes:** High-value source for future mapping of small battle-tested Android utilities.
+- **Caveats / risks:** GPL-3.0 obligations apply to copied code; Linux CI build does not verify Android runtime.
+- **Research notes:** See `research/2026-10-21-termux-esptool-reticulum-maintenance.md` for source evidence and verification boundaries.
 
 ### termux-adb
 
@@ -91,39 +91,39 @@ Suggested tiers:
 - **Author / Org:** nohajc
 - **Category:** Android / Termux / ADB / Fastboot / USB interoperability
 - **Evidence:** VERIFIED
-- **Tier / Score:** A / 23
+- **Tier / Score:** A / 23 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 3 + Maintenance 3)
 - **What it does:** Patches ADB and Fastboot so one Android device can debug another over USB from Termux without root using user-approved USB file descriptors.
 - **Why it is valuable:** Demonstrates a reusable interoperability pattern combining Android USB permission APIs with Unix-domain-socket file-descriptor passing.
-- **Useful code/components:** `termux-usb` integration; USB FD bridging; Unix-socket FD transfer; patched ADB/Fastboot enumeration; package adaptations.
+- **Useful code/components:** `install.sh` and `android-tools` submodule pointing to `nohajc/vendor-adb-patched` (USB FD bridging)
 - **Install / runtime:** Requires Termux and Termux:API; upstream provides an install flow and apt repository.
 - **Platforms:** Android / Termux.
 - **License:** MIT at repository root; upstream Android tools/submodules have separate licenses.
-- **Maintenance signals:** Substantial history and documented limitations.
-- **Verification performed:** README and root MIT license inspected. No device-to-device ADB test performed.
+- **Maintenance signals:** Latest inspected release v0.2.3 published 2025-09-09; latest commit 2026-03-13 modified install.sh. No GitHub Actions runs found.
+- **Verification performed:** Inspected README, MIT root license, install.sh, android-tools submodule and release/commit history. No independent Android USB test or upstream automated test evidence found.
 - **Source discovery:** Termux ecosystem pass.
 - **Related projects:** termux/termux-api; termux/termux-packages; Android platform-tools.
-- **Caveats / risks:** Inspect remote install scripts before execution. Review component licenses before extraction.
-- **Research notes:** Strong architecture reference for non-root Android USB FD bridging.
+- **Caveats / risks:** Documented curl-to-Bash installer adds a third-party APT repository and downloads its signing key without a pinned fingerprint in install.sh. Authenticate script and key before use; patched Android-tools submodule has separate licenses.
+- **Research notes:** Upstream-only scoring audit: `research/2026-10-22-legacy-four-scoring-audit.md`. No third-party source copied.
 
-### ESP32-S3 Remote ID Add-on (`esp-remoteid`)
+### ESP32-S3 Remote ID Add-on
 
 - **Repository:** https://github.com/peinser/esp-remoteid
 - **Author / Org:** Peinser BV / peinser
 - **Category:** ESP32-S3 / OpenDroneID / embedded firmware / interoperability
 - **Evidence:** PROMISING
-- **Tier / Score:** A / 24
+- **Tier / Score:** A / 24 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 3 + Documentation 5 + Maintenance 3)
 - **What it does:** ESP-IDF firmware for standards-based OpenDroneID / ASTM F3411 Remote ID broadcast over BLE and Wi-Fi with MAVLink input.
 - **Why it is valuable:** Well-documented standards implementation built around `opendroneid-core-c`, with explicit transport behavior and flight-controller integration paths.
-- **Useful code/components:** OpenDroneID state/transport integration; BLE advertisements; Wi-Fi beacon/NAN transport; Kconfig; MAVLink ingestion; readiness gating; indicators.
+- **Useful code/components:** `src/remoteid/main.c`, `src/remoteid/remoteid/`, `tests/remoteid_test.py`, `components/opendroneid_core`, `.github/workflows/firmware.yml`
 - **Install / runtime:** ESP-IDF environment with recursive submodules; build/flash/monitor workflow documented upstream.
 - **Platforms:** ESP32-S3.
 - **License:** Apache-2.0 at root; dependency licenses must also be preserved.
-- **Maintenance signals:** Current 2026 project with extensive documentation and active TODOs.
-- **Verification performed:** README and root license inspected. No firmware build or RF hardware test performed.
+- **Maintenance signals:** v1.0.0 released 2026-05-15; main commit 2026-06-29. Upstream ESP-IDF v5.5 esp32s3 firmware-build CI run 28357049701 passed 2026-06-29; tests and RF operation were not exercised in that workflow.
+- **Verification performed:** Inspected README, Apache-2.0 license, src/remoteid, components, tests and firmware.yml. Upstream compile succeeded; no independent build, receiver test or regulatory conformance test.
 - **Source discovery:** OpenDroneID ecosystem branch.
 - **Related projects:** opendroneid/opendroneid-core-c; opendroneid/receiver-android; ArduPilot/ArduRemoteID.
-- **Caveats / risks:** Regulatory compliance depends on jurisdiction and configuration.
-- **Research notes:** Good candidate for deeper source-level study after dependency-license review.
+- **Caveats / risks:** Successful compilation does not establish ASTM F3411 radio interoperability, timing, identity correctness or legal compliance. Preserve dependency/submodule licenses and follow applicable aviation regulations.
+- **Research notes:** Upstream-only scoring audit: `research/2026-10-22-legacy-four-scoring-audit.md`. No third-party source copied.
 
 ### OpenDroneID Core C
 
@@ -131,19 +131,19 @@ Suggested tiers:
 - **Author / Org:** OpenDroneID
 - **Category:** C library / Remote ID / protocol encoding / embedded interoperability
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 5, Documentation 4, Maintenance 4)
 - **What it does:** Core C library for packing and unpacking Open Drone ID messages defined by ASTM F3411 and ASD-STAN specifications, with MAVLink conversion and Wi-Fi reference code.
 - **Why it is valuable:** Standards-focused, portable core with compact APIs, tests, memory-reduction options, adapters, and reference broadcast code.
 - **Useful code/components:** `libopendroneid`; Basic ID/Location/Auth/Self ID/System/Operator ID encoders and decoders; `libmav2odid`; Wi-Fi reference code; unit tests; low-memory compile options.
 - **Install / runtime:** CMake build on Linux; upstream documents sample and test builds.
 - **Platforms:** Portable C / Linux / embedded downstream integrations.
 - **License:** Apache-2.0.
-- **Maintenance signals:** August 2026 protocol-validation/documentation work; README documents CI and tests.
-- **Verification performed:** README, license, public API, build/test docs, and recent history inspected. Tests not executed by GitHub Gold.
+- **Maintenance signals:** v2.0 (2022-04-06); master CMake 37671876169 succeeded 1/1 job (2026-10-07). 2026-10-07 master merged a MAVLink Basic ID cycling index fix with regression test; newer than the latest tagged release.
+- **Verification performed:** 2026-10-21 inspected README, license, source/build layout, release metadata and upstream CI. Do not assume master fixes are in v2.0; no independent packet, hardware or regulatory-conformance test.
 - **Source discovery:** OpenDroneID ecosystem follow-up.
 - **Related projects:** opendroneid/receiver-android; opendroneid/wireshark-dissector; opendroneid/transmitter-linux; ArduPilot/ArduRemoteID; peinser/esp-remoteid.
 - **Caveats / risks:** Standards and jurisdictional requirements can change.
-- **Research notes:** Strong component-level Gold; prefer standards-core reuse with required notices over reimplementation.
+- **Research notes:** research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md. Do not assume master fixes are in v2.0; no independent packet, hardware or regulatory-conformance test.
 
 ### LocalSend
 
@@ -151,15 +151,15 @@ Suggested tiers:
 - **Author / Org:** LocalSend
 - **Category:** local-first / offline file transfer / cross-platform / privacy
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
 - **What it does:** Cross-platform LAN file/message transfer without cloud infrastructure or internet access.
 - **Why it is valuable:** Mature serverless local workflow spanning Android, iOS, macOS, Windows, Linux, and Fire OS with a documented protocol.
 - **Useful code/components:** peer discovery; HTTPS certificate generation; REST transfer flow; file/message transfer; portable configuration; packaging; companion protocol spec.
 - **Install / runtime:** Distributed through major package channels; source build uses Flutter/Rust and platform tooling.
 - **Platforms:** Android, iOS, macOS, Windows, Linux, Fire OS.
 - **License:** Apache-2.0.
-- **Maintenance signals:** Same-day activity observed 2026-08-19; release 1.18.2 observed 2026-08-17.
-- **Verification performed:** README, license, build docs, protocol description, and recent history inspected. No transfer test performed by GitHub Gold.
+- **Maintenance signals:** Stable v1.18.2 published 2026-08-21 (correcting earlier 2026-08-17 date); main-branch CI 38703786899 passed all four jobs on 2026-10-15 (test, packaging, rust, format).
+- **Verification performed:** README, Apache-2.0 license, Flutter/Rust project trees, network providers, release assets and upstream CI inspected 2026-10-20. Upstream v1.17.0 notes a path-traversal fix; v1.18.2 includes compatibility/security fixes. No transfer test or independent security audit performed.
 - **Source discovery:** Local-first/offline software pass.
 - **Related projects:** localsend/protocol; localsend/web; community protocol implementations.
 - **Caveats / risks:** LAN firewall/router/AP isolation can affect discovery and transfer.
@@ -171,19 +171,19 @@ Suggested tiers:
 - **Author / Org:** Genymobile / Romain Vimont
 - **Category:** Android / device control / screen mirroring / USB / media streaming
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 5, Documentation 5, Maintenance 4)
 - **What it does:** Mirrors and controls Android devices from desktop hosts over USB or TCP/IP without root or a permanently installed Android app.
 - **Why it is valuable:** Highly developed native Android interoperability architecture with low-latency streaming and a temporary server/client model.
-- **Useful code/components:** temporary `app_process` server; ADB tunnels; video/audio/control sockets; MediaCodec; SDL/FFmpeg host pipeline; control/clipboard protocol; hidden-API wrappers; UHID/OTG; V4L2 sink.
+- **Useful code/components:** `server/` temporary Android app_process server; `app/` desktop client; ADB tunnels; video/audio/control sockets; MediaCodec capture/encoding; SDL/FFmpeg rendering and v5 GPU decoding; clipboard/control protocol; hidden API wrappers; UHID/OTG; V4L2.
 - **Install / runtime:** Official binaries/packages on Linux, Windows, and macOS; normal control uses USB debugging.
 - **Platforms:** Android target; Linux, Windows, macOS hosts.
 - **License:** Apache-2.0.
-- **Maintenance signals:** Version 4.1 released July 2026; active and unarchived.
-- **Verification performed:** README, developer architecture docs, license, and recent history inspected. No mirroring session executed by GitHub Gold.
+- **Maintenance signals:** Stable v5.0.1 published 2026-10-08 (supersedes July v4.1); fixes VA-API/GPU selection, NVIDIA chroma-plane compatibility, Windows H.265 decoding and EGL handling. Release CI 37737030700: all 17 jobs succeeded, including server/client tests and cross-platform builds/packages.
+- **Verification performed:** README, Apache-2.0 LICENSE, release notes, source layout and CI job conclusions inspected 2026-10-21. Upstream CI only; no independent build, device connection, screen mirroring or GPU test.
 - **Source discovery:** Android interoperability pass.
 - **Related projects:** ADB/platform-tools; SDL; FFmpeg.
 - **Caveats / risks:** Internal protocol is version-coupled; hidden APIs vary across Android versions.
-- **Research notes:** One of the strongest Android host/device architecture references in the catalog.
+- **Research notes:** `research/2026-10-21-scrcpy-syncthing-ntfy-maintenance.md`. Hardware decoding varies by GPU/driver; server/client protocol is version-coupled.
 
 ### ZIM Tools
 
@@ -191,19 +191,19 @@ Suggested tiers:
 - **Author / Org:** openZIM
 - **Category:** offline knowledge / archival / ZIM / CLI tools / content packaging
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
 - **What it does:** Provides command-line tooling for creating, validating, inspecting, extracting, and splitting ZIM offline-content archives used by the Kiwix/openZIM ecosystem.
 - **Why it is valuable:** It is infrastructure for turning web-style content into portable offline archives and validating those archives rather than merely a reader application.
 - **Useful code/components:** `zimcheck` validation; `zimdump` inspection/extraction; `zimsplit` chunking; `zimwriterfs` HTML-directory-to-ZIM packaging; Meson build; automated tests; official container image.
 - **Install / runtime:** Meson/Ninja build with libzim and documented dependencies; official container image also available.
 - **Platforms:** Linux and other supported Unix-like build environments; containerized deployment.
 - **License:** GPL-3.0-or-later.
-- **Maintenance signals:** Version 3.8.0 release merged 2026-08-13; additional code modernization merged 2026-08-15; README exposes CI/codecov/release signals.
-- **Verification performed:** README, build/test instructions, license declaration, and recent release/commit history inspected. GitHub Gold did not execute the tools.
+- **Maintenance signals:** 3.8.0 (2026-08-13); main CI 39216346633 succeeded 5/5 cross-platform jobs (2026-10-19). Version 3.8.0 improved zimcheck link/metadata validation, zimsplit sizing and zimwriterfs URL parsing.
+- **Verification performed:** 2026-10-21 inspected README, license, source/build layout, release metadata and upstream CI. GPL-3.0-or-later and third-party dependencies need license review; no independent archive build/validation.
 - **Source discovery:** Independent offline-knowledge/archival pass.
-- **Related projects:** openzim/libzim; Kiwix readers; kiwix/kiwix-android; kiwix/kiwix-desktop; kiwix/kiwix-js.
+- **Related projects:** openzim/libzim; Kiwix readers; kiwix/kiwix-android; kiwix/kiwix-desktop; kiwix/kiwix-js; kiwix/kiwix-tools (offline search/serve/manage).
 - **Caveats / risks:** GPL copyleft obligations apply to covered reused code; `zimwriterfs` has multiple third-party dependencies that require separate license review.
-- **Research notes:** High-value foundation for portable offline libraries, disaster/off-grid reference collections, and archival pipelines.
+- **Research notes:** research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md. GPL-3.0-or-later and third-party dependencies need license review; no independent archive build/validation.
 
 ### ntfy
 
@@ -211,19 +211,19 @@ Suggested tiers:
 - **Author / Org:** Philipp C. Heckel / binwiederhier
 - **Category:** self-hosting / notifications / HTTP API / pub-sub / automation
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 27
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
 - **What it does:** Simple HTTP-based publish/subscribe notification service that accepts PUT/POST messages and can be self-hosted, with web and mobile clients in the ecosystem.
 - **Why it is valuable:** Extremely composable automation primitive: shell scripts, CI jobs, servers, sensors, and personal tools can publish notifications through a minimal HTTP interface without building a custom push stack.
-- **Useful code/components:** HTTP PUT/POST publish API; topic pub-sub model; self-hosted server; CLI/automation integrations; web client; Docker/release build machinery.
+- **Useful code/components:** `server/` HTTP publish/subscription; `server/server_auth.go` authorization; `server/server_cluster.go` experimental cluster; `server/server_webpush.go` Web Push; `client/`; `db/`; `web/`; topic handlers and server test suite; minimal PUT/POST pub-sub API.
 - **Install / runtime:** Self-hosted server packages/containers or the hosted service; Android/iOS clients are maintained in related repositories.
 - **Platforms:** Linux/server, Docker, web; mobile clients via related repositories.
 - **License:** Root `LICENSE` is Apache-2.0; repository also contains a secondary GPLv2 license file, so component-level licensing must be checked before code extraction.
-- **Maintenance signals:** Recent commits observed through 2026-08-04; README exposes release, tests, Go report, and coverage signals.
-- **Verification performed:** README, root license, repository root, and recent commit history inspected. No server/client session executed by GitHub Gold.
+- **Maintenance signals:** Stable v2.32.0 published 2026-10-18; RFC 10036 `Incremental: ?1` header for streaming subscribers, experimental passive-cluster housekeeping and database-version guards. Main-branch test workflow 39182637748 passed 2026-10-19; clustering remains experimental.
+- **Verification performed:** README, Apache-2.0 LICENSE, secondary LICENSE.GPLv2, server/test tree, release notes and upstream main-branch test job inspected 2026-10-21. No independent deployment, streaming, or failover test.
 - **Source discovery:** Independent self-hosting/automation pass.
 - **Related projects:** binwiederhier/ntfy-android; binwiederhier/ntfy-ios; community integrations.
 - **Caveats / risks:** Authentication, topic privacy, TLS, and internet exposure must be configured appropriately when self-hosting. Review the secondary license and component notices before copying code.
-- **Research notes:** Strong candidate for alerting/automation glue in user-controlled systems because the publish surface is intentionally small.
+- **Research notes:** `research/2026-10-21-scrcpy-syncthing-ntfy-maintenance.md`. Review component licensing and streaming reverse-proxy buffering; experimental clustering not production-verified.
 
 ### OpenObserve
 
@@ -231,19 +231,20 @@ Suggested tiers:
 - **Author / Org:** OpenObserve
 - **Category:** observability / logs / metrics / traces / OpenTelemetry / self-hosting
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 4 + Documentation 5 + Maintenance 5)
 - **What it does:** Rust-based observability platform unifying logs, metrics, traces, dashboards, alerts, pipelines, real-user monitoring, and related analytics with OpenTelemetry ingestion.
 - **Why it is valuable:** Demonstrates a modern self-hostable observability architecture around a single binary, columnar Parquet storage, object-store/S3 design, SQL/PromQL querying, and multi-signal workflows.
 - **Useful code/components:** single-binary Rust server; OpenTelemetry ingestion; Parquet storage; S3-native persistence architecture; SQL/PromQL paths; logs/metrics/traces UI; alerting; pipelines/stream processing; multi-tenancy.
+- **Inspected source paths:** `src/api/grpc/src/handler/grpc/request/otlp.rs`; `src/config/src/meta/otlp.rs`; `src/core/src/profiles/dictionary_compat.rs`.
 - **Install / runtime:** Upstream documents a single Docker command for local startup plus HA/cloud-native deployment paths.
 - **Platforms:** Linux, Docker, Kubernetes/cloud-native environments.
 - **License:** AGPL-3.0.
-- **Maintenance signals:** Heavy same-day activity observed on 2026-08-19, including search/queue fixes, compactor fixes, CI work, and test changes; upstream commit messages include specific build/test validation evidence.
+- **Maintenance signals:** v1.1.2 released 2026-10-20 with upstream-reported PromQL, disk-cache, cluster-peer and Kubernetes query fixes. Inspected OTLP gRPC response handling and OTLP request-type unit tests. No independent deployment or benchmark.
 - **Verification performed:** README, root AGPL-3.0 license, and same-day commit history inspected. GitHub Gold did not deploy or benchmark it; performance/cost claims in upstream README remain upstream claims, not independent verification.
 - **Source discovery:** Independent observability pass.
 - **Related projects:** OpenTelemetry ecosystem; Parquet/object-storage tooling; OpenObserve deployment integrations.
 - **Caveats / risks:** AGPL-3.0 has network-use source-sharing implications for modified covered software; do not casually vendor code into differently licensed projects. Some enterprise features are separate from the open-source edition.
-- **Research notes:** Excellent architecture-study candidate; particularly valuable for self-hosted telemetry ingestion, object-store design, and unified signal pipelines.
+- **Research notes:** Prior provisional 29 reduced to 27: performance/cost claims not independently reproduced; AGPL and enterprise feature boundaries complicate reuse. See `research/2026-10-22-openobserve-loro-libp2p-maintenance.md`.
 
 ### Syncthing
 
@@ -251,19 +252,19 @@ Suggested tiers:
 - **Author / Org:** Syncthing
 - **Category:** local-first / continuous synchronization / peer-to-peer / data replication
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 5, Documentation 5, Maintenance 4)
 - **What it does:** Continuously synchronizes folders between two or more computers while prioritizing data safety, security, automation, and user control.
 - **Why it is valuable:** Mature decentralized replication architecture with a documented wire protocol, automatic device discovery, relay infrastructure, conflict handling, signed releases, and straightforward source builds.
-- **Useful code/components:** Block Exchange Protocol; folder reconciliation; device discovery; relaying; conflict handling; filesystem watcher integration; versioning; signed automatic upgrades; API/web GUI.
+- **Useful code/components:** `lib/protocol/` Block Exchange Protocol; `lib/model/` reconciliation; `lib/discover/` discovery; `lib/relay/` relay; `lib/scanner/` block scanner; `lib/versioner/` versioning; `lib/api/` REST API; `lib/fs/` filesystem abstraction; conflict and watcher integrations.
 - **Install / runtime:** Native releases, packages, or Docker; source builds with `go run build.go`.
 - **Platforms:** Linux, Windows, macOS, BSD and other supported Go targets.
 - **License:** MPL-2.0.
-- **Maintenance signals:** Same-day commit observed 2026-08-19 updating the Go toolchain, plus 2026-08-18 discovery-server/infrastructure fixes and Docker-signing work.
-- **Verification performed:** README, license declaration, build instructions, signed-release notes, and recent commits inspected. No live synchronization test performed by GitHub Gold.
+- **Maintenance signals:** Stable v2.1.7 published 2026-10-21 with receive-only reconciliation, SQLite and malformed-protocol-input fixes plus incoming-message validation. Main-branch CI 39487469482 on 2026-10-20 passed Linux/macOS/Windows build/tests and govulncheck; several lint/signing/release jobs were skipped.
+- **Verification performed:** README, MPL-2.0 LICENSE, `lib/` tree, v2.1.7 release notes and main-branch CI job conclusions inspected 2026-10-21. No independent sync, filesystem fault or security test.
 - **Source discovery:** Independent resilient-data/local-first pass.
 - **Related projects:** syncthing/docs; GUI wrappers; discovery and relay infrastructure.
 - **Caveats / risks:** MPL-2.0 is file-level copyleft; modifications to covered files require license compliance. Operational deployments should review discovery/relay exposure and versioning behavior.
-- **Research notes:** Excellent complement to LocalSend: continuous state replication rather than ad-hoc transfer.
+- **Research notes:** `research/2026-10-21-scrcpy-syncthing-ntfy-maintenance.md`. Validate deletion and receive-only semantics for critical data.
 
 ### rclone
 
@@ -271,19 +272,19 @@ Suggested tiers:
 - **Author / Org:** rclone
 - **Category:** data movement / cloud storage / synchronization / filesystem abstraction
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 27
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 4, Maintenance 4)
 - **What it does:** A cross-platform command-line data-movement engine supporting a very large set of cloud, object-storage, network, and local backends plus virtual backends layered on top of them.
 - **Why it is valuable:** The backend abstraction is unusually reusable: one command surface spans S3, WebDAV, SFTP, SMB, cloud drives, object stores, local filesystems, encryption, chunking, unions, FUSE mounts, and serving protocols.
 - **Useful code/components:** storage-backend interface; `copy`, `sync`, `bisync`, and `check`; Crypt; Chunker; Union/Combine; FUSE mount; hash verification; HTTP/WebDAV/FTP/SFTP/DLNA serving; remote-control API and GUI.
 - **Install / runtime:** Native binaries/packages, Docker, or source builds; broad Go-supported platform coverage.
 - **Platforms:** Linux, Windows, macOS, BSD and other Go targets.
 - **License:** MIT.
-- **Maintenance signals:** Same-day activity observed 2026-08-19 and 2026-08-18, including GUI maintenance, transform fixes, and security-advisory documentation.
-- **Verification performed:** README, MIT license declaration, CI/build signals, recent commits, and security-advisory documentation inspected. GitHub Gold did not execute transfers.
+- **Maintenance signals:** v1.75.2 (2026-10-09); master build 39406871189 succeeded 9/9 jobs (2026-10-20). 2026-10-20 master fixes corrected S3 Last-Modified caching and rejected overflowing duration arguments.
+- **Verification performed:** 2026-10-21 inspected README, license, source/build layout, release metadata and upstream CI. Review security advisories and patched versions before exposing serving protocols; no transfer or mount test performed.
 - **Source discovery:** Independent resilient-data/data-movement pass.
 - **Related projects:** restic (rclone backend integration); cloud/object-store ecosystems; FUSE.
 - **Caveats / risks:** Recent v1.75.0 advisories document multiple assigned CVEs involving `serve restic` path traversal, proxy CONNECT memory exhaustion, FTP/SFTP command injection, and local filename handling. Use patched releases and review exposed serving/backend features.
-- **Research notes:** Gold is primarily the backend abstraction and composable virtual-filesystem layers, not merely the CLI surface.
+- **Research notes:** research/2026-10-21-rclone-opendroneid-zim-tools-maintenance.md. Review security advisories and patched versions before exposing serving protocols; no transfer or mount test performed.
 
 ### restic
 
@@ -291,15 +292,15 @@ Suggested tiers:
 - **Author / Org:** restic
 - **Category:** backup / encrypted storage / deduplication / snapshots / data integrity
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5)
 - **What it does:** Fast, efficient, encrypted backup software designed around verifiability, untrusted storage backends, deduplication, snapshots, restore, and reproducible builds.
 - **Why it is valuable:** Provides a compact reference architecture for secure content-addressed backup repositories, incremental snapshots, repository verification, and portable storage-backend integration.
 - **Useful code/components:** encrypted repository format; deduplication; snapshots; restore; FUSE browsing; repository verification; SFTP/REST/S3/B2/Azure/GCS backends; rclone integration; reproducible build pipeline.
 - **Install / runtime:** Native binaries/packages across major desktop/server OSes; documented CLI workflow and backend setup.
 - **Platforms:** Linux, Windows, macOS, FreeBSD, OpenBSD.
 - **License:** BSD-2-Clause.
-- **Maintenance signals:** Dependency and CI maintenance observed through 2026-08-01; README exposes active test workflow and reproducible-build documentation.
-- **Verification performed:** README, license declaration, backend list, design principles, reproducible-build notes, and recent maintenance commits inspected. No backup/restore cycle executed by GitHub Gold.
+- **Maintenance signals:** Stable v0.19.1 published 2026-07-05; master CI on 2026-10-18 failed in the Swift cloud-backend test because the remote authentication endpoint's TLS certificate expired 2026-10-01. Linux Go 1.26, macOS Go 1.27, cross-compiles, lint and Docker jobs passed; the red aggregate must not be reported as passing.
+- **Verification performed:** README, BSD-2-Clause license, internal/repository, internal/archiver, internal/restorer and backend trees, release and failing CI job logs inspected 2026-10-20. Failure appears external to core backup logic but is not resolved. No independent backup/restore or repository integrity test executed.
 - **Source discovery:** Independent resilient-data/backup pass.
 - **Related projects:** restic/rest-server; restic/builder; rclone; S3-compatible storage systems.
 - **Caveats / risks:** Password loss makes encrypted repositories unrecoverable by design; backup quality depends on actually testing restores and repository checks.
@@ -311,19 +312,19 @@ Suggested tiers:
 - **Author / Org:** Organic Maps
 - **Category:** offline maps / navigation / OpenStreetMap / privacy / mobile
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 5, Documentation 5, Maintenance 4)
 - **What it does:** Privacy-focused offline navigation using downloadable OpenStreetMap-derived maps, routing, search, bookmarks/tracks, and elevation-related data.
 - **Why it is valuable:** Strong offline-first architecture spanning map generation, compact local map storage, rendering, routing, geocoding/search, and mobile navigation without a required cloud backend.
-- **Useful code/components:** offline map storage/rendering; routing engine; offline geocoding/search; OpenStreetMap ingestion; map update pipeline; KML/KMZ/GPX/GeoJSON import-export; elevation and contour support.
+- **Useful code/components:** `libs/routing/`, `libs/search/`, `libs/storage/`, `libs/mwm_diff/`, `libs/kml/`, `generator/`, `android/`, `iphone/`
 - **Install / runtime:** Native Android/iOS applications with repository build tooling and map-generation infrastructure.
 - **Platforms:** Android, iOS, desktop/build tooling.
 - **License:** Apache-2.0 for code; binary map/data artifacts use a separate license.
-- **Maintenance signals:** Same-day development activity was inspected during the research pass.
-- **Verification performed:** README, commit history, and code/data license boundary inspected. No navigation field test performed by GitHub Gold.
+- **Maintenance signals:** Android release 2026.09.29-32-android (2026-09-29); master Android/iOS navigation updates 2026-10-21; main Android Check, Android Beta, iOS Check, CMake and translation workflows succeeded 2026-10-21. One feature-branch Android Check failed; this is not a main-branch failure.
+- **Verification performed:** 2026-10-21 upstream release, code tree, license and CI reviewed. Source is Apache-2.0; binary map/data use separate DATA_LICENSE.txt including ODbL/CC BY-SA upstream terms. No on-device navigation, route accuracy, or map-generation test.
 - **Source discovery:** Offline/resilient systems pass.
 - **Related projects:** OpenStreetMap ecosystem; map-generation and routing tooling.
 - **Caveats / risks:** Treat code and generated map/data licensing separately; do not assume Apache-2.0 covers binary map artifacts.
-- **Research notes:** Excellent reference for fully offline mobile mapping and routing pipelines.
+- **Research notes:** `research/2026-10-21-organicmaps-kopia-age-maintenance.md`. Source is Apache-2.0; binary map/data use separate DATA_LICENSE.txt including ODbL/CC BY-SA upstream terms. No on-device navigation, route accuracy, or map-generation test.
 
 ### Kopia
 
@@ -331,19 +332,19 @@ Suggested tiers:
 - **Author / Org:** Kopia
 - **Category:** backup / encrypted snapshots / deduplication / storage abstraction / self-hosting
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
 - **What it does:** Encrypted, compressed, deduplicated snapshot backup system with local, cloud, network, and repository-server modes plus CLI and GUI clients.
 - **Why it is valuable:** Combines content-addressed encrypted repositories, multiple storage backends, snapshot policy, error correction, and a server mode in a composable Go codebase.
-- **Useful code/components:** encrypted snapshot repository; deduplication; compression; error correction; repository server; S3/Azure/B2/GCS/WebDAV/SFTP/local backends; rclone integration; CLI and GUI.
+- **Useful code/components:** `repo/content/`, `repo/blob/`, `repo/encryption/`, `repo/compression/`, `repo/ecc/`, `repo/splitter/`, `snapshot/`, `cli/`, `repo/api_server_repository.go`
 - **Install / runtime:** Native binaries/packages and container/server workflows documented upstream.
 - **Platforms:** Linux, Windows, macOS and Go/Electron-supported environments.
 - **License:** Apache-2.0.
-- **Maintenance signals:** Recent maintenance included dependency and CodeQL updates during the August 2026 research pass.
-- **Verification performed:** README, root Apache-2.0 license, and recent commits inspected. No backup/restore cycle executed by GitHub Gold.
+- **Maintenance signals:** v0.23.1 (2026-06-16) fixes a rare epoch-compaction index race that may cause data loss (#5371); upstream recommends upgrade. 2026-10-21 master stress/endurance workflows succeeded. Providers - Core workflow failed: Azure PIT tests got nil version IDs; S3 MinIO integration tests could not pull minio/minio Docker image.
+- **Verification performed:** 2026-10-21 upstream release, code tree, license and CI reviewed. Root license Apache-2.0. No independently performed backup/restore or regression test. Provider CI is not all green; check Azure versioning and MinIO test infrastructure.
 - **Source discovery:** Offline/resilient systems pass.
 - **Related projects:** rclone; cloud/object-storage backends; snapshot/backup ecosystems.
 - **Caveats / risks:** Operational confidence requires restore testing and repository verification; dependency/backend behavior varies by deployment.
-- **Research notes:** Strong complement to restic, especially for repository-server and policy architecture study.
+- **Research notes:** `research/2026-10-21-organicmaps-kopia-age-maintenance.md`. Root license Apache-2.0. No independently performed backup/restore or regression test. Provider CI is not all green; check Azure versioning and MinIO test infrastructure.
 
 ### Reticulum Network Stack
 
@@ -351,19 +352,19 @@ Suggested tiers:
 - **Author / Org:** markqvist
 - **Category:** off-grid networking / delay-tolerant networking / cryptographic routing / heterogeneous transports
 - **Evidence:** VERIFIED
-- **Tier / Score:** A / 25
+- **Tier / Score:** A / 24 (Utility 5, Working Evidence 4, Reusability 3, Novelty 5, Documentation 5, Maintenance 2)
 - **What it does:** Networking stack designed to carry encrypted communication across very-low-bandwidth and heterogeneous transports including LoRa/RNode, packet radio, serial links, TCP/UDP/IP, pipes, and custom interfaces.
 - **Why it is valuable:** Provides a transport-agnostic path-discovery and cryptographic-routing model for disconnected, intermittent, and unconventional networks rather than assuming conventional internet infrastructure.
-- **Useful code/components:** interface abstraction; path discovery/routing; cryptographic identities; link establishment; request-response API; channels/buffers; low-bandwidth transport; `rnsd`; `rnstatus`; `rnpath`; `rnprobe`; `rncp`; `rnid`; `rnsh`; `rnx`; `rngit`; `git-remote-rns`.
+- **Useful code/components:** `RNS/Interfaces/` (RNode, KISS, TCP, UDP, serial, backbone), `RNS/Transport.py`, `RNS/Link.py`, `RNS/Identity.py`, `RNS/Channel.py`, `RNS/Buffer.py`, `RNS/Resource.py`, `tests/`, `Examples/`
 - **Install / runtime:** Python 3 systems plus supported radio/network interfaces.
 - **Platforms:** Python systems, LoRa/RNode, packet radio, serial, TCP/UDP/IP, custom interfaces.
 - **License:** Custom Reticulum License; protocol is stated upstream as public domain.
-- **Maintenance signals:** Recent commits and current installation/interface documentation were inspected.
-- **Verification performed:** README, custom license, installation/interface documentation, and recent commits inspected. No live Reticulum network was run by GitHub Gold.
+- **Maintenance signals:** Stable 1.5.5 released 2026-09-29; latest inspected master mirror commit e40191b (2026-09-30). Upstream CI 36723645574 passed `make test` (one job); tag-only packaging skipped. `MIRROR.md` says this is a public mirror, development elsewhere, no public support/issue responses and no predictable update schedule; maintenance score lowered.
+- **Verification performed:** 2026-10-21 inspected README, custom LICENSE, MIRROR.md, setup.py, interface and test trees, release and CI; no independent live network, radio or cryptographic tests.
 - **Source discovery:** Offline/resilient systems pass.
 - **Related projects:** LXMF, Sideband, RNode and broader Reticulum ecosystem projects.
-- **Caveats / risks:** The custom license includes restrictions beyond standard permissive/copyleft open-source licenses. Review exact terms before any code reuse; protocol-level study is safer than assuming source-code reuse rights.
-- **Research notes:** High-value architecture reference for off-grid communication even where code reuse is constrained.
+- **Caveats / risks:** Custom Reticulum License prohibits harmful systems and AI/ML training datasets; not OSI-standard. Do not copy/adapt without legal review or permission. Public-domain protocol claim does not replace source license; upstream support withdrawn.
+- **Research notes:** See `research/2026-10-21-termux-esptool-reticulum-maintenance.md` for source evidence and verification boundaries.
 
 ### Espressif esptool
 
@@ -371,19 +372,19 @@ Suggested tiers:
 - **Author / Org:** Espressif
 - **Category:** embedded tooling / ESP32 / flashing / provisioning / serial protocol
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 28
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
 - **What it does:** Official Python tooling for communicating with Espressif ROM bootloaders and flasher stubs to identify chips, read/write/erase flash, inspect images, and perform provisioning-related operations.
 - **Why it is valuable:** Mature host-side reference implementation for Espressif serial bootloader protocols and cross-platform flashing workflows.
-- **Useful code/components:** serial bootloader protocol; chip detection; flash read/write/erase; image parsing/validation; provisioning operations; flasher stub loading; cross-platform CLI.
-- **Install / runtime:** Python-supported host systems connected to Espressif SoCs through supported serial/USB bridges.
+- **Useful code/components:** `esptool/loader.py`, `esptool/bin_image.py`, `esptool/cmds.py`, `esptool/targets/`, `espefuse/`, `espsecure/`; companion `espressif/esp-flasher-stub`
+- **Install / runtime:** Python >=3.10 on Linux/macOS/Windows, pyserial and cryptography dependencies; compatible Espressif device via USB/serial.
 - **Platforms:** Python hosts; Espressif SoCs.
 - **License:** GPL-2.0-or-later.
-- **Maintenance signals:** Recent research observed flasher-stub integration, new chip support, and active CI.
-- **Verification performed:** Official README, GPL license, CI signals, and recent commits inspected. No physical flashing test performed by GitHub Gold.
+- **Maintenance signals:** Stable v5.6.0 released 2026-10-15. Master commit 93477ace (2026-10-20) adds --encrypt-files alignment validation, not necessarily in v5.6.0. Upstream CI 39435542641 passed 7/7 host test/stub-check jobs (Python 3.10-3.15); build CI 39435542027 passed six platform builds, release step skipped.
+- **Verification performed:** 2026-10-21 inspected README, LICENSE, pyproject.toml, loader/image source, commits, release and CI; no independent flash, provisioning or runtime test.
 - **Source discovery:** Embedded/Android tooling pass.
-- **Related projects:** ESP-IDF; Espressif flasher stubs and provisioning tooling.
-- **Caveats / risks:** GPL copyleft obligations apply to covered reused code; flashing/provisioning operations can alter or erase target devices.
-- **Research notes:** Especially valuable at the protocol/image-tooling layer, not just as a command-line utility.
+- **Related projects:** ESP-IDF; Espressif flasher stubs and provisioning tooling; esp-rs/esp-hal (complementary Rust bare-metal HAL, not a dependency).
+- **Caveats / risks:** GPL-2.0-or-later; check bundled stub/dependency licenses. Host CI is not hardware validation; eFuse/provisioning can be irreversible.
+- **Research notes:** See `research/2026-10-21-termux-esptool-reticulum-maintenance.md` for source evidence and verification boundaries.
 
 ### App Manager
 
@@ -391,19 +392,19 @@ Suggested tiers:
 - **Author / Org:** MuntashirAkon
 - **Category:** Android / package inspection / app management / diagnostics / backup
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 27
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 4 + Documentation 5 + Maintenance 5)
 - **What it does:** Advanced Android package-management and diagnostics suite covering package/component inspection, manifests/signatures, tracker/library scanning, APK bundle workflows, backups, logcat, profiles, files, and terminal functionality.
 - **Why it is valuable:** Consolidates many Android package-analysis and device-management capabilities behind explicit privilege layers, making it a useful architecture reference for non-root, ADB-assisted, and root-enhanced workflows.
-- **Useful code/components:** package/component inspection; manifest/signature analysis; APK bundle installation; tracker/library scanning; logcat tools; profiles/batch operations; encrypted backup/restore; ADB/root capability layers; file manager; terminal integration.
+- **Useful code/components:** `app/src/main/java/io/github/muntashirakon/AppManager/{apk,backup,scanner,adb,profiles,logcat,crypto}/`
 - **Install / runtime:** Android application with optional ADB/root-enhanced capabilities.
 - **Platforms:** Android.
 - **License:** REUSE/SPDX model; primary application is documented GPL-3.0-or-later with additional file-level licenses.
-- **Maintenance signals:** Recent commits were inspected during the research pass.
-- **Verification performed:** README, REUSE/license metadata, and recent commits inspected. No Android execution performed by GitHub Gold.
+- **Maintenance signals:** v4.1.1 published 2026-09-04; commits through 2026-10-19. Upstream Tests 39186829907, Lint 39186829863 and CodeQL 39186829827 all passed 2026-10-19.
+- **Verification performed:** Inspected README, BUILDING.rst, REUSE/SPDX licensing, Java module tree and test workflow. Upstream Gradle unit tests, lint and CodeQL passed; no independent Android build, backup/restore or privileged-device test.
 - **Source discovery:** Embedded/Android tooling pass.
-- **Related projects:** Android package manager APIs, ADB, APK analysis and backup ecosystems.
-- **Caveats / risks:** Perform file-level SPDX/license review before code reuse; powerful package/device operations should be used only on devices the operator controls.
-- **Research notes:** Particularly strong as a map of Android package metadata, privilege abstraction, and diagnostics workflows.
+- **Related projects:** Android package manager APIs, ADB, APK analysis and backup ecosystems; ImranR98/Obtainium (complementary upstream APK release tracking and installation, not the same inspection scope).
+- **Caveats / risks:** Primary app GPL-3.0-or-later with file-level SPDX exceptions; review each file and submodule before copying. Privileged operations can alter user data; use on owned devices with backups.
+- **Research notes:** Upstream-only scoring audit: `research/2026-10-22-legacy-four-scoring-audit.md`. No third-party source copied.
 
 ### Caddy
 
@@ -411,19 +412,19 @@ Suggested tiers:
 - **Author / Org:** CaddyServer
 - **Category:** web server / reverse proxy / automatic HTTPS / self-hosting / server platform
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5)
 - **What it does:** Modular Go web server and reverse proxy with automatic HTTPS, dynamic configuration, HTTP/1.1/2/3, internal PKI support, and a broad plugin ecosystem.
 - **Why it is valuable:** Combines production-grade serving/proxying with an API-driven configuration model and reusable TLS automation, making it a strong self-hosting and infrastructure reference.
 - **Useful code/components:** automatic HTTPS; native JSON configuration; dynamic configuration API; config adapters; reverse proxy; HTTP/1.1 HTTP/2 HTTP/3; modular Go app/plugin architecture; local CA; cluster-aware TLS coordination; xcaddy custom builds.
 - **Install / runtime:** Native Go binaries/packages and containerized deployments.
 - **Platforms:** Linux, Windows, macOS, BSD and other Go-supported systems.
 - **License:** Apache-2.0.
-- **Maintenance signals:** August 2026 research observed recent security-sensitive and correctness fixes in proxy/server paths.
-- **Verification performed:** Official README, root Apache-2.0 license, build/test documentation, and recent security/maintenance commits inspected. No live deployment performed by GitHub Gold.
+- **Maintenance signals:** Stable v2.11.7 (2026-10-03) fixed v2.11.6 HTTP/2 proxy panic and streaming cutoffs. Main commit f355b868 (2026-10-21) improves forward-proxy-wrapped dial retries; not established in stable. Upstream Tests run 39594833694 passed 3 platform jobs (2 optional skipped).
+- **Verification performed:** 2026-10-21: README, Apache-2.0 LICENSE, reverseproxy.go, release notes, recent commits and upstream CI jobs inspected; no independent deployment or security testing.
 - **Source discovery:** TLS/self-hosting pass.
 - **Related projects:** caddyserver/certmagic; xcaddy; config adapters; libdns ecosystem.
-- **Caveats / risks:** Internet-facing deployments must track patched releases and carefully review exposed admin/config APIs and proxy behavior.
-- **Research notes:** High-value platform entry; deeper Gold lies in module/config/TLS architecture rather than a simple web-server feature list.
+- **Caveats / risks:** Review exposed admin/config API and proxy trust boundaries. v2.11.6 had regressions fixed in v2.11.7; main-branch changes are not necessarily released.
+- **Research notes:** research/2026-10-21-caddy-certmagic-duckdb-maintenance.md; upstream CI is not independent verification.
 
 ### CertMagic
 
@@ -431,24 +432,2831 @@ Suggested tiers:
 - **Author / Org:** CaddyServer
 - **Category:** Go library / TLS automation / ACME / certificate management / reusable infrastructure
 - **Evidence:** VERIFIED
-- **Tier / Score:** S / 29
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5)
 - **What it does:** Go library for automated certificate issuance, renewal, caching, storage, OCSP, ACME challenges, on-demand issuance, and `tls.Config` integration.
 - **Why it is valuable:** Extracts Caddy's certificate-management capabilities into a reusable library that can be embedded into other Go applications.
 - **Useful code/components:** certificate issuance/renewal; ACME HTTP/TLS-ALPN/DNS challenges; multiple issuers; pluggable storage; distributed challenge locking; certificate cache; OCSP stapling; on-demand issuance controls; retry/backoff; event hooks; `tls.Config` integration; libdns interoperability.
 - **Install / runtime:** Go library embedded in Go applications and services.
 - **Platforms:** Go-supported systems including Linux, Windows, macOS, BSD, and Android targets where dependencies permit.
 - **License:** Apache-2.0.
-- **Maintenance signals:** Recent research observed fixes to certificate-renewal retry/error behavior and other security-sensitive maintenance.
-- **Verification performed:** Official README, Apache-2.0 license, API/feature documentation, and recent maintenance commits inspected. No certificate issuance flow executed by GitHub Gold.
+- **Maintenance signals:** Stable v0.25.6 (2026-09-30) upgraded ZeroSSL dependency for Authorization: ApiKey header. Latest master commit cfd20205 (2026-10-01) fixes README link. Upstream Tests run 36915271739 passed 6/6 Ubuntu/macOS/Windows Go 1.25/1.26 jobs.
+- **Verification performed:** 2026-10-21: README, Apache-2.0 LICENSE.txt, certmagic.go, release, recent commits and upstream CI jobs inspected; no independent ACME issuance or TLS audit.
 - **Source discovery:** TLS/self-hosting pass.
 - **Related projects:** Caddy; libdns providers; ACME issuers; storage backends.
-- **Caveats / risks:** Certificate automation is security-critical; deployments must configure storage, permissions, on-demand controls, and issuer policies carefully.
-- **Research notes:** Strong reusable component entry independent of Caddy itself.
+- **Caveats / risks:** ACME issuance depends on CA availability, challenge routing, permissions, storage locks and on-demand controls. Review external DNS/storage provider licenses.
+- **Research notes:** research/2026-10-21-caddy-certmagic-duckdb-maintenance.md; upstream CI is not independent verification.
+
+### whisper.cpp
+
+- **Repository:** https://github.com/ggml-org/whisper.cpp
+- **Author / Org:** ggml-org
+- **Category:** local AI / speech recognition / embedded inference
+- **Evidence:** VERIFIED (upstream code, release and CI evidence; not independently executed)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5; upstream evidence)
+- **What it does:** Local cross-platform speech recognition implementation in C/C++.
+- **Why it is valuable:** Embeddable C API and CPU/GPU backends for offline transcription.
+- **Useful code/components:** include/whisper.h C API; src/whisper.cpp inference core; CLI and streaming examples; VAD and quantization tooling; Android iOS WASM Java and Docker examples; GPU and accelerator backend integrations; talk-llama speech-to-LLM example.
+- **Install / runtime:** Build with CMake; obtain separately licensed model weights; run whisper-cli or link the C API.
+- **Platforms:** Linux, Windows, macOS, Android, iOS, WebAssembly.
+- **License:** MIT for the inspected root repository; third-party code and assets may differ.
+- **Maintenance signals:** v1.9.5 published 2026-10-06; upstream CPU CI passed 5/5 jobs 2026-10-19 (run 39266836864). Android, Windows, WASM and VAD workflows also succeeded. A later model-vocabulary check is not assumed shipped in v1.9.5.
+- **Verification performed:** README, license, upstream release and CI definitions inspected. No independent build, runtime test, or benchmark.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-local-ai-crdt.md
+- **Related projects:** ggml-org/ggml; ggml-org/llama.cpp (shared ggml and talk-llama example); Whisper model ecosystem.
+- **Caveats / risks:** MIT source licensing is permissive, but model weights and third-party dependencies/backends may have separate terms.
+- **Research notes:** Promoted from READY queue; scoring remains provisional.
+
+### Loro
+
+- **Repository:** https://github.com/loro-dev/loro
+- **Author / Org:** loro-dev
+- **Category:** local-first / CRDT / collaborative state infrastructure
+- **Evidence:** VERIFIED (upstream code, release and CI evidence; not independently executed)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 4)
+- **What it does:** Conflict-free replicated data types for local-first collaborative application state.
+- **Why it is valuable:** Reusable mergeable text, rich-text, tree, list and map structures, with delta synchronization and history.
+- **Useful code/components:** Rust CRDT core; JavaScript/WASM loro-crdt package; Swift support; Fugue text and rich-text CRDTs; moveable tree and list CRDTs; delta synchronization APIs; shallow snapshots and time travel; Loro Inspector.
+- **Inspected source paths:** `crates/loro-internal/src/container/richtext/fugue_span.rs`; `crates/loro/README.md`; `loro-js/README.md`.
+- **Install / runtime:** Use the Rust crates, JavaScript/WASM package, or documented Swift integration.
+- **Platforms:** Rust, JavaScript/WebAssembly, Swift.
+- **License:** MIT for the inspected root repository; third-party code and assets may differ.
+- **Maintenance signals:** Upstream loro-crdt@1.16.4 and experimental loro.js@0.3.0 released 2026-09-30. Source documents causally pending remote updates and convergence fixes; no independent cross-runtime tests.
+- **Verification performed:** README, license, upstream release and CI definitions inspected. No independent build, runtime test, or benchmark.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-local-ai-crdt.md
+- **Related projects:** loro-dev ecosystem, local-first applications, CRDT research.
+- **Caveats / risks:** Root project is MIT licensed; optional ecosystem repositories and bindings should be checked separately before code reuse.
+- **Research notes:** The pure TypeScript runtime is explicitly experimental; pending remote updates require careful checkpoint handling. See `research/2026-10-22-openobserve-loro-libp2p-maintenance.md`.
+
+### DuckDB
+
+- **Repository:** https://github.com/duckdb/duckdb
+- **Author / Org:** duckdb
+- **Category:** embedded analytics / SQL / data tooling / columnar processing
+- **Evidence:** VERIFIED (upstream implementation, documentation and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 4, Reusability 5, Novelty 5, Documentation 5, Maintenance 4)
+- **What it does:** Embeddable analytical SQL database with vectorized execution and local CSV/Parquet processing.
+- **Why it is valuable:** Reusable in-process analytics engine and C API for local-first data pipelines and scripts.
+- **Useful code/components:** embeddable analytical SQL engine; public version-targeted C API; CSV and Parquet readers; query planner and optimizer; vectorized execution engine; storage and transaction layers; extension architecture; CLI and language-client integration points; unit-test and benchmark infrastructure.
+- **Install / runtime:** Use a supported DuckDB CLI, language package, or documented native C/C++ interface; extension compatibility depends on versions.
+- **Platforms:** Linux, Windows, macOS, other supported native and language-binding targets.
+- **License:** MIT at upstream root; dependencies/extensions require separate review.
+- **Maintenance signals:** Stable v2.0.0 (2026-10-21) published 28 assets. Main commit c15a232a (2026-10-21) fixes window-aggregate memory-limit livelock but is not established in v2.0.0. On Tag 39602672912 failed staging download; SwiftRelease 39602672833 failed push; Oct 19 Main 39259831957 passed many core tests but failed parser benchmark and cloud-extension builds.
+- **Verification performed:** 2026-10-21: README, MIT LICENSE, generated C API header, v2.0.0 release, recent commit and selected upstream CI jobs inspected; no independent build, query, benchmark or extension test.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-embedded-analytics.md
+- **Related projects:** DuckDB extensions, Arrow, Parquet and embedded analytics tooling.
+- **Caveats / risks:** Major-version API/extension compatibility needs review. Release/integration CI failures do not prove core SQL malfunction. Check optional extension licenses.
+- **Research notes:** research/2026-10-21-caddy-certmagic-duckdb-maintenance.md; upstream CI is not independent verification.
+
+### go-libp2p
+
+- **Repository:** https://github.com/libp2p/go-libp2p
+- **Author / Org:** libp2p
+- **Category:** peer-to-peer networking / protocol stack / NAT traversal / distributed systems
+- **Evidence:** VERIFIED (upstream implementation, documentation and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 5)
+- **What it does:** Composable Go implementation of the libp2p peer-to-peer networking stack.
+- **Why it is valuable:** Reusable transport, peer identity, discovery and NAT traversal layers for resilient distributed applications.
+- **Useful code/components:** host and network abstractions; transport composition; NAT traversal and hole punching; reachability and AutoNAT logic; peer identity and secure channel layers; stream multiplexing; protocol negotiation; connection management; examples; Grafana production dashboards.
+- **Inspected source paths:** `p2p/protocol/holepunch/svc.go`; `p2p/host/autonat/autonat.go`; `p2p/protocol/autonatv2/autonat.go`.
+- **Install / runtime:** Go module embedded in Go applications; network behavior depends on transport, NAT and deployment environment.
+- **Platforms:** Go-supported systems, Linux, Windows, macOS.
+- **License:** MIT at upstream root; dependencies/extensions require separate review.
+- **Maintenance signals:** v0.50.0 released 2026-09-21 with upstream-reported reachability stress tests, hole-punch timeout fix and HTTP authentication hardening. Requires Go 1.26. No independent network test.
+- **Verification performed:** README, root license and upstream commits inspected; no independent build, runtime, network, performance or security tests.
+- **Source discovery:** GitHub-first discovery; research/2026-08-20-p2p-networking.md
+- **Related projects:** libp2p specifications, go-libp2p examples, QUIC, WebTransport and AutoNAT.
+- **Caveats / risks:** Root repository is MIT licensed, but dependencies, integrations, protocol implementations, and downstream projects may carry separate licenses and operational constraints.
+- **Research notes:** NAT/firewall environments and relay availability affect actual connectivity; review transport dependency licenses. See `research/2026-10-22-openobserve-loro-libp2p-maintenance.md`.
+
+### uv
+
+- **Repository:** https://github.com/astral-sh/uv
+- **Author / Org:** Astral
+- **Category:** Python tooling / dependency management / Rust CLI
+- **Evidence:** VERIFIED (upstream evidence; not independently executed)
+- **Tier / Score:** S / 29 (provisional; Utility + Working Evidence + Reusability + Novelty + Documentation + Maintenance = 5+5+5+4+5+5)
+- **What it does:** Fast Rust-based Python package and project manager supporting lockfiles, interpreters, workspaces, tools, scripts, caching and pip-compatible commands.
+- **Why it is valuable:** A reusable dependency resolver, package installation stack and environment manager with extensive upstream tests and cross-platform distribution.
+- **Useful code/components:** `crates/uv-resolver/src/pubgrub/` dependency solver; `crates/uv-lock/` lockfiles; `crates/uv-cache/` cache; `crates/uv-install-wheel/` wheel installation; `crates/uv-python-discovery/` interpreter discovery; `crates/uv-virtualenv/` environments; `crates/uv-build-backend/` builds.
+- **Install / runtime:** Standalone installers or PyPI; Rust toolchain for source builds; some operations access package indexes or download interpreters.
+- **Platforms:** Linux, macOS, Windows.
+- **License:** Apache-2.0 OR MIT; inspect dependency and component terms before copying.
+- **Maintenance signals:** 0.13.5 published 2026-10-22 UTC (release notes dated 2026-10-21); updated managed CPython builds after 0.13.4 trust-root removal. Main CI succeeded 2026-10-22 (run 39720666204).
+- **Verification performed:** README, MIT and Apache-2.0 root licenses inspected; uv-resolver source tree and GitHub Actions test workflows inspected; v0.13.1 upstream release published 2026-10-14 inspected; No independent build, install or benchmark.
+- **Source discovery:** GitHub-first; research/2026-08-21-python-tooling.md
+- **Related projects:** [Ruff](https://github.com/astral-sh/ruff) (inspected VERIFIED/S29; same Astral ecosystem, usable through `uvx ruff`), ty; Python packaging standards.
+- **Caveats / risks:** Upstream 10–100x speed claims not independently benchmarked. Downloaded interpreters, packages and third-party dependencies have separate licenses and supply-chain risks.
+- **Research notes:** Promoted from READY queue on 2026-10-14. No upstream code copied.
+
+### age
+
+- **Repository:** https://github.com/FiloSottile/age
+- **Author / Org:** Filippo Valsorda and contributors
+- **Category:** File encryption / Go cryptography / CLI / interoperability
+- **Evidence:** VERIFIED (upstream evidence; not independently executed)
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
+- **What it does:** Interoperable encrypted-file format, Go library and command-line tools supporting recipients, identities, passphrases, plugins and hybrid post-quantum options.
+- **Why it is valuable:** Small composable encryption interfaces, documented format and independent implementations enable secure file-exchange applications.
+- **Useful code/components:** `age.go`, `x25519.go`, `scrypt.go`, `pq.go`, `plugin/`, `cmd/age/`, `cmd/age-keygen/`, `cmd/age-inspect/`, `age_test.go`
+- **Install / runtime:** Prebuilt CLI or Go module `filippo.io/age`; source go.mod specifies Go 1.25 and toolchain Go 1.27.
+- **Platforms:** Linux, macOS, Windows, BSD.
+- **License:** BSD 3-Clause-style; inspect dependency and component terms before copying.
+- **Maintenance signals:** v1.3.2 (2026-08-29) adds parser/input hardening and new binary/platform coverage. Main Go tests passed 2026-10-21; earlier main tests failed October 10–12, with later successful runs. Feature-branch checks are not counted as main evidence.
+- **Verification performed:** 2026-10-21 upstream release, code tree, license and CI reviewed. Root BSD 3-Clause-style license requires notices; plugin/dependency terms vary. No independent cryptographic audit, interoperability, fuzzing, CLI encryption or decryption test.
+- **Source discovery:** GitHub-first; research/2026-08-21-file-encryption.md
+- **Related projects:** str4d/rage; FiloSottile/typage; str4d/age-plugin-yubikey; age C2SP format.
+- **Caveats / risks:** Catalog inclusion is not a cryptographic audit. Plugins and dependencies require separate review. v1.3.2 rejects some formerly accepted malformed or oversized inputs.
+- **Research notes:** `research/2026-10-21-organicmaps-kopia-age-maintenance.md`. Root BSD 3-Clause-style license requires notices; plugin/dependency terms vary. No independent cryptographic audit, interoperability, fuzzing, CLI encryption or decryption test.
+
+### Tailscale
+
+- **Repository:** https://github.com/tailscale/tailscale
+- **Author / Org:** Tailscale Inc. and contributors
+- **Category:** overlay networking / WireGuard / NAT traversal / embedded networking / private networks
+- **Evidence:** VERIFIED (upstream release, implementation, test and CI evidence; no independent runtime test).
+- **Tier / Score:** S / 29; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** WireGuard-based private overlay networking with NAT traversal and relay fallback; tsnet embeds an authenticated tailnet node into Go programs.
+- **Why it is valuable:** Reusable networking infrastructure with documented architecture, active maintenance and upstream test coverage.
+- **Useful code/components:** `tsnet/tsnet.go: embedded tailnet server`; `tsnet/example/: examples`; `wgengine/: userspace networking engine`; `wgengine/magicsock/: NAT traversal`; `wgengine/netstack/: gVisor userspace TCP/IP`; `tailcfg/: control protocol types`; `tailscaled and CLI`.
+- **Install / runtime:** Official client packages, or Go module tailscale.com/tsnet; tailnet enrollment required.
+- **Platforms:** Linux, Windows, macOS, selected BSD, Go embedded services.
+- **License:** BSD-3-Clause; review third-party notices and component licenses before extraction.
+- **Maintenance signals:** Upstream release v1.104.1 (2026-10-07); recent commits 2026-10-14; source tests and GitHub Actions workflows inspected.
+- **Verification performed:** README and BSD-3-Clause LICENSE inspected on 2026-10-14; tsnet README/source and tests, wgengine directory and CI workflows inspected; upstream stable release v1.104.1 published 2026-10-07; upstream commits 2026-10-14 inspected; no independent build or deployment.
+- **Source discovery:** GitHub-first; research/2026-08-21-overlay-networking.md
+- **Related projects:** juanfont/headscale; WireGuard/wireguard-go; tailscale/tailscale-android.
+- **Caveats / risks:** Hosted control plane and some proprietary GUI code are not included; check dependency notices, device enrollment and ACL configuration. No upstream code copied or independent security audit performed.
+- **Research notes:** Promoted from READY queue on 2026-10-14. Inspect exact upstream paths in the source tree before reuse.
+
+### Headscale
+
+- **Repository:** https://github.com/juanfont/headscale
+- **Author / Org:** Juan Font / Headscale contributors
+- **Category:** self-hosted networking / Tailscale control plane / WireGuard coordination
+- **Evidence:** VERIFIED (upstream release, implementation, test and CI evidence; no independent runtime test).
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Self-hosted coordination server for Tailscale-compatible clients, with enrollment, policy, node management and route distribution.
+- **Why it is valuable:** Reusable networking infrastructure with documented architecture, active maintenance and upstream test coverage.
+- **Useful code/components:** `hscontrol/: control server`; `hscontrol/api/: management API`; `integration/: integration tests`; `registration and pre-auth keys`; `OIDC authorization`; `ACL and policy evaluation`; `DERP and route coordination`.
+- **Install / runtime:** Deploy the Go server with release-tag-matched configuration; requires compatible clients.
+- **Platforms:** Linux server, Go source, Nix-supported hosts.
+- **License:** BSD-3-Clause; review third-party notices and component licenses before extraction.
+- **Maintenance signals:** Upstream release v0.29.5 (2026-10-13); recent commits 2026-10-13; source tests and GitHub Actions workflows inspected.
+- **Verification performed:** README and BSD-3-Clause LICENSE inspected on 2026-10-14; hscontrol and integration source trees and CI workflows inspected; upstream v0.29.5 published 2026-10-13 with policy and route fixes; 2026-10-13 commits inspected; no independent deployment or interoperability test.
+- **Source discovery:** Recursive Tailscale research; research/2026-08-21-self-hosted-control-plane.md
+- **Related projects:** tailscale/tailscale; WireGuard/wireguard-go.
+- **Caveats / risks:** Self-hosted tailnet coordination, not feature parity with hosted Tailscale. Follow configuration/docs matching the installed release tag; security-sensitive policies require review. No upstream code copied or independent security audit performed.
+- **Research notes:** Promoted from READY queue on 2026-10-14. Inspect exact upstream paths in the source tree before reuse.
+
+### wireguard-go
+
+- **Repository:** https://github.com/WireGuard/wireguard-go
+- **Author / Org:** WireGuard LLC / WireGuard contributors
+- **Category:** userspace VPN / encrypted networking / Go networking / TUN interface
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Go implementation of the WireGuard userspace VPN tunnel.
+- **Why it is valuable:** Portable userspace WireGuard implementation and reusable networking abstractions.
+- **Useful code/components:** device/: WireGuard protocol, handshake and packet pipeline; conn/: UDP endpoint and batching; tun/: cross-platform TUN integration; ipc/: control interface; replay/: anti-replay logic; ratelimiter/: handshake limiting; rwcancel/: cancellable descriptor I/O; tai64n/: timestamps.
+- **Install / runtime:** Go 1.23.1 (go.mod); kernel WireGuard is preferred on supported Linux systems.
+- **Platforms:** Linux, Windows, macOS, BSD and other Go-supported targets where TUN support exists.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** No GitHub releases; latest inspected commit 2026-10-06 corrects handshake-response state (2631ce99).
+- **Verification performed:** official upstream README inspected; root repository structure inspected; upstream licensing text inspected; recent commit history inspected; 2026-05-22 Linux vectorized-I/O/TUN header correctness fix observed; not independently built, fuzzed, benchmarked, deployed, cryptographically audited, or interoperability-tested by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** Recursive networking research; research/2026-08-21-wireguard-userspace.md
+- **Related projects:** tailscale/tailscale (userspace engine fork); WireGuard kernel implementation.
+- **Caveats / risks:** Upstream recommends the kernel WireGuard implementation on Linux when available. Catalog inclusion is not a cryptographic audit, and downstream forks such as Tailscale's may contain meaningful divergence. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
+### Nebula
+
+- **Repository:** https://github.com/slackhq/nebula
+- **Author / Org:** Slack Technologies / slackhq contributors
+- **Category:** overlay networking / peer-to-peer SDN / NAT traversal / private networking
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Peer-to-peer encrypted overlay network with lighthouse discovery, certificates, and firewall policies.
+- **Why it is valuable:** Self-hosted encrypted overlay network with explicit identity, policy and peer discovery.
+- **Useful code/components:** handshake/: authenticated Noise handshakes; lighthouse.go: peer discovery; hostmap.go: peer state; punchy.go: UDP hole punching; cert/: certificate identities; firewall.go: group-aware firewall; overlay/: TUN and platform adapters; e2e/: end-to-end tests.
+- **Install / runtime:** Go 1.27.2 (current go.mod); nebula and nebula-cert executables.
+- **Platforms:** Linux, Windows, macOS, BSD.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** Stable v1.11.2 published 2026-09-22; commits on 2026-10-16 add tunnel framing tests and certificate validation fixes.
+- **Verification performed:** repository metadata inspected; official README inspected; root license metadata inspected; recent maintenance commits inspected; 2026-08-21 native Go fips140 support observed; 2026-08-21 TUN offload work observed; 2026-08-20 fail-closed IPv6 parsing fix observed; 2026-08-20 32-bit CA command memory-safety fix observed; not independently deployed, built, tested, benchmarked, fuzzed, cryptographically audited, or FIPS-validated by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** GitHub-first and recursive networking research; research/2026-08-22-nebula-overlay-networking.md
+- **Related projects:** Defined Networking mobile clients; WireGuard and Tailscale as architectural comparisons; yggdrasil-network/yggdrasil-go — self-arranging encrypted IPv6 routing comparison (different trust/authorization model).
+- **Caveats / risks:** Private-network infrastructure is security-sensitive; catalog inclusion is not an audit. Direct paths depend on NAT/firewall topology, CA key handling is critical, companion mobile code is separate, and FIPS build support is not blanket deployment compliance. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
+### Nushell
+
+- **Repository:** https://github.com/nushell/nushell
+- **Author / Org:** Nushell Project
+- **Category:** developer tooling / shell / structured data pipelines / cross-platform automation
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Cross-platform shell that treats pipeline data as typed values rather than only text.
+- **Why it is valuable:** Structured data pipelines and reusable shell/parser/plugin components.
+- **Useful code/components:** crates/nu-protocol/: typed values and pipelines; crates/nu-parser/: language parsing; crates/nu-engine/: execution engine; crates/nu-command/: built-in commands; crates/nu-plugin/: plugin APIs; structured file and process-stream integration.
+- **Install / runtime:** Prebuilt nu releases or Rust toolchain for source builds.
+- **Platforms:** Linux, Windows, macOS.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** Stable 0.116.1 published 2026-10-04; 2026-10-16 commits correct plugin-input lifetime, MCP visibility and number formatting.
+- **Verification performed:** official README inspected; root MIT license inspected; repository metadata inspected; CI/nightly and release surfaces inspected; 0.114.1 release dated 2026-07-11 observed upstream; August 2026 ecosystem maintenance observed; not independently built, benchmarked, or cross-platform tested by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** GitHub-first discovery; research/2026-08-22-structured-shell.md
+- **Related projects:** nushell/reedline; nushell/nushell.github.io; jqlang/jq (complementary JSON CLI; no integration asserted); atuinsh/atuin (supported Nushell history integration; not a Nushell core dependency).
+- **Caveats / risks:** Nushell semantics differ materially from POSIX shells and some commands/design details may evolve. Plugins, packages, integrations, and separately maintained ecosystem repositories require independent license checks. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
+### Reedline
+
+- **Repository:** https://github.com/nushell/reedline
+- **Author / Org:** Nushell Project
+- **Category:** developer tooling / interactive CLI / line editor / Rust library
+- **Evidence:** VERIFIED (upstream source, release and maintenance evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4.
+- **What it does:** Rust readline-like line editor with completion, history, highlighting and multiple editing modes.
+- **Why it is valuable:** Reusable interactive terminal input engine independent of a full shell.
+- **Useful code/components:** src/engine.rs: editor engine; completion and menu interfaces; highlighter, hinter, validator traits; file and SQLite-backed history; Emacs, Vi and Helix keybinding modes; Unicode/grapheme-aware editing; examples/: integration samples.
+- **Install / runtime:** Rust >=1.95.0 (current Cargo.toml); crossterm and optional feature dependencies.
+- **Platforms:** Linux, Windows, macOS terminals.
+- **License:** MIT; preserve upstream copyright and dependency notices before code reuse.
+- **Maintenance signals:** Stable v0.52.1 published 2026-10-04; 2026-10-10 commits add opt-in paste hooks and improve editor state handling.
+- **Verification performed:** official README inspected; root MIT license inspected; Cargo.toml and feature definitions inspected; current manifest version 0.50.0 observed; recent commits through 2026-08-21 inspected; correctness fixes and RustSec-driven dependency maintenance observed; not independently built, fuzzed, benchmarked, terminal-matrix tested, or security-audited by GitHub Gold; 2026-10-16 root license, release and commit surfaces rechecked. No independent build, deployment, benchmark or security audit.
+- **Source discovery:** Recursive Nushell ecosystem research; research/2026-08-22-line-editor.md
+- **Related projects:** nushell/nushell; crossterm.
+- **Caveats / risks:** Upstream lists complex Unicode scripts, expensive completion/prompt handling, and full-duplex concurrent output as areas needing further improvement. Optional dependencies and downstream integrations retain separate licenses. No third-party implementation code copied.
+- **Research notes:** Promoted from READY queue on 2026-10-16; source evidence is not a runtime test.
+
+
+### MCAP
+
+- **Repository:** https://github.com/foxglove/mcap
+- **Author / Org:** Foxglove Technologies / foxglove
+- **Category:** Robotics / telemetry / indexed binary log formats / cross-language data interchange
+- **Evidence:** VERIFIED (upstream source, CI, conformance and release evidence; not independently executed)
+- **Tier / Score:** S / 29; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** Serialization-agnostic container format and multi-language libraries for timestamped messages, schemas, chunks, indexes, metadata and attachments.
+- **Why it is valuable:** Durable telemetry interchange with streaming and indexed readers, six language implementations, conformance tests and CLI utilities.
+- **Useful code/components:** `typescript/core/src/McapStreamReader.ts`; `typescript/core/src/McapIndexedReader.ts`; `typescript/core/src/McapWriter.ts`; `rust/mcap/src/read.rs`; `rust/mcap/src/write.rs`; `rust/cli/src/commands/`; `tests/conformance/`; `website/docs/spec/mcap.ksy`.
+- **Install / runtime:** Language-specific packages/toolchains (C++, Go, Python, Rust, TypeScript/JavaScript, Swift); packaged MCAP CLI binaries or Homebrew.
+- **Platforms:** Linux, macOS, Windows; runtime support varies by implementation.
+- **License:** MIT at repository root; review dependency notices for reused components.
+- **Maintenance signals:** MCAP CLI v0.4.0 released 2026-10-16; Rust CLI features include CSV/NDJSON export and timestamp formatting changes.
+- **Verification performed:** README, root LICENSE, implementation directories, CI/conformance directory, recent commits and release feed inspected 2026-10-17. No independent build, tests, benchmark or parser security audit.
+- **Source discovery:** GitHub-first; `research/2026-09-05-mcap-robotics-telemetry-container-conformance-toolkit.md` and `research/2026-09-09-mcap-robotics-telemetry-log-format.md`.
+- **Related projects:** ROS 1/ROS 2 integrations, Foxglove SDK, Kaitai Struct, MCAP conformance tools.
+- **Caveats / risks:** CLI v0.4.0 changes default timestamp output; automation expecting integer nanoseconds may break. Parsing untrusted files remains security-sensitive.
+- **Research notes:** Promoted from existing research dossiers on 2026-10-17; no third-party implementation code copied.
+
+### sherpa-onnx
+
+- **Repository:** https://github.com/k2-fsa/sherpa-onnx
+- **Author / Org:** k2-fsa
+- **Category:** Offline AI / speech recognition / speech synthesis / Android / Termux
+- **Evidence:** VERIFIED (upstream source, CI and release evidence; not independently executed)
+- **Tier / Score:** S / 29; Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** Local inference toolkit for ASR, TTS, VAD, speaker diarization/identification, keyword spotting and other audio tasks.
+- **Why it is valuable:** Cross-platform offline speech stack with C++ core, C API, Python and Rust bindings, mobile integration and extensive build workflows.
+- **Useful code/components:** `sherpa-onnx/csrc/`; `sherpa-onnx/c-api/c-api.h`; `sherpa-onnx/c-api/c-api.cc`; `sherpa-onnx/python/`; `sherpa-onnx/rust/`; Android build workflows; VAD and streaming/offline recognizers.
+- **Install / runtime:** Model files and platform-specific inference binaries or build toolchain; native Android Termux/Python-in-Termux paths documented in v1.13.8.
+- **Platforms:** Android/Termux, Linux, Windows, macOS, iOS, WebAssembly; architecture/backend support varies.
+- **License:** Apache-2.0 at repository root; separately review model weights, dependencies and accelerator SDKs.
+- **Maintenance signals:** Stable v1.13.8 published 2026-09-10; C API exception-handling PR #4044 merged 2026-10-14; Rust zip dependency advisory fix committed 2026-10-17.
+- **Verification performed:** README, root LICENSE, C API and C++ source directories, multi-platform CI, release notes, security-fix commit and PR inspected 2026-10-17. No independent model execution, build, benchmark or audit.
+- **Source discovery:** GitHub-first and offline AI ecosystem; `research/2026-10-17-sherpa-onnx-termux-c-api-safety.md`.
+- **Related projects:** k2-fsa speech ecosystem; ONNX Runtime; Termux; Android audio applications.
+- **Caveats / risks:** The October C API and Rust dependency fixes postdate stable v1.13.8; do not assume stable builds contain them. Models and dependencies may have separate licenses and RAM/storage requirements.
+- **Research notes:** Promoted 2026-10-17; upstream build and release evidence does not equal an independent performance or security test.
+
+
+### pyOCD
+
+- **Repository:** https://github.com/pyocd/pyOCD
+- **Author / Org:** pyocd contributors
+- **Category:** Embedded debugging / Arm Cortex-M / firmware programming / Python automation / debug probes
+- **Evidence:** VERIFIED (upstream source, tests, CI configuration and release evidence; not independently executed)
+- **Tier / Score:** S / 28; Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** Python CLI and library for programming, inspecting, and debugging Arm Cortex-M devices through supported probes.
+- **Why it is valuable:** Reusable CMSIS-DAP, ST-Link, J-Link, GDB server, CMSIS-Pack target support, flash loading, RTOS-aware debugging, and SWV tracing.
+- **Useful code/components:** `pyocd/probe/cmsis_dap_probe.py`; `pyocd/probe/stlink_probe.py`; `pyocd/probe/jlink_probe.py`; `pyocd/gdbserver/gdbserver.py`; `pyocd/flash/loader.py`; `pyocd/target/pack/`; `pyocd/rtos/`; `pyocd/trace/swv.py`; `test/unit/`.
+- **Install / runtime:** Python 3.9+, libusb or suitable USB backend, supported probe and Cortex-M target for hardware operations; PyPI package available.
+- **Platforms:** Linux, Windows, macOS, FreeBSD; MCU support depends on probe and target.
+- **License:** Apache-2.0 at root; verify separate documentation, vendor device-pack, and dependency terms.
+- **Maintenance signals:** v0.45.1 released 2026-07-21; v0.45 series adds debug sequences and RTT/SWV file capture; CI declares three OSes and Python 3.9–3.14 with pytest, lint and package checks.
+- **Verification performed:** README, license, packaging, security and remote-probe guides, CI workflow, and official releases inspected 2026-10-18. No independent install, test execution, flashing, benchmark or security audit.
+- **Source discovery:** GitHub-first, recursive follow-up to existing probe-rs dossier.
+- **Related projects:** probe-rs/probe-rs; CMSIS-DAP; Open-CMSIS-Pack; DAPLink.
+- **Caveats / risks:** Auto-unlock can mass-erase protected targets; exposing remote probe access permits device control. Upstream describes beta quality and possible 1.0 API changes.
+- **Research notes:** `research/2026-10-18-pyocd-cortexm-debugging-flashing-evidence.md`. Score reflects upstream evidence, not independently reproduced hardware tests. No third-party code copied.
+
+
+
+### FlatGeobuf
+
+- **Repository:** https://github.com/flatgeobuf/flatgeobuf
+- **Author / Org:** Björn Harrtell and FlatGeobuf contributors
+- **Category:** Geospatial binary features / packed Hilbert R-tree / HTTP byte ranges
+- **Evidence:** VERIFIED (upstream source, tests and CI definitions; not independently executed)
+- **Tier / Score:** S / 29 — Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 5.
+- **What it does:** Static FlatBuffers-based geographic feature format with optional packed R-tree, bounding-box filtering, streaming and byte-range access.
+- **Why it is valuable:** Enables selective retrieval of large vector datasets for offline-first maps and geospatial tools without requiring a database server.
+- **Useful code/components:** `src/ts/http-reader.ts`, `src/ts/packedrtree.ts`, `src/ts/packedrtree.spec.ts`, `src/ts/seekable-zstd.ts`, `src/ts/geojson.ts`, `src/fbs/header.fbs`, `src/fbs/feature.fbs`, `src/rust/src/`, `src/go/`.
+- **Install / runtime:** Language-specific packages; TypeScript CI uses Node 22/24 and pnpm 12; Rust crate manifest requires Rust 1.85+. HTTP filtering requires Range and CORS support.
+- **Platforms:** Browser/Node, Rust, C++, Go, Java, .NET, local files and servers.
+- **License:** Root BSD-2-Clause; package.json BSD-3-Clause; `src/ts/LICENSE` ISC; Rust manifest BSD-2-Clause. Review component notices before reuse.
+- **Maintenance signals:** 2026-10-07 TypeScript R-tree boundary/duplicate regression fix; cross-language CI configuration.
+- **Verification performed:** Inspected upstream source, test, license files and CI 2026-10-18. No independent execution or audit.
+- **Source discovery:** GitHub-first; `research/2026-10-18-spatial-stack-interoperability-maintenance.md`.
+- **Related projects:** DuckDB Spatial, PMTiles, MapLibre, GDAL, geozero. Tippecanoe (FlatGeobuf input -> PMTiles/MBTiles output; source-level).
+- **Caveats / risks:** Static feature format, not a tile renderer or in-place random-write database; mixed license declarations; range-request latency and version-specific APIs.
+- **Research notes:** No upstream implementation code copied.
+
+### DuckDB Spatial
+
+- **Repository:** https://github.com/duckdb/duckdb-spatial
+- **Author / Org:** DuckDB Foundation and contributors
+- **Category:** Geospatial SQL / R-tree / GDAL / vector tiles / offline analytics
+- **Evidence:** VERIFIED (upstream implementation and regression-test source; not independently executed)
+- **Tier / Score:** S / 27 — Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 4, Maintenance 5.
+- **What it does:** DuckDB extension providing geometry types, spatial SQL, R-tree indexing, geographic file I/O, CRS transforms, OSM PBF processing and Mapbox Vector Tile output.
+- **Why it is valuable:** Composable local geospatial analytics, conversion and map-data preparation with SQL rather than a separate geospatial server.
+- **Useful code/components:** `src/spatial/index/rtree/`, `test/sql/index/rtree_basic.test`, `src/spatial/modules/gdal/`, `src/spatial/modules/mvt/`, `src/spatial/modules/osm/`, `src/spatial/modules/proj/`, `src/spatial/modules/geos/`, `test/sql/mvt/st_asmvt.test`.
+- **Install / runtime:** Compatible DuckDB binary and spatial extension (`INSTALL spatial; LOAD spatial;`); source builds use CMake, C++ toolchain, OpenSSL and bundled dependencies.
+- **Platforms:** Platforms with matching DuckDB extension builds; pin binary and extension versions.
+- **License:** MIT root; third-party GDAL, GEOS, PROJ and bundled notices must be reviewed separately.
+- **Maintenance signals:** 2026-10-18 upstream GDAL JSON patch correction; SQL regression tests and distribution CI.
+- **Verification performed:** Inspected README, source/test paths, LICENSE and CI on 2026-10-18; no local SQL execution, build or benchmark.
+- **Source discovery:** GitHub-first; `research/2026-10-18-spatial-stack-interoperability-maintenance.md`.
+- **Related projects:** DuckDB, FlatGeobuf, PMTiles, MapLibre, GDAL.
+- **Caveats / risks:** README still says spatial indexing unsupported although R-tree code/tests exist; feature support is version-dependent; geometry storage described upstream as work in progress.
+- **Research notes:** `RTREE_INDEX_SCAN` appears in test source, not a locally observed successful run. No third-party implementation code copied.
+
+
+### TinyUSB
+
+- **Repository:** https://github.com/hathach/tinyusb
+- **Author / Org:** Ha Thach and contributors
+- **Category:** Embedded USB / MCU host-device stacks / firmware / protocol drivers
+- **Evidence:** VERIFIED (upstream source, tests and CI configuration; not independently run)
+- **Tier / Score:** S / 27 — Utility 5, Working Evidence 4, Reusability 5, Novelty 3, Documentation 5, Maintenance 5.
+- **What it does:** Portable C USB host/device stack for embedded controllers with USB class drivers, board examples, and bare-metal/RTOS integrations.
+- **Why it is valuable:** Reusable USB enumeration, endpoint handling, class-driver and controller-backend implementations across many microcontroller families.
+- **Useful code/components:** `src/host/usbh.c`; `src/device/`; `src/class/`; `src/portable/`; `src/portable/raspberrypi/rp2040/hcd_rp2040.c`; `src/osal/`; `examples/`; `test/unit-test/project.yml`; `test/fuzz/`; `test/hil/`.
+- **Install / runtime:** Integrate with supported board SDK/toolchain, `tusb_config.h`, descriptor callbacks and host/device task processing; consult official board-specific examples. Host/device roles vary by MCU.
+- **Platforms:** Embedded C, 50+ MCU families claimed upstream, bare metal, FreeRTOS, RT-Thread and Mynewt; verify exact controller support.
+- **License:** MIT root; inspect separately licensed vendor SDKs and `lib/` dependencies before extracting code.
+- **Maintenance signals:** Official 0.21.0 release published 2026-06-30; upstream commits through 2026-10-18; test and fuzz infrastructure.
+- **Verification performed:** Inspected README.rst, LICENSE, host source, class directories, Ceedling configuration and pre-commit workflow 2026-10-18. Unit-test invocation is commented out in that workflow; fuzz harnesses are configured but not run by GitHub Gold.
+- **Source discovery:** GitHub-first; `research/2026-10-08-tinyusb-embedded-usb-host-device-stack.md`.
+- **Related projects:** raspberrypi/pico-sdk (direct TinyUSB Git submodule; not independently hardware-tested), ESP-IDF, FreeRTOS, Adafruit TinyUSB integrations.
+- **Caveats / risks:** Static allocation is not a formal memory-safety guarantee for C. USB host/device availability differs by target; DFU mode, video and PD3 are partly WIP. October 18 HIL recovery tooling changes do not prove stack correctness.
+- **Research notes:** No third-party code copied; no independent firmware build, test execution, fuzzing, hardware enumeration, or security audit.
+
+
+### LighthouseReckoning
+
+- **Repository:** https://github.com/TidalImpact/LighthouseReckoning
+- **Author / Org:** Fynn Jannis Schulz / TidalImpact
+- **Category:** LoRa / embedded routing / off-grid sensor telemetry
+- **Evidence:** VERIFIED — upstream source, field-test and release evidence, not independently executed
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 5)
+- **What it does:** Small RadioLib-based C++ library routing LoRa sensor data through confirmed hops toward one Home node.
+- **Why it is valuable:** Compact packet protocol, many-to-one routing, retries, raw field-test logs, sleep-aware scheduling, and tunable RAM use.
+- **Useful code/components:** `src/LHR_Routing.*` (routes); `src/LHR_Tx.*` and `LHR_Rx.*` (retries/receive); `src/LHR_Packet.h` (framing); `src/LHR_DutyCycle.*` (airtime); `src/LHR_Encryption*.*` (per-hop crypto); `src/LighthouseReckoning.cpp` (sleep scheduling and local queue); `src/LHR_RamConfig.h` (~248-byte buffer toggle); `examples/`; `fieldtests/2026-08-09_forced-chain-test/`.
+- **Install / runtime:** Arduino or PlatformIO plus RadioLib and suitable LoRa hardware; configure regional radio limits.
+- **Platforms:** RP2040 and ESP32 upstream tested; SX126x CAD/interrupt behavior validated; other RadioLib chips need verification.
+- **License:** MIT root; review RadioLib and vendor SDK licensing separately.
+- **Maintenance signals:** v1.3.0 released 2026-10-16; adds `getNextUpdateInMs()`, one local-data queue slot, RAM toggle and ESP32 encryption detection fix. Upstream compile workflow excludes new SleepyNode sketches.
+- **Verification performed:** Inspected source, release, README, changelog, license, CI configuration and upstream 1h53m forced-chain field test with raw log. No independent build, RF test, log parsing or security audit.
+- **Source discovery:** GitHub-first; `research/2026-09-30-lighthouse-reckoning-lora-mesh-routing.md` and `research/2026-10-18-lighthouse-reckoning-v13-maintenance.md`.
+- **Related projects:** jgromes/RadioLib; Meshtastic; MeshCore; Reticulum.
+- **Caveats / risks:** Single-sink only; no end-to-end ACK. Shared-key AES-128-CCM is hop-by-hop with no replay protection. One queued local packet and one global retry cycle. Forced chain was physically close, not a long-range RF test.
+- **Research notes:** Independently parse raw log and test v1.3 sleep/queue behavior on hardware before stronger claims.
+
+
+### RadioLib
+
+- **Repository:** https://github.com/jgromes/RadioLib
+- **Author / Org:** Jan Gromeš / jgromes
+- **Category:** Embedded radio / LoRa / LoRaWAN / radio drivers / digital modes
+- **Evidence:** VERIFIED — upstream source, release and CI evidence; no independent execution
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 5)
+- **What it does:** C++ radio abstraction and protocol library spanning LoRa, FSK/OOK, LoRaWAN and amateur-radio digital modes.
+- **Why it is valuable:** Reusable transceiver drivers, hardware abstraction, cross-platform examples and radio-protocol implementations underpin multiple embedded and off-grid projects, including LighthouseReckoning.
+- **Useful code/components:** `src/Hal.h` and `src/hal/` (GPIO/SPI/time abstraction); `src/modules/SX126x/SX126x.cpp` and `src/modules/` (radio chip drivers); `src/protocols/LoRaWAN/LoRaWAN.cpp` (LoRaWAN); `src/protocols/AX25/`, `APRS/`, `RTTY/`, `SSTV/`, `Pager/` (digital modes); `src/utils/`; `examples/NonArduino/`; `extras/test/unit/` and `extras/test/fuzz/`; `extras/SX126x_Spectrum_Scan/`.
+- **Install / runtime:** Arduino Library Manager, PlatformIO or ESP-IDF component; CMake/non-Arduino integration documented upstream. Requires compatible radio chip, GPIO/SPI wiring and board-specific platform setup.
+- **Platforms:** Arduino AVR (constrained), ESP32/ESP8266, RP2040, STM32, nRF52, Teensy and selected non-Arduino C++ targets; exact support varies by chip and mode.
+- **License:** MIT (`license.txt`); preserve notice and check SDK, dependencies and hardware support files individually.
+- **Maintenance signals:** Upstream 7.8.1 release 2026-09-28; master commit 9825002 dated 2026-10-18; compile matrix, unit, fuzz, static analysis and CodeQL workflows.
+- **Verification performed:** Inspected README, license, metadata, HAL, SX126x and LoRaWAN sources, CI/test workflows, releases and recent commits. Observed CI/unit/fuzz/CodeQL success on a PR revision with Cppcheck failure on that same revision; did not run tests.
+- **Source discovery:** GitHub-first, recursively followed from LighthouseReckoning; `research/2026-10-18-radiolib-radio-drivers-protocols.md`.
+- **Related projects:** TidalImpact/LighthouseReckoning, Meshtastic, RadioShield, Semtech SX126x/LR11x0 radio ecosystems.
+- **Caveats / risks:** Upstream LoRaWAN Class A/C and pre-certification claims are not independent verification. Radio/board compatibility and regulatory duty cycle/power limits vary. v7.7 introduced configuration-struct `begin` APIs; positional overloads are deprecated ahead of 8.0.0. AVR ATmega328 boards are discouraged upstream due to memory constraints.
+- **Research notes:** Source and CI evidence support cataloging, not hardware or security certification. No upstream code copied.
+
+### Termux:API Android App
+
+- **Repository:** https://github.com/termux/termux-api
+- **Author / Org:** Termux
+- **Category:** Android / Termux / device APIs / local automation / IPC
+- **Evidence:** VERIFIED — upstream implementation and APK build workflow; not independently executed
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 4, Maintenance 5)
+- **What it does:** Android plugin exposing permission-gated device capabilities to Termux shell commands.
+- **Why it is valuable:** Reusable mobile API dispatcher, permission boundary and response transport for scriptable Android automation.
+- **Useful code/components:** `TermuxApiReceiver.java` (dispatch), `ResultReturner.java` (response lifecycle), `apis/LocationAPI.java`, `apis/SensorAPI.java`, `apis/UsbAPI.java`, `AndroidManifest.xml`.
+- **Install / runtime:** Android Termux app and companion Termux:API plugin must have compatible signing keys; install CLI helper separately.
+- **Platforms:** Android / Termux.
+- **License:** GPLv3 stated in upstream README; no standalone root license established during inspection.
+- **Maintenance signals:** September 2026 location and result-handling corrections; upstream Gradle APK build and artifact checks.
+- **Verification performed:** Inspected README, source, manifest, build workflow and upstream commits; no APK build, install, instrumentation, hardware or security test.
+- **Source discovery:** GitHub-first; `research/2026-09-08-termux-api-android-capability-cli-bridge.md` and `research/2026-10-19-termux-api-bridge-release-and-components.md`.
+- **Related projects:** termux/termux-api-package; termux/termux-app; termux/termux-packages; termux/termux-boot.
+- **Caveats / risks:** Broad Android permission surface; distribution signatures cannot be mixed freely; background-execution behavior varies by Android version and OEM. Review component-level notices before copying.
+- **Research notes:** Source/CI evidence is not independent execution. No third-party source copied.
+
+### Termux API CLI Package
+
+- **Repository:** https://github.com/termux/termux-api-package
+- **Author / Org:** Termux
+- **Category:** Android / Termux / CLI / Unix-domain IPC
+- **Evidence:** VERIFIED — upstream source, tagged release and downstream packaging; not independently executed
+- **Tier / Score:** A / 23 (Utility 5, Working Evidence 3, Reusability 5, Novelty 4, Documentation 2, Maintenance 4)
+- **What it does:** C runtime and CLI wrappers connecting Unix shell commands to Android-side Termux:API implementations.
+- **Why it is valuable:** Compact, reusable local IPC pattern with authenticated peer checks, stdin/stdout transport and descriptor passing.
+- **Useful code/components:** `termux-api.c` (Unix sockets, `SO_PEERCRED`, `SCM_RIGHTS`, Android 14+ fallback), `termux-api.h`, `CMakeLists.txt`, `scripts/`, `termux-callback.in`.
+- **Install / runtime:** Termux `termux-api` package, compatible Android plugin, Bash, util-linux and termux-am.
+- **Platforms:** Android / Termux.
+- **License:** MIT root LICENSE; companion Android app separately GPLv3.
+- **Maintenance signals:** Upstream v0.60.0 released 2026-09-16; official Termux packaging pins v0.60.0 with a SHA-256 source checksum.
+- **Verification performed:** Inspected source, CMake, license, tag and downstream package recipe; no compilation, installation, socket fuzzing, device test or independent runtime verification.
+- **Source discovery:** GitHub-first; `research/2026-09-08-termux-api-package-shell-android-bridge-runtime.md` and `research/2026-10-19-termux-api-bridge-release-and-components.md`.
+- **Related projects:** termux/termux-api; termux/termux-packages; termux/termux-app.
+- **Caveats / risks:** No repository-local CI/test matrix established; Android background restrictions and IPC lifecycle require device testing. Preserve MIT notice and review companion licensing.
+- **Research notes:** Updates earlier v0.59.1 maintenance snapshot; Gold score raised from 22 to 23 based on current release evidence. No upstream code copied.
+
+
+### MeshCore
+
+- **Repository:** https://github.com/meshcore-dev/MeshCore
+- **Author / Org:** meshcore-dev; MIT notice credits Scott Powell / rippleradios.com
+- **Category:** LoRa / off-grid mesh / embedded C++ firmware
+- **Evidence:** VERIFIED — upstream source, release and test evidence; no independent execution
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 4, Maintenance 5)
+- **What it does:** Lightweight multi-hop packet-routing stack with companion-radio, repeater, room-server and sensor firmware.
+- **Why it is valuable:** Reusable routing and serial interoperability components, published firmware artifacts and native tests.
+- **Useful code/components:** `src/`, `include/`; `examples/companion_radio/`, `kiss_modem/`, `simple_repeater/`, `simple_room_server/`, `simple_secure_chat/`, `simple_sensor/`; `docs/kiss_modem_protocol.md`, `docs/companion_protocol.md`; `test/test_routing_policy/`, `test/test_kiss_modem/`, `test/test_mesh_tables/`.
+- **Install / runtime:** PlatformIO/C++ or upstream firmware artifacts; compatible radio board.
+- **Platforms:** Selected ESP32, nRF52, RP2040 and STM32 devices.
+- **License:** MIT root; retain attribution and review third-party dependencies.
+- **Maintenance signals:** Companion/repeater/room-server v1.18.0 releases dated 2026-10-15; native tests and board-build workflows, with successful feature-branch checks on 2026-10-19.
+- **Verification performed:** Inspected source layout, README, license, workflows, test directories, release artifacts and commits; no independent build, RF test or security audit. Several newer PR checks required action.
+- **Source discovery:** GitHub-first; `research/2026-09-20-meshcore-lightweight-packet-radio-mesh.md`; 2026-10-20 upstream release refresh.
+- **Related projects:** Meshtastic, Reticulum, RadioLib, meshcore-dev/meshcore.js.
+- **Caveats / risks:** Check firmware security configuration, licensing of dependencies, board support and regional RF rules; release artifacts alone do not establish field reliability.
+- **Research notes:** No upstream code copied.
+
+### Termux:Widget
+
+- **Repository:** https://github.com/termux/termux-widget
+- **Author / Org:** Termux
+- **Category:** Android / Termux / launcher widgets / script shortcuts
+- **Evidence:** PROMISING — source and build evidence; not independently executed
+- **Tier / Score:** A / 24 (Utility 5, Working Evidence 3, Reusability 5, Novelty 3, Documentation 5, Maintenance 3)
+- **What it does:** Launches user-controlled Termux scripts through Android widgets and launcher shortcuts.
+- **Why it is valuable:** Reusable script discovery, shortcut creation and Android-to-Termux execution patterns.
+- **Useful code/components:** `ShortcutUtils.java`, `ShortcutFile.java`, `TermuxWidgetProvider.java`, `TermuxLaunchShortcutActivity.java`, `TermuxWidgetService.java`, `AndroidManifest.xml`.
+- **Install / runtime:** Termux and plugin signed with compatible keys; scripts in `~/.shortcuts/` and tasks in `~/.shortcuts/tasks/`.
+- **Platforms:** Android / Termux.
+- **License:** GPLv3-only (`LICENSE.md`); review dependencies.
+- **Maintenance signals:** v0.15.0 released 2025-09-02; January 2026 build fix; upstream scheduled APK build passed 2026-09-01.
+- **Verification performed:** Inspected README, source, manifest, license, release and workflow; no independent build, installation or security audit.
+- **Source discovery:** GitHub-first from Termux:API; primary-source review 2026-10-20.
+- **Related projects:** termux/termux-app, termux/termux-api, termux/termux-boot.
+- **Caveats / risks:** Launcher permissions and shortcut handling need device-level validation; background execution and signing compatibility vary.
+- **Research notes:** No upstream code copied.
+
+
+### Glasgow Interface Explorer
+
+- **Repository:** https://github.com/GlasgowEmbedded/glasgow
+- **Author / Org:** GlasgowEmbedded contributors
+- **Category:** Open hardware / FPGA gateware / protocol instrumentation / Python
+- **Evidence:** PROMISING — inspected implementation, tests and passing upstream CI; no device execution
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 4, Reusability 5, Novelty 5, Documentation 4, Maintenance 4)
+- **What it does:** USB-connected programmable interface explorer with Python host, FPGA gateware, firmware and protocol applets.
+- **Why it is valuable:** Reusable protocol parsers, Amaranth gateware blocks and hardware-debugging workflows.
+- **Useful code/components:** `software/glasgow/gateware/` (SPI, I2C, UART, JTAG, SWD, QSPI); `software/glasgow/protocol/sfdp.py` (JEDEC SFDP); `software/glasgow/applet/interface/`; `software/tests/gateware/`; `hardware/boards/glasgow/`; `firmware/`.
+- **Install / runtime:** Python >=3.13,<3.16, PDM, Amaranth, libusb, optional YoWASP; Glasgow board needed for physical measurements.
+- **Platforms:** Python host and Glasgow hardware.
+- **License:** 0BSD OR Apache-2.0 for software; inspect firmware, hardware, vendor and submodule notices separately.
+- **Maintenance signals:** 2026-10-20 commit `640848a9`; main-branch CI run `39421095221` succeeded; no GitHub Releases found; package declares alpha.
+- **Verification performed:** Source, manifest, licenses, test tree, CI workflow and successful CI run inspected. No independent synthesis, tests or hardware measurements.
+- **Source discovery:** GitHub-first; `research/2026-10-08-glasgow-interface-explorer.md`, refreshed 2026-10-20.
+- **Related projects:** Amaranth HDL, YoWASP, libusb, flashrom (comparative lead).
+- **Caveats / risks:** Hardware electrical limits; alpha applets; SFDP parser limited to base JESD216/JESD216A; lint omitted from required CI aggregate.
+- **Research notes:** No source copied; upstream CI success is not physical device verification.
+
+### ArchiveBox
+
+- **Repository:** https://github.com/ArchiveBox/ArchiveBox
+- **Author / Org:** ArchiveBox / Nick Sweeting
+- **Category:** Web archiving / digital preservation / self-hosting / capture orchestration
+- **Evidence:** VERIFIED — upstream release, source, tests and passing CI; not independently deployed
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
+- **What it does:** Self-hosted capture platform preserving URLs as HTML, screenshots, PDF, WARC, media and metadata through CLI, web UI and API.
+- **Why it is valuable:** Local ownership of durable archives and reusable heterogeneous capture pipelines.
+- **Useful code/components:** `archivebox/cli/`, `archivebox/api/`, `archivebox/crawls/`, `archivebox/personas/`, `archivebox/mcp/`, `archivebox/plugins/`, `archivebox/tests/`; companion `ArchiveBox/abx-dl`.
+- **Install / runtime:** Docker Compose or Python >=3.13 / uv; external Chromium, wget, yt-dlp and other tools.
+- **Platforms:** Linux, macOS, Docker, self-hosted web/CLI.
+- **License:** MIT root; third-party capture tools/plugins and archived content have separate licensing.
+- **Maintenance signals:** Non-prerelease v0.9.73 published 2026-10-06; dev at 0.9.74rc327 on 2026-10-20; upstream CI success at `11e6dd31`.
+- **Verification performed:** README, license, manifest, module tree, release notes, commits and successful CI metadata inspected. No independent capture or security testing.
+- **Source discovery:** GitHub-first; `research/2026-09-02-archivebox-self-hosted-web-preservation-runtime.md`, refreshed 2026-10-20.
+- **Related projects:** ArchiveBox/abx-dl, browser extension, Chromium, wget, yt-dlp, WARC.
+- **Caveats / risks:** Prior v0.7.4 stable snapshot is outdated; untrusted page replay, downloads and authenticated browser cookies need isolation.
+- **Research notes:** No third-party source copied. Distinguish non-prerelease v0.9.73 from newer development release candidates.
+
+
+### abx-dl
+
+- **Repository:** https://github.com/ArchiveBox/abx-dl
+- **Author / Org:** ArchiveBox / Nick Sweeting
+- **Category:** Web archiving / standalone capture runtime / Python CLI / plugin orchestration / digital preservation
+- **Evidence:** VERIFIED — upstream release, implementation, tests and passing CI; not independently deployed
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
+- **What it does:** Framework-independent URL downloader and plugin runner that captures pages, metadata, media and derived artifacts via the ArchiveBox plugin ecosystem.
+- **Why it is valuable:** Reusable capture orchestration without a Django database, explicit event phases, plugin dependency resolution, typed events and durable JSONL output.
+- **Useful code/components:** `abx_dl/catalog.py` (`PluginCatalog`, `PluginConfigResolver`); `abx_dl/orchestrator.py` (`download`, `parse_input`); `abx_dl/execution.py` (`execute_hook`, process-group cleanup); `abx_dl/events.py`; `abx_dl/services/`; `abx_dl/output_files.py` (`OutputManifest`); `abx_dl/cli.py`; `tests/`.
+- **Install / runtime:** `uvx abx-dl` or `uv tool install abx-dl`; Python >=3.12,<3.15; `abx-plugins`, `abxpkg`, `abxbus`; optional external browser/downloader binaries and Docker.
+- **Platforms:** Python on Linux/macOS; upstream Docker linux/amd64 and linux/arm64; other OS behavior not independently established.
+- **License:** MIT root LICENSE (Nick Sweeting 2024); dependencies, plugin implementations, external binaries and captured content retain their own rights.
+- **Maintenance signals:** v1.13.242 published 2026-10-20 15:34 UTC; upstream CI run `39448373304` succeeded at commit `367d06dc` with 18 successful jobs and one skipped, including Python tests, all-plugin tests and Docker builds on amd64/arm64.
+- **Verification performed:** README, manifest, license, code, test cases, release and CI job conclusions inspected. No local install, test execution, live capture, container build or security audit.
+- **Source discovery:** GitHub-first recursive lead from ArchiveBox; `research/2026-10-20-abx-dl-framework-independent-capture-runtime.md`.
+- **Related projects:** ArchiveBox/ArchiveBox (already cataloged); ArchiveBox/abx-plugins, ArchiveBox/abxpkg, ArchiveBox/abxbus (recursive leads).
+- **Caveats / risks:** Automatic dependency installation, third-party plugin execution and untrusted URL handling expand the attack surface; use `--no-install` where appropriate; browser cookies and downloaded files require isolation. Fast release cadence warrants version pinning.
+- **Research notes:** The runtime is separate from ArchiveBox's Django UI/database. Upstream CI is not independent GitHub Gold testing. No third-party code copied.
+
+
+### abxbus
+
+- **Repository:** https://github.com/ArchiveBox/abxbus
+- **Author / Org:** ArchiveBox / Nick Sweeting and contributors
+- **Category:** Async event bus / cross-language automation / event-driven runtimes
+- **Evidence:** VERIFIED — upstream release, source, tests and successful main CI; not independently executed
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
+- **What it does:** Typed asynchronous event dispatch with nested event tracking, timeouts, concurrency controls and Python, TypeScript, Rust and Go implementations.
+- **Why it is valuable:** Reusable event orchestration, structured results, cross-runtime contracts and optional IPC bridges independent of ArchiveBox.
+- **Useful code/components:** `abxbus/event_bus.py`, `base_event.py`, `lock_manager.py`, `event_history.py`, `bridge_jsonl.py`, optional `bridge_{redis,nats,postgres,sqlite}.py`, `abxbus-ts/src/EventBus.ts`, `abxbus-rust/src/event_bus.rs`, `abxbus-go/event_bus.go`, cross-runtime tests.
+- **Install / runtime:** Python >=3.11 (pip/uv); TypeScript Node/browser; Rust crate; Go >=1.25; optional backend extras.
+- **Platforms:** Python, TypeScript Node/browser, Rust, Go.
+- **License:** MIT root; review individual dependencies and optional transports.
+- **Maintenance signals:** v2.5.77 released 2026-10-09; main CI run 37981912198 passed 120/120 jobs; docs CI passed 2026-10-20.
+- **Verification performed:** README, license, source, tests, manifests, release and CI inspected. No independent build or execution.
+- **Source discovery:** GitHub-first recursive lead from ArchiveBox/abx-dl.
+- **Related projects:** ArchiveBox/abx-dl, ArchiveBox/abx-plugins, ArchiveBox/abxpkg, browser-use/bubus (historical origin).
+- **Caveats / risks:** In-memory events are not durable by default; JSONL polling is not a transactional queue. Bridge reliability and cancellation require integration tests. Experimental `rust-core-ffi` branch CI failed 2026-10-12, distinct from passing main.
+- **Research notes:** `research/2026-10-20-abxbus-cross-runtime-event-bus.md`. No upstream source copied.
+
+### abxpkg
+
+- **Repository:** https://github.com/ArchiveBox/abxpkg
+- **Author / Org:** ArchiveBox / Nick Sweeting
+- **Category:** Dependency management / package providers / Python CLI / binary-installation automation
+- **Evidence:** VERIFIED — upstream release, source, tests and passing CI; not independently installed
+- **Tier / Score:** S / 27 (Utility 5, Working Evidence 4, Reusability 5, Novelty 4, Documentation 5, Maintenance 4)
+- **What it does:** Python API and CLI that discovers, loads, installs, updates and executes binaries through multiple package-manager backends (env, apt, brew, pip, uv, npm, Docker and others).
+- **Why it is valuable:** Reusable provider adapters, typed dependency declarations, version validation, cache/environment projection and package-installation lifecycle management across heterogeneous tools.
+- **Useful code/components:** `abxpkg/binary.py` (Binary model); `abxpkg/binprovider.py` (provider abstraction and locks); `abxpkg/binprovider_{apt,brew,pip,uv,npm,docker,playwright,puppeteer,nix}.py` (adapters); `abxpkg/config.py` (cache identity); `abxpkg/semver.py`; `abxpkg/binary_service.py`; `abxpkg/cli.py`; `tests/test_security_controls.py`, `tests/test_provider_install_locks.py`.
+- **Install / runtime:** `pip install abxpkg` or `uv tool install abxpkg`; Python >=3.12,<3.15; selected external package managers and optional privileges must exist for corresponding providers.
+- **Platforms:** Linux/macOS; optional Docker and host package managers; Windows not established.
+- **License:** MIT root LICENSE (Nick Sweeting 2024); installed third-party packages, providers and dependencies retain their own terms.
+- **Maintenance signals:** Non-prerelease v1.13.58 published 2026-10-20; main Linux CI 39413598967 passed 30/30 jobs; scheduled macOS CI 39501442167 succeeded on its executed test jobs.
+- **Verification performed:** README, license, manifest, provider modules, tests, workflow, release and job logs inspected. Earlier macOS CI 39444656035 failed one Deno test because Deno was missing; later scheduled Deno test passed. No independent installation, runtime test or supply-chain audit.
+- **Source discovery:** GitHub-first recursive lead from ArchiveBox/abx-dl; `research/2026-10-20-abxpkg-provider-runtime-ci-failure-analysis.md`.
+- **Related projects:** ArchiveBox/ArchiveBox, ArchiveBox/abx-dl, ArchiveBox/abx-plugins, ArchiveBox/abxbus.
+- **Caveats / risks:** Runtime installers execute third-party code and may need elevated privileges; provider-specific `min_release_age` and `postinstall_scripts` controls **warn and continue** where unsupported, rather than fail closed. Pin, isolate and verify packages before deployment.
+- **Research notes:** No upstream code copied. Upstream passing CI is not independent verification. Distinguish this package-provider runtime from abx-dl's capture orchestration.
+
+### SOPS
+
+- **Repository:** https://github.com/getsops/sops
+- **Author / Org:** getsops (CNCF Sandbox).
+- **Category:** Structured encrypted configuration / GitOps / secrets management.
+- **Evidence:** VERIFIED — upstream CI evidence; not independently security-audited.
+- **Tier / Score:** S / 28 (Utility 5; Working Evidence 5; Reusability 5; Novelty 4; Documentation 5; Maintenance 4).
+- **What it does:** Encrypts YAML, JSON, ENV, INI and binary configuration using age, PGP and cloud key providers.
+- **Why it is valuable:** Reusable format adapters, key-provider abstraction, multi-recipient policies and encrypted Git-friendly configuration.
+- **Useful code/components:** `stores/` serialization adapters; `age/`, `pgp/` and KMS provider integrations; `keyservice/` gRPC; `shamir/` secret sharing; `audit/`.
+- **Install / runtime:** Upstream binaries for Linux/macOS/Windows or Go source; supply keys or provider credentials.
+- **Platforms:** Linux, macOS, Windows.
+- **License:** MPL-2.0; file-level copyleft and attribution obligations.
+- **Maintenance signals:** v3.13.3 released 2026-07-23; main CLI CI passed 17/17 jobs on 2026-10-20; recent commits through 2026-10-20.
+- **Verification performed:** Inspected upstream README, license, source tree, release and GitHub Actions. No independent build, encryption/KMS test or security audit.
+- **Source discovery:** GitHub-first; `research/2026-10-22-sops-mcuboot-promotion-evidence.md` and earlier SOPS component dossiers.
+- **Related projects:** FiloSottile/age; getsops/community; betterleaks/betterleaks (complementary secret detection; no tested integration); openbao/openbao (centralized dynamic secrets comparison; no integration verified).
+- **Caveats / risks:** Endpoint compromise, plaintext at runtime and cloud keyservice permissions remain relevant; CI does not prove cryptographic security.
+- **Research notes:** No third-party implementation code copied.
+
+### MCUboot
+
+- **Repository:** https://github.com/mcu-tools/mcuboot
+- **Author / Org:** mcu-tools.
+- **Category:** Embedded secure boot / firmware signing / microcontroller updates.
+- **Evidence:** VERIFIED — upstream simulator, firmware-tool and platform CI; not independently hardware-tested.
+- **Tier / Score:** S / 29 (Utility 5; Working Evidence 5; Reusability 5; Novelty 5; Documentation 5; Maintenance 4).
+- **What it does:** Portable authenticated bootloader and firmware-update framework for 32-bit microcontrollers.
+- **Why it is valuable:** Security-sensitive image verification, update state machine, signing CLI and regression simulator are reusable across embedded platforms.
+- **Useful code/components:** `boot/bootutil/` image verification and swap; `boot/boot_serial/` recovery; `scripts/imgtool.py` signing; `sim/` regression simulator; platform ports.
+- **Install / runtime:** Integrate via board/RTOS bootloader support; configure flash layout, keys and update policy.
+- **Platforms:** Zephyr, Mynewt, NuttX, Mbed, Espressif and Cypress/Infineon; RIOT boot target.
+- **License:** Apache-2.0 plus NOTICE; review bundled cryptographic components separately.
+- **Maintenance signals:** Stable v2.4.0 released 2026-04-23; source version bumped to 2.5.0 on 2026-10-22 but a new stable release was not confirmed. Main Sim CI passed 42/42 jobs 2026-10-22; imgtool, FIH, Zephyr and Espressif workflows passed.
+- **Verification performed:** Inspected upstream README, license, NOTICE, source tree, release and Actions. No independent build, flashing, board-level testing or physical fault-injection audit.
+- **Source discovery:** GitHub-first; `research/2026-10-22-sops-mcuboot-promotion-evidence.md` and earlier MCUboot dossier.
+- **Related projects:** Zephyr, TinyCrypt, Mbed TLS.
+- **Caveats / risks:** Trust anchors, anti-rollback, debug lock and flash geometry require board-specific validation. Feature-branch CI failures should not be conflated with main.
+- **Research notes:** No third-party implementation code copied.
+
+### PMTiles
+
+- **Repository:** https://github.com/protomaps/PMTiles
+- **Author / Org:** Protomaps
+- **Category:** Offline mapping / geospatial / single-file tile archives / serverless maps
+- **Evidence:** VERIFIED — upstream source/CI, not independent execution
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 3)
+- **What it does:** Open Version 3 tile archive format and cross-runtime readers. The 127-byte header and root index within 16 KiB support efficient HTTP byte-range access.
+- **Why it is valuable:** Enables offline or static-object-hosted maps without a dedicated tile database; provides formal spec and reusable JavaScript, Python, C++, OpenLayers and serverless implementations.
+- **Useful code/components:** `spec/v3/spec.md`; `js/src/index.ts`; `js/src/adapters.ts`; `python/pmtiles`; `python/rio-pmtiles`; `cpp/`; `openlayers/`; `serverless/aws/`; `serverless/cloudflare/`.
+- **Install / runtime:** Use npm/PyPI reference readers or companion go-pmtiles CLI; remote archives need HTTP Range and suitable CORS.
+- **Platforms:** Browser/Node.js, Python, C++, OpenLayers, AWS Lambda, Cloudflare Workers.
+- **License:** BSD-3-Clause implementation code; spec public domain/CC0; sample and generated map data separate.
+- **Maintenance signals:** Latest inspected main commit 2026-09-16 (Python pmtiles 3.8.1); 2026-10-19 PR CI run 39281511827 passed build_app and test. No root GitHub Releases; packages published separately.
+- **Verification performed:** README, LICENSE, V3 spec, CI and source structure inspected; upstream PR tests passed. No independent archive, range-read, browser or security tests.
+- **Source discovery:** GitHub-first offline-mapping ecosystem; `research/2026-09-05-protomaps-pmtiles-single-file-offline-map-archive.md` and `research/2026-10-22-pmtiles-go-pmtiles-promotion.md`.
+- **Related projects:** protomaps/go-pmtiles; maplibre/maplibre-native (native `PMTilesFileSource`; Android APK assets); Planetiler; Protomaps Basemaps.; felt/tippecanoe (PMTiles output from geospatial source features).
+- **Caveats / risks:** Range/CORS and untrusted archive parsing require validation. Large-object corruption or replacement affects a whole map. Map-data licenses independent. CI uses mutable Action tags.
+- **Research notes:** No third-party implementation code or map data copied.
+
+### go-pmtiles
+
+- **Repository:** https://github.com/protomaps/go-pmtiles
+- **Author / Org:** Protomaps
+- **Category:** Offline mapping / Go CLI / archive conversion, verification, HTTP serving and cloud storage
+- **Evidence:** VERIFIED — upstream source/CI, not independent execution
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 5)
+- **What it does:** Go CLI and package for inspecting, converting, extracting, clustering, verifying, serving and uploading PMTiles archives, with experimental differential sync.
+- **Why it is valuable:** Practical local-to-cloud archive lifecycle for portable/offline maps and reproducible geospatial delivery.
+- **Useful code/components:** `main.go` CLI; `pmtiles/verify.go` structural checks; `pmtiles/extract.go`, `region.go` geographic extraction; `pmtiles/server.go` HTTP; `pmtiles/bucket.go` storage abstraction; `pmtiles/directory.go` indexing; `pmtiles/sync.go` experimental range sync.
+- **Install / runtime:** Download upstream binaries or build with Go; `go test ./pmtiles` is documented. Remote object stores need credentials and compatible range handling.
+- **Platforms:** Linux, Windows, macOS binaries; Go library; S3, GCS, Azure and local storage.
+- **License:** BSD-3-Clause; map archive contents independently licensed.
+- **Maintenance signals:** Stable v1.31.2 published 2026-07-22, fixing Content-Length for tile responses. 2026-10-06 PR CI run 37488026517 passed Linux/Windows tests and lint; separate publish Docker workflow 37488026722 failed.
+- **Verification performed:** Inspected README, LICENSE, main.go, verify.go, sync.go, tests and CI; no independent archive, server, object-storage or sync execution.
+- **Source discovery:** Recursive PMTiles research; `research/2026-09-06-go-pmtiles-operational-cli-range-sync-server.md` and `research/2026-10-22-pmtiles-go-pmtiles-promotion.md`.
+- **Related projects:** protomaps/PMTiles; Planetiler; MapLibre; Protomaps Basemaps.
+- **Caveats / risks:** `verify` is structural, not cryptographic or payload integrity; some anomalies are logged without failing. `serve` defaults to `0.0.0.0`. Differential sync is explicitly experimental.
+- **Research notes:** No third-party implementation code or map data copied.
+
+### marimo
+
+- **Repository:** https://github.com/marimo-team/marimo
+- **Author / Org:** marimo-team
+- **Category:** Reactive Python notebooks / scientific computing / interactive data apps / developer tooling
+- **Evidence:** VERIFIED — upstream source, release and CI; no independent execution
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Reactive Python notebooks stored as executable, version-control-friendly Python files; automatically re-executes dependent cells or marks them stale and supports SQL, UI widgets, scripts, apps and browser/Pyodide execution.
+- **Why it is valuable:** Reproducible, composable scientific and analytical workflows without opaque notebook JSON; reusable runtime, reactive graph, SQL, widget and export components.
+- **Useful code/components:** `marimo/_runtime/dataflow/` dependency tracking; `marimo/_runtime/executor/` execution; `marimo/_sql/` SQL; `marimo/_plugins/` UI widgets; `marimo/_export/` exports; `marimo/_pyodide/` WASM; `marimo/_server/` HTTP service; `marimo/_mcp/` agent interfaces.
+- **Install / runtime:** Python >=3.10; `pip install marimo` then `marimo tutorial intro`; SQL, sandbox and AI integrations have optional dependencies.
+- **Platforms:** Linux, Windows, macOS, browser via Pyodide/WASM.
+- **License:** Apache-2.0; review bundled third-party notices/assets before copying.
+- **Maintenance signals:** v0.25.2 released 2026-10-19; main CI 2026-10-22: backend run 39859957455 passed 18 jobs (docs skipped), frontend 39859957465 passed 4/4, Playwright 39859957692 passed 2/2.
+- **Verification performed:** Inspected README, pyproject, license, source layout, releases and upstream CI results; no independent notebook execution or security review.
+- **Source discovery:** GitHub-first; `research/2026-09-30-marimo.md` and `research/2026-10-22-marimo-probe-rs-promotion.md`.
+- **Related projects:** marimo-team/marimo-lsp; marimo-team/vscode-marimo; DuckDB; Loro; uv.
+- **Caveats / risks:** Notebook execution runs arbitrary Python and needs normal trust boundaries. As of 2026-10, native Loro dependency excludes Python 3.15 in `pyproject.toml`; do not infer identical collaboration behavior on all supported interpreters. Third-party assets may carry separate notices.
+- **Research notes:** No upstream code copied; prioritize runtime dependency graph, SQL isolation, and browser/native feature parity.
+
+### probe-rs
+
+- **Repository:** https://github.com/probe-rs/probe-rs
+- **Author / Org:** probe-rs
+- **Category:** Embedded debugging / SWD-JTAG / firmware flashing / Rust libraries / hardware test infrastructure
+- **Evidence:** VERIFIED — upstream source, release, CI and hardware smoke-test jobs; no independent device test
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Rust libraries and CLI for embedded debug probes, MCU memory/register access, flashing, GDB and Debug Adapter Protocol integration across supported Arm, RISC-V and Xtensa targets.
+- **Why it is valuable:** Modular transports, target descriptions, flashing engines, remote RPC and real hardware test infrastructure; useful for interoperability and authorized board development.
+- **Useful code/components:** `probe-rs/src/probe/` transports; `probe-rs/src/architecture/` CPU support; `probe-rs/src/flashing/` loaders; `probe-rs-target/` chip metadata; `probe-rs-debug/` DAP; `probe-rs-rpc/` and `probe-rs-rpc-client/` remote API; `probe-rs-linux/` GPIO/spidev SWD; `smoke-tester/` hardware harness.
+- **Install / runtime:** Upstream CLI binaries or Rust workspace (minimum Rust 1.95); physical probe and compatible MCU normally required; Linux GPIO/spidev backend is hardware-specific.
+- **Platforms:** Linux, Windows, macOS hosts; Arm/RISC-V/Xtensa embedded targets where supported.
+- **License:** MIT OR Apache-2.0 workspace; external CMSIS packs and flash algorithms may differ.
+- **Maintenance signals:** Stable v0.32.0 published 2026-07-22; master 2026-10-22 Run CI 39849611123 passed 12/12 jobs; Run smoke test 39849610977 passed 5/5 including two named hardware-runner jobs and embedded-test.
+- **Verification performed:** Inspected README, workspace manifest, MIT license, source tree, release and CI jobs. Upstream hardware tests are not independent GitHub Gold tests.
+- **Source discovery:** GitHub-first; `research/2026-10-08-probe-rs-embedded-debugging-flashing-toolkit.md` and `research/2026-10-22-marimo-probe-rs-promotion.md`.
+- **Related projects:** probe-rs/vscode; probe-rs/embedded-test; pyOCD; esptool; MCUboot.
+- **Caveats / risks:** Flash erase can permanently overwrite data or brick targets. Probe and MCU support varies. Remote RPC can expose sensitive debug operations. Verify external target-pack/flash-algorithm licensing before reuse.
+- **Research notes:** No upstream code copied; compare DAP/GDB behavior with pyOCD and independently validate supported boards before production claims.
+
+### Iroh
+
+- **Repository:** https://github.com/n0-computer/iroh
+- **Author / Org:** n0-computer
+- **Category:** P2P networking / QUIC / NAT traversal / Rust / local-first infrastructure
+- **Evidence:** VERIFIED — upstream source, release and CI; not independently network-tested
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 5)
+- **What it does:** Public-key-addressed QUIC connections with direct path selection, hole punching, relay fallback and protocol composition.
+- **Why it is valuable:** Reusable transport for sync, messaging, edge and mobile software; self-hostable relay and discovery components.
+- **Useful code/components:** `iroh/src/endpoint.rs`, `endpoint/`, `address_lookup/`, `portmapper.rs`, `protocol.rs`, `net_report/`; `iroh-relay/`, `iroh-base/`, `iroh-dns-server/`.
+- **Install / runtime:** Rust crate/workspace; upstream CI MSRV 1.91; configure discovery and relay policy.
+- **Platforms:** Linux, Windows, macOS, Android, browser/Wasm build targets (feature parity not established).
+- **License:** MIT OR Apache-2.0; ecosystem licenses need separate review.
+- **Maintenance signals:** v1.4.1 published 2026-10-22; main CI 39805786602 passed 28/28 jobs (desktop, Android, Wasm, netsim and cross-build); recent relay handshake leak fix.
+- **Verification performed:** README, licenses, source layout, releases, commits and upstream CI inspected. No independent NAT, relay, battery, performance or crypto testing.
+- **Source discovery:** GitHub-first GuardianDB ecosystem; `research/2026-09-30-iroh-key-addressed-p2p-quic.md` and `research/2026-10-22-iroh-satdump-promotion.md`.
+- **Related projects:** iroh-blobs; iroh-gossip; iroh-docs; iroh-ffi; noq; go-libp2p.
+- **Caveats / risks:** Relays/discovery may expose metadata. Real NAT and datagram path behavior varies; upstream reports some edge cases.
+- **Research notes:** No source copied. Investigate relay trust, NAT reliability and Android idle-power consumption.
+
+### SatDump
+
+- **Repository:** https://github.com/SatDump/SatDump
+- **Author / Org:** SatDump
+- **Category:** SDR / satellite data / offline DSP / weather imagery / scientific tools
+- **Evidence:** VERIFIED — upstream source and partial CI success; no independent reception/decoder test
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 5)
+- **What it does:** GUI/CLI pipeline system for live satellite SDR reception or offline baseband processing, decoding and image/data products.
+- **Why it is valuable:** Broad modular DSP and decoder stack with offline use and cross-platform packaging.
+- **Useful code/components:** `src-core/dsp/`, `src-core/pipeline/`, `src-core/products/`, `src-core/image/`, `src-core/projection/`, `src-cli/`, `src-ui/`, `plugins/`, `src-testing/`.
+- **Install / runtime:** CMake and optional SDR/acceleration libraries; recorded input works without SDR hardware; live reception requires drivers/device.
+- **Platforms:** Linux, Windows, macOS, Android.
+- **License:** GPL-3.0; third-party drivers and satellite data may have separate terms.
+- **Maintenance signals:** Latest numbered stable 1.2.2 (2024-11-29); active 2026-10-22 IERS fix. Build All 39809901226: 5 jobs succeeded, 3 failed, 1 skipped; macOS SDRPlay dependency download invalid ZIP, ARM64 compiler killed.
+- **Verification performed:** README, license, source tree, release, commits, upstream CI and failing logs inspected. No independent build, radio, decoder or imagery tests.
+- **Source discovery:** GitHub-first SDR ecosystem; `research/2026-09-29-satdump-satellite-sdr-processing.md` and `research/2026-10-22-iroh-satdump-promotion.md`.
+- **Related projects:** GNU Radio; SoapySDR; RTL-SDR; HackRF; weather-satellite processing.
+- **Caveats / risks:** CI partly failing; stable tag older than current development. Build success does not prove decoder correctness; radio operation and data use have separate obligations.
+- **Research notes:** No source copied. Prioritize ARM64/macOS CI and recorded-IQ regression fixtures.
+
+### Zephyr RTOS
+
+- **Repository:** https://github.com/zephyrproject-rtos/zephyr
+- **Author / Org:** Zephyr Project
+- **Category:** Embedded RTOS / hardware abstraction / device drivers / Bluetooth / networking / test automation
+- **Evidence:** VERIFIED — upstream release, source and passing CI; not independently hardware-tested
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Configurable real-time OS for resource-constrained devices, with multi-architecture kernel, board descriptions, drivers, protocol stacks and test infrastructure.
+- **Why it is valuable:** Extensive reusable embedded architecture; Kconfig, devicetree, west, and Twister support portable and testable firmware across many targets.
+- **Useful code/components:** `kernel/`, `drivers/`, `subsys/`, `include/zephyr/`, `boards/`, `soc/`, `dts/`, `scripts/twister`, `scripts/pylib/twister/`, `west.yml`, `samples/`, `tests/`.
+- **Install / runtime:** west workspace and Zephyr SDK/toolchains; supported board, target-specific drivers and flashing/debug hardware as applicable.
+- **Platforms:** Arm, RISC-V, x86, Xtensa, ARC and other documented architectures; host build support depends on SDK/toolchain.
+- **License:** Apache-2.0 project; imported modules/HALs and some individually licensed files have separate SPDX terms.
+- **Maintenance signals:** Stable v4.4.2 published 2026-08-07 with security fixes; 2026-10-22 main commit prepared v4.5.0-rc3 (not a stable release). 2026-10-22 main Twister 39835122032, CodeQL 39835121878 and docs 39835121990 completed successfully.
+- **Verification performed:** Upstream README, source tree, west manifest, LICENSE, REUSE license guidance, release, commits and GitHub Actions inspected. No independent build, board flashing or security audit.
+- **Source discovery:** GitHub-first; `research/2026-09-07-zephyr-rtos-embedded-kernel-hardware-test-platform.md` and `research/2026-10-23-zephyr-zellij-promotion.md`.
+- **Related projects:** west; BabbleSim; MCUboot; ESPHome; RadioLib; probe-rs; `zmkfirmware/zmk` (ZMK pins a separate Zephyr fork); **LVGL** GUI via Zephyr `west.yml` module at `modules/lib/gui/lvgl`, pinned to **zephyrproject-rtos/lvgl** fork commit `c9ffd469` (not upstream `lvgl/lvgl`).
+- **Caveats / risks:** Security advisories affect multiple kernel/protocol paths; CI does not establish all board combinations work. Imported modules may not inherit the root license.
+- **Research notes:** No third-party code copied. Prioritize Twister sharding and devicetree/driver generation as reusable architectural studies.
+
+### Zellij
+
+- **Repository:** https://github.com/zellij-org/zellij
+- **Author / Org:** zellij-org
+- **Category:** Terminal multiplexer / Rust / developer workspace / WebAssembly plugins / terminal automation
+- **Evidence:** VERIFIED — upstream source, release and passing CI; no independent session or web-client testing
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Terminal workspace with persistent sessions, programmable layouts, pane management, collaboration, web client and Wasm plugins.
+- **Why it is valuable:** Composable terminal operations, remote workspaces and a reusable Rust client/server plus WebAssembly plugin architecture.
+- **Useful code/components:** `zellij-client/`, `zellij-server/`, `zellij-utils/`, `zellij-tile/`, `zellij-tile-utils/`, `default-plugins/`, `xtask/`, `zellij-integration-tests/`, layout assets.
+- **Install / runtime:** Prebuilt release binaries or Cargo source build; main workspace Rust >=1.95. Browser-client availability depends on build/configuration.
+- **Platforms:** Linux, macOS, Windows (upstream CI); browser client where enabled.
+- **License:** MIT; review third-party assets and plugin dependencies separately.
+- **Maintenance signals:** Stable v0.45.1 released 2026-08-28; main Cargo workspace v0.46.0 is development, not stable. 2026-10-22 main Rust CI 39811852472 passed 12/12 jobs; end-to-end 39811852673 passed 1/1. Main commits include session renaming and memory optimizations.
+- **Verification performed:** README, MIT license, Cargo workspace, source layout, releases, commits, upstream CI jobs inspected. No independent install, terminal-session tests or plugin security audit.
+- **Source discovery:** GitHub-first; `research/2026-09-09-zellij-terminal-workspace-wasm-plugin-platform.md` and `research/2026-10-23-zephyr-zellij-promotion.md`.
+- **Related projects:** Rust Cargo; WebAssembly plugin ecosystem; tmux; SSH; Nushell.
+- **Caveats / risks:** Browser terminal and collaborative sessions require careful authentication and network-exposure controls. Wasm plugins require capability-boundary review; CI contains some mutable action tags.
+- **Research notes:** No third-party code copied. Next investigate plugin host permissions, web-client exposure defaults and reproducible release builds.
+
+
+
+### Zarr Python
+
+- **Repository:** https://github.com/zarr-developers/zarr-python
+- **Author / Org:** Zarr Developers
+- **Category:** Scientific computing / chunked array storage / object stores / Python / large datasets
+- **Evidence:** VERIFIED — upstream source, release and CI; no independent execution
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Implements compressed, chunked N-dimensional arrays, Zarr metadata, storage backends, and optional separately packaged lazy indexing and HTTP serving.
+- **Why it is valuable:** Fine-grained access to large arrays, reusable storage and codec abstractions, object-store interoperability, lazy indexing and modular scientific data services.
+- **Useful code/components:** `src/zarr/core/array.py`, `src/zarr/core/codec_pipeline.py`, `src/zarr/core/chunk_grids.py`, `src/zarr/storage/_fsspec.py`, `src/zarr/storage/_obstore.py`, `packages/zarr-indexing/`, `packages/zarr-http-server/`, `packages/zarr-metadata/`.
+- **Install / runtime:** Python >=3.12; install via Python package tooling; NumPy and numcodecs dependencies; optional fsspec/obstore and HTTP service dependencies.
+- **Platforms:** Python on Linux, macOS, Windows; supported object stores with backend adapters.
+- **License:** MIT (root and inspected indexing subpackage); inspect optional codec/backend/data licenses separately.
+- **Maintenance signals:** Stable v3.4.1 published 2026-10-08; source activity 2026-10-22. Upstream 2026-10-23 Test workflow 39892893049 passed 16/16 jobs; Slow Hypothesis 39892893145 passed 1/1 (PR workflows, not independent tests).
+- **Verification performed:** Inspected upstream README/package manifests, license, source layout, subpackage docs, release notes and workflow results; no local installation, dataset I/O, concurrency, cloud or security test.
+- **Source discovery:** GitHub-first; `research/2026-09-06-zarr-python-chunked-array-storage-indexing-stack.md`.
+- **Related projects:** earth-mover/icechunk; zarr-developers/zarr-specs; zarr-developers/numcodecs; xarray; Dask; TensorStore.
+- **Caveats / risks:** Core Zarr is not a transactional database; chunk sizing, backend consistency and cloud costs matter. Experimental `zarr-http-server` is read-only by default; `store_app` exposes all keys and enabling writes requires independent access controls.
+- **Research notes:** `research/2026-10-23-zarr-soapysdr-promotion.md`; no upstream code copied. Prioritize HTTP authorization boundaries and sharded partial-write correctness.
+
+### SoapySDR
+
+- **Repository:** https://github.com/pothosware/SoapySDR
+- **Author / Org:** Pothosware
+- **Category:** SDR / hardware abstraction / portable device APIs / C++ / interoperability
+- **Evidence:** VERIFIED — upstream cross-platform build, null-device tests and plugin CI; no physical radio test
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** Vendor-neutral SDR device discovery, configuration and sample streaming through a C++ API, C wrapper and dynamically loadable hardware modules.
+- **Why it is valuable:** Separates DSP applications from hardware SDKs and offers reusable device capabilities, stream APIs, sample converters, language bindings and driver plugin architecture.
+- **Useful code/components:** `include/SoapySDR/Device.hpp`, `include/SoapySDR/Device.h`, `include/SoapySDR/ConverterRegistry.hpp`, `include/SoapySDR/Modules.hpp`, `include/SoapySDR/Registry.hpp`, `apps/`, `ExampleDriver/`, `swig/`, `luajit/`.
+- **Install / runtime:** CMake and C++11; build from source or platform packages; optional SWIG/Python and LuaJIT bindings; hardware requires separately installed Soapy driver plugins and vendor libraries.
+- **Platforms:** Linux, macOS, Windows (upstream CI); actual device support depends on drivers.
+- **License:** Boost Software License 1.0; inspect individual drivers, vendor SDKs and firmware separately.
+- **Maintenance signals:** Source Changelog declares 0.9.0 dated 2026-10-10 and CMake derives version from it; GitHub Releases API returned no published release object. Upstream CI 38058033433 passed 36/36 jobs and cross-compile CI 38058033417 passed 15/15 on 2026-10-10.
+- **Verification performed:** Inspected source header tree, README, license, changelog, CMake and CI results. Null-device and example-driver tests are upstream evidence, not independent hardware streaming validation.
+- **Source discovery:** GitHub-first; `research/2026-09-11-soapysdr-vendor-neutral-sdr-hardware-abstraction.md`.
+- **Related projects:** pothosware/SoapyRemote; SoapyRTLSDR; `gnuradio/gnuradio` (in-tree `gr-soapy` adapter; no RF hardware validation); SatDump; `AlexandreRouma/SDRPlusPlus` (SDR++ Soapy source plugin); `merbanan/rtl_433` (SoapySDR receiver input; RF not independently tested).
+- **Caveats / risks:** A passing null-device/plugin test does not prove any particular SDR device works. Vendor driver licenses and remote device access controls vary. GitHub Release metadata does not independently confirm the changelog's 0.9.0 label.
+- **Research notes:** `research/2026-10-23-zarr-soapysdr-promotion.md`; no upstream code copied. Prioritize sample-format converter edge cases and SoapyRemote authentication/exposure review.
+
+### Icechunk
+
+- **Repository:** https://github.com/earth-mover/icechunk
+- **Author / Org:** Earthmover
+- **Category:** Scientific computing / transactional Zarr storage / object storage / data versioning / Rust / Python
+- **Evidence:** VERIFIED — upstream Python tests and source-level inspection; no independent storage tests
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Transactional, versioned object-storage engine for Zarr arrays; provides atomic committed snapshots, branches, tags, concurrent-write conflict detection and virtual chunk references.
+- **Why it is valuable:** Adds snapshot consistency and conflict-aware multi-writer updates to chunked scientific datasets, with reusable Rust storage/format crates and Python integration.
+- **Useful code/components:** `icechunk-format/` snapshot/manifest encodings; `icechunk-storage/` storage traits; `icechunk-arrow-object-store/` and `icechunk-s3/` backends; `icechunk/src/repository.rs`, `session.rs`, `conflicts/`, `virtual_chunks.rs`, `cli/`; `icechunk-python/` PyO3 bindings; `icechunk-js/` client.
+- **Install / runtime:** Python >=3.12 and Zarr Python >=3.1; Rust v2.3.0 requires Rust >=1.95 for source builds. Backend-specific cloud credentials and dependencies as applicable.
+- **Platforms:** Python/Rust on supported Linux/macOS/Windows targets; local and cloud object stores.
+- **License:** Apache-2.0 root; inspect dependencies and external datasets separately.
+- **Maintenance signals:** v2.3.0 released 2026-10-06. Upstream Python Check 39895350092 succeeded 2026-10-23; separate Python CI/release 39898974564 failed on several legacy support/v1.x Python 3.15t wheel jobs.
+- **Verification performed:** README, license, source structure, changelog, package requirements, release and CI job results inspected. No independent installation, storage transaction, concurrency or cloud test.
+- **Source discovery:** GitHub-first recursive Zarr Python follow-up; existing `research/2026-09-06-icechunk-transactional-zarr-object-storage-versioning.md`.
+- **Related projects:** zarr-developers/zarr-python; Apache Arrow object_store; xarray; Dask; Kerchunk.
+- **Caveats / risks:** Serializable transaction guarantees require backend conditional-write semantics; garbage collection, branch reset and external virtual references need rigorous validation. Legacy wheel build failures limit packaging confidence.
+- **Research notes:** `research/2026-10-23-icechunk-soapyremote-promotion.md`. No source copied. Prioritize conflict/GC state-model testing and cloud-backend conditional-write behavior.
+
+### SoapyRemote
+
+- **Repository:** https://github.com/pothosware/SoapyRemote
+- **Author / Org:** Pothosware
+- **Category:** Software-defined radio / remote device control / RPC / streaming / hardware interoperability
+- **Evidence:** VERIFIED — upstream cross-platform build/module-registration CI; no end-to-end stream or radio test
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 3 + Maintenance 4)
+- **What it does:** Exports SoapySDR-compatible devices across a network using a remote SoapySDR client plugin, control-plane RPC and configurable UDP/TCP sample streaming.
+- **Why it is valuable:** Reuses the existing SoapySDR device API for headless receivers and LAN-attached SDR hardware; its separated RPC, discovery, transport and device-adapter layers are useful components.
+- **Useful code/components:** `client/Streaming.cpp` sample format/MTU/window negotiation; `client/DiscoverServers.cpp` service discovery; `client/Registration.cpp` SoapySDR plugin; `server/ClientHandler.cpp` RPC dispatcher; `server/SoapyServer.cpp` and `ServerListener.cpp`; `common/SoapyRemoteDefs.hpp` protocol definitions; `common/` sockets and framing.
+- **Install / runtime:** Build with CMake and compatible SoapySDR; remote server and client need network connectivity; hardware requires appropriate SoapySDR plugins/vendor libraries.
+- **Platforms:** Linux, macOS, Windows and FreeBSD upstream build matrix.
+- **License:** Boost Software License 1.0; driver and vendor SDK terms vary.
+- **Maintenance signals:** 2026-09-29 remote-call safety fix, 2026-10-05 CI refresh, v0.5.3 in changelog dated 2026-10-10; upstream CI 38059816370 and 38059814840 succeeded. No GitHub Release object found.
+- **Verification performed:** Inspected README, root license, changelog, source layout, RPC definitions and CI jobs. No independent SDR hardware, remote control, sample-stream or security tests.
+- **Source discovery:** GitHub-first recursive follow-up from SoapySDR; existing `research/2026-09-05-soapyremote-network-transparent-sdr-transport.md`.
+- **Related projects:** pothosware/SoapySDR; SoapyRTLSDR; GNU Radio; SatDump; SDR++.
+- **Caveats / risks:** Default server port 55132; documented server binding may expose radio control beyond a trusted LAN. Inspected stock path did not establish TLS/client authentication; use external access controls. Passing module-registration CI does not prove sample transport works.
+- **Research notes:** `research/2026-10-23-icechunk-soapyremote-promotion.md` and `research/2026-08-29-soapyremote-network-trust-boundary.md`. No source copied. Prioritize safe loopback streaming and RPC authorization boundaries.
+
+### NVDA
+
+- **Repository:** https://github.com/nvaccess/nvda
+- **Author / Org:** NV Access
+- **Category:** Accessibility / Windows screen reader / speech / braille / UI automation
+- **Evidence:** VERIFIED — upstream Windows build, unit and system CI; no independent installation
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 4 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Open-source Windows screen reader with speech and braille output, browser accessibility, add-ons and application-specific accessibility adapters.
+- **Why it is valuable:** Mature, tested interoperability architecture for Windows UI Automation, IAccessible, ARIA/browser navigation, braille hardware and speech drivers.
+- **Useful code/components:** `source/UIAHandler/`, `source/IAccessibleHandler/`, `source/NVDAObjects/`, `source/speech/`, `source/braille/`, `source/brailleDisplayDrivers/`, `source/addonHandler/`, `source/_remoteClient/`, `tests/system/`.
+- **Install / runtime:** Official Windows installer for end users; source build uses SCons/Windows toolchain and `pyproject.toml` requires Python >=3.13,<3.14. Windows-only.
+- **Platforms:** Windows; upstream CI builds Windows x64 and runs installer/browser system tests.
+- **License:** GPL-2.0-or-later with two special project exceptions in `copying.txt`; bundled libraries have separate licenses.
+- **Maintenance signals:** Stable release `release-2026.2` published 2026-08-31; master commit `40e2df64cd` dated 2026-10-21. Upstream master CI 39544741209 passed 37 jobs with 4 skipped on 2026-10-21. A separate 2026-10-23 PR CI failed; do not generalize that failure to master.
+- **Verification performed:** Inspected root license, Python requirements, source layout, release, commits and upstream CI job results. No independent screen-reader, braille, installer, accessibility or security tests.
+- **Source discovery:** GitHub-first accessibility rotation; `research/2026-09-12-nvda-windows-screen-reader-accessibility-platform.md`.
+- **Related projects:** Microsoft UI Automation, NVDA add-on ecosystem, Windows accessibility APIs.
+- **Caveats / risks:** GPL exceptions and third-party licenses require file-level review; add-ons and remote-access components create separate trust boundaries. Windows-only; passing CI does not prove all applications are accessible.
+- **Research notes:** `research/2026-10-23-nvda-libzim-promotion.md`. No third-party code copied.
+
+### libzim
+
+- **Repository:** https://github.com/openzim/libzim
+- **Author / Org:** openZIM
+- **Category:** Offline knowledge / ZIM archives / C++ library / search / content packaging
+- **Evidence:** VERIFIED — upstream cross-platform CI and source inspection; no independent archive test
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 5)
+- **What it does:** Reference C++ implementation for reading, writing and searching ZIM offline-content archives.
+- **Why it is valuable:** Reusable archive-format APIs for offline reference libraries, education, disaster-preparedness and disconnected applications; complements existing operational `openzim/zim-tools` entry.
+- **Useful code/components:** `include/zim/archive.h`, `entry.h`, `item.h`, `blob.h`, `search.h`, `suggestion.h`, `writer/`; `test/` and external `openzim/zim-testing-suite`.
+- **Install / runtime:** C++17, Meson/Ninja, liblzma, ICU, Zstd; Xapian optional for search. Some test cases require high memory; cross-target builds have different feature flags.
+- **Platforms:** Linux, macOS, Windows; upstream build matrix includes Android, iOS and WebAssembly targets.
+- **License:** GPL-2.0-or-later per upstream README/COPYING; check individual dependencies and packaging obligations.
+- **Maintenance signals:** Stable release 9.8.2 published 2026-08-13; 2026-10-19 merged random-entry off-by-one fix. Upstream main CI 39279529888 passed all 23 jobs on 2026-10-19; cross-compilation does not imply on-device runtime testing.
+- **Verification performed:** Inspected README, root license declaration, Meson configuration, public headers, recent commits, release and upstream CI job outcomes. No independent parsing, writing, search, fuzz or performance tests.
+- **Source discovery:** GitHub-first recursive research from existing `openzim/zim-tools`; `research/2026-09-13-libzim-zim-offline-archive-library.md`.
+- **Related projects:** openzim/zim-tools, openzim/zim-testing-suite, Kiwix readers; `kiwix/java-libkiwix` (Android JNI binding); `kiwix/kiwix-tools` (offline ZIM search/serve/manage).
+- **Caveats / risks:** GPL copyleft affects embedding; optional Xapian changes available APIs; hostile ZIM files may present parser/decompression/resource-exhaustion risks requiring further testing.
+- **Research notes:** `research/2026-10-23-nvda-libzim-promotion.md`. No third-party code copied.
+
+
+### OpenTelemetry Collector
+
+- **Repository:** https://github.com/open-telemetry/opentelemetry-collector
+- **Author / Org:** OpenTelemetry / CNCF ecosystem
+- **Category:** Observability / Go / traces / metrics / logs / extensible telemetry pipelines
+- **Evidence:** VERIFIED — upstream source and CI; no independent deployment
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Vendor-neutral, configurable receivers → processors → exporters pipeline for logs, metrics and traces.
+- **Why it is valuable:** Modular Go framework for agents, gateways, custom collectors and resilient telemetry delivery; separates data-plane interfaces from runtime orchestration.
+- **Useful code/components:** `receiver/`, `processor/`, `exporter/exporterhelper/` (queues, batching, retry), `service/pipelines/`, `confmap/`, `config/`, `pdata/`, `cmd/`.
+- **Install / runtime:** Go 1.26.0 declared in core `go.mod`; official binary distribution is built using `open-telemetry/opentelemetry-collector-releases`, not the root module alone. Configuration is mandatory.
+- **Platforms:** Go cross-builds cover Linux, macOS, Windows and several additional targets; successful cross-compilation is not runtime verification on every OS.
+- **License:** Apache-2.0; retain notices and attribution for reused code.
+- **Maintenance signals:** Latest inspected stable GitHub release v0.163.0 (2026-10-14). On 2026-10-23, upstream main `build-and-test` run 40012185839 passed 24 jobs, skipped one; main CodeQL, ARM, Windows and builder integration workflows also passed.
+- **Verification performed:** Inspected README, LICENSE, `go.mod`, source trees, security guidance, release and CI job results. No independent Go build, telemetry capture, network test or security audit.
+- **Source discovery:** GitHub-first observability research; prior dossier `research/2026-09-01-opentelemetry-collector-modular-observability-pipeline.md`.
+- **Related projects:** `open-telemetry/opentelemetry-collector-contrib`; `open-telemetry/opentelemetry-collector-releases`; `open-telemetry/opentelemetry-proto`.
+- **Caveats / risks:** Exporter queues/retries need capacity planning; configuration and extension exposure require security review. Core security guidance specifies validated config, secure connections and least privilege; no blanket guarantee that custom components follow these rules.
+- **Research notes:** `research/2026-10-23-otel-collector-openrtx-promotion.md`. Next: queue batching semantics, TLS defaults, data leakage and resource exhaustion.
+
+### OpenRTX
+
+- **Repository:** https://github.com/OpenRTX/OpenRTX
+- **Author / Org:** OpenRTX contributors
+- **Category:** Embedded firmware / amateur radio / M17 digital voice / DSP / hardware abstraction
+- **Evidence:** VERIFIED — upstream builds/tests; hardware and radio interoperability not independently tested
+- **Tier / Score:** S / 26 (Utility 4 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 4)
+- **What it does:** Experimental modular open-source firmware for supported digital amateur radios, including an integrated M17 voice/data protocol implementation.
+- **Why it is valuable:** End-to-end M17 encoding/decoding, DSP/FEC, device abstractions and multi-target firmware builds make it useful for legitimate radio interoperability and embedded research.
+- **Useful code/components:** `openrtx/src/protocols/M17/{FrameEncoder,FrameDecoder,Golay,DSP,Modulator,Demodulator,Callsign,MetaText}.cpp`; `openrtx/src/rtx/OpMode_M17.cpp`; `platform/`; `tests/unit/M17_*.cpp`.
+- **Install / runtime:** Meson/CMake, cross toolchains, libcodec2, Python build helpers; firmware images require exact supported radio hardware and safe flashing procedures. Linux emulation/runtime available; some M17 use requires radio modifications.
+- **Platforms:** Linux; supported radio Cortex-M targets; Zephyr-based ESP32-S3/Lilygo T-TWR Plus target.
+- **License:** Primary GPL-3.0-or-later; mixed file/subtree licenses tracked by `REUSE.toml`, including GPL-2.0-or-later, MIT, Apache-2.0 and vendor-specific terms. Review exact file before copying.
+- **Maintenance signals:** Latest inspected GitHub release v0.4.5 (2026-10-04) is a prerelease. Master build-and-test run 38790546561 (2026-10-15) passed all 13 jobs, including unit tests, Zephyr and firmware builds. Retevis-c62 PR-branch build and devcontainer workflows failed 2026-10-23; these do not imply a failed master build.
+- **Verification performed:** Inspected README, REUSE metadata, protocol source/test tree, requirements, workflow, release and run jobs. No local build, radio flash, RF reception/transmission, M17 interoperability or memory-safety audit.
+- **Source discovery:** GitHub-first embedded/off-grid radio research; prior dossier `research/2026-09-06-openrtx-modular-amateur-radio-firmware-m17-stack.md`.
+- **Related projects:** M17 Project, Zephyr RTOS, `travisgoodspeed/md380tools`, `v0l/radio_tool`, Codec2. `AlexandreRouma/SDRPlusPlus` provides an optional M17 decoder; interoperability untested.
+- **Caveats / risks:** Upstream explicitly calls firmware highly experimental; flashing carries device risk and RF operation is regulated. Vendor SDK licensing differs from the main project. CI builds do not establish on-device functionality.
+- **Research notes:** `research/2026-10-23-otel-collector-openrtx-promotion.md`. Follow failed PR builds and perform device-specific M17 interoperability tests before making operational claims.
+
+
+### Dora
+
+- **Repository:** https://github.com/dora-rs/dora
+- **Author / Org:** dora-rs
+- **Category:** Robotics / distributed AI dataflow / Rust / Arrow / ROS2 interoperability
+- **Evidence:** VERIFIED — upstream
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Dataflow-oriented robotics/AI runtime with typed YAML graphs, Rust/Python/C/C++ nodes, Arrow messages, shared-memory/Zenoh transports, coordinator/daemon lifecycle and record/replay.
+- **Why it is valuable:** Composable cross-language runtime, fault recovery, observability and concrete regression infrastructure, with current releases and substantial upstream CI.
+- **Useful code/components:** `libraries/recording/src/lib.rs` (versioned `.drec` read/write); `binaries/record-node/src/main.rs`; `binaries/replay-node/src/main.rs`; `binaries/coordinator/src/` (scheduling/liveness); `binaries/daemon/`; `libraries/arrow-convert/`; `apis/rust/node/`; `tests/fault-tolerance-e2e.rs`.
+- **Install / runtime:** Rust/Cargo CLI; Python/PyArrow or Rust/C/C++ node APIs; optional Zenoh networking and ROS2 dependencies. Cargo workspace minimum Rust 1.95.0, CI Rust 1.97.1.
+- **Platforms:** Linux, macOS and Windows, with feature-specific platform limitations.
+- **License:** Apache-2.0 root; inspect third-party dependencies and Node Hub packages individually. No source copied.
+- **Maintenance signals:** Stable v1.1.0 published 2026-10-08 with 14 release assets. 2026-10-22 [main CI 39797929129](https://github.com/dora-rs/dora/actions/runs/39797929129) passed 13/13 jobs including Linux unit, E2E, semantic contracts, benchmarks and audits; Oct 22 commits update record-node and runtime code.
+- **Verification performed:** Inspected README, LICENSE, Cargo workspace, implementation directories, `.drec` reader/writer, releases, CI jobs and tests. No independent build, dataflow, Zenoh/ROS2, benchmark or robot-hardware test.
+- **Source discovery:** GitHub-first robotics category; `research/2026-09-26-dora-real-time-robotics-dataflow.md`.
+- **Related projects:** `dora-rs/dora-hub`, Zenoh, Apache Arrow, ROS2 `rmw_zenoh`, `Ekumen-OS/andino-rs`.
+- **Caveats / risks:** `dora_recording` explicitly declares itself **internal and outside the 1.0 API stability guarantee**; format v2 limits record bodies to 64 MiB. README latency claims not independently reproduced; soft real-time is not hard real-time certification.
+- **Research notes:** `research/2026-10-23-dora-asterics-aac-promotion.md`. Investigate coordinator recovery, backpressure and `.drec` format compatibility.
+
+### Asterics AAC
+
+- **Repository:** https://github.com/asterics/Asterics-AAC
+- **Author / Org:** asterics / AsTeRICS Foundation ecosystem
+- **Category:** Accessibility / augmentative and alternative communication / offline-first PWA / alternate input
+- **Evidence:** VERIFIED — upstream
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Customizable communication grids with speech, multilingual vocabulary, switch scanning, predictive text, optional messaging and smart-home actions; documented offline-capable PWA.
+- **Why it is valuable:** Unifies assistive input, communication and actions across devices; source contains reusable scanning, local data, prediction, speech and grid-action components.
+- **Useful code/components:** `src/js/input/scanning.js`, `inputEventHandler.js`; `src/js/service/predictionService.js`; `src/js/service/data/pouchDbService.js`, `encryptionService.js` and `encryptionService.test.js`; `src/js/service/speechService.js`, `actionService.js`, `openHABService.js`; `serviceWorker.js`.
+- **Install / runtime:** Modern browser/PWA on mobile/desktop; developer build uses Node.js, npm/Yarn, Jest and Webpack. CI uses Node 22; `npm run build` runs Jest then Webpack and cache generation.
+- **Platforms:** Android, iOS, Windows, Linux and macOS browsers.
+- **License:** AGPL-3.0 source; CC BY-SA 4.0 documentation/non-source per README; symbol libraries, voices, fonts and media have separate terms. No code or assets copied.
+- **Maintenance signals:** Stable release `release-2026-10-21-12.10/+0200` (2026-10-21) fixes word forms, navigation and imports. 2026-10-23 [PR Beta Build 39950169970](https://github.com/asterics/Asterics-AAC/actions/runs/39950169970) succeeded with Jest+Webpack; beta deployment success is not independent UI verification.
+- **Verification performed:** Inspected README, LICENSE, package manifest, scanning and encryption source, service worker, Jest tests, release and CI workflow. No independent browser install, offline cold-start, switch/eye-gaze hardware, user study or cryptographic audit.
+- **Source discovery:** GitHub-first accessibility category; `research/2026-09-25-asterics-aac-offline-accessibility-platform.md`.
+- **Related projects:** `asterics/predictionary`, `asterics/AsTeRICS`, `asterics/FabiWare`, `asterics/FLipMouse`, ARASAAC.
+- **Caveats / risks:** Offline use may require prior caching; cloud/Matrix/HTTP integrations need trust controls. Vue 2-era dependencies merit review. AAC suitability is user-specific and was not assessed.
+- **Research notes:** `research/2026-10-23-dora-asterics-aac-promotion.md`. Test fresh-install offline behavior, physical switch scanning and external asset licensing.
+
+### OpenRefine
+
+- **Repository:** https://github.com/OpenRefine/OpenRefine
+- **Author / Org:** OpenRefine community
+- **Category:** Data cleaning / reconciliation / local-first data transformations / Java
+- **Evidence:** VERIFIED (upstream source, release, unit/E2E CI; no independent execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Browser-based local data-cleaning workbench for importing, profiling, clustering, transforming, reconciling and exporting tabular/structured data.
+- **Why it is valuable:** Reusable GREL parser, format importers, string-clustering strategies, reconciliation extensions and reproducible operations, supported by browser E2E and Java unit tests.
+- **Useful code/components:** `modules/grel/src/main/java/com/google/refine/grel/Parser.java` and `Scanner.java`; `main/src/com/google/refine/importers/`; `main/src/com/google/refine/clustering/`; `extensions/wikibase/`; `server/src/com/google/refine/ValidateHostHandler.java`; `main/tests/cypress/`.
+- **Install / runtime:** Official desktop packages; for source builds Maven, Node.js and Java. README says JDK 11+, but current root `pom.xml` declares Java minimum 21; follow the manifest/branch-specific build instructions.
+- **Platforms:** Windows, macOS, Linux; Java server with local browser interface.
+- **License:** BSD-3-Clause root; preserve notices and separately inspect extension/dependency licenses.
+- **Maintenance signals:** Stable 3.10.1 released 2026-03-04; October 23 commits fix path-prefixed URLs and macOS signing. 2026-10-23 [upstream snapshot CI](https://github.com/OpenRefine/OpenRefine/actions/runs/40010351064) passed 12/12 jobs, including seven Cypress E2E groups, unit tests and packaging.
+- **Verification performed:** README, LICENSE.txt, pom.xml, GREL parser, importers/clustering, server Host validation and CI workflow/job results inspected 2026-10-24. No independent install, transformations, performance tests or security audit.
+- **Source discovery:** GitHub-first data-cleaning category.
+- **Related projects:** Wikibase, Wikidata, OpenRefine reconciliation services, OpenRefine extensions.
+- **Caveats / risks:** README and current build manifest disagree on Java minimum. The local HTTP interface's host-validation code does not establish full security. Third-party integrations and imported data require privacy/license review.
+- **Research notes:** `research/2026-10-24-openrefine-kiwix-android-promotion.md`. Test release-specific Java requirements, import edge cases, reconciliation provenance and local HTTP trust boundaries.
+
+### Kiwix Android
+
+- **Repository:** https://github.com/kiwix/kiwix-android
+- **Author / Org:** Kiwix
+- **Category:** Android / offline knowledge / ZIM archives / Wi-Fi Direct content sharing
+- **Evidence:** VERIFIED (upstream source, stable release, partial emulator CI; not independently run)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Offline Android reader for ZIM archives (including Wikipedia), with local library management, file transfer and local-network serving.
+- **Why it is valuable:** Practical offline knowledge distribution with reusable Android storage handling, Wi-Fi Direct file exchange, ZIM-reader integration and optional local HTTP sharing.
+- **Useful code/components:** `app/src/main/java/org/kiwix/kiwixmobile/webserver/KiwixServer.kt`; `localFileTransfer/WifiDirectManager.kt`; `zimManager/Fat32Checker.kt`; `core/src/main/java/org/kiwix/kiwixmobile/core/reader/`; `core/.../downloader/`; `app/.../zimManager/`.
+- **Install / runtime:** Android 7.1+ (minSdk 25). Official full APK or restricted Play Store variant; source builds require Android Studio/Gradle with JDK 21.
+- **Platforms:** Android phones and tablets; targetSdk 36 in current development source.
+- **License:** GPL-3.0-or-later; separate rights apply to ZIM content, branding and dependencies.
+- **Maintenance signals:** Stable v3.14.1 released 2026-05-14; October 22 source changes improve read-aloud and java-libkiwix integration. 2026-10-22 [main CI](https://github.com/kiwix/kiwix-android/actions/runs/39790121822) **failed** an Android API 25 standard-app test while other matrix jobs passed; 2026-10-24 CD succeeded but does not prove runtime correctness.
+- **Verification performed:** README, COPYING, Gradle, Config.kt, Wi-Fi Direct manager, server, FAT32 checker, test matrix and CI job results inspected 2026-10-24. No independent Android build, real-device test, offline archive read, peer transfer or security audit.
+- **Source discovery:** Recursive GitHub-first follow-up from libzim and ZIM Tools.
+- **Related projects:** `openzim/libzim`, `openzim/zim-tools`, `kiwix/java-libkiwix`, `kiwix/kiwix-android-branded`, `kiwix/kiwix-desktop`.
+- **Caveats / risks:** Play Store variant has Android scoped-storage restrictions; full variant permits broader file selection. Large ZIM files may exceed FAT32 limits; deleting the app can delete app-managed archives. Wi-Fi Direct and local server trust boundaries need review. Main's 4.0.0 version configuration is not a published stable release.
+- **Research notes:** `research/2026-10-24-openrefine-kiwix-android-promotion.md`. Follow Android API 25 CI regression and test cold-start offline, network sharing and file integrity.
+
+
+### java-libkiwix
+
+- **Repository:** https://github.com/kiwix/java-libkiwix
+- **Author / Org:** Kiwix
+- **Category:** Android / JNI / Java-Kotlin / offline ZIM archives / embedded local HTTP serving
+- **Evidence:** VERIFIED (upstream source, release and CI build/test; no independent Android runtime verification)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Java/Kotlin Android bindings to native libkiwix and libzim for archive access, catalog management, full-text search, suggestions and local serving.
+- **Why it is valuable:** Integrates reusable native ZIM components into Android applications, exposing archive readers, searchable offline libraries and HTTP serving without implementing the native format stack from scratch.
+- **Useful code/components:** `lib/src/main/java/org/kiwix/libzim/Archive.java`, `Searcher.java`, `SuggestionSearcher.java`; `lib/src/main/java/org/kiwix/libkiwix/Library.java`, `Manager.java`, `Server.java`; JNI bridges `lib/src/main/cpp/libzim/archive.cpp`, `searcher.cpp`, `libkiwix/kiwixserver.cpp`; `lib/src/test/` ZIM fixtures and Java tests.
+- **Install / runtime:** README specifies JDK 17, `./install_deps.sh`, `./gradlew buildHeaders build`; produces Android AAR. Current Gradle manifest: minSdk 24, compileSdk 34, NDK 27.3.13750724. Native libraries support multiple Android ABIs.
+- **Platforms:** Android API 24+; Java/Kotlin apps with bundled native libraries.
+- **License:** GPL-3.0-or-later per README/COPYING. Native libkiwix/libzim and third-party components require independent notice and licensing review.
+- **Maintenance signals:** Stable 2.7.0 released 2026-10-21; adds ZIM language metadata and updates libzim 9.8.2. [Upstream CI 39562805161](https://github.com/kiwix/java-libkiwix/actions/runs/39562805161) succeeded 2026-10-21 (one build-and-test job).
+- **Verification performed:** Inspected README, COPYING, CHANGELOG, Gradle manifest, Java/JNI module trees, test fixtures, CI workflow, release and job result on 2026-10-24. No local build, emulator/device run, malformed archive test or security audit.
+- **Source discovery:** Recursive GitHub-first investigation from existing libzim and Kiwix Android entries.
+- **Related projects:** `kiwix/kiwix-android`, `kiwix/libkiwix`, `openzim/libzim`, `openzim/zim-tools`.
+- **Caveats / risks:** JNI ABI compatibility, native memory safety, 16KB page-size support and malicious ZIM parsing require further tests. CI success is not proof of Android device compatibility or safe local HTTP exposure.
+- **Research notes:** `research/2026-10-24-java-libkiwix-rizin-promotion.md`. Test corrupted archives and network-serving boundaries; check transitive native licenses.
+
+### Rizin
+
+- **Repository:** https://github.com/rizinorg/rizin
+- **Author / Org:** RizinOrg
+- **Category:** Defensive reverse engineering / binary parsing / forensics / developer tools / C
+- **Evidence:** VERIFIED (upstream source, release and partially passing CI; no independent binary-analysis tests)
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** Scriptable binary-analysis and debugging framework with disassemblers, file-format parsers, search/diff utilities and reusable C libraries.
+- **Why it is valuable:** Exposes practical stand-alone binary-inspection CLIs and composable libraries for legitimate forensics, firmware interoperability, debugging and defensive program analysis.
+- **Useful code/components:** `librz/bin/` loaders and parsers; `librz/arch/` disassembly/analysis; `librz/arch/il/` intermediate-language lifting; `librz/diff/fastcdc.c` content-defined chunking; `librz/diff/bytes_diff.c` and `lines_diff.c`; `librz/search/`; `binrz/` command-line tools; `test/db/`, `test/unit/`, `test/fuzz/` test infrastructure.
+- **Install / runtime:** Meson/Ninja build (`meson setup build`, `meson compile -C build`); install via supported packages or source. C toolchain, Python build helpers and architecture/format dependencies vary by target.
+- **Platforms:** Linux, macOS, Windows, BSD; additional targets including Android are documented upstream but were not independently tested.
+- **License:** Core Meson project declares LGPL-3.0-only. `REUSE.toml`, file SPDX headers and `LICENSES/` show mixed licensing; inspect each reused file and dependency.
+- **Maintenance signals:** Stable v0.9.1 released 2026-06-29; active dev commits 2026-10-23. Development `meson.build` reports v0.10.0, not a published stable release. [Upstream CI 39999863129](https://github.com/rizinorg/rizin/actions/runs/39999863129) and [rerun 40000224650](https://github.com/rizinorg/rizin/actions/runs/40000224650) failed four Capstone variant builds; several Linux/macOS, sanitizer and QEMU RISC-V jobs passed.
+- **Verification performed:** Inspected README, BUILDING.md, Meson, LGPL text, REUSE licensing annotations, source/test trees, release metadata and CI job conclusions on 2026-10-24. No local compile, parser correctness tests, fuzzing or security audit.
+- **Source discovery:** GitHub-first defensive binary-analysis category.
+- **Related projects:** `rizinorg/rz-pipe`, `rizinorg/rizin-testbins`, `rizinorg/cutter`, `radareorg/radare2`; `NationalSecurityAgency/ghidra` (independent alternative).
+- **Caveats / risks:** Current development CI is not green; Capstone dependency compatibility needs investigation. Untrusted binary formats present parser attack surface; do not assume LGPL covers all bundled files. Intended catalog use is authorized debugging, forensics and interoperability.
+- **Research notes:** `research/2026-10-24-java-libkiwix-rizin-promotion.md`. Recheck Capstone matrix and evaluate FastCDC, RzIL and fuzz corpus independently.
+
+
+
+### osm2pgsql
+
+- **Repository:** https://github.com/osm2pgsql-dev/osm2pgsql
+- **Author / Org:** osm2pgsql-dev
+- **Category:** OpenStreetMap / geospatial ETL / PostgreSQL / PostGIS / incremental data import / Lua
+- **Evidence:** VERIFIED (upstream source, release and CI; no independent database import)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Imports OSM, PBF and O5M geodata into PostgreSQL/PostGIS, with Lua-configurable geometry and table outputs and incremental replication diffs.
+- **Why it is valuable:** Mature, well-tested ingestion and transformation pipeline for self-hosted maps, geocoding and geospatial analysis; valuable incremental tile-expiry and geometry code.
+- **Useful code/components:** `src/input.cpp`, `src/osmdata.cpp` (ingestion); `src/output-flex.cpp`, `src/flex-lua-*.cpp` (Lua/PostGIS output); `src/geom-from-osm.cpp` (geometry); `src/expire-tiles.cpp`, `src/expire-output.cpp` (tile invalidation); `src/node-persistent-cache.cpp`, `src/middle-pgsql.cpp` (intermediate storage); `flex-config/*.lua` (public-domain examples); `tests/test-output-flex-update.cpp`, `tests/test-expire-tiles.cpp` and `tests/bdd/` (regressions).
+- **Install / runtime:** Distribution packages or CMake/C++17 source build; requires PostgreSQL >=12 (14+ recommended) and PostGIS >=3.0; Lua and other build libraries; large-area imports need substantial storage and memory.
+- **Platforms:** Linux, Windows, macOS; other Unix-like platforms with dependencies.
+- **License:** GPL-2.0-or-later (README and SPDX); `flex-config/` examples are explicitly public domain. Bundled third-party libraries have separate licenses; OSM input data has separate ODbL obligations.
+- **Maintenance signals:** Stable v2.3.1 released 2026-07-05, fixing a diff-expire segfault; 2026-10-15 master commit 5d821cce adds grouped-linemerge generalization. Upstream CI [38734399518](https://github.com/osm2pgsql-dev/osm2pgsql/actions/runs/38734399518) passed **20/20** jobs; installation CI [38734399525](https://github.com/osm2pgsql-dev/osm2pgsql/actions/runs/38734399525) passed **2/2**.
+- **Verification performed:** Inspected README, COPYING, CMake requirements, source/test trees, flex configuration examples, release notes and workflow; upstream build-and-test action invokes `ctest` under PostgreSQL virtual environments. No local import, replication replay, benchmark or security audit.
+- **Source discovery:** GitHub-first geospatial tooling pass.
+- **Related projects:** `osm2pgsql-dev/osm2pgsql-themepark`, `osmcode/libosmium`, `mapbox/protozero`; `protomaps/PMTiles` and `onthegomap/planetiler` are adjacent map-pipeline alternatives, not dependencies.
+- **Caveats / risks:** High resource demand for global imports; ensure PostgreSQL access control and validate incremental updates/dirty-tile calculations on real data. GPL and OSM dataset licenses are distinct.
+- **Research notes:** `research/2026-10-24-osm2pgsql-rz-pipe-promotion.md`. Follow-up: replication-diff idempotency, multi-output expiry regression, Lua transformation correctness, geometry edge cases.
+
+### rz-pipe
+
+- **Repository:** https://github.com/rizinorg/rz-pipe
+- **Author / Org:** rizinorg
+- **Category:** Defensive binary analysis / Rizin automation / IPC / Python / Rust / Go / multi-language bindings
+- **Evidence:** VERIFIED (upstream source and passing CI for supported components; no independent runtime tests)
+- **Tier / Score:** A / 24 (Utility 4 + Working Evidence 4 + Reusability 5 + Novelty 3 + Documentation 4 + Maintenance 4)
+- **What it does:** Exposes Rizin command execution and JSON output to Python, Go, Rust, Haskell, OCaml, Ruby and Racket through local subprocess/pipes and optional network transports.
+- **Why it is valuable:** Reusable automation bridge for scripted, authorized firmware and binary inspection without embedding Rizin's internal C APIs.
+- **Useful code/components:** `python/rzpipe/open_sync.py`, `open_async.py`, `open_base.py` (transport and command helpers); `python/tests/`; `go/rzpipe.go`, `go/native.go`, `go/rzpipe_test.go`; `rust/src/rzpipe.rs`, `rz.rs`, `errors.rs`; Racket, Ruby, OCaml and Haskell bindings.
+- **Install / runtime:** Rizin CLI or compatible trusted remote endpoint; Python package `rzpipe` (`pip install rzpipe` documented), Go module or Rust Cargo build; other languages have separate package/build procedures.
+- **Platforms:** Linux, macOS and Windows where corresponding language runtime and Rizin process/transport are supported; exact portability varies by binding.
+- **License:** **Mixed by language:** Python/Haskell MIT; Rust MIT OR Apache-2.0. No root LICENSE; Go, Ruby, OCaml and Racket source licensing not established in this pass. **Do not copy unreviewed language code.**
+- **Maintenance signals:** Master commit b2fa2dfd (2026-09-27) adds Racket binding; Python NUL-output fix 2026-09-27. Upstream CI [36352169977](https://github.com/rizinorg/rz-pipe/actions/runs/36352169977) passed **2/2** jobs; no GitHub Releases objects returned.
+- **Verification performed:** Inspected README, language trees, Python and Rust manifests/licenses, Go tests, Python subprocess implementation and CI workflow. CI runs Python pytest and Go tests, builds Rust and exercises additional bindings; it does **not** run Rust unit tests. No independent installation, execution, transport-security testing or audit.
+- **Source discovery:** Recursive investigation of the existing `rizinorg/rizin` entry.
+- **Related projects:** `rizinorg/rizin`, `rizinorg/cutter`, `rizinorg/rizin-testbins`, `radareorg/radare2`.
+- **Caveats / risks:** Plain HTTP/TCP remote command interfaces may lack authentication and transport encryption; do not expose publicly. Commands can manipulate Rizin analysis state and targets; use only on authorized files and trusted services. Python NUL-delimited output handling and polling deserve regression testing.
+- **Research notes:** `research/2026-10-24-osm2pgsql-rz-pipe-promotion.md`. Follow-up: remote trust boundaries, per-language license audit, Windows and Rust runtime tests, malformed command/output behavior.
+
+
+### Tesseract OCR
+
+- **Repository:** https://github.com/tesseract-ocr/tesseract
+- **Author / Org:** tesseract-ocr
+- **Category:** offline-ocr / document-processing / computer-vision / c++ / c-api / text-extraction
+- **Evidence:** VERIFIED (upstream code, releases and CI; no independent execution)
+- **Tier / Score:** S / 28 (utility 5 + working evidence 5 + reusability 5 + novelty 3 + documentation 5 + maintenance 5)
+- **What it does:** Offline LSTM and optional legacy OCR engine with CLI, C/C++ APIs and text/hOCR/ALTO/PAGE/TSV/searchable-PDF output.
+- **Why it is valuable:** Reusable image-to-text pipeline, document renderers, page-layout algorithms, training utilities and cross-platform embedding.
+- **Useful code/components:** `include/tesseract/baseapi.h; src/api/baseapi.cpp (C++ OCR API)`; `include/tesseract/capi.h; src/api/capi.cpp (C interface)`; `src/api/hocrrenderer.cpp, altorenderer.cpp, pdfrenderer.cpp (document outputs)`; `src/textord/ (page segmentation and text layout)`; `src/lstm/lstmrecognizer.cpp, recodebeam.cpp (neural recognition)`; `src/training/lstmtraining.cpp, text2image.cpp (training tools)`; `unittest/ (API, LSTM, page layout, sanitizer tests)`.
+- **Install / runtime:** Use packages or CMake/Autotools C++ build with Leptonica and separate traineddata language models; preprocess PDF into images for input.
+- **Platforms:** Linux, Windows, macOS, C++/Leptonica-supported environments.
+- **License:** Apache-2.0 engine; Leptonica, language traineddata and other dependencies separately licensed. No third-party code copied.
+- **Maintenance signals:** 2026-10-24 main commits fix Windows NSIS buffer and skip unit tests when traineddata absent; active multi-platform CI; stable 5.5.3 (2026-07-24).
+- **Verification performed:** 2026-10-24: inspected README, LICENSE, VERSION, doc/tesseract.1.asc, source/API trees, unit tests, and CI workflows; Stable GitHub release 5.5.3 published 2026-07-24; VERSION matches; 2026-10-24 upstream Linux autotools CI 40128395434 passed 4/4; macOS autotools 40127924448 and Windows msys2 40114227579 succeeded; Upstream CMake CI 40025480669 passed 8/8; sanitizer unit tests 40042891468 passed 2/2; CodeQL 40091625811 succeeded; CI invokes sample OCR and make check; no independent build, OCR accuracy test or security audit.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `tesseract-ocr/tessdata`; `tesseract-ocr/tessdata_fast`; `tesseract-ocr/tessdata_best`; `DanBloomberg/leptonica`; `paperless-ngx/paperless-ngx` (downstream Tesseract/OCRmyPDF integration; source inspected 2026-10-27).; OCRmyPDF (downstream searchable-PDF pipeline).
+- **Caveats / risks:** Untrusted-image parsing, model licensing, image quality and C API memory ownership require review; upstream CI does not prove accuracy or safety.
+- **Research notes:** research/2026-10-24-tesseract-openscad-promotion.md. OCR engine accepts raster images, not PDFs directly; PDF output supported. Model availability, input image quality and page segmentation affect accuracy. No independent OCR accuracy benchmark. Check traineddata licenses and memory ownership before code extraction.
+
+### OpenSCAD
+
+- **Repository:** https://github.com/openscad/openscad
+- **Author / Org:** openscad
+- **Category:** parametric-cad / 3d-printing / geometry / c++ / design-automation / offline-tools
+- **Evidence:** VERIFIED (upstream code, releases and CI; no independent execution)
+- **Tier / Score:** S / 26 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 4 + maintenance 3)
+- **What it does:** Script-driven 3D CAD compiler for constructive solid geometry, parametric parts, extrusion and mesh export.
+- **Why it is valuable:** Reproducible, version-controlled mechanical designs; reusable geometry and export components.
+- **Useful code/components:** `src/core/AST.cc, Expression.cc (parametric language evaluation)`; `src/core/CSGTreeEvaluator.cc (constructive solid geometry tree)`; `src/geometry/GeometryEvaluator.cc, boolean_utils.cc (geometry operations)`; `src/geometry/linear_extrude.cc, rotate_extrude.cc (extrusion)`; `src/io/export_stl.cc, export_3mf_v2.cc, import_stl.cc (model interchange)`; `tests/regression/, tests/test_cmdline_tool.py, tests/stlexportsanitytest.py`; `libraries/MCAD (mechanical shapes, LGPL-2.1 submodule)`.
+- **Install / runtime:** Desktop binary or C++17/CMake build with Qt, CGAL, OpenCSG, Eigen, Boost and other libraries; optional headless build.
+- **Platforms:** Linux/Unix, Windows, macOS, headless CLI builds.
+- **License:** GPL-2.0-or-later with CGAL linking exception; MCAD and other submodules have separate licenses. No third-party code copied.
+- **Maintenance signals:** Active 2026-10-24 master commits and multi-OS green CI; last non-prerelease GitHub tag remains 2021.01 (2021-02-07).
+- **Verification performed:** 2026-10-24: inspected README, COPYING, src/openscad.cc license header, .gitmodules, CMake, geometry/core/io source and regression tests; Latest GitHub stable release found openscad-2021.01 (2021-02-07); master commit bf28796b dated 2026-10-24; 2026-10-24 upstream Linux release build 40109445217, release tests 40109445203 and experimental tests 40109445087 succeeded; 2026-10-24 upstream macOS experimental 40109445085 and Windows msys2 40109445266 succeeded (Windows Qt5 and Qt6 jobs); Linux experimental CI invokes CTest, example tests and coverage; no independent geometry rendering, STL validation or 3D printing.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `openscad/MCAD`; `elalish/manifold`; `floriankirsch/OpenCSG`; `AngusJohnson/Clipper2`; `FreeCAD/FreeCAD` (OpenSCAD workbench; interoperability untested).
+- **Caveats / risks:** Stable release is over five years old; active master differs. 3D geometry must be checked before physical fabrication; license exception does not cover all submodules.
+- **Research notes:** research/2026-10-24-tesseract-openscad-promotion.md. S/26 discounts old stable release despite active development. CGAL, Qt, OpenCSG, Eigen, Boost and other dependencies required; submodule licenses differ. Verify manifold quality and nightly/stable differences before production use.
+
+### OpenROAD
+
+- **Repository:** https://github.com/The-OpenROAD-Project/OpenROAD
+- **Author / Org:** The OpenROAD Project
+- **Category:** Electronic design automation / ASIC physical design / OpenDB / C++ / Tcl / limited Python
+- **Evidence:** VERIFIED (upstream code, build CI and regression fixtures; no independent execution)
+- **Tier / Score:** S / 27 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 4)
+- **What it does:** Open-source ASIC physical-design application with floorplanning, placement, clock-tree synthesis, routing, timing repair and design database.
+- **Why it is valuable:** Reusable LEF/DEF physical-design database, placement/routing engines, Tcl/Python control and example chip-design flows.
+- **Useful code/components:** `src/odb/` (OpenDB LEF/DEF and binary DB); `src/drt/` (detailed routing/DRC); `src/rsz/` (timing and gate repair); `src/gpl/`, `src/cts/`, `src/pdn/`, `src/grt/` (placement/clock/power/global routing); `src/README.md` (API); `test/` and `src/*/test/` (regressions).
+- **Install / runtime:** Bazelisk and Bazel-supported C++ build toolchain, with relevant physical-design libraries and PDK; Tcl interface, limited Python bindings. **CMake deprecated and scheduled for removal November 1, 2026.**
+- **Platforms:** Linux primary; macOS upstream CI; other Bazel-supported hosts require confirmation.
+- **License:** BSD-3-Clause root; review third-party/submodule SPDX and notices. No third-party code copied.
+- **Maintenance signals:** 2026-10-25 UTC master commits; upstream macOS build 40145237901 passed, CodeQL 40145237910 passed, expected-output check 40145237885 passed. No current stable GitHub release verified (only old v0.9.0-beta object returned).
+- **Verification performed:** README, LICENSE, Bazel/CMake docs, OpenDB/detailed-route/resizer documentation, source/test trees and GitHub Actions inspected. No independent build, end-to-end RTL-to-GDSII run, PDK integration, silicon or security audit.
+- **Source discovery:** GitHub-first EDA research; no YouTube attribution.
+- **Related projects:** `The-OpenROAD-Project/OpenROAD-flow-scripts`; OpenSTA; PDK toolchains.
+- **Caveats / risks:** CMake deprecation, large build/PDK requirements, incomplete OpenDB API documentation, limited Python support; passing CI does not establish physical-design quality.
+- **Research notes:** `research/2026-10-24-openroad-zmk-promotion.md`. Investigate OpenDB reuse, detailed-route reproducibility, PDK compatibility and Bazel transition.
+
+### ZMK Firmware
+
+- **Repository:** https://github.com/zmkfirmware/zmk
+- **Author / Org:** zmkfirmware
+- **Category:** Zephyr-based embedded keyboard firmware / BLE / USB HID / split keyboards / alternative input
+- **Evidence:** VERIFIED (upstream source, tests and build CI; no independent hardware test)
+- **Tier / Score:** S / 26 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 3)
+- **What it does:** Configurable low-power firmware for wired/wireless custom keyboards, split input devices, key layers, macros, pointing devices and Studio configuration.
+- **Why it is valuable:** Reusable key-behavior engine and BLE/USB HID, split transport, programmable alternative-input capabilities.
+- **Useful code/components:** `app/src/behaviors/` (hold-tap, sticky keys, tap dance, macros); `app/src/split/` (wired/BLE split); `app/src/pointing/` (input processors); `app/src/studio/` (RPC/transport); `app/src/ble.c`, `usb_hid.c`, `keymap.c`; `app/tests/` (behavior/BLE regressions).
+- **Install / runtime:** Zephyr `west` workspace and board-specific firmware builds; supported MCU/shield and USB/BLE input hardware. `app/west.yml` pins `zmkfirmware/zephyr` `v4.1.0+zmk-fixes`.
+- **Platforms:** Supported nRF52/nRF53, RP2040 and other listed boards; USB and BLE HID; Linux/macOS/Windows build hosts vary.
+- **License:** MIT root; west modules and HALs retain their own licenses. No third-party code copied.
+- **Maintenance signals:** Stable v0.3.0 (2025-08-01); master commits through 2026-10-09. Oct 23 Tests 40030685287 passed 25/25; BLE 40030685316 passed 4/4; Oct 24 scheduled Build 40062805918 failed one `proton_c` matrix job; Oct 25 main Build 40162399914 passed 38 jobs (3 skipped), including `proton_c`. Root cause unknown.
+- **Verification performed:** README, LICENSE, changelog, west manifest, source/test directories, workflows, recent commits and CI job matrices inspected. No independent flash, BLE pairing, accessibility testing or security audit.
+- **Source discovery:** GitHub-first embedded/alternative-input discovery; no YouTube attribution.
+- **Related projects:** `zephyrproject-rtos/zephyr`; `zmkfirmware/zephyr`; `zmkfirmware/zmk-studio`.
+- **Caveats / risks:** The Oct 24 `proton_c` failure was followed by an Oct 25 passing `proton_c` build; root cause unknown and board/shield combinations are not universally verified. BLE pairing, split reliability and Studio RPC need security testing. Customizable input is not itself proof of accessibility suitability.
+- **Research notes:** `research/2026-10-24-openroad-zmk-promotion.md`. Follow the pinned Zephyr fork, investigate `proton_c` failure, Studio RPC and hardware compatibility.
+
+
+### LibrePCB
+
+- **Repository:** https://github.com/LibrePCB/LibrePCB
+- **Author / Org:** LibrePCB
+- **Category:** PCB EDA / schematic capture / circuit-board layout / C++ / Rust / Qt / CLI
+- **Evidence:** VERIFIED (upstream source, release and CI; no independent build)
+- **Tier / Score:** S / 28 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 5)
+- **What it does:** Cross-platform, open-source electronic design suite for schematic capture and PCB layout, with design libraries, importers and CLI automation.
+- **Why it is valuable:** Working PCB engineering stack with reusable geometry, import, export, board model and rule-checking components, plus CLI and test fixtures.
+- **Useful code/components:** `libs/librepcb/core/` (project/board models, serialization, geometry, rule checks); `libs/librepcb/kicadimport/` and `libs/librepcb/eagleimport/` (library converters); `apps/librepcb-cli/commandlineinterface.cpp` (automation); `tests/unittests/`, `tests/cli/`, `tests/funq/`, `tests/ui/` (tests).
+- **Install / runtime:** Stable release recommended; source requires C++20, Rust >=1.92 GNU, Qt >=6.2, CMake >=3.22, OpenSSL; OpenCASCADE optional. Windows builds require MinGW GNU rather than MSVC.
+- **Platforms:** Windows, Linux, macOS.
+- **License:** GPL-3.0 root; REUSE metadata, third-party assets and submodules have distinct file-level obligations. No code copied.
+- **Maintenance signals:** Stable release 2.1.1 on 2026-06-12; active master fix 2026-10-20; [upstream 2026-10-24 CI](https://github.com/LibrePCB/LibrePCB/actions/runs/40072270629) passed 9/9 jobs on Linux/macOS/Windows plus quality checks. Some Oct 22 CI runs failed before newer green runs.
+- **Verification performed:** README, license/REUSE tree, source and test directories, CI job matrix, releases and commits inspected; no independent compilation, PCB fabrication, import/export validation or security testing.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** KiCad import ecosystem, LibrePCB libraries and EAGLE import.
+- **Caveats / risks:** Master explicitly unstable and may break projects/workspaces; prefer stable builds. Verify imported library geometry, rule checks and fabrication exports before manufacturing; comply with copyleft and third-party licensing.
+- **Research notes:** `research/2026-10-24-librepcb-xournalpp-promotion.md`. Follow up on KiCad/EAGLE import fidelity, CLI automation and rule-check regressions.
+
+### Xournal++
+
+- **Repository:** https://github.com/xournalpp/xournalpp
+- **Author / Org:** xournalpp
+- **Category:** Offline note-taking / stylus input / PDF annotation / Lua plugins / document processing
+- **Evidence:** VERIFIED (upstream release and CI; no independent install)
+- **Tier / Score:** S / 27 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 4)
+- **What it does:** Cross-platform handwriting and PDF-annotation application supporting pen tablets, layers, images, text, audio, and extensible Lua plugins.
+- **Why it is valuable:** Offline document workflow with reusable stroke and layer models, PDF integration, Lua plugin hooks and multi-platform test coverage.
+- **Useful code/components:** `src/core/model/Stroke.cpp`, `Document.cpp`, `Layer.cpp`, `Snapping.cpp` (ink/document); `src/core/pdf/` (PDF); `src/core/control/xojfile/` (native document I/O); `src/core/plugin/`, `plugins/` (Lua); `src/core/audio/`; `test/unit_tests/`, `test/gtk_tests/`.
+- **Install / runtime:** Official release packages for Linux, Windows and macOS; Linux distribution packages, Flatpak and AppImage; source uses CMake/C++ and GTK stack. LaTeX tool requires separate TeX installation.
+- **Platforms:** Linux, Windows, macOS; ChromeOS via Linux container. Mobile version is separate software.
+- **License:** GPL-2.0-or-later core per `copyright.txt`; some icons/assets GPL-3.0+, ISC or CC-BY-SA-4.0. File-level review required; no code/assets copied.
+- **Maintenance signals:** Stable v1.3.8 on 2026-09-26; commits through 2026-10-24; [upstream 2026-10-24 Build](https://github.com/xournalpp/xournalpp/actions/runs/40072649214) passed 7/7 cross-platform jobs. Some later PR checks show `action_required`, not passing verification.
+- **Verification performed:** README, licenses and `copyright.txt`, plugin/model/PDF/test source trees, workflow and release metadata inspected. No independent pen, PDF, plugin, export, backup or security testing.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** Flathub packaging and Xournal++ Mobile (separate upstream).
+- **Caveats / risks:** Lua plugins execute code; trust boundaries need review. Stylus compatibility and PDF round-trips vary by platform and file. File-level asset licenses differ.
+- **Research notes:** `research/2026-10-24-librepcb-xournalpp-promotion.md`. Investigate document parser resilience, plugin security, stylus latency and backup recovery.
+
+### Renode
+
+- **Repository:** https://github.com/renode/renode
+- **Author / Org:** renode
+- **Category:** embedded-emulation / virtual-hardware / firmware-testing / robot-framework / co-simulation
+- **Evidence:** VERIFIED (narrow downstream patched Renode execution; upstream core CI unconfirmed)
+- **Tier / Score:** S / 27 (utility 5 + working evidence 4 + reusability 5 + novelty 5 + documentation 5 + maintenance 3)
+- **What it does:** Emulates embedded CPUs, boards, peripherals and networks to run unmodified firmware without hardware.
+- **Why it is valuable:** Multi-node virtual hardware and firmware regression automation; useful reusable test infrastructure.
+- **Useful code/components:** src/Renode/PlatformDescription/: board descriptions; src/Renode/Network/ and Connectors/: virtual networks; src/Renode/RobotFrameworkEngine/: test keywords; tests/run_tests.py and tests/platforms/*.robot: Robot/NUnit regression harness; src/Plugins/CoSimulationPlugin/ and SystemCPlugin/: co-simulation; src/Renode/WebSockets/ and ws-api/: remote interfaces.
+- **Install / runtime:** .NET >=6, prebuilt Windows/Linux/macOS packages or source; GTK2 for Linux portable GUI, Robot Framework/Python for tests.
+- **Platforms:** Linux, Windows, macOS, virtual ARM/RISC-V/x86/SPARC/POWER/Xtensa/MSP430X.
+- **License:** MIT core; third-party libraries separately licensed; no code copied.
+- **Maintenance signals:** Stable v1.17.0 (2026-09-07), active source 2026-10-23; upstream core CI unconfirmed. [ArduPilot Renode run 40231792336](https://github.com/ArduPilot/ardupilot/actions/runs/40231792336) passed 2026-10-25 with emulator unit tests and CubeOrangePlus quadplane mission.
+- **Verification performed:** 2026-10-25: README, MIT LICENSE, source/test/platform trees and test runner inspected; Stable v1.17.0 published 2026-09-07 with binary assets and detailed architecture fixes; 2026-10-23 master commit 04cafbb adjusts CPU pause/halt synchronization; No passing current core emulator CI found; 2026-10-22 GitHub Actions success 39742143711 was dependency graph update only; 2026-10-25 downstream ArduPilot job 121284892561 passed Renode unit tests and quadplane mission using an ArduPilot-hosted, checksum-verified custom Renode package. No independent build, upstream stock runtime test, physical hardware timing test or security audit.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** renode/renode-infrastructure; zephyrproject-rtos/zephyr; lowRISC/opentitan; ArduPilot/ardupilot (`Tools/renode/` downstream integration).
+- **Caveats / risks:** Downstream patched Renode executed successfully, but unmodified upstream core tests and broad CPU/peripheral fidelity remain unverified; virtual timing differs from hardware; bundled licenses and remote API access require review.
+- **Research notes:** `research/2026-10-25-renode-odm-maintenance.md`. VERIFIED narrowly via downstream patched Renode execution, not general stock upstream or hardware equivalence. See `research/2026-10-25-openthread-ardupilot-renode.md`. .NET >=6; GTK2 for Linux portable GUI; Robot Framework/Python tests. Simulated peripheral/timing fidelity varies; secure remote APIs and check dependency licenses.
+
+### OpenDroneMap
+
+- **Repository:** https://github.com/OpenDroneMap/ODM
+- **Author / Org:** OpenDroneMap
+- **Category:** photogrammetry / aerial-mapping / geospatial / point-clouds / orthophotos / 3d-reconstruction
+- **Evidence:** VERIFIED (upstream evidence only)
+- **Tier / Score:** S / 27 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 4)
+- **What it does:** Converts aerial photographs into georeferenced orthophotos, elevation models, point clouds and textured 3D meshes.
+- **Why it is valuable:** Reusable open geospatial reconstruction with GCP, multispectral/thermal and map tiling components.
+- **Useful code/components:** stages/run_opensfm.py, odm_meshing.py, odm_dem.py, odm_orthophoto.py: reconstruction stages; opendm/gcp.py and geo.py: ground-control/georeferencing; opendm/dem/: DEM and PDAL; opendm/orthophoto.py, cogeo.py, tiles/: orthophotos/GeoTIFF/tiles; opendm/multispectral.py and thermal.py: sensor data; opendm/remote.py and stages/splitmerge.py: remote processing; tests/test_gcp.py and tests/: regression fixtures.
+- **Install / runtime:** Docker CPU amd64/arm64, optional NVIDIA GPU image, or native pixi/SuperBuild; large datasets resource-intensive.
+- **Platforms:** Linux Docker amd64/arm64, Windows, macOS, optional NVIDIA GPU.
+- **License:** AGPL-3.0 root; native dependencies/assets separately licensed; no code copied.
+- **Maintenance signals:** Stable 3.6.2 on 2026-08-12; 2026-09-16 native CI 4/4 green; recurring Windows installer publishing failures.
+- **Verification performed:** 2026-10-25: README, AGPL LICENSE, stages/modules/tests, native/Docker workflows inspected; Stable v3.6.2 released 2026-08-12; master 77439b1 merged OpenSfM v110 on 2026-09-15; Upstream 2026-09-16 Native Builds 35092809957 passed 4/4 Linux/ARM/Windows/macOS jobs with Test, Smoke and Prod smoke steps; Upstream 2026-09-15 Docker CPU 34975847090 passed 5/5 jobs; 2026-09-15 Windows Setup publish 34975845646 failed; later October PR action_required is not test execution; No independent aerial reconstruction, GCP accuracy, GPU benchmark or installer testing.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** OpenDroneMap/NodeODM; OpenDroneMap/WebODM; mapillary/OpenSfM.
+- **Caveats / risks:** AGPL obligations; reconstruction accuracy depends on image overlap and georeferencing. Windows installer CI failure remains unresolved.
+- **Research notes:** `research/2026-10-25-renode-odm-maintenance.md`. Docker or native pixi/SuperBuild; high CPU/RAM/disk demands. AGPL network copyleft and dependency licenses. Verify GCP residuals, reflectance/NoData, orthophoto repeatability, Windows packaging.
+
+
+### Ghidra
+
+- **Repository:** https://github.com/NationalSecurityAgency/ghidra
+- **Author / Org:** National Security Agency Research Directorate
+- **Category:** Defensive reverse engineering / decompilation / binary analysis / forensics
+- **Evidence:** VERIFIED (upstream release and successful build; no independent runtime tests)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 4)
+- **What it does:** Extensible disassembler, decompiler, debugger and binary-analysis platform supporting numerous processors and executable formats.
+- **Why it is valuable:** Reusable SLEIGH/p-code processor semantics, decompiler API, headless automation and scripting for legitimate firmware analysis and interoperability.
+- **Useful code/components:** `Ghidra/Features/Decompiler/src/main/java/ghidra/app/decompiler/DecompInterface.java`; `Ghidra/Features/Decompiler/src/decompile/cpp/sleigh.hh`; `Ghidra/Features/Base/src/main/java/ghidra/app/util/headless/AnalyzeHeadless.java`; `Ghidra/RuntimeScripts/support/analyzeHeadless`; `Ghidra/RuntimeScripts/support/sleigh`.
+- **Install / runtime:** Official multi-platform ZIP, JDK 25 64-bit; source Gradle 9.1+, Python 3.9–3.15, native toolchains. Master declares 12.3 DEV, not a stable release.
+- **Platforms:** Windows, macOS, Linux.
+- **License:** Apache-2.0 core. `NOTICE` documents GPL-3 stand-alone support tools and module-specific third-party licensing; inspect `LICENSE.txt` before copying.
+- **Maintenance signals:** [Stable 12.2](https://github.com/NationalSecurityAgency/ghidra/releases/tag/Ghidra_12.2_build) released 2026-10-22; [upstream Ubuntu Gradle build 39747670372](https://github.com/NationalSecurityAgency/ghidra/actions/runs/39747670372) passed 2026-10-22. The build workflow does not establish a full regression suite.
+- **Verification performed:** README, LICENSE, NOTICE, version manifest, Gradle workflow, SLEIGH/decompiler source, headless CLI and release inspected. No local build, binary processing, fuzzing or security audit.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `rizinorg/rizin` (independent alternative), `NationalSecurityAgency/ghidra-data`, `rizinorg/cutter`.
+- **Caveats / risks:** Treat untrusted binaries as hostile. [Decompiler use-after-free](https://github.com/NationalSecurityAgency/ghidra/security/advisories/GHSA-8jqp-qv73-395r) and [Mach-O export-trie exhaustion](https://github.com/NationalSecurityAgency/ghidra/security/advisories/GHSA-wm33-9f68-3vjg) affected older versions and were patched in 12.1.
+- **Research notes:** `research/2026-10-25-ghidra-openmct.md`. Next: SLEIGH, PyGhidra and parser fuzzing.
+
+### Open MCT
+
+- **Repository:** https://github.com/nasa/openmct
+- **Author / Org:** NASA Ames Research Center
+- **Category:** Telemetry visualization / mission control / browser dashboards / JavaScript
+- **Evidence:** PROMISING (released project and test source, but current e2e run fails before tests)
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 3)
+- **What it does:** Extensible browser framework for time-series telemetry, plots, timelines, status and operations planning.
+- **Why it is valuable:** Composable telemetry providers/subscriptions, WebSocket batching, persistence and dashboard APIs for robotics, instrumentation and monitoring.
+- **Useful code/components:** `src/api/telemetry/TelemetryAPI.js`, `BatchingWebSocket.js`, `TelemetryCollection.js`, `src/plugins/persistence/couch/`, `src/api/plan/PlanAPI.js`, `API.md`, `e2e/tests/`.
+- **Install / runtime:** Node/npm/webpack and modern browser; `npm install`, `npm start`, `npm run build`. Current `package.json` requires Node >=24.14.1.
+- **Platforms:** Browsers; Linux, macOS and Windows/WSL development hosts.
+- **License:** Apache-2.0 core (`LICENSE.md`); dependency/asset licenses separate. Source headers mention `LICENSES.md`, not found at inspected root.
+- **Maintenance signals:** [Stable v4.3.1](https://github.com/nasa/openmct/releases/tag/v4.3.1) released 2026-08-31; latest inspected master commit 2026-10-07. [e2e-full 40147454572](https://github.com/nasa/openmct/actions/runs/40147454572) FAILED 2026-10-25 at Ubuntu `npm ci`; Playwright tests skipped, Windows cancelled. Workflow uses Node `lts/hydrogen` (18) while package engine requires >=24.14.1. The 2026-10-26 [Ubuntu e2e-full job log](https://github.com/nasa/openmct/actions/runs/40250211098) confirms `npm ci` failed `EBADENGINE`: actual Node v18.20.8, required >=24.14.1. Other workflow failures remain undiagnosed. Subsequent 2026-10-26 UTC [e2e-full 40250211098](https://github.com/nasa/openmct/actions/runs/40250211098) also failed (Ubuntu failure, Windows cancelled); e2e-perf 40248391927 and pr-platform 40247907640 failed. 2026-10-27 [e2e-full 40427389616](https://github.com/nasa/openmct/actions/runs/40427389616) Ubuntu log confirms npm ci EBADENGINE (Node 18.20.8 vs required >=24.14.1); no Playwright run.
+- **Verification performed:** README, LICENSE.md, package.json, API.md, telemetry source, e2e workflow and job steps inspected. No local install, browser test or telemetry execution.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `nasa/openmct-tutorial`, `nasa/openmct-map`, `akhenry/openmct-yamcs`; OpenTelemetry Collector is a conceptual neighbor, not confirmed integration.
+- **Caveats / risks:** No passing current full e2e execution verified. Review plugin input sanitization, WebSocket reconnection, CouchDB permissions and packaged licenses.
+- **Research notes:** 2026-10-28 UTC [e2e-full 40608853694](https://github.com/nasa/openmct/actions/runs/40608853694) Ubuntu npm ci EBADENGINE: Node v18.20.8 vs required >=24.14.1; Windows cancelled; no Playwright. [e2e-perf 40607018153](https://github.com/nasa/openmct/actions/runs/40607018153) failed npm ci (cause not independently checked). Retain PROMISING/A25. `research/2026-10-25-ghidra-openmct.md`. 2026-10-27 UTC: [e2e-full 40427389616](https://github.com/nasa/openmct/actions/runs/40427389616) failed Ubuntu `npm ci` (Windows cancelled); [e2e-perf 40424992380](https://github.com/nasa/openmct/actions/runs/40424992380) failed at `npm ci`. Previous Node mismatch confirmed, latest exact failure cause not independently checked. Rechecked 2026-10-26 UTC: three scheduled workflows remain failed. Node mismatch confirmed by Ubuntu `EBADENGINE` log as the e2e-full `npm ci` cause. Keep PROMISING/25; update CI Node >=24.14.1 and require passing Playwright e2e before promotion.
+
+### Zigbee2MQTT
+
+- **Repository:** https://github.com/Koenkk/zigbee2mqtt
+- **Author / Org:** Koen Kanters / Koenkk
+- **Category:** Zigbee / MQTT / IoT / local-first automation / device interoperability
+- **Evidence:** VERIFIED (upstream CI; no independent hardware test)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Bridges supported Zigbee devices into MQTT topics without a proprietary vendor gateway.
+- **Why it is valuable:** Practical, modular local automation infrastructure with reusable Zigbee device state, event translation, firmware OTA handling, topology and MQTT integration.
+- **Useful code/components:** `lib/zigbee.ts` Zigbee lifecycle; `lib/mqtt.ts` MQTT transport; `lib/controller.ts` orchestration; `lib/extension/otaUpdate.ts` OTA; `networkMap.ts` topology; `availability.ts` health; `homeassistant.ts` integration; `test/` Vitest tests.
+- **Install / runtime:** Node.js as constrained by `package.json` (`^22.2.0 || ^24 || <=26.2`), pnpm 11, MQTT broker, compatible Zigbee USB/network coordinator; Docker packages available.
+- **Platforms:** Linux, Windows, macOS, ARM/Docker hosts; Zigbee coordinator hardware required for radio use.
+- **License:** GPL-3.0 root; `Koenkk/zigbee-herdsman` and `Koenkk/zigbee-herdsman-converters` are separately MIT licensed. Review dependency notices before extracting.
+- **Maintenance signals:** Stable 2.14.2 released 2026-10-01; upstream dev [CI 40171469797](https://github.com/Koenkk/zigbee2mqtt/actions/runs/40171469797) passed 10/10 jobs on 2026-10-25 (Linux/Windows/macOS, Node 22/24/26; check/build/tests).
+- **Verification performed:** README, license, package manifest, lib/extension tree, test suite and CI job steps inspected. No independent MQTT connection, coordinator pairing, firmware OTA, RF or security tests.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `Koenkk/zigbee-herdsman`, `Koenkk/zigbee-herdsman-converters`, `zigbee2mqtt/hassio-zigbee2mqtt`.
+- **Caveats / risks:** Device support and OTA reliability vary. Secure MQTT credentials, Zigbee pairing and exposed web UI. GPL obligations for covered copied code; no source copied.
+- **Research notes:** `research/2026-10-25-zigbee2mqtt-sdrpp.md`. Follow network-key handling, OTA validation and device-converter tests.
+
+### SDR++
+
+- **Repository:** https://github.com/AlexandreRouma/SDRPlusPlus
+- **Author / Org:** Alexandre Rouma
+- **Category:** SDR / digital signal processing / modular radio receivers / cross-platform
+- **Evidence:** VERIFIED (upstream cross-platform build evidence; no independent RF reception)
+- **Tier / Score:** S / 26 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** Cross-platform modular software-defined-radio receiver with hardware source plugins, waterfall display, multiple VFOs, demodulators and recording.
+- **Why it is valuable:** Reusable C++ DSP blocks, IQ streaming, VFO management, plugin interfaces and optional decoders; complements the existing SoapySDR and OpenRTX entries.
+- **Useful code/components:** `core/src/dsp/` filters/demodulators/streams; `core/src/signal_path/` IQ frontend and VFO; `core/src/module.{cpp,h}` plugin interfaces; `source_modules/soapy_source/`, `rtl_sdr_source/`, `rtl_tcp_source/`; `decoder_modules/m17_decoder/`, `meteor_demodulator/`; `misc_modules/` recorder/scanner.
+- **Install / runtime:** C++17/CMake; system libraries including FFTW, GLFW and audio backends; radio hardware requires appropriate vendor drivers; Android build exists but runtime not validated.
+- **Platforms:** Windows, Linux, macOS, BSD source builds, Android build target.
+- **License:** GPL-3.0 root; bundled `core/libcorrect` and third-party SDR vendor SDKs/modules require separate license review before reuse.
+- **Maintenance signals:** [Upstream Build Binaries 39896187183](https://github.com/AlexandreRouma/SDRPlusPlus/actions/runs/39896187183) passed 22/22 jobs on 2026-10-23, including Windows, macOS x86/ARM, Linux variants, Android APK build and formatting checks. Last confirmed numbered stable GitHub tag 1.0.4 dates to 2021-10-17; rolling nightly release is not a newly dated stable release.
+- **Verification performed:** README, license, CMake build switches, DSP/signal-path/source/decoder trees, Android project and upstream CI jobs inspected. No independent build, device RF test, decoder verification or Android installation.
+- **Source discovery:** GitHub-first; no YouTube attribution.
+- **Related projects:** `pothosware/SoapySDR`, `pothosware/SoapyRemote`, `OpenRTX/OpenRTX` (M17 ecosystem only), `AlexandreRouma/libperseus-sdr`.
+- **Caveats / risks:** CI compilation does not demonstrate device-specific RF correctness. Some optional decoders are disabled by default; drivers and vendor SDKs have independent licensing. Protect remote interfaces and comply with radio laws. No source copied.
+- **Research notes:** `research/2026-10-25-zigbee2mqtt-sdrpp.md`. Follow M17 decoding and Soapy plugin compatibility, Android runtime and bundled-code licenses.
+
+
+### CyberChef
+
+- **Repository:** https://github.com/gchq/CyberChef
+- **Author / Org:** GCHQ
+- **Category:** Browser-based data transformation / encoding / decoding / forensics / local-first utilities
+- **Evidence:** VERIFIED (upstream Node and browser CI; no independent execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Composable browser recipes for text and binary transformations, encoding/decoding, compression, hashes, parsing and data inspection.
+- **Why it is valuable:** Reusable typed operation pipeline with a large collection of individual operations, a Node interface and browser UI; can run from a locally hosted build.
+- **Useful code/components:** `src/core/Chef.mjs` recipe execution; `Recipe.mjs` sequencing; `Dish.mjs` typed data; `Operation.mjs` extension contract; `src/core/operations/` operation implementations; `src/node/` API; `tests/operations/`, `tests/node/`, `tests/browser/`.
+- **Install / runtime:** Node.js 24 supported (26 CI tested); `npm ci`, `npm run build`, `npm test`; Docker image or local browser build. Browser/Node versions and dependency requirements should be checked for deployed versions.
+- **Platforms:** Browser on desktop systems, Node.js and Docker; offline usage possible with locally built assets.
+- **License:** Apache-2.0 root and core file headers. Bundled and npm dependencies retain their own licenses.
+- **Maintenance signals:** Stable [v11.5.0](https://github.com/gchq/CyberChef/releases/tag/v11.5.0) released 2026-09-18; [upstream master CI 39942157083](https://github.com/gchq/CyberChef/actions/runs/39942157083) passed 2/2 Node 24/26 jobs on 2026-10-23, including lint, unit tests, production builds and browser UI tests.
+- **Verification performed:** Inspected README, LICENSE, SECURITY.md, package.json, core operation architecture, test tree, workflow and upstream CI job steps. No independent build, browser recipe execution or cryptographic verification.
+- **Source discovery:** GitHub-first; no usable YouTube transcript evidence.
+- **Related projects:** Node consumer API; Tesseract.js dependency (not the native Tesseract engine).
+- **Caveats / risks:** Upstream SECURITY.md explicitly warns cryptographic operations should not be relied on for security guarantees. Review individual dependencies and operation implementations before reuse. Handle confidential data and recipe URLs carefully. No third-party code copied.
+- **Research notes:** `research/2026-10-25-cyberchef-rtl433.md`. Follow operation-level test coverage, input size limits, browser security and dependency licenses.
+
+### rtl_433
+
+- **Repository:** https://github.com/merbanan/rtl_433
+- **Author / Org:** Benjamin Larsson and rtl_433 contributors / merbanan
+- **Category:** SDR / ISM-band sensor decoding / RF signal processing / embedded C / local IoT telemetry
+- **Evidence:** VERIFIED (upstream builds, unit/integration tests and static analysis; no independent RF test)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** Receives and decodes signals from compatible unlicensed-band sensors and devices using RTL-SDR or SoapySDR, or analyzes recorded sample files.
+- **Why it is valuable:** Hundreds of device decoder source files, reusable pulse detection/bit parsing, low-resource C99 implementation and output bridges for MQTT, JSON, CSV and other sinks.
+- **Useful code/components:** `src/pulse_detect.c`, `pulse_detect_fsk.c`, `pulse_slicer.c` for demodulation; `src/bitbuffer.c` bit parsing; `src/devices/` protocol decoders; `src/output_mqtt.c`, `output_influx.c`, `http_server.c`; `tests/` unit and HTTP integration suites.
+- **Install / runtime:** C99/CMake or platform packages; supported RTL-SDR/SoapySDR hardware for live reception, or input IQ files for offline decoding.
+- **Platforms:** Linux (including ARM/embedded), FreeBSD, macOS, Windows; device support depends on drivers.
+- **License:** GPL-2.0-or-later in examined core source; COPYING contains GPL-2.0 text. Review vendored components and device files separately.
+- **Maintenance signals:** Stable [25.12](https://github.com/merbanan/rtl_433/releases/tag/25.12) released 2025-12-12; [upstream CI 39967799370](https://github.com/merbanan/rtl_433/actions/runs/39967799370) passed 12/12 jobs on 2026-10-23 (Linux/macOS build/tests, coverage, Clang analysis, style, docs). A later [2026-10-24 run](https://github.com/merbanan/rtl_433/actions/runs/40144928023) concluded `action_required`; investigate before claiming all latest checks green.
+- **Verification performed:** README, COPYING, source license headers, CMake, `src/`, `src/devices/`, `tests/`, workflow and CI job steps inspected. Linux matrix disables hardware backends; no live RF capture or decoder accuracy test performed.
+- **Source discovery:** GitHub-first; no usable YouTube transcript evidence.
+- **Related projects:** `pothosware/SoapySDR`, `osmocom/rtl-sdr`, `pothosware/SoapyRemote`, SDR++ (complementary SDR receiver, no direct integration confirmed).
+- **Caveats / risks:** Device-specific decoders require representative capture testing. Secure MQTT, HTTP and remote receiver interfaces; sensor telemetry may reveal location or activity. RF use subject to applicable rules. GPL obligations and vendored code licenses apply; no code copied.
+- **Research notes:** `research/2026-10-25-cyberchef-rtl433.md`. Follow decoder test coverage, malformed-packet robustness and SoapySDR hardware integration.
+
+
+### ESPHome
+
+- **Repository:** https://github.com/esphome/esphome
+- **Author / Org:** ESPHome / Open Home Foundation ecosystem
+- **Category:** Embedded firmware / ESP32 / ESP8266 / local-first home automation / YAML code generation / IoT
+- **Evidence:** VERIFIED (upstream release and CI; no independent hardware or firmware test)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Generates configurable microcontroller firmware from declarative YAML for local sensors, controls, device integrations and automation.
+- **Why it is valuable:** Reusable configuration-validation, code-generation and device-component architecture, with OTA recovery and native encrypted API; can operate locally without mandatory cloud services.
+- **Useful code/components:** `esphome/config.py` YAML packages/substitutions/validation; `esphome/codegen.py` and `cpp_generator.py` C++ generation; `esphome/components/api/` native API and Noise configuration; `ota/` and `safe_mode/` firmware updates/recovery; `mqtt/`, `modbus/`, `esp32_ble/` integration modules; `tests/integration/` regression fixtures.
+- **Install / runtime:** Python >=3.12,<3.16 per `pyproject.toml`, PlatformIO/ESP-IDF and appropriate toolchains for target boards; CLI or supported device-builder workflow; flashing requires appropriate hardware and drivers.
+- **Platforms:** ESP32, ESP8266, RP2 and selected LibreTiny/Zephyr targets; Python development hosts. Verify each specific board/framework before use.
+- **License:** **Split license:** Python and other non-C++ files MIT; C/C++ firmware/runtime files GPLv3 by root `LICENSE`. Dependencies and external components may have other licenses. Do not treat the entire repository as MIT based on package metadata.
+- **Maintenance signals:** [Stable 2026.10.0](https://github.com/esphome/esphome/releases/tag/2026.10.0) released 2026-10-21; active 2026-10-25 development commits. [Upstream PR CI 40218426253](https://github.com/esphome/esphome/actions/runs/40218426253) completed **28 successful, 2 skipped** jobs on 2026-10-25 (integration tests, C++ tests, component builds, static checks).
+- **Verification performed:** Inspected README, root license, Python manifest, configuration/codegen, API, OTA, safe-mode, MQTT source and CI workflow; inspected upstream CI job results. No independent build, flash, MQTT connection, OTA recovery or device security test.
+- **Source discovery:** GitHub-first; no usable YouTube transcript evidence.
+- **Related projects:** `home-assistant/core` (ecosystem); `Koenkk/zigbee2mqtt` (complementary local IoT bridge, not a direct integration); `esphome/esphome.io` documentation; [ArduinoJson](https://github.com/bblanchon/ArduinoJson) 7.4.3 (direct pinned JSON component dependency, source-verified 2026-10-30).
+- **Caveats / risks:** YAML external components are executable build inputs; protect API encryption keys, OTA authentication and device credentials. Firmware reliability and resource use vary by board. GPLv3 obligations apply to C++ runtime reuse. No source copied.
+- **Research notes:** `research/2026-10-25-esphome-gnuradio.md`. Investigate API Noise session handling, OTA rollback and external-component trust.
+
+### GNU Radio
+
+- **Repository:** https://github.com/gnuradio/gnuradio
+- **Author / Org:** GNU Radio contributors / gnuradio
+- **Category:** Software-defined radio / digital signal processing / C++ / Python / radio simulation / flowgraphs
+- **Evidence:** VERIFIED (upstream multi-distro tests; no independent flowgraph or radio-hardware execution)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** C++/Python DSP block runtime and visual flowgraph toolkit for SDR receivers, digital communications, protocol research and offline signal processing.
+- **Why it is valuable:** Mature composable DSP blocks, schedulers, modulation and channel models, visual graph construction, testing utilities and vendor-neutral SDR interfaces.
+- **Useful code/components:** `gnuradio-runtime/lib/top_block_impl.cc` runtime; `gr-digital/lib/` OFDM/CRC/synchronization; `gr-filter/lib/` DSP filters; `gr-analog/`, `gr-fft/` signal generation/FFT; `gr-soapy/` SoapySDR adapter; `grc/core/FlowGraph.py` flowgraph model; `gr-utils/modtool/` block scaffolding; `gr-digital/python/digital/qa_ofdm_*.py` tests.
+- **Install / runtime:** Debian/Ubuntu package `gnuradio` or platform-specific packages; source CMake build needs C++ compiler, Python and DSP/GUI dependencies (Boost, VOLK, optional Qt and SoapySDR).
+- **Platforms:** Linux (multi-distro CI), Windows/macOS via supported packaging/build methods; live RF requires SDR hardware and compatible drivers, offline flowgraphs do not.
+- **License:** GPL-3.0-or-later for examined core (`COPYING` and SPDX source headers); review dependencies and external modules individually.
+- **Maintenance signals:** Latest inspected stable GitHub release [v3.10.12.0](https://github.com/gnuradio/gnuradio/releases/tag/v3.10.12.0) dates to **2025-02-20**; main development remains active in October 2026. [Upstream Make Test 39263827649](https://github.com/gnuradio/gnuradio/actions/runs/39263827649) on PR #8240 passed **10/10 jobs** (Ubuntu, Fedora, Debian, 32-bit and clang). Separate [Conda build 39263827623](https://github.com/gnuradio/gnuradio/actions/runs/39263827623) **failed 2/2 jobs**; do not call all CI green.
+- **Verification performed:** Inspected README, COPYING, CMake, runtime, digital/filter sources, Soapy integration, GRC, module tooling and CI workflow; checked upstream jobs. No independent installation, DSP flowgraph execution, RF reception or security test.
+- **Source discovery:** GitHub-first; no usable YouTube transcript evidence.
+- **Related projects:** `pothosware/SoapySDR` (in-tree `gr-soapy` adapter); `gnuradio/gnuradio4` (separate next-generation C++23 codebase); SDR++; `merbanan/rtl_433` (complementary decoding).
+- **Caveats / risks:** Conda packaging currently has failed upstream CI evidence. Recent 2026 DVB-T buffer-overflow and channel-model correctness fixes warrant review of parser boundaries and DSP test vectors. GNU Radio 4 is not assumed drop-in compatible. Comply with spectrum rules; no source copied.
+- **Research notes:** `research/2026-10-25-esphome-gnuradio.md`. Follow Conda packaging, gr-soapy integration, malformed-stream testing and GNU Radio 4 migration.
+
+### OpenThread
+
+- **Repository:** https://github.com/openthread/openthread
+- **Author / Org:** OpenThread (Google and contributors)
+- **Category:** Thread IPv6 mesh / IEEE 802.15.4 / embedded networking / IoT / border routers
+- **Evidence:** VERIFIED (upstream build, unit, POSIX, simulation and border-router CI)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Portable implementation of the Thread mesh protocol with IPv6/6LoWPAN, link security, routing, commissioning and border-router support.
+- **Why it is valuable:** Reusable standards-based low-power mesh stack, portable hardware abstraction and reproducible network simulation; complements rather than replaces Zigbee implementations.
+- **Useful code/components:** `src/core/thread/mesh_forwarder.cpp` (6LoWPAN packet forwarding); `src/core/thread/key_manager.cpp` (security material); `src/core/thread/mle.cpp` and `router_table.cpp` (mesh establishment/routing); `src/core/net/`, `src/core/mac/`, `src/posix/`; `tests/unit/`, `tests/toranj/`, `tests/fuzz/`.
+- **Install / runtime:** CMake/GN and C/C++ host toolchain; Thread-capable IEEE 802.15.4 hardware for real RF, or POSIX simulation without hardware. Board-specific builds and integration vary.
+- **Platforms:** Embedded SoC/NCP/RCP; Linux/macOS POSIX development and simulation.
+- **License:** BSD-3-Clause at root and inspected core files; preserve notices and review `third_party/` separately.
+- **Maintenance signals:** Stable [v2026.10.0](https://github.com/openthread/openthread/releases/tag/v2026.10.0) published 2026-10-01; active main 2026-10-25. Upstream [Build 40228441197](https://github.com/openthread/openthread/actions/runs/40228441197) passed 54/54, [Unit 40228441160](https://github.com/openthread/openthread/actions/runs/40228441160) 3/3, [POSIX 40228441091](https://github.com/openthread/openthread/actions/runs/40228441091) 10/10, [Simulation 40228441202](https://github.com/openthread/openthread/actions/runs/40228441202) 6/6, [Border Router 40228441070](https://github.com/openthread/openthread/actions/runs/40228441070) 4/4 (2026-10-25).
+- **Verification performed:** README, LICENSE, CMake, core forwarding/key-management source, tests tree and workflow inspected; upstream successful CI reviewed. No independent build, hardware, commissioning, RF or security test.
+- **Source discovery:** GitHub-first; no accessible YouTube transcript attribution.
+- **Related projects:** `openthread/ot-br-posix` (border router), `openthread/ot-ns` (network simulation), `zephyrproject-rtos/zephyr` (RTOS ecosystem); Zigbee2MQTT uses a distinct protocol.
+- **Caveats / risks:** Mesh key storage and commissioning security require review; passing simulation is not physical radio reliability or Thread certification. Third-party licensing separate; no code copied.
+- **Research notes:** `research/2026-10-25-openthread-ardupilot-renode.md`. Follow commissioning, border-router privileges, multi-vendor radio interoperability and fuzz harnesses.
+
+### ArduPilot
+
+- **Repository:** https://github.com/ArduPilot/ardupilot
+- **Author / Org:** ArduPilot
+- **Category:** Robotics / autopilot / embedded vehicle control / navigation / MAVLink / simulation
+- **Evidence:** VERIFIED (upstream SITL, unit-build and downstream Renode integration CI)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Open-source autopilot firmware and supporting libraries for copters, planes, rovers, submarines and other autonomous vehicles.
+- **Why it is valuable:** Mature modular flight-control, sensor-fusion, hardware abstraction, navigation, safety/failsafe and software-in-the-loop test components.
+- **Useful code/components:** `libraries/AP_NavEKF3/` (navigation EKF), `libraries/AC_AttitudeControl/` (attitude/rate loops), `libraries/AP_HAL_SITL/` and `Tools/autotest/` (simulation), `libraries/GCS_MAVLink/`, `libraries/AP_GPS/`, `libraries/AP_Avoidance/`, `Tools/renode/` (board-level emulator integration).
+- **Install / runtime:** Git clone with recursive submodules, Python/Waf build toolchain; board-specific ChibiOS toolchains for embedded firmware or SITL development environment.
+- **Platforms:** Supported flight controllers, Linux SBC and SITL; platform-specific desktop development.
+- **License:** GPL-3.0 root `COPYING.txt`; individual files, submodules and bundled dependencies require separate checks.
+- **Maintenance signals:** Vehicle-specific stable v4.7.2 releases published 2026-10-14. On 2026-10-25, upstream [unit/SITL build 40231792309](https://github.com/ArduPilot/ardupilot/actions/runs/40231792309) passed 8/8 jobs, [Copter 40231792304](https://github.com/ArduPilot/ardupilot/actions/runs/40231792304) 12/12, [Plane 40231792276](https://github.com/ArduPilot/ardupilot/actions/runs/40231792276) 7/7; [Renode integration 40231792336](https://github.com/ArduPilot/ardupilot/actions/runs/40231792336) passed a CubeOrangePlus quadplane mission and emulator unit tests.
+- **Verification performed:** README, COPYING, BUILD.md, EKF/control source, SITL workflows, Renode integration scripts/tests and CI job steps inspected. No independent build, simulation, firmware flashing, flight or safety audit.
+- **Source discovery:** GitHub-first; no accessible YouTube transcript attribution.
+- **Related projects:** `renode/renode` (ArduPilot-patched downstream integration), `mavlink/mavlink`, `ArduPilot/pymavlink`, `ArduPilot/MAVProxy`, `PX4/PX4-Autopilot` (alternative ecosystem), `mavlink/MAVSDK` (SDK, integration untested).
+- **Caveats / risks:** GPL copyleft; embedded hardware/sensor compatibility and aviation safety are not established by CI. Renode tests use an ArduPilot-hosted, checksum-verified custom Renode package, not necessarily upstream stock Renode. No code copied.
+- **Research notes:** `research/2026-10-25-openthread-ardupilot-renode.md`. Investigate EKF failures, failsafes, GPS denial, mission regression, and MAVLink trust boundaries.
+
+### OpenThread Border Router
+
+- **Repository:** https://github.com/openthread/ot-br-posix
+- **Author / Org:** openthread
+- **Category:** thread-networking / ipv6-border-router / nat64 / dns-srp-mdns / iot / embedded-gateway
+- **Evidence:** VERIFIED (upstream CI; no independent runtime/hardware test)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Connects Thread mesh networks to external IP networks using IPv6 routing, service discovery, DHCPv6 prefix delegation, NAT64 and commissioning.
+- **Why it is valuable:** Practical Thread gateway with reusable service-discovery proxies, REST diagnostics, D-Bus interfaces, host firewall and routing regression tests.
+- **Useful code/components:** `src/agent/application.cpp` — border router daemon; `src/border_agent/border_agent.cpp` — Thread border agent; `src/sdp_proxy/advertising_proxy.cpp and discovery_proxy.cpp` — SRP/mDNS bridging; `src/mdns/mdns_openthread.cpp and mdns_mdnssd.cpp` — mDNS backends; `src/dbus/server/dbus_agent.cpp` — D-Bus control plane; `src/rest/rest_web_server.cpp and src/rest/openapi.yaml` — commissioning and diagnostics HTTP API; `script/_firewall, script/_nat64 and src/agent/nftables-backend.in` — host firewall and NAT; `tests/scripts/thread-cert/border_router/` — simulated routing tests.
+- **Install / runtime:** CMake/POSIX, Raspberry Pi, Docker or OpenWrt packaging; radio RCP/NCP and host networking privileges required for live Thread.
+- **Platforms:** Linux; Raspberry Pi; OpenWrt; Docker amd64/arm64/armv7; macOS CI; IEEE 802.15.4 RCP/NCP hardware for live use.
+- **License:** BSD-3-Clause (root LICENSE and inspected scripts); third-party dependencies separately licensed.
+- **Maintenance signals:** v2026.10.0 (2026-10-01), active 2026-10-25; upstream [Border Router 7/7](https://github.com/openthread/ot-br-posix/actions/runs/40165604861), [Build 13/13](https://github.com/openthread/ot-br-posix/actions/runs/40165604824), [Docker 3 builds](https://github.com/openthread/ot-br-posix/actions/runs/40165604873) succeeded (merge skipped).
+- **Verification performed:** 2026-10-26 inspected README, BSD-3-Clause LICENSE, REST API docs, NAT/firewall scripts, source tree, workflow and releases; Stable v2026.10.0 published 2026-10-01; 2026-10-25 Border Router 40165604861 passed 7/7; Build 40165604824 passed 13/13; Docker Border Router 40165604873 had 3 passed and 1 skipped; OpenWrt 40165604857, Raspbian 40165604829, macOS 40165604856 succeeded; No independent build, commissioning, radio, gateway deployment or security audit.
+- **Source discovery:** GitHub-first; research/2026-10-26-otbr-open62541-maintenance.md; no YouTube transcript evidence.
+- **Related projects:** openthread/openthread; openthread/ot-ns; zephyrproject-rtos/zephyr.
+- **Caveats / risks:** Review commissioning/diagnostics REST authorization, D-Bus access, host firewall/nftables/pf and network-key protection. Upstream simulated tests do not verify radio interoperability.
+- **Research notes:** `research/2026-10-26-otbr-open62541-maintenance.md`. BSD-3-Clause notices required; inspect third-party licensing. Research REST authentication and RCP compatibility. No code copied.
+
+
+### open62541
+
+- **Repository:** https://github.com/open62541/open62541
+- **Author / Org:** open62541
+- **Category:** industrial-automation / opc-ua / c-library / pubsub / embedded-networking / protocol-implementation
+- **Evidence:** VERIFIED (upstream CI; no independent runtime/hardware test)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Portable C99 implementation of OPC UA (IEC 62541) clients, servers, subscriptions, PubSub and security plugins.
+- **Why it is valuable:** Reusable industrial communication stack with Zephyr support, single-file amalgamation, upstream fuzzing and OpenSSL/mbedTLS interoperability tests.
+- **Useful code/components:** `src/client/ua_client.c and ua_client_subscriptions.c` — client and subscription APIs; `src/server/ua_server.c and ua_services_securechannel.c` — server and secure channels; `src/pubsub/ua_pubsub_networkmessage_binary.c and ua_pubsub_networkmessage_json.c` — PubSub codecs; `src/pubsub/ua_pubsub_keystorage.c` — PubSub key storage; `plugins/crypto/openssl/ and plugins/crypto/mbedtls/` — security policy backends; `arch/zephyr/eventloop_zephyr.c` — Zephyr event loop; `tests/fuzz/fuzz_binary_message.cc` — parser fuzzing; `tests/interop/` — cross-SDK interoperability; `CMakeLists.txt UA_ENABLE_AMALGAMATION` — single-file C distribution.
+- **Install / runtime:** C99 compiler, CMake and Python for generated definitions; optional OpenSSL/mbedTLS; UA_ENABLE_AMALGAMATION emits combined open62541.c/.h.
+- **Platforms:** Linux; Windows; macOS; Zephyr; FreeRTOS/lwIP; C99/CMake/Python generator; OpenSSL or mbedTLS optional.
+- **License:** MPL-2.0 core; select examples/plugins CC0; deps/README.md documents separately licensed MIT, BSD, Apache, Boost and MPL components.
+- **Maintenance signals:** v1.5.9 (2026-10-04); [interop 2/2](https://github.com/open62541/open62541/actions/runs/40294086389), [CIFuzz 1/1](https://github.com/open62541/open62541/actions/runs/40294086435), [Windows 4/4](https://github.com/open62541/open62541/actions/runs/40294086561), Zephyr/macOS passed 2026-10-26. [CodeQL](https://github.com/open62541/open62541/actions/runs/40294086468) blocked by missing clang-tools-14; Linux still running.
+- **Verification performed:** 2026-10-26 inspected README, FEATURES.md, MPL-2.0 LICENSE, deps/README.md, CMake, client/server/PubSub/Zephyr source and workflows; Stable v1.5.9 published 2026-10-04; 2026-10-26 upstream interop 40294086389 passed 2/2, CIFuzz 40294086435 passed 1/1, Windows 40294086561 passed 4/4; Zephyr 40294086507 and macOS 40294086387 succeeded; Linux 40294086564 had 18 successful and 12 in-progress jobs at inspection; no overall pass claimed; Code Scanning 40294086468 failed 2/2 before CodeQL analysis: job log reports missing apt package clang-tools-14; not evidence of code vulnerability; No independent build, OPC UA connection, fuzz run, industrial hardware or security audit.
+- **Source discovery:** GitHub-first; research/2026-10-26-otbr-open62541-maintenance.md; no YouTube transcript evidence.
+- **Related projects:** OPCFoundation/UA-.NETStandard; zephyrproject-rtos/zephyr.
+- **Caveats / risks:** Certificate trust, legacy cryptography, PubSub SKS and exposed server defaults require review. CodeQL failure was dependency installation, not a scan finding.
+- **Research notes:** `research/2026-10-26-otbr-open62541-maintenance.md`. MPL-2.0 file-level copyleft; CC0 only for specifically marked files. Upstream reports certification for a v1.4 example server, not arbitrary current deployments. No code copied.
+
+
+### OpenWrt
+
+- **Repository:** https://github.com/openwrt/openwrt
+- **Author / Org:** OpenWrt
+- **Category:** Embedded Linux / router firmware / firewall / network infrastructure / image building
+- **Evidence:** VERIFIED (upstream build CI; no independent hardware testing)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Customizable Linux firmware and package/image build system for supported routers and embedded networking hardware.
+- **Why it is valuable:** Reusable embedded build infrastructure, network configuration, firewall integration, reproducible image assembly and extensive device targeting.
+- **Useful code/components:** `scripts/feeds` (feed management); `package/network/config/netifd/files/` (network configuration); `package/network/config/firewall4/` (nftables); `package/base-files/files/etc/` (init/hotplug); `target/imagebuilder/Makefile` (image builder); `scripts/gen_image_generic.sh` (reproducible image assembly); `target/linux/` and `toolchain/`.
+- **Install / runtime:** Build with host toolchain on case-sensitive GNU/Linux/BSD/macOS; run `scripts/feeds update -a`, `scripts/feeds install -a`, `make menuconfig`, `make`. Flash only verified supported device/board images.
+- **Platforms:** Supported embedded routers/network devices; Linux/BSD/macOS build hosts.
+- **License:** GPL-2.0-only root COPYING; inspect third-party package, kernel and driver licenses separately.
+- **Maintenance signals:** [v25.12.6](https://github.com/openwrt/openwrt/releases/tag/v25.12.6) 2026-10-18; active 2026-10-26. [Kernel 40231519176](https://github.com/openwrt/openwrt/actions/runs/40231519176) 29/29 and [core packages 40231388127](https://github.com/openwrt/openwrt/actions/runs/40231388127) 10/10 passed on 2026-10-25; toolchain workflow 40231388106 succeeded.
+- **Verification performed:** Inspected README, COPYING, package/target/scripts source, APK Makefile, image builder and upstream workflows. No independent build, flash, network operation or security audit.
+- **Source discovery:** GitHub-first 2026-10-26; YouTube playlist fetches throttled; no transcript-derived claims.
+- **Related projects:** `openwrt/luci`, `openwrt/packages`, `openwrt/routing`, `openwrt/actions-shared-workflows`.
+- **Caveats / risks:** Device-specific flashing can brick hardware. README references opkg, but current APK package and image builder support APK/OPKG configurations; verify target/release. Root GPL does not cover every dependency. No code copied.
+- **Research notes:** `research/2026-10-26-openwrt-mavsdk.md`. Follow sysupgrade recovery, firewall tests, image reproducibility and package-manager transition.
+
+### MAVSDK
+
+- **Repository:** https://github.com/mavlink/MAVSDK
+- **Author / Org:** MAVLink / MAVSDK
+- **Category:** Robotics / MAVLink / telemetry / mission control / cross-platform SDK
+- **Evidence:** VERIFIED (upstream CI; no independent simulator or vehicle test)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** C++ MAVLink SDK with direct C, Python and Kotlin bindings, mission, telemetry, offboard-control and raw-message plugins.
+- **Why it is valuable:** Reusable protocol clients and portable language bindings, examples, fuzz tests and broad platform support.
+- **Useful code/components:** `cpp/src/mavsdk/core/mavsdk_impl.cpp`, `libmav_receiver.cpp`, `cpp/src/mavsdk/plugins/mission/`, `telemetry/`, `offboard/`, `mavlink_direct/`, `c/`, `py/mavsdk/`, `kt/`, `jni/`, `cpp/examples/`, optional `cpp/src/mavsdk_server/`.
+- **Install / runtime:** CMake/C++ toolchain or packaged direct bindings; optional gRPC server for legacy clients; MAVLink vehicle or SITL needed for functional testing.
+- **Platforms:** Linux, Windows, macOS, Android, iOS; C++, C, Python, Kotlin.
+- **License:** BSD-3-Clause root LICENSE.md; proto submodule and third-party dependencies require separate review.
+- **Maintenance signals:** [v4.0.6](https://github.com/mavlink/MAVSDK/releases/tag/v4.0.6) 2026-10-08. 2026-10-26 upstream [Linux 40313071240](https://github.com/mavlink/MAVSDK/actions/runs/40313071240) 30 jobs, [Windows 40313071239](https://github.com/mavlink/MAVSDK/actions/runs/40313071239) 14/14, [Kotlin 40313071246](https://github.com/mavlink/MAVSDK/actions/runs/40313071246) 9 passed/1 skipped, [fuzz 40313071314](https://github.com/mavlink/MAVSDK/actions/runs/40313071314) passed; macOS 40313071347 failed on x64 artifact upload (six jobs passed).
+- **Verification performed:** Inspected README, LICENSE, SECURITY.md, py/README.md, core/plugins/examples, .gitmodules, release and CI. No independent compilation, protocol connection, simulator, vehicle or security test.
+- **Source discovery:** GitHub-first 2026-10-26; YouTube playlist fetches throttled; no transcript-derived claims.
+- **Related projects:** `mavlink/MAVSDK-Proto`, `mavlink/MAVSDK-Python`, `mavlink/mavlink`, `ArduPilot/ardupilot`, `PX4/PX4-Autopilot`.
+- **Caveats / risks:** Upstream SECURITY.md says MAVLink signing is not implemented; optional `mavsdk_server` gRPC is unauthenticated/unencrypted and binds 0.0.0.0 by default, exposing connected vehicle control to reachable clients. Prefer direct v4 bindings and isolate/firewall legacy server. No code copied.
+- **Research notes:** `research/2026-10-26-openwrt-mavsdk.md`. Follow fuzz parser coverage, network trust, SITL compatibility, macOS artifact publishing.
+
+### FreeCAD
+
+- **Repository:** https://github.com/FreeCAD/FreeCAD
+- **Author / Org:** FreeCAD
+- **Category:** parametric CAD / mechanical design / 3D modeling / Python automation
+- **Evidence:** VERIFIED (upstream build and tests; no independent CAD execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Cross-platform, history-based parametric 3D modeler using OpenCASCADE, Qt and Python scripting.
+- **Why it is valuable:** Open-source mechanical-design workflows with reusable sketch constraints, geometric modeling, technical drawings, and automation APIs.
+- **Useful code/components:** `src/Mod/Sketcher/App/Constraint.cpp`, `SketchObject.cpp` (constraint model); `src/Mod/Part/App` (OpenCASCADE B-rep wrappers); `src/Mod/PartDesign` (feature modeling); `src/Mod/OpenSCAD/importCSG.py`, `exportCSG.py` (CSG exchange); `src/Mod/TechDraw` (drawings); `tests/src` and `SketcherTests` (regression).
+- **Install / runtime:** Official desktop releases or CMake >=3.22 with OpenCASCADE, Qt, Python, Coin3D and platform build dependencies; documented Python API and workbenches.
+- **Platforms:** Linux, Windows, macOS; C++/Python.
+- **License:** Root LGPL-2.1 text; inspected `src/App/CMakeLists.txt` declares LGPL-2.1-or-later. Review each reused file, third-party dependency and asset license separately; no code copied.
+- **Maintenance signals:** Stable 1.1.4 released 2026-09-28; upstream main FreeCAD CI primary [40346216527](https://github.com/FreeCAD/FreeCAD/actions/runs/40346216527) passed 2026-10-26 with build, CLI/GUI, C++ and install tests; CodeQL [40346215716](https://github.com/FreeCAD/FreeCAD/actions/runs/40346215716) passed.
+- **Verification performed:** Inspected README, LICENSE, module SPDX, CMake, workbench and test trees, SECURITY.md, stable release and upstream CI steps. No independent installation, model generation, geometry precision or manufacturing test.
+- **Source discovery:** GitHub-first 2026-10-26; YouTube seed pages throttled, no transcript evidence claimed.
+- **Related projects:** `openscad/openscad` (in-tree FreeCAD OpenSCAD workbench), OpenCASCADE/OCCT, `FreeCAD/FreeCAD-Bundle`.
+- **Caveats / risks:** Geometry and manufactured part tolerances require domain validation; macros/addons and imported CAD files require trust review. Root license does not imply uniform dependency licensing.
+- **Research notes:** `research/2026-10-26-freecad-opencpn.md`. Follow OpenSCAD roundtrip fidelity, sketch solver regressions and Python macro sandboxing.
+
+### OpenCPN
+
+- **Repository:** https://github.com/OpenCPN/OpenCPN
+- **Author / Org:** OpenCPN
+- **Category:** marine navigation / offline charts / AIS / NMEA / geospatial sensors
+- **Evidence:** VERIFIED (upstream multi-platform builds and tests; no independent navigation)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Open-source chartplotter and vessel navigation application with raster/vector charts, AIS, NMEA 0183/2000 and Signal K inputs.
+- **Why it is valuable:** Mature offline-capable navigation interface and reusable marine telemetry, chart, protocol and plugin components.
+- **Useful code/components:** `model/src/ais_decoder.cpp`, `ais_target_data.cpp` (AIS); `comm_drv_n0183_serial.cpp`, `comm_drv_n0183_net.cpp` (NMEA 0183); `comm_drv_n2k_socketcan.cpp` (NMEA 2000); `comm_drv_signalk_net.cpp` (Signal K); `libs/s57-charts` (ENC charts); `plugins/dashboard_pi`, `plugins/grib_pi` (dashboard and weather); `test/n2k_tests.cpp`, `test/rest-tests.cpp` (tests).
+- **Install / runtime:** Desktop release packages or CMake/wxWidgets source build; chart datasets and sensor interfaces vary by platform. Android supported upstream but not tested this run.
+- **Platforms:** Linux, Windows, macOS, Android.
+- **License:** OpenCPN-authored files GPL-2.0-or-later per `LICENSING`; bundled dependencies and assets use multiple licenses, with file-level inventory in `data/copyright`. No code copied.
+- **Maintenance signals:** Stable 5.14.2 released 2026-09-28; 2026-10-15 upstream Linux [38800150299](https://github.com/OpenCPN/OpenCPN/actions/runs/38800150299) passed 3 jobs (including ASan and test steps), macOS [38800150392](https://github.com/OpenCPN/OpenCPN/actions/runs/38800150392) 2/2, Windows [38800150288](https://github.com/OpenCPN/OpenCPN/actions/runs/38800150288) 1/1.
+- **Verification performed:** Inspected README, LICENSING, SECURITY.md, source modules, plugins, test README and CI jobs. No independent AIS/GPS device, chart, sea-trial or Android testing.
+- **Source discovery:** GitHub-first 2026-10-26; YouTube seed pages throttled, no transcript evidence claimed.
+- **Related projects:** `SignalK/signalk-server-node`; OpenCPN in-tree plugins and chart parsers.
+- **Caveats / risks:** Upstream SECURITY.md states third-party plugins inherit full user privileges; charts and sensor data can be untrusted. AIS/GPS data and chart currency must not be treated as infallible navigation safety evidence.
+- **Research notes:** `research/2026-10-26-freecad-opencpn.md`. Follow AIS malformed-input tests, chart parser fuzzing, plugin trust and Signal K transport security.
 
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
 - **colonelpanichacks/Remote-ID-Spoofer:** not promoted. Its primary purpose is Remote ID spoofing, outside this catalog's preferred defensive/interoperability scope.
+
+
+### llama.cpp
+
+- **Repository:** https://github.com/ggml-org/llama.cpp
+- **Author / Org:** ggml-org
+- **Category:** Local AI / LLM inference / GGUF / quantization / C++ / Android
+- **Evidence:** VERIFIED (upstream builds and CI; not independently executed).
+- **Tier / Score:** S / 29 (Utility 5, Working Evidence 5, Reusability 5, Novelty 5, Documentation 5, Maintenance 4).
+- **What it does:** Local LLM/VLM inference engine, GGUF model loader, quantization utilities and HTTP API server.
+- **Why it is valuable:** Portable, low-resource CPU inference, optional GPU acceleration, embeddable C API, model inspection and reusable constrained-decoding components.
+- **Useful code/components:** `include/llama.h` C API; `src/llama-model-loader.cpp`; `src/llama-sampler.cpp`; `src/llama-grammar.cpp`; `tools/server/`; `tools/quantize/`, `tools/imatrix/`; `gguf-py/gguf/scripts/gguf_dump.py`; `docs/android.md`; `examples/llama.android`; `tests/test-gguf.cpp`.
+- **Install / runtime:** CMake source build or rolling binaries; separate GGUF model weights. Android/Termux and NDK instructions available. RAM/VRAM varies with model/context/quantization.
+- **Platforms:** Linux, Windows, macOS, Android/Termux, iOS, WASM and accelerator-specific targets.
+- **License:** MIT root; check `gguf-py/LICENSE`, `vendor/`, dependencies and model-weight terms before reuse.
+- **Maintenance signals:** Rolling [b11907](https://github.com/ggml-org/llama.cpp/releases/tag/b11907) prerelease 2026-10-26 with 36 assets; [Server CI 40389494969](https://github.com/ggml-org/llama.cpp/actions/runs/40389494969) Windows/Ubuntu passed 2/2; [self-hosted Server 40379656923](https://github.com/ggml-org/llama.cpp/actions/runs/40379656923) CUDA/Metal/KleidiAI passed 3/3; [WASM 40389495039](https://github.com/ggml-org/llama.cpp/actions/runs/40389495039) passed.
+- **Verification performed:** Inspected upstream README, LICENSE, SECURITY.md, source, tests, server/Android/GGUF docs and CI 2026-10-26. No independent build, inference, Android run, benchmark or security audit.
+- **Source discovery:** GitHub-first; `research/2026-10-26-llamacpp-jq.md`. Two YouTube playlists throttled; no transcript attribution.
+- **Related projects:** ggml-org/ggml; ggml-org/whisper.cpp; ggml-org/llama.vscode.
+- **Caveats / risks:** Upstream security policy advises isolating untrusted models and not exposing server/RPC to untrusted networks. Model licenses vary; b-tags are rolling prereleases.
+- **Research notes:** Follow GGUF parser fuzzing, model-license provenance, API isolation and Android memory profiling. No third-party code copied.
+
+### jq
+
+- **Repository:** https://github.com/jqlang/jq
+- **Author / Org:** jqlang
+- **Category:** JSON / structured-data CLI / C library / data transformation
+- **Evidence:** VERIFIED (upstream release and CI; not independently executed).
+- **Tier / Score:** S / 28 (Utility 5, Working Evidence 5, Reusability 5, Novelty 4, Documentation 5, Maintenance 4).
+- **What it does:** JSON query and transformation CLI with an embeddable C filter language runtime.
+- **Why it is valuable:** Reusable parser, typed-value model, filter compiler/VM, shell integration and regression/fuzzing components.
+- **Useful code/components:** `src/jv_parse.c` parser; `src/jv.c` values; `src/compile.c` compiler; `src/execute.c` VM; `src/lexer.l`, `src/parser.y`; `src/builtin.c`, `src/builtin.jq`; `tests/jq.test`, `tests/jq_fuzz_parse.c`; `src/jq.h` C API.
+- **Install / runtime:** Standalone release binaries, Docker or autotools build; optional Oniguruma; `make check` documented.
+- **Platforms:** Linux, Windows, macOS, FreeBSD, NetBSD, ARM, RISC-V and other cross-built targets.
+- **License:** MIT jq core; `COPYING` lists CC BY 3.0 documentation, ICU decNumber, Lucent dtoa, Heimdal/NetBSD notices; check Oniguruma separately.
+- **Maintenance signals:** Stable [jq-1.8.2](https://github.com/jqlang/jq/releases/tag/jq-1.8.2) published 2026-06-20 with security fixes; [CI 40382053397](https://github.com/jqlang/jq/actions/runs/40382053397) 24 jobs passed, release job skipped; [Valgrind 40382053249](https://github.com/jqlang/jq/actions/runs/40382053249) and [BSD 40382053191](https://github.com/jqlang/jq/actions/runs/40382053191) passed. Source commits 2026-10-25.
+- **Verification performed:** README, COPYING, SECURITY.md, source, tests, parser fuzz harness, release and CI inspected 2026-10-26. No independent execution or fuzz campaign.
+- **Source discovery:** GitHub-first; `research/2026-10-26-llamacpp-jq.md`. Two YouTube playlists throttled; no transcript attribution.
+- **Related projects:** nushell/nushell (complementary structured-data shell, not direct integration); johnkerl/miller (CSV/TSV/JSONL streaming CLI; no direct integration asserted).
+- **Caveats / risks:** jq-1.8.2 addresses multiple parser/memory-safety, path-depth and DoS CVEs. Patch deployments processing untrusted JSON. Bundled components have additional licenses.
+- **Research notes:** Follow parser fuzzing, deep-input limits, regex engine configuration and embedded libjq use. No code copied.
+
+
+### Joplin
+
+- **Repository:** https://github.com/laurent22/joplin
+- **Author / Org:** Laurent Cozic / Joplin SAS
+- **Category:** Offline-first Markdown notes / encrypted sync / productivity / CLI
+- **Evidence:** VERIFIED (upstream CI; no independent runtime execution)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Offline-first Markdown notes and tasks with cross-platform sync, E2EE, search, import/export and plugins.
+- **Why it is valuable:** Reusable sync/conflict handling, encrypted content, indexing, import/export, mobile and CLI components.
+- **Useful code/components:** `packages/lib/services/synchronizer/` (including E2EE/conflict tests), `packages/lib/services/e2ee/EncryptionService.ts`, `packages/lib/services/interop/`, `packages/lib/services/search/SearchEngine.ts`, `packages/app-cli/`, `packages/app-mobile/`.
+- **Install / runtime:** Official desktop/mobile packages; development uses Node/Yarn monorepo and native mobile toolchains.
+- **Platforms:** Linux, Windows, macOS, Android, iOS, CLI.
+- **License:** Root AGPL-3.0-or-later **except overrides**; `packages/server/LICENSE.md` is separate Joplin Server Personal Use License; branding assets reserved.
+- **Maintenance signals:** Stable [v3.7.21](https://github.com/laurent22/joplin/releases/tag/v3.7.21) 2026-09-25. [CI 40406257789](https://github.com/laurent22/joplin/actions/runs/40406257789) passed 7/7 jobs 2026-10-26; [UI tests 40423856061](https://github.com/laurent22/joplin/actions/runs/40423856061) passed 3/3 and [Android build 40423856058](https://github.com/laurent22/joplin/actions/runs/40423856058) passed 2026-10-27 UTC. Later [CI 40423856055](https://github.com/laurent22/joplin/actions/runs/40423856055) failed macOS Intel `packages/utils/ipc.test.ts:67` (expected pong, received no response), with 4 other jobs passed and 2 cancelled.
+- **Verification performed:** README, root/server licenses, source and tests, release and upstream job logs inspected. No independent sync, E2EE, Android runtime or security audit.
+- **Source discovery:** GitHub-first 2026-10-26; no YouTube transcript attribution.
+- **Related projects:** Syncthing and restic (conceptual/complementary, not proven integrations).
+- **Caveats / risks:** Server license differs from root; branding restricted; plugin trust and MCP/API exposure require review; intermittent macOS IPC test failure.
+- **Research notes:** `research/2026-10-26-joplin-kicad-maintenance.md`. No third-party code copied.
+
+### KiCad Source Mirror
+
+- **Repository:** https://github.com/KiCad/kicad-source-mirror
+- **Author / Org:** KiCad Development Team; canonical upstream https://gitlab.com/kicad/code/kicad
+- **Category:** Electronics EDA / schematic capture / PCB layout / Gerber / hardware design
+- **Evidence:** PROMISING (official release, source and test infrastructure; passing application CI not inspected)
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 3)
+- **What it does:** Cross-platform schematic and PCB design with connectivity/ERC, DRC, Gerber viewing and automation APIs.
+- **Why it is valuable:** Reusable EDA connectivity, layout, geometry, file-format and test infrastructure.
+- **Useful code/components:** `eeschema/connection_graph.cpp`, `eeschema/erc/`, `pcbnew/board.cpp`, `pcbnew/board_loader.cpp`, `pcbnew/autorouter/` (placement, not complete general autorouter), `api/proto/board/`, `api/proto/schematic/`, `qa/tests/pcbnew/`, `gerbview/`.
+- **Install / runtime:** Official packages; source build uses CMake/C++/wxWidgets and native dependencies.
+- **Platforms:** Linux, Windows, macOS.
+- **License:** Majority GPL-3.0-or-later per `LICENSE.README`; third-party portions MIT/BSD/Apache/Boost/ISC; file-by-file review required.
+- **Maintenance signals:** Official [10.0.7 release announcement](https://www.kicad.org/blog/2026/10/KiCad-10.0.7-Release/) 2026-10-07; GitHub artifacts 2026-10-16; 10.0.8 RC1 announced 2026-10-22. `.gitlab-ci.yml` defines build/test pipelines but passing GitLab run not checked; mirror GitHub Actions are not application CI.
+- **Verification performed:** README, licensing, source/API/QA trees, build configuration and official release inspected. No independent build, DRC, Gerber export or fabrication.
+- **Source discovery:** GitHub-first and official KiCad release notes; no YouTube attribution.
+- **Related projects:** LibrePCB (alternative), FreeCAD (complementary; no tested interoperability).
+- **Caveats / risks:** GitHub is a mirror, upstream contributions on GitLab. Untrusted design/archive files, plugin behavior and engineering output require review.
+- **Research notes:** `research/2026-10-26-joplin-kicad-maintenance.md`. No code copied.
+
+
+### Paperless-ngx
+
+- **Repository:** https://github.com/paperless-ngx/paperless-ngx
+- **Author / Org:** paperless-ngx
+- **Category:** Self-hosted document management / OCR / search / archiving / Django
+- **Evidence:** VERIFIED (upstream release, source and CI; no independent deployment)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Imports, OCR-processes, classifies and indexes documents into a searchable self-hosted archive.
+- **Why it is valuable:** Practical ingestion, OCR, classification, document permissions, workflows and export architecture with real multi-platform container builds.
+- **Useful code/components:** `src/documents/consumer.py` (ingestion); `src/paperless/parsers/tesseract.py` (OCRmyPDF/Tesseract); `src/documents/classifier.py`; `src/documents/search/`; `src/documents/permissions.py`; `src/documents/tests/test_permission_filtering_security.py`; `src/documents/export/`; `docker/compose/`.
+- **Install / runtime:** Docker Compose recommended; Python >=3.11 for source builds, Django/Celery, database/Redis and OCR/PDF dependencies. Browser client.
+- **Platforms:** Linux self-hosting; amd64/arm64 container builds; modern web browsers.
+- **License:** GPL-3.0 root; separate OCRmyPDF/Tesseract/Ghostscript and other dependency notices. No source copied.
+- **Maintenance signals:** Stable [v3.3.4](https://github.com/paperless-ngx/paperless-ngx/releases/tag/v3.3.4) (2026-10-22) addresses certifi/Pillow/aiohttp-related dependency security issues. 2026-10-27 UTC upstream [Backend Tests 40424424887](https://github.com/paperless-ngx/paperless-ngx/actions/runs/40424424887) passed Python 3.11–3.14; [CodeQL 40424425034](https://github.com/paperless-ngx/paperless-ngx/actions/runs/40424425034) passed JS/Python; [Docker Build 40424424910](https://github.com/paperless-ngx/paperless-ngx/actions/runs/40424424910) passed amd64/arm64/manifest. These passing runs were on `fix/14557`, not a confirmed current `dev` head.
+- **Verification performed:** Inspected README, root license, Python manifest, ingestion/OCR/permission source, regression test source, release and upstream job conclusions. Frontend workflow succeeded but its frontend test/build jobs were skipped due to no frontend changes. No independent OCR, install, backup/restore or security tests.
+- **Source discovery:** GitHub-first 2026-10-26 CDT; no YouTube transcript attribution.
+- **Related projects:** Tesseract OCR and OCRmyPDF (OCR dependencies); paperless-ngx/builder.
+- **Caveats / risks:** Upstream warns document contents are stored in clear text at rest; do not host on untrusted infrastructure. Secure access, backups, untrusted document parsing and third-party licenses need review.
+- **Research notes:** `research/2026-10-26-paperless-briar.md`. No third-party code copied.
+
+### Briar Android
+
+- **Repository:** https://github.com/briar/briar
+- **Author / Org:** Briar Project; canonical https://code.briarproject.org/briar/briar (GitHub mirror)
+- **Category:** Offline messaging / Android / Bluetooth / Wi-Fi / Tor / emergency communications
+- **Evidence:** PROMISING (official release and source/test structure; passing CI and runtime not independently confirmed)
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 3)
+- **What it does:** Peer-to-peer encrypted messaging and synchronization over nearby Bluetooth/Wi-Fi, or Tor when internet is available.
+- **Why it is valuable:** Modular offline-first message synchronization, cryptographic transport, Android radio adapters, mailbox and headless integration.
+- **Useful code/components:** `bramble-core/src/main/java/org/briarproject/bramble/crypto/`, `bramble-core/src/main/java/org/briarproject/bramble/sync/`, `bramble-android/src/main/java/org/briarproject/bramble/plugin/bluetooth/`, `bramble-android/src/main/java/org/briarproject/bramble/plugin/tcp/`, `bramble-core/src/main/java/org/briarproject/bramble/plugin/file/`, `bramble-core/src/test/java/org/briarproject/bramble/sync/SyncIntegrationTest.java`, `bramble-core/src/test/java/org/briarproject/bramble/mailbox/`, `briar-headless/`.
+- **Install / runtime:** Official Android app/APK; source uses Gradle, Java 17, Android SDK 35; minSdk 21 (Android 5.0). Bluetooth/Wi-Fi or Tor networking as available.
+- **Platforms:** Android 5.0+; Java/Gradle headless components.
+- **License:** GPL-3.0-or-later in inspected `LICENSE.txt`; submodules and third-party Tor/crypto dependencies require separate license review. No source copied.
+- **Maintenance signals:** Official [Briar 1.5.22](https://www.briarproject.org/) dated 2026-10-13; October 9 GitHub mirror commit updated version and Tor 0.4.9.14. `.gitlab-ci.yml` specifies Gradle, emulator and reproducibility jobs, but no passing canonical GitLab pipeline was inspected. GitHub mirror has no release objects.
+- **Verification performed:** Inspected README, license, Gradle Android build configuration, cryptographic/transport/sync source paths and test suite; official release page. No independent APK build, Bluetooth/Wi-Fi/Tor message delivery, reproducible build or security audit.
+- **Source discovery:** GitHub-first 2026-10-26 CDT, checked against official Briar site; no YouTube transcript attribution.
+- **Related projects:** briar/briar-mailbox, briar/briar-desktop, briar/onionwrapper; Reticulum is a conceptual off-grid alternative, not a proven integration.
+- **Caveats / risks:** GitHub is a mirror; verify canonical GitLab CI and release signatures. Bluetooth/Wi-Fi needs nearby peers; Tor needs internet. Do not infer independently audited encryption from source names.
+- **Research notes:** `research/2026-10-26-paperless-briar.md`. No third-party code copied.
+
+
+### OCRmyPDF
+
+- **Repository:** https://github.com/ocrmypdf/OCRmyPDF
+- **Author / Org:** James R. Barlow and OCRmyPDF contributors
+- **Category:** Offline OCR / PDF/A / document processing / Python CLI and API
+- **Evidence:** VERIFIED (upstream source, tests and CI; no independent execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Adds searchable text layers to scanned PDFs/images with rotation, deskew, PDF/A output and plugin-based processing.
+- **Why it is valuable:** Reusable OCR pipeline, PDF/A validation, hOCR parsing, Python API, extension hooks, resource controls and watcher security components.
+- **Useful code/components:** `src/ocrmypdf/api.py`, `src/ocrmypdf/_pipelines/ocr.py`, `src/ocrmypdf/pdfa.py`, `src/ocrmypdf/hocrtransform/hocr_parser.py`, `src/ocrmypdf/_exec/tesseract.py`, `src/ocrmypdf/pluginspec.py`, `src/ocrmypdf/_watcher_security.py`, `tests/test_pdfa_final_validation.py`, `tests/test_decompression_bomb.py`.
+- **Install / runtime:** Python >=3.11 plus Tesseract and PDF/image native dependencies; CLI or Python API; optional watcher/HEIC extras.
+- **Platforms:** Linux, Windows, macOS.
+- **License:** MPL-2.0 application; README CC-BY-SA-4.0; separate dependency/font and optional HEIC/x265 licenses. Review each file before reuse.
+- **Maintenance signals:** Stable [v17.13.0](https://github.com/ocrmypdf/OCRmyPDF/releases/tag/v17.13.0) 2026-09-28; main manifest 17.13.1 is not a confirmed release. 2026-10-26 [CI 40295734365](https://github.com/ocrmypdf/OCRmyPDF/actions/runs/40295734365) succeeded overall: 21 jobs passed, four experimental Python 3.15 dependency installs failed, one skipped. Python 3.11–3.14, lint and build jobs passed.
+- **Verification performed:** Inspected README, license, manifest, OCR/PDF/A/API/watcher/plugin code, tests and workflow job steps. Python 3.15 install failure traced to onnxruntime 1.31.0 lacking cp315 wheel/sdist; 3.15 marked continue-on-error. No independent OCR or PDF/A validation.
+- **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript evidence.
+- **Related projects:** Tesseract OCR, Paperless-ngx, pikepdf.
+- **Caveats / risks:** Plugin and Pillow image limits are interpreter-global; different concurrent configs need separate processes. Watcher acknowledges TOCTOU/hardlink residual risks. Untrusted PDFs require isolation.
+- **Research notes:** `research/2026-10-27-ocrmypdf-gokrazy.md`. No third-party code copied.
+
+### gokrazy
+
+- **Repository:** https://github.com/gokrazy/gokrazy
+- **Author / Org:** gokrazy contributors
+- **Category:** Minimal Go appliance OS / embedded Linux / Raspberry Pi / edge services
+- **Evidence:** VERIFIED (upstream QEMU boot tests, Go tests and image generation; no physical hardware)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 3)
+- **What it does:** Runs Go programs as minimal Linux appliances with process supervision, a status interface and update support.
+- **Why it is valuable:** Distinctive edge runtime with CI-tested MBR/UEFI boot, modular Go services, authenticated control-plane code and companion image builder.
+- **Useful code/components:** `supervise.go`, `update.go`, `authenticated.go`, `cmd/dhcp/dhcp.go`, `cmd/ntp/ntp.go`, `netlink.go`, `integration/mbrboot/mbrboot_test.go`, `integration/uefiboot/uefiboot_test.go`.
+- **Install / runtime:** Go 1.26 for inspected main source; `gokrazy/tools` supplies `gok` image builder; supported Raspberry Pi or x86_64 PC.
+- **Platforms:** Raspberry Pi supported boards, x86_64 PC (MBR/UEFI); companion CLI builds Linux/macOS/Windows.
+- **License:** BSD-3-Clause core and companion tools; kernel, firmware, EEPROM and dependencies separately licensed.
+- **Maintenance signals:** Core [CI 35105853192](https://github.com/gokrazy/gokrazy/actions/runs/35105853192) passed 2026-09-16 including `go test ./...`, QEMU MBR/UEFI boot and image creation; [feature CI 37527198802](https://github.com/gokrazy/gokrazy/actions/runs/37527198802) passed 2026-10-06. Companion [tools CI 40385840520](https://github.com/gokrazy/tools/actions/runs/40385840520) passed Windows/macOS/Ubuntu 2026-10-26. No GitHub Releases in core.
+- **Verification performed:** Inspected README, license, Go manifest, supervision/auth/update source, tests, CI YAML and job log; QEMU `TestMBRBoot` and `TestUEFIBoot` explicitly passed. No physical device boot, remote update or security audit.
+- **Source discovery:** GitHub-first 2026-10-27; no transcript attribution.
+- **Related projects:** `gokrazy/tools`, `gokrazy/internal`, `gokrazy/kernel`, `gokrazy/firmware`.
+- **Caveats / risks:** No stable core release tag; firmware/kernel provenance and licenses separate. Review HTTPS/Basic auth, management exposure and update/rollback before deployment.
+- **Research notes:** `research/2026-10-27-ocrmypdf-gokrazy.md`. No third-party code copied.
+
+### yt-dlp
+
+- **Repository:** https://github.com/yt-dlp/yt-dlp
+- **Author / Org:** yt-dlp maintainers
+- **Category:** media-archiving / python-cli / metadata-extraction / subtitles / offline-preservation
+- **Evidence:** VERIFIED (upstream evidence; no independent execution)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Extensible Python media/metadata/subtitle downloader with format selection, HTTP resume and postprocessing.
+- **Why it is valuable:** Reusable extractor, network, plugin and postprocessor architecture; useful for permitted archival workflows.
+- **Useful code/components:** `yt_dlp/extractor/common.py`; `yt_dlp/downloader/http.py`; `yt_dlp/networking/`; `yt_dlp/plugins.py`; `yt_dlp/YoutubeDL.py`; `yt_dlp/postprocessor/`; `test/`.
+- **Install / runtime:** Python >=3.11, optional FFmpeg and JS runtime depending on site/format.
+- **Platforms:** Linux, Windows, macOS, Python >=3.11, Android/Termux with compatible tools.
+- **License:** Unlicense root; optional dependencies and media have independent rights. No source copied.
+- **Maintenance signals:** Stable [2026.10.26](https://github.com/yt-dlp/yt-dlp/releases/tag/2026.10.26) published 2026-10-26. [Core Tests](https://github.com/yt-dlp/yt-dlp/actions/runs/40404432725) 13/13 passed across Linux/Windows/Python 3.11–3.15/PyPy; [Quick Test](https://github.com/yt-dlp/yt-dlp/actions/runs/40404432887) 2/2 passed; [CodeQL](https://github.com/yt-dlp/yt-dlp/actions/runs/40404432831) passed. Later Core Tests run 40409938717 was skipped.
+- **Verification performed:** README, license, manifest, source, release and upstream CI inspected; no local download, subtitle extraction or security test.
+- **Source discovery:** GitHub-first 2026-10-27; playlist pages throttled, no transcript attribution.
+- **Related projects:** ArchiveBox (optional external downloader), abx-dl, FFmpeg.
+- **Caveats / risks:** Unlicense root does not cover FFmpeg, optional packages or downloaded content. Handle cookies and plugins as sensitive/untrusted. Respect rights and site terms.
+- **Research notes:** `research/2026-10-27-ytdlp-immich.md`.
+
+### Immich
+
+- **Repository:** https://github.com/immich-app/immich
+- **Author / Org:** immich-app
+- **Category:** self-hosting / photo-video-archiving / mobile-backup / local-machine-learning / media-management
+- **Evidence:** PROMISING (upstream evidence; no independent execution)
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 4)
+- **What it does:** Self-hosted photo/video library with mobile backup, search, deduplication, ML and sharing.
+- **Why it is valuable:** Reusable media lifecycle, authorization, duplicate resolution, database backups and typed local inference pipeline.
+- **Useful code/components:** `server/src/services/asset.service.ts`; `duplicate.service.ts`; `database-backup.service.ts`; `search.service.ts`; `machine-learning/immich_ml/pipeline.py`; server `*.spec.ts` tests.
+- **Install / runtime:** Docker server with PostgreSQL and Redis; optional ML service, Android/iOS apps and browser.
+- **Platforms:** Linux/Docker server, web browsers, Android, iOS, PostgreSQL/Redis, Python ML service.
+- **License:** AGPL-3.0 root; ML models, assets and dependencies separately licensed. No source copied.
+- **Maintenance signals:** Stable [v3.3.5](https://github.com/immich-app/immich/releases/tag/v3.3.5) published 2026-10-21. 2026-10-27 [CodeQL](https://github.com/immich-app/immich/actions/runs/40492780574) and [static analysis](https://github.com/immich-app/immich/actions/runs/40492780708) passed; [Test](https://github.com/immich-app/immich/actions/runs/40492780438) failed overall. Server test/lint passed; SQL/e2e GHCR image pulls throttled (`toomanyrequests`), medium tests lacked PostgreSQL image. Mobile build-and-sign jobs were skipped. On 2026-10-28, [mobile passkey PR Test 1](https://github.com/immich-app/immich/actions/runs/40653312777) and [Test 2](https://github.com/immich-app/immich/actions/runs/40653532254) succeeded for selected mobile/schema/API jobs, but web/server/ML E2E and medium tests were SKIPPED; green `End-to-End Tests Success` gate does not prove E2E execution.
+- **Verification performed:** README, license, package manifest, source and upstream CI logs inspected; no local deployment, mobile upload, backup restore, ML inference or e2e test.
+- **Source discovery:** GitHub-first 2026-10-27; playlist pages throttled, no transcript attribution.
+- **Related projects:** immich-app/devtools, PostgreSQL, FFmpeg; no claimed direct integration.
+- **Caveats / risks:** AGPL-3.0 network copyleft; third-party/model rights. Official 3-2-1 backup warning; database-only backup does not preserve media. Face/location privacy and public sharing need scrutiny.
+- **Research notes:** `research/2026-10-27-ytdlp-immich.md`.
+
+### libarchive
+
+- **Repository:** https://github.com/libarchive/libarchive
+- **Author / Org:** libarchive
+- **Category:** archival / c-library / compression / format-parsing / cli-tools
+- **Evidence:** VERIFIED (upstream CI and source inspection; no independent execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Portable C archive reader/writer and implementations of bsdtar, bsdcpio, bsdcat and bsdunzip.
+- **Why it is valuable:** Embeddable archive parsing, streaming compression, metadata handling and multi-format interoperability.
+- **Useful code/components:** `libarchive/archive_read_support_format_zip.c — ZIP reader`; `libarchive/archive_read_support_format_7zip.c — 7z reader`; `libarchive/archive_read_support_format_tar.c — tar reader`; `libarchive/archive_read_support_filter_zstd.c — Zstandard filter`; `libarchive/archive_entry.c — entry metadata`; `examples/minitar/minitar.c — embedding example`; `tar/ — bsdtar`; `unzip/ — bsdunzip`; `libarchive/test/ — regression fixtures`.
+- **Install / runtime:** CMake or Autotools C build; compression and crypto dependencies vary by configuration.
+- **Platforms:** Linux, Windows, macOS, FreeBSD, Alpine Linux.
+- **License:** Permissive two-clause BSD-style notice for most source; UC Regents, public-domain, BLAKE2 and build-script exceptions. No third-party source copied.
+- **Maintenance signals:** [v3.8.10](https://github.com/libarchive/libarchive/releases/tag/v3.8.10) released 2026-10-14; [CI](https://github.com/libarchive/libarchive/actions/runs/40530777935) 20/20 passed 2026-10-27; [CodeQL](https://github.com/libarchive/libarchive/actions/runs/40530777979) passed.
+- **Verification performed:** 2026-10-27 inspected README, COPYING, SECURITY.md, source, examples, test tree and CI workflow; Stable v3.8.10 released 2026-10-14; 2026-10-27 master CI 40530777935 passed 20/20 jobs with build/test stages on Ubuntu, Alpine, Windows, FreeBSD and macOS; 2026-10-27 master CodeQL 40530777979 passed; PR CIFuzz workflow exists; No independent compilation, extraction, fuzzing or security audit.
+- **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript attribution.
+- **Related projects:** bsdtar, bsdcpio, bsdcat, bsdunzip (same repository); [Zstandard](https://github.com/meta/zstd) provides the codec used by `archive_read_support_filter_zstd.c` (upstream integration; not independently tested).
+- **Caveats / risks:** Individual source-file license headers govern reuse. Malformed archives, traversal, symlinks and decompression bombs require deployment safeguards; no code copied.
+- **Research notes:** `research/2026-10-27-libarchive-kiwix-tools.md`. 2026-10-30 dependency check: libkiwix stable 14.2.1, development manifest 14.3.0; same-commit libkiwix CI passed 11/11, Debian-unstable packaging failed. These results do not independently rebuild kiwix-tools; see `research/2026-10-30-accesskit-libkiwix.md`.
+
+### Kiwix Tools
+
+- **Repository:** https://github.com/kiwix/kiwix-tools
+- **Author / Org:** kiwix
+- **Category:** offline-knowledge / zim-format / http-server / search / cli-tools
+- **Evidence:** VERIFIED (upstream CI and source inspection; no independent execution)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Provides offline ZIM HTTP serving (kiwix-serve), full-text search (kiwix-search) and library management (kiwix-manage).
+- **Why it is valuable:** Completes the existing offline ZIM ecosystem with practical search and local multi-device HTTP access.
+- **Useful code/components:** `src/server/kiwix-serve.cpp — offline ZIM HTTP serving, bind controls`; `src/searcher/kiwix-search.cpp — full-text search and suggestions`; `src/manager/kiwix-manage.cpp — ZIM library XML/OPDS catalog`; `meson.build — dependency constraints and C++17 build`; `docker/ — container packaging`.
+- **Install / runtime:** Meson/Ninja C++17; libzim >=9,<10, libkiwix >=14.2,<15, docopt; official Docker image.
+- **Platforms:** Linux x86_64 dynamic/static, Windows x64, POSIX, Docker.
+- **License:** GPL-3.0-or-later per source headers; root COPYING GPLv3; dependencies separate. No third-party source copied.
+- **Maintenance signals:** [3.8.2](https://github.com/kiwix/kiwix-tools/releases/tag/3.8.2) released 2026-03-02; [CI](https://github.com/kiwix/kiwix-tools/actions/runs/36844685289) 3/3 passed 2026-10-01 (Linux builds, Windows build/tests).
+- **Verification performed:** 2026-10-27 inspected README, COPYING, C++ server/searcher/manager source, Meson manifest and CI workflow; Stable 3.8.2 released 2026-03-02; 2026-10-01 main CI 36844685289 passed 3/3 jobs: Linux dynamic/static compile and Windows compile plus Meson tests; 2026-10-26 scheduled 40272845437 passed only Actions analysis, not a runtime test; No independent HTTP serving, ZIM search, LAN security or Docker deployment.
+- **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript attribution.
+- **Related projects:** kiwix/libkiwix (direct dependency); openzim/libzim (direct dependency); openzim/zim-tools (complementary); kiwix/kiwix-android (separate client); kiwix/kiwix-build (build support).
+- **Caveats / risks:** Meson/Ninja C++17, libzim >=9,<10, libkiwix >=14.2,<15, docopt. kiwix-serve defaults to all network interfaces on HTTP port 80; restrict exposure. No source copied.
+- **Research notes:** `research/2026-10-27-libarchive-kiwix-tools.md`.
+
+
+### SQLCipher
+
+- **Repository:** https://github.com/sqlcipher/sqlcipher
+- **Author / Org:** sqlcipher / Zetetic LLC.
+- **Category:** encrypted-database / sqlite / c-library / local-first / privacy.
+- **Evidence:** PROMISING — release, source and test suite inspected; successful current CI not established.
+- **Tier / Score:** A / 25 (Utility 5; Working Evidence 3; Reusability 5; Novelty 3; Documentation 5; Maintenance 4).
+- **What it does:** SQLite fork that encrypts database pages on the fly, with key derivation, integrity protection, rekeying and migration.
+- **Why it is valuable:** Reusable embedded encrypted storage for offline-first, mobile and desktop applications.
+- **Useful code/components:** `src/sqlcipher.c` — SQLite pager encryption, key derivation, rekey, migration; `src/sqlcipher.h` — codec/provider API; `src/crypto_openssl.c` — OpenSSL reference provider; `src/crypto_cc.c` — CommonCrypto provider; `src/crypto_libtomcrypt.c` — LibTomCrypt provider; `test/sqlcipher.test` — SQLCipher-specific test-suite manifest; `test/sqlcipher-compatibility.test` — backward compatibility tests.
+- **Install / runtime:** C toolchain and supported cryptographic provider; define SQLITE_HAS_CODEC, SQLITE_EXTRA_INIT=sqlcipher_extra_init, SQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown, SQLITE_TEMP_STORE=2/3 and SQLITE_THREADSAFE=1/2.
+- **Platforms:** Linux, Windows, macOS, Android, iOS, WebAssembly (platform-specific builds).
+- **License:** Zetetic 3-clause BSD-style Community Edition; upstream SQLite public domain; crypto providers/build scripts separately licensed. No third-party source copied.
+- **Maintenance signals:** [v4.20.0](https://github.com/sqlcipher/sqlcipher/releases/tag/v4.20.0) released 2026-10-27; SQLite 3.54.1 baseline, cipher_migrate and WebAssembly fixes.
+- **Verification performed:** 2026-10-27 inspected README, LICENSE.md, SQLITE_LICENSE.md, CHANGELOG.md, src/sqlcipher.c, src/crypto_openssl.c and test/sqlcipher.test; Stable v4.20.0 released 2026-10-27 14:15 UTC, updating SQLite baseline to 3.54.1; SQLCipher-specific Tcl tests are present and documented; public GitHub Actions runs API returned none; No independent compilation, encryption, migration, rekey, backup restoration, or cryptographic audit.
+- **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript attribution.
+- **Related projects:** SQLite; OpenSSL; CommonCrypto; LibTomCrypt.
+- **Caveats / risks:** SQLCipher 4 defaults differ from earlier major versions. Migrate legacy databases explicitly; handle keys and backups securely. Tests are documented but no passing current CI execution was found.
+- **Research notes:** `research/2026-10-27-sqlcipher-betterleaks.md`. Keep PROMISING until reproducible encryption, rekey and backward-compatibility tests are observed.
+
+### Betterleaks
+
+- **Repository:** https://github.com/betterleaks/betterleaks
+- **Author / Org:** betterleaks (Zachary Rice and maintainers).
+- **Category:** defensive-security / secrets-scanning / go-cli / credential-hygiene / supply-chain.
+- **Evidence:** VERIFIED — upstream CI passed; no independent execution.
+- **Tier / Score:** S / 28 (Utility 5; Working Evidence 5; Reusability 5; Novelty 4; Documentation 5; Maintenance 4).
+- **What it does:** Go CLI and embeddable SDK to detect possible exposed secrets in files, Git, hosted code and containers, with optional provider validation and credential analysis.
+- **Why it is valuable:** Reusable scanner with keyword prefilters, concurrent regex engine, Expr rules, provider-specific detection and source adapters.
+- **Useful code/components:** `scan/scanner.go` — reusable concurrent scanner, keyword filtering; `analyze/analyzer.go` — optional credential validation and analysis; `config/` — Expr/TOML rule compilation; `sources/` — filesystem, Git, hosted-code and container adapters; `cmd/container.go` — container image scan entrypoint; `fingerprint/` — match identifiers; `cmd/generate/config/rules/` — provider-specific detection rules; `examples/` — Go SDK.
+- **Install / runtime:** Go 1.26 for current v2 source; go install github.com/betterleaks/betterleaks/v2@latest or make build. Package managers may still ship v1.
+- **Platforms:** Linux, Windows, macOS, Go 1.26 for current v2 source, containers.
+- **License:** MIT at root; dependencies and third-party rules separately licensed. No third-party source copied.
+- **Maintenance signals:** [v1.9.0 stable](https://github.com/betterleaks/betterleaks/releases/tag/v1.9.0) 2026-09-29; [v2.0.0-rc.4](https://github.com/betterleaks/betterleaks/releases/tag/v2.0.0-rc.4) 2026-10-20; [main CI 40351219706](https://github.com/betterleaks/betterleaks/actions/runs/40351219706) passed Ubuntu and Windows builds/config/race-tests 2026-10-26.
+- **Verification performed:** 2026-10-27 inspected README, LICENSE, SECURITY.md, go.mod, scanner/analyzer source and .github/workflows/test.yml; Stable v1.9.0 released 2026-09-29; v2.0.0-rc.4 released 2026-10-20; main develops v2; 2026-10-26 main CI run 40351219706 passed 2/2 Ubuntu and Windows jobs: go build ./..., RE2/stdlib config validation, go test -race ./...; 2026-10-27 feature-branch CI passed but is not main-branch evidence; No independent build, scan, credential validation, network request or security audit.
+- **Source discovery:** GitHub-first 2026-10-27; no YouTube transcript attribution.
+- **Related projects:** gitleaks/gitleaks (maintainer ecosystem); getsops/sops (complementary); expr-lang/expr; go-git/go-git.
+- **Caveats / risks:** Main branch targets v2 release candidate, not stable v2. Validation/analysis can send credentials to providers when enabled; custom rules are a trust boundary. Revocation is separate and explicit. Protect reports.
+- **Research notes:** `research/2026-10-27-sqlcipher-betterleaks.md`. Test false-positive behavior on synthetic fixtures, network validation boundaries, container resource limits and future stable v2 release.
+
+### Cosign
+
+- **Repository:** https://github.com/sigstore/cosign
+- **Author / Org:** Sigstore
+- **Category:** software-supply-chain / artifact-signing / oci-registry / provenance
+- **Evidence:** VERIFIED (upstream CI, not independently executed)
+- **Tier / Score:** S / 29 (utility 5 + working evidence 5 + reusability 5 + novelty 5 + documentation 5 + maintenance 4)
+- **What it does:** Signs and verifies OCI images and artifacts with keys, keyless certificates, KMS, transparency logs and attestations.
+- **Why it is valuable:** Reusable artifact authenticity and provenance controls.
+- **Useful code/components:** `cmd/cosign/cli/verify/verify.go` — certificate identity and signature verification; `cmd/cosign/cli/verify/verify_attestation.go` — attestations; `cmd/cosign/cli/verify/verify_bundle.go` — bundle verification; `pkg/oci/remote/remote.go` — OCI registry access; `pkg/cosign/bundle/types/` — bundle types; `pkg/policy/attestation.go` — attestation policy.
+- **Install / runtime:** Release binaries for Linux/macOS/Windows; current main source Go 1.27; registry or offline bundle as applicable.
+- **Platforms:** Linux, macOS, Windows, OCI registries, Go 1.27 current main.
+- **License:** Apache-2.0 root; dependencies separate. No source copied.
+- **Maintenance signals:** [v3.1.4](https://github.com/sigstore/cosign/releases/tag/v3.1.4) 2026-10-20; [main CI](https://github.com/sigstore/cosign/actions/runs/40262470330) 6/6, [main E2E](https://github.com/sigstore/cosign/actions/runs/40262470331) 5/5 and [CodeQL](https://github.com/sigstore/cosign/actions/runs/40262470324) passed 2026-10-26.
+- **Verification performed:** 2026-10-27 inspected README, LICENSE, go.mod, verification/OCI source, releases and CI; Stable v3.1.4 published 2026-10-20; main go.mod specifies Go 1.27; 2026-10-26 main CI-Tests 40262470330 passed 6/6 Linux/macOS/Windows and E2E jobs; main E2E 40262470331 passed 5/5 registry/KMS/PKCS#11 jobs; CodeQL 40262470324 passed; 2026-10-27/28 UTC conformance nightlies 40428072278 and 40609410330 succeeded; No independent signing, verification, registry or security testing.
+- **Source discovery:** GitHub-first; no YouTube transcript evidence.
+- **Related projects:** sigstore/fulcio; sigstore/rekor; sigstore/sigstore-go; google/go-containerregistry; in-toto/in-toto-golang.
+- **Caveats / risks:** Enforce expected certificate identity, issuer and trusted roots; cryptographic signature validity alone is not sufficient.
+- **Research notes:** `research/2026-10-27-cosign-task-openmct.md`.
+
+### Task
+
+- **Repository:** https://github.com/go-task/task
+- **Author / Org:** go-task / Andrey Nering and maintainers
+- **Category:** developer-tooling / task-runner / build-automation / go-cli
+- **Evidence:** VERIFIED (upstream CI, not independently executed)
+- **Tier / Score:** S / 28 (utility 5 + working evidence 5 + reusability 5 + novelty 3 + documentation 5 + maintenance 5)
+- **What it does:** Cross-platform YAML Taskfile runner with dependencies, variables, source checksums, file watching and remote includes.
+- **Why it is valuable:** Portable build/test/release automation and reusable scheduling/fingerprint code.
+- **Useful code/components:** `executor.go` — task execution; `compiler.go` — Taskfile compilation; `taskfile/node_git.go` — remote Git Taskfile and private cache; `taskfile/node_http.go` — HTTP Taskfile; `internal/fingerprint/sources_checksum.go` — source fingerprinting; `watch.go` — file watcher; `taskfile/ast/` — AST; `testdata/` — fixtures.
+- **Install / runtime:** Published binaries and package managers; current main Go 1.26.4; Taskfile.yml configuration.
+- **Platforms:** Linux, macOS, Windows, Go 1.26.4 current main.
+- **License:** MIT root; dependencies separate. No source copied.
+- **Maintenance signals:** [v3.54.0](https://github.com/go-task/task/releases/tag/v3.54.0) stable 2026-10-01; [CI](https://github.com/go-task/task/actions/runs/40605488694) 16/16 passed 2026-10-27 on Renovate branch (not main); nightly 2026-10-28 UTC not stable.
+- **Verification performed:** 2026-10-27 inspected README, LICENSE, go.mod, source, remote Git loader, checksum implementation and tests; Stable v3.54.0 published 2026-10-01; current main go.mod specifies Go 1.26.4; 2026-10-27 Renovate branch CI 40605488694 passed 16/16 jobs: Go 1.26/1.27 builds, Linux/macOS/Windows tests, lint, docs, schema and vulnerability checks (not main branch); 2026-10-28 UTC nightly release succeeded; not stable release evidence; No independent build, Taskfile execution, remote import or security testing.
+- **Source discovery:** GitHub-first; no YouTube transcript evidence.
+- **Related projects:** go-task/template; go-task/slim-sprig; mvdan.cc/sh/v3; chainguard-dev/git-urls.
+- **Caveats / risks:** Untrusted Taskfiles run arbitrary commands with user privileges. Review and pin remote includes; HTTPS is not sandboxing.
+- **Research notes:** `research/2026-10-27-cosign-task-openmct.md`.
+
+### MapLibre Native
+
+- **Repository:** https://github.com/maplibre/maplibre-native
+- **Author / Org:** MapLibre
+- **Category:** offline-mapping / geospatial / gpu-rendering / cpp / android / ios
+- **Evidence:** VERIFIED — upstream CI, not independent execution
+- **Tier / Score:** S / 29 (utility 5 + working evidence 5 + reusability 5 + novelty 5 + documentation 5 + maintenance 4)
+- **What it does:** Cross-platform C++ GPU vector-map renderer with programmable styles, offline cache and native PMTiles reading.
+- **Why it is valuable:** Provides production-grade rendering, style evaluation and disconnected map components for custom field applications.
+- **Useful code/components:** src/mln/renderer/renderer.cpp and render_orchestrator.cpp — GPU rendering; src/mln/style/expression/ — style evaluation; src/mln/tile/ — vector/raster tiles; platform/default/src/mln/storage/pmtiles_file_source.cpp — native PMTiles reader; platform/default/src/mln/storage/offline_database.cpp — offline SQLite cache; bin/offline.cpp — offline CLI; include/mln/plugin/plugin_api.h — experimental native plugins; render-test/ and expression-test/ — regression fixtures.
+- **Install / runtime:** Android Gradle, iOS Swift package/CocoaPods or native C++ build; supply licensed offline tiles/styles/glyphs/sprites.
+- **Platforms:** Android, iOS (v7 requires >=15.5), Linux, Windows, macOS, Node.js, Qt/Compose companions.
+- **License:** BSD-2-Clause root; third-party notices in LICENSES.core.md/vendor; map data separately licensed.
+- **Maintenance signals:** Android v13.7.1 2026-10-15; iOS v7.0.0 2026-10-28; main platform CI passed 2026-10-27.
+- **Verification performed:** [Android main 10/10](https://github.com/maplibre/maplibre-native/actions/runs/40603579515), [iOS main 6/6](https://github.com/maplibre/maplibre-native/actions/runs/40603579220), [Linux main 6/6](https://github.com/maplibre/maplibre-native/actions/runs/40603579610) passed 2026-10-27. Separate [pr-linux-tests](https://github.com/maplibre/maplibre-native/actions/runs/40632794426) benchmark/bloat jobs failed 2026-10-28. Inspected source, licenses and release notes; no independent builds, deployment or security audits.
+- **Source discovery:** GitHub-first; previous research dossier and 2026-10-28 follow-up; no transcript attribution.
+- **Related projects:** protomaps/PMTiles; protomaps/go-pmtiles; maplibre/maplibre-compose; maplibre/maplibre-native-qt.
+- **Caveats / risks:** iOS v7 raises minimum to 15.5 and changes Objective-C header. Experimental native plugins require special builds. Validate untrusted tile/PMTiles inputs; no offline map data bundled.
+- **Research notes:** `research/2026-10-28-maplibre-native-nats-server.md`. No third-party code copied.
+
+### NATS Server
+
+- **Repository:** https://github.com/nats-io/nats-server
+- **Author / Org:** NATS.io
+- **Category:** distributed-messaging / jetstream / pub-sub / edge / go-server
+- **Evidence:** VERIFIED — upstream CI, not independent execution
+- **Tier / Score:** S / 29 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 5 + maintenance 5)
+- **What it does:** Subject-based broker supporting request/reply, account isolation, MQTT, leaf nodes, clustering and JetStream durable replicated streams.
+- **Why it is valuable:** Reusable implementation of edge messaging, Raft consensus, persistence, flow control and authorization.
+- **Useful code/components:** server/jetstream.go and jetstream_cluster.go — durable streams; server/stream.go and consumer.go — delivery/ack state; server/filestore.go, memstore.go, store.go — storage; server/raft.go and raft_transport.go — consensus; server/leafnode.go, route.go, gateway.go — edge topology; server/auth.go and auth_callout.go — authorization; server/mqtt.go — MQTT; server/monitor.go — monitoring.
+- **Install / runtime:** Official binaries/container or Go build; configure TLS, accounts, monitoring restrictions and JetStream storage.
+- **Platforms:** Linux, macOS, Windows, containers, Raspberry Pi-class Linux, main Go 1.26.0/toolchain 1.26.10.
+- **License:** Apache-2.0 root; dependencies and client SDKs separately licensed.
+- **Maintenance signals:** v2.15.2 2026-10-26; main CI 21/21 2026-10-26; long JetStream and govulncheck 2026-10-27.
+- **Verification performed:** [Main NATS Server Tests 21/21](https://github.com/nats-io/nats-server/actions/runs/40365928969) passed 2026-10-26; [Long JetStream Tests](https://github.com/nats-io/nats-server/actions/runs/40507265134) and [govulncheck](https://github.com/nats-io/nats-server/actions/runs/40459212504) passed 2026-10-27. Inspected source, licenses and release notes; no independent builds, deployment or security audits.
+- **Source discovery:** GitHub-first; previous research dossier and 2026-10-28 follow-up; no transcript attribution.
+- **Related projects:** nats-io/nats.go; nats-io/natscli; nats-io/nkeys; nats-io/jwt; nats-io/nats-general; benbjohnson/litestream (NATS JetStream Object Store replication backend, not NATS server core).
+- **Caveats / risks:** v2.15.2 fixes OCSP binding, auth callout restrictions, snapshot limits and MQTT/leafnode ACLs. Read 2.15 upgrade guide; test backup and failover; secure listeners.
+- **Research notes:** `research/2026-10-28-maplibre-native-nats-server.md`. No third-party code copied.
+
+### ripgrep
+
+- **Repository:** https://github.com/BurntSushi/ripgrep
+- **Author / Org:** BurntSushi / Andrew Gallant
+- **Category:** developer-tooling / text-search / rust-cli / regex / filesystem-traversal
+- **Evidence:** VERIFIED (upstream CI, not independently executed)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Fast recursive line-oriented regex search with .gitignore-aware filtering, optional PCRE2 and structured output.
+- **Why it is valuable:** Portable CLI and independently reusable Rust crates for filesystem walking, ignore/glob parsing, search and result formatting.
+- **Useful code/components:** `crates/ignore/src/walk.rs` (parallel walker); `crates/ignore/src/gitignore.rs`; `crates/globset/src/glob.rs`; `crates/searcher/src/searcher/`; `crates/regex/src/matcher.rs`; `crates/pcre2/src/matcher.rs`; `crates/printer/src/json.rs`; `crates/core/search.rs`; `tests/tests.rs`.
+- **Install / runtime:** Official release binaries, package managers or Cargo; current source specifies Rust >=1.96; PCRE2 optional.
+- **Platforms:** Linux, macOS, Windows; CI also covers multiple ARM, RISC-V, s390x and WASM targets.
+- **License:** MIT OR Unlicense; inspected root LICENSE-MIT and per-crate notices. Dependencies separately licensed; no source copied.
+- **Maintenance signals:** Stable [15.2.0](https://github.com/BurntSushi/ripgrep/releases/tag/15.2.0) released 2026-07-15 with ignore matching and traversal fixes. [2026-10-28 master CI](https://github.com/BurntSushi/ripgrep/actions/runs/40612963042) passed 23/23 jobs including OS/architecture tests, docs, fuzz-target compilation and benchmark test.
+- **Verification performed:** README, manifests, license, source tree, ignore walker and upstream CI inspected; no independent execution, performance measurement or fuzzing.
+- **Source discovery:** GitHub-first; no transcript attribution.
+- **Related projects:** BurntSushi/regex-automata; BurntSushi/aho-corasick; sharkdp/fd (separate CLI using ripgrep's ignore/globset crates); Genivia/ugrep.
+- **Caveats / risks:** Default ignore/hidden/binary filtering may omit results; `rg -uuu` disables automatic filters. Optional PCRE2 behavior and untrusted text/resource limits require evaluation.
+- **Research notes:** `research/2026-10-28-ripgrep-tauri-immich.md`.
+
+### Tauri
+
+- **Repository:** https://github.com/tauri-apps/tauri
+- **Author / Org:** tauri-apps / Tauri Programme
+- **Category:** cross-platform / desktop-apps / mobile-apps / rust / webview / application-framework
+- **Evidence:** VERIFIED (upstream PR core CI, not independently executed)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Rust-backed desktop/mobile app framework combining system webviews with HTML/JS/CSS frontends, native APIs, capabilities and packaging.
+- **Why it is valuable:** Reusable webview/IPC and ACL architecture, native plugin framework, app bundling and cross-platform Rust/TypeScript bridge.
+- **Useful code/components:** `crates/tauri/src/ipc/authority.rs`; `crates/tauri/src/ipc/protocol.rs`; `crates/tauri-utils/src/acl/`; `crates/tauri-runtime-wry/src/webview.rs`; `crates/tauri/src/plugin.rs`; `crates/tauri-bundler/src/bundle/`; `crates/tauri-codegen/`; `packages/api/`; `packages/api-e2e/test/specs/`.
+- **Install / runtime:** Rust >=1.90 in inspected dev workspace, Node/package manager for JS frontend, OS-specific build tools and system webviews; Linux Tauri v2 requires WebKitGTK 4.1. Desktop updater is not a mobile updater.
+- **Platforms:** Windows 10+, macOS 10.15+, Linux, Android, iOS; check per-target SDK and device minimums.
+- **License:** Apache-2.0 OR MIT declared in Cargo workspace and inspected `crates/tauri/LICENSE-MIT`; dependencies, plugins and webviews separately licensed. No code copied.
+- **Maintenance signals:** [tauri-v2.12.5](https://github.com/tauri-apps/tauri/releases/tag/tauri-v2.12.5) published 2026-10-21. [2026-10-27 PR core CI](https://github.com/tauri-apps/tauri/actions/runs/40530165720) passed 10/10 Linux/Windows/macOS tests and Android/iOS cross-builds. [2026-10-28 dev Audit](https://github.com/tauri-apps/tauri/actions/runs/40609767411) failed JS audit (one LOW `deepmerge` advisory GHSA-gcqx-w48m-w2h4 via example Svelte tooling); Rust audit passed.
+- **Verification performed:** README, architecture, manifest, license, IPC/ACL source, upstream release and CI/audit logs inspected; no independent app build, device test, signed updater or security audit.
+- **Source discovery:** GitHub-first; no transcript attribution.
+- **Related projects:** tauri-apps/wry; tauri-apps/tao; tauri-apps/create-tauri-app; tauri-apps/tauri-action; tauri-apps/plugins-workspace.
+- **Caveats / risks:** Frontend-to-Rust IPC permission scope and third-party plugin trust are security-critical. System webview behavior differs by OS. Passing PR core tests do not clear dev-branch JS audit finding or establish mobile runtime execution.
+- **Research notes:** `research/2026-10-28-ripgrep-tauri-immich.md`.
+
+### fd
+
+- **Repository:** https://github.com/sharkdp/fd
+- **Author / Org:** sharkdp / David Peter and contributors
+- **Category:** developer-tooling / filesystem-search / Rust CLI / parallel traversal / automation
+- **Evidence:** VERIFIED (upstream PR CI, not independently executed)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Parallel, ignore-aware filename and directory finder with regex/glob matching, filters, and optional external command execution.
+- **Why it is valuable:** Reusable Rust traversal and command scheduling patterns; complements ripgrep's content search while sharing its ignore/globset library ecosystem.
+- **Useful code/components:** `src/walk.rs` parallel traversal; `src/exec/mod.rs` command templates; `src/exec/command.rs` command runner; `src/sanitize.rs` TTY-safe filename output; `src/main.rs` CLI; `tests/tests.rs` filesystem integration fixtures.
+- **Install / runtime:** Official binaries or package manager; `cargo install fd-find` with Rust >=1.90 for inspected source. Package command may be `fdfind` on Debian-based systems.
+- **Platforms:** Linux, macOS, Windows; Android/Termux not independently verified.
+- **License:** MIT OR Apache-2.0 in Cargo.toml and LICENSE-MIT/LICENSE-APACHE; dependencies separately licensed. No source copied.
+- **Maintenance signals:** Stable [v10.5.0](https://github.com/sharkdp/fd/releases/tag/v10.5.0) released 2026-08-26. [2026-09-09 PR CICD](https://github.com/sharkdp/fd/actions/runs/34198170327) had 18 successful jobs, one skipped publication job (not current master). Latest inspected master commit [b7a0a29](https://github.com/sharkdp/fd/commit/b7a0a29d07c3d0e9e0a41155019acada08831a6c) on 2026-10-28.
+- **Verification performed:** Inspected README, manifest, two licenses, traversal, execution, sanitization, tests, release and upstream CI job conclusions. No independent binary execution or benchmarks.
+- **Source discovery:** GitHub-first follow-up from ripgrep ecosystem; no transcript attribution.
+- **Related projects:** BurntSushi/ripgrep (shared ignore/globset dependencies); sharkdp/bat.
+- **Caveats / risks:** Hidden/ignored files are excluded by default. `-x`/`-X` execute user-specified commands; do not run untrusted command templates. Filename sanitization on terminal output is not a security boundary for arbitrary subprocesses.
+- **Research notes:** `research/2026-10-28-fd-pandoc.md`. Upstream PR CI predates latest master; no source copied.
+
+### Pandoc
+
+- **Repository:** https://github.com/jgm/pandoc
+- **Author / Org:** John MacFarlane / jgm and contributors
+- **Category:** document-conversion / Haskell / document AST / markup parsing / archival
+- **Evidence:** VERIFIED (upstream main CI, not independently executed)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 5 + Documentation 5 + Maintenance 4)
+- **What it does:** Haskell document-conversion library and CLI supporting Markdown, DOCX, HTML, EPUB, LaTeX, Typst and many other input/output formats via a shared document representation.
+- **Why it is valuable:** Source readers/writers, document transformation APIs, Lua filters and format-independent conversion pipelines enable archiving, documentation migration and publishing.
+- **Useful code/components:** `src/Text/Pandoc/Readers/Markdown.hs`; `src/Text/Pandoc/Readers/Docx.hs`; `src/Text/Pandoc/Writers/Docx.hs`; `src/Text/Pandoc/Writers/EPUB.hs`; `pandoc-lua-engine/src/Text/Pandoc/Lua.hs`; `pandoc-cli/pandoc-cli.cabal`; `test/Tests/Readers/Markdown.hs`.
+- **Install / runtime:** Prebuilt binaries or Haskell Cabal/Stack; inspected CI tests GHC 9.6–9.14. PDF output requires external engines (e.g. TeX) depending on selected format.
+- **Platforms:** Linux, macOS, Windows.
+- **License:** GPL-2.0-or-later in Cabal manifests and COPYING.md; check dependency and Lua filter licenses. No source copied.
+- **Maintenance signals:** [3.13 release](https://github.com/jgm/pandoc/releases/tag/3.13) published 2026-10-26. [2026-09-29 main CI](https://github.com/jgm/pandoc/actions/runs/36603069136) had 8/8 successful jobs; this predates 3.13. [2026-10-28 main commit](https://github.com/jgm/pandoc/commit/60725b8673fb0783ea109fb7d76b9f9ef600b89c) fixes EPUB date handling.
+- **Verification performed:** Inspected README, Cabal manifests, GPL license, reader/writer/Lua sources, tests, 3.13 release and CI jobs. No independent conversion, PDF, filter execution or parser fuzzing.
+- **Source discovery:** Independent GitHub-first research; no transcript attribution.
+- **Related projects:** jgm/pandoc-types; jgm/citeproc; pandoc/lua-filters; pandoc/actions.
+- **Caveats / risks:** Format conversion can lose unsupported semantics; the DOCX reader itself documents incomplete features. 3.13 changes YAML parsing behavior; migration testing advised. Lua filters and external converters can execute code. GPL obligations apply to reuse.
+- **Research notes:** `research/2026-10-28-fd-pandoc.md`. Current-head CI not established; no source copied.
+
+### Piper
+
+- **Repository:** https://github.com/OHF-Voice/piper1-gpl
+- **Author / Org:** Open Home Foundation / OHF-Voice.
+- **Category:** offline text-to-speech / accessibility / local AI / Python / C/C++.
+- **Evidence:** VERIFIED (older upstream release CI, not current-head or independent execution).
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4).
+- **What it does:** Local neural TTS using eSpeak-NG and ONNX Runtime, with Python, HTTP and C/C++ APIs.
+- **Why it is valuable:** Offline speech for assistive technology, disconnected devices and local assistants; encoder/decoder splitting enables lower-latency audio chunks.
+- **Useful code/components:** `src/piper/voice.py` (synthesis), `src/piper/http_server.py` (Flask API), `libpiper/include/piper.h` (C ABI), `docs/STREAMING.md` (streaming), `docs/VOICES.md` (model terms).
+- **Install / runtime:** `pip install piper-tts`, matching `.onnx`/`.onnx.json` voice files, ONNX Runtime; optional CUDA; CMake for libpiper.
+- **Platforms:** Linux, Windows and macOS (v1.8.0 wheel artifacts).
+- **License:** GPL-3.0 (`COPYING`); voice models have independent MODEL_CARD licenses; dependencies separately licensed.
+- **Maintenance signals:** [v1.8.0](https://github.com/OHF-Voice/piper1-gpl/releases/tag/v1.8.0) published 2026-09-04; [main commit 74ac24e](https://github.com/OHF-Voice/piper1-gpl/commit/74ac24e7e8e2e57a5e1fada5505c74e3d9c1843a) 2026-10-23. [v1.5.0 publish CI](https://github.com/OHF-Voice/piper1-gpl/actions/runs/29609618090) 14/14 jobs passed 2026-07-17, **before v1.8.0 and new streaming**.
+- **Verification performed:** Inspected README, GPL, voice and HTTP sources, C header, docs, test workflow, release and upstream CI. No local synthesis, latency, model-license or security testing.
+- **Source discovery:** GitHub-first accessibility/offline research; no transcript attribution.
+- **Related projects:** espeak-ng, ONNX Runtime, rhasspy/piper-voices, Home Assistant, NVDA (upstream mentions use, integration unverified).
+- **Caveats / risks:** Flask server defaults to `0.0.0.0:5000`; restrict network exposure. Individual voices may restrict redistribution. README seeks maintainers.
+- **Research notes:** `research/2026-10-28-piper-esp-hal.md`. No upstream code copied.
+
+### esp-hal
+
+- **Repository:** https://github.com/esp-rs/esp-hal
+- **Author / Org:** esp-rs / Espressif Rust contributors.
+- **Category:** embedded Rust / ESP32 / `no_std` / peripheral drivers.
+- **Evidence:** PROMISING (mixed upstream hardware-in-loop evidence; no independent hardware tests).
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4).
+- **What it does:** Bare-metal Rust HAL for ESP32 chips with blocking/async drivers, GPIO, I2C and companion runtime support.
+- **Why it is valuable:** Reusable typed peripheral ownership, chip-aware driver abstractions and examples for embedded projects.
+- **Useful code/components:** `esp-hal/src/lib.rs` (ownership), `esp-hal/src/gpio/mod.rs`, `esp-hal/src/i2c/master/mod.rs`, `esp-rtos/src/lib.rs`, `hil-test/README.md`, `examples/README.md`.
+- **Install / runtime:** Rust >=1.95 for inspected 1.2.0 manifest; RISC-V/Xtensa toolchains, chip features, compatible ESP32 and probe/serial interface.
+- **Platforms:** ESP32, C2/C3/C5/C6/C61, H2, P4, S2/S3 and v1.2.0-supported S31; peripheral coverage varies.
+- **License:** MIT OR Apache-2.0 (`LICENSE-MIT`, `LICENSE-APACHE`, Cargo manifest); dependency/radio firmware terms separate.
+- **Maintenance signals:** [v1.2.0](https://github.com/esp-rs/esp-hal/releases/tag/esp-hal-v1.2.0) 2026-09-03; [main commit 5c0820c](https://github.com/esp-rs/esp-hal/commit/5c0820cf9e2be0a49719bd71c30e7a45cae48134) 2026-10-27. [2026-09-10 merge-group CI](https://github.com/esp-rs/esp-hal/actions/runs/34454713435): 22 success, 4 HIL failures, 3 skipped. Successful aggregator does not mean all HIL passed.
+- **Verification performed:** Inspected README, manifests, licenses, HAL/GPIO/I2C/RTOS source, HIL docs, examples and per-job CI. No independent build, flash or board tests.
+- **Source discovery:** GitHub-first embedded Rust research; no transcript attribution.
+- **Related projects:** esp-rs/esp-generate, esp-rs/espflash, esp-rs/esp-pacs, esp-rs/esp-idf (different stack), espressif/esptool (host flasher), probe-rs.
+- **Caveats / risks:** Unstable APIs can break on minor releases; hardware support varies by chip. HIL failures need investigation.
+- **Research notes:** `research/2026-10-28-piper-esp-hal.md`. No upstream code copied.
+
+
+### Pion WebRTC
+
+- **Repository:** https://github.com/pion/webrtc
+- **Author / Org:** Pion community.
+- **Category:** WebRTC / peer-to-peer / realtime communications / Go / media transport.
+- **Evidence:** VERIFIED (upstream main-head test, browser interoperability and E2E evidence; no independent execution).
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5).
+- **What it does:** Pure-Go WebRTC PeerConnection implementation for encrypted audio/video and DataChannels, with ICE, DTLS/SRTP, RTP/RTCP and SCTP modules.
+- **Why it is valuable:** Embeddable real-time communications for local-first collaboration, remote sensors, robotics and browser-to-Go connections without native media transport libraries.
+- **Useful code/components:** `peerconnection.go` (negotiation and lifecycle), `datachannel.go` (data transport), `settingengine.go` (ICE/DTLS controls), `interceptor.go` (NACK/RTCP/TWCC), `examples/ice-restart`, `examples/data-channels-flow-control`, `e2e/e2e_test.go`.
+- **Install / runtime:** Go modules `github.com/pion/webrtc/v4` (go.mod requires Go >=1.24); application must implement signaling and may require trusted STUN/TURN infrastructure.
+- **Platforms:** Linux, Windows, macOS, FreeBSD, Android/iOS Go integrations, WebAssembly (JS build); actual deployment support depends on target networking/browser.
+- **License:** MIT root and SPDX source headers; review dependent Pion modules and third-party notices. No source copied.
+- **Maintenance signals:** [v4.2.26](https://github.com/pion/webrtc/releases/tag/v4.2.26) released 2026-10-28 from main commit 0e35f8059c. Same-head [Test](https://github.com/pion/webrtc/actions/runs/40727255754) **9/9 passed**, [browser interoperability](https://github.com/pion/webrtc/actions/runs/40727255162) **5/5 passed** (Chrome Linux/Windows, Firefox, Safari, Edge), [browser E2E](https://github.com/pion/webrtc/actions/runs/40727254729) **1/1 passed**, [examples](https://github.com/pion/webrtc/actions/runs/40727253980) **1/1 passed**, and [fuzz workflow](https://github.com/pion/webrtc/actions/runs/40727255601) **1/1 passed**; [release](https://github.com/pion/webrtc/actions/runs/40727408015) succeeded.
+- **Verification performed:** Inspected README, DESIGN, MIT LICENSE, go.mod, PeerConnection, SettingEngine, interceptor and examples/E2E sources; inspected per-job upstream CI. No independent sessions, devices, network traversal, performance or security tests.
+- **Source discovery:** Independent GitHub-first connectivity research; no transcript attribution.
+- **Related projects:** pion/ice (v4 pinned by current go.mod), pion/turn, pion/interceptor, pion/datachannel, pion/rtp, pion/srtp, pion/example-webrtc-applications.
+- **Caveats / risks:** Signaling and application authorization are not supplied. ICE can reveal IP information; TURN relays need authentication, limits and monitoring. Do not disable DTLS fingerprint verification or replay protection without a defensible threat model. Passing fuzz workflow is not proof of exhaustive fuzz coverage.
+- **Research notes:** `research/2026-10-28-pion-webrtc-tree-sitter.md`. No third-party implementation copied.
+
+### Tree-sitter
+
+- **Repository:** https://github.com/tree-sitter/tree-sitter
+- **Author / Org:** tree-sitter / Max Brunsfeld and contributors.
+- **Category:** incremental parsing / parser generator / developer tooling / C / Rust / WebAssembly.
+- **Evidence:** VERIFIED (upstream current-master multi-platform CI and sanitizer test evidence; no independent execution).
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5).
+- **What it does:** Generates language parsers and incrementally maintains concrete syntax trees after source edits; exposes structural queries, syntax highlighting, native C API, Rust CLI and WebAssembly bindings.
+- **Why it is valuable:** Reusable parsing engine for editors, refactoring tools, static analysis, code navigation, indexing and browser-based developer tools.
+- **Useful code/components:** `lib/src/parser.c` (incremental runtime), `lib/src/get_changed_ranges.c` (edit differences), `lib/src/query.c` (structural queries), `lib/include/tree_sitter/api.h` (C API and ABI), `crates/generate/src/generate.rs` (generator), `crates/highlight/src/highlight.rs` (syntax highlighting), `lib/binding_web` (WASM), `crates/cli/README.md` (CLI).
+- **Install / runtime:** Prebuilt CLI or `cargo install --locked tree-sitter-cli`; current master workspace specifies Rust >=1.90. Grammar generation requires Node.js; grammar parse/test commands require a C/C++ compiler. Embeddable C runtime is dependency-free.
+- **Platforms:** Linux, Windows, macOS, illumos and WebAssembly, with target-specific build/test coverage.
+- **License:** MIT root/Cargo workspace; each grammar and third-party dependency must be reviewed separately. No source copied.
+- **Maintenance signals:** [v0.27.1](https://github.com/tree-sitter/tree-sitter/releases/tag/v0.27.1) released 2026-10-08; current master workspace already reports **0.28.0 development**, not a stable release. [2026-10-28 master CI](https://github.com/tree-sitter/tree-sitter/actions/runs/40640264375) **15/15 passed**, including checks, cross-platform builds, and sanitizer job invoking ASAN/UBSAN tests.
+- **Verification performed:** Inspected README, MIT LICENSE, Cargo manifests, C API, changed-range source, grammar generator, highlighting module, CLI/WASM docs, CI definitions and per-job results. No independent parser generation, fuzzing, grammar execution or security audit.
+- **Source discovery:** Independent GitHub-first parsing-tool research; no transcript attribution.
+- **Related projects:** tree-sitter/tree-sitter-javascript (inspected grammar.js), tree-sitter/tree-sitter-python (companion grammar), tree-sitter/tree-sitter-rust (follow-up lead).
+- **Caveats / risks:** Native grammar modules execute compiled code; do not load untrusted grammars without isolation. Current header supports language ABI versions 13–15 and does not guarantee forward compatibility. Grammar licenses differ. Test coverage is not proof of immunity to malformed inputs.
+- **Research notes:** `research/2026-10-28-pion-webrtc-tree-sitter.md`. No third-party implementation copied.
+
+### Wasmtime
+
+- **Repository:** https://github.com/bytecodealliance/wasmtime
+- **Author / Org:** Bytecode Alliance
+- **Category:** webassembly / runtime / sandboxed-execution / wasi / rust / c-api
+- **Evidence:** VERIFIED (upstream source and CI; no independent execution)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Standalone and embeddable WebAssembly runtime for Wasm modules, components and WASI.
+- **Why it is valuable:** Cross-platform runtime for portable applications, host-controlled plugins and component interoperability.
+- **Useful code/components:** `crates/wasmtime/src/config.rs` — engine features; `crates/wasmtime/src/runtime/store.rs` — Store and fuel; `crates/wasmtime/src/runtime/limits.rs` — ResourceLimiter; `crates/wasmtime/src/runtime/component/mod.rs` — component model; `crates/wasi/src/lib.rs` — WASI host; `crates/wasi-http/src/lib.rs` — wasi:http; `cranelift/` — compiler backend; `pulley/` — interpreter; `crates/c-api/` — C embedding.
+- **Install / runtime:** Official release CLI or Rust/Cargo build; embed through Rust or C API; accepts compiled Wasm modules/components.
+- **Platforms:** Linux, macOS, Windows, x86_64, aarch64, other cross-compile targets.
+- **License:** Apache-2.0 WITH LLVM-exception (root Cargo.toml); root LICENSE Apache-2.0; dependencies separate. No upstream code copied.
+- **Maintenance signals:** [Stable v50.0.0](https://github.com/bytecodealliance/wasmtime/releases/tag/v50.0.0) 2026-10-20; [main merge-group CI](https://github.com/bytecodealliance/wasmtime/actions/runs/40740727895) 2026-10-28: 190 pass, 3 skip; [cargo audit](https://github.com/bytecodealliance/wasmtime/actions/runs/40792277264) 2026-10-29 passed.
+- **Verification performed:** Inspected 2026-10-29 README, LICENSE, Cargo.toml, SECURITY.md, runtime config/store/limits/component and WASI source; Stable v50.0.0 released 2026-10-20; 2026-10-28 main merge-group CI run 40740727895 succeeded: 190 passed, 3 skipped, 0 failed jobs; 2026-10-29 cargo-audit run 40792277264 passed (upstream, not an independent audit); No independent Wasm execution, build, sandbox penetration test or benchmark.
+- **Source discovery:** GitHub-first WebAssembly runtime research 2026-10-29 UTC; no video transcript attribution.
+- **Related projects:** Cranelift (same monorepo); bytecodealliance/wasm-tools — VERIFIED/S29 companion binary validation, WIT/component and fuzz tooling (2026-10-29 upstream CI); WASI and WebAssembly Component Model.
+- **Caveats / risks:** Wasm execution is not a complete sandbox without controlled host capabilities. Restrict WASI filesystem/network access and callbacks; set fuel/epoch and resource budgets.
+- **Research notes:** `research/2026-10-29-wasmtime-zstandard.md`.
+
+### Zstandard
+
+- **Repository:** https://github.com/meta/zstd
+- **Author / Org:** Meta Platforms (historical facebook/zstd redirects here)
+- **Category:** compression / c-library / streaming / dictionary-compression / archival / cli-tools
+- **Evidence:** VERIFIED (upstream source and CI; no independent execution)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Reference C library and CLI for Zstandard lossless compression, streaming and dictionary-coded data.
+- **Why it is valuable:** Reusable interoperable compression for storage, archives, data pipelines and constrained systems (RFC 8878).
+- **Useful code/components:** `lib/zstd.h` — public C streaming API; `lib/zdict.h` — dictionary API; `lib/compress/zstdmt_compress.c` — multithreaded compressor; `lib/compress/zstd_compress.c` — compression core; `lib/decompress/zstd_decompress.c` — decoder; `lib/dictBuilder/fastcover.c` — dictionary training; `programs/` — zstd CLI; `tests/` — regression and fuzz infrastructure.
+- **Install / runtime:** C toolchain; make builds CLI/library and make check runs smoke tests; CMake, Meson and Windows options documented.
+- **Platforms:** Linux, macOS, Windows, Android NDK, other C targets subject to build constraints.
+- **License:** BSD-style OR GPLv2 (root LICENSE, COPYING and lib/zstd.h); user selects one. No upstream code copied.
+- **Maintenance signals:** [Stable v1.5.7](https://github.com/meta/zstd/releases/tag/v1.5.7) 2025-02-19; [2026-10-19 PR long tests](https://github.com/meta/zstd/actions/runs/39212353135) 30/30 passed (different branch); [2026-10-29 dev nightly regression](https://github.com/meta/zstd/actions/runs/40794889524) 1/1 passed.
+- **Verification performed:** Inspected 2026-10-29 canonical meta/zstd README, LICENSE, COPYING, API headers, codec source, tests and CI workflows; Stable v1.5.7 released 2025-02-19; dev SHA 49cf51799e committed 2026-10-06; 2026-10-19 dev-long-tests PR run 39212353135 passed 30/30 jobs on macos14 branch, not current dev; 2026-10-29 nightly run 40794889524 passed 1/1 regression job on dev SHA 49cf51799e; Other recent dev push workflows action_required are not passing CI; no independent codec run or benchmark.
+- **Source discovery:** GitHub-first codec/archival research 2026-10-29 UTC; facebook/zstd renamed to meta/zstd; no playlist transcript attribution.
+- **Related projects:** libarchive/libarchive — Zstandard filter; Cyan4973/FiniteStateEntropy — entropy coding; RFC 8878; facebook/zstd — historical alias.
+- **Caveats / risks:** Untrusted compressed data may exhaust resources; enforce output/CPU/memory budgets and validate dictionaries, checksums and errors. Dev v1.6.0 docs are not stable release evidence.
+- **Research notes:** `research/2026-10-29-wasmtime-zstandard.md`.
+
+
+### wasm-tools
+
+- **Repository:** https://github.com/bytecodealliance/wasm-tools
+- **Author / Org:** Bytecode Alliance
+- **Category:** WebAssembly / parser and validator / WIT / component model / Rust tooling / fuzzing
+- **Evidence:** VERIFIED (upstream source and CI; no independent execution)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** CLI and reusable Rust libraries for parsing, validating, printing, generating, transforming, and analyzing WebAssembly modules and components.
+- **Why it is valuable:** Modular, composable toolchain for Wasm inspection, compatibility checks, WIT interfaces, and fuzz-test input generation, complementary to runtime Wasmtime.
+- **Useful code/components:** `crates/wasmparser/src/parser.rs` — incremental parser; `crates/wasmparser/src/validator.rs` — validator; `crates/wasm-encoder/` — encoder; `crates/wat/`, `crates/wast/` — text formats; `crates/wit-parser/`, `crates/wit-component/src/lib.rs` — WIT/component tooling; `crates/wasm-smith/`, `crates/wasm-mutate/`, `crates/wasm-shrink/` — fuzz tooling; `crates/c-api/` — native bindings.
+- **Install / runtime:** `cargo install --locked wasm-tools` or release artifacts; Rust workspace MSRV 1.88.0 at inspected head. Linux, macOS and Windows.
+- **Platforms:** Rust CLI/libraries, C API, supported Wasm targets; CI includes multiple native architectures and WASI.
+- **License:** Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT (workspace manifest); source files and dependencies require separate review. No code copied.
+- **Maintenance signals:** [Stable v1.262.0](https://github.com/bytecodealliance/wasm-tools/releases/tag/v1.262.0) 2026-10-13; [2026-10-28 merge-group CI](https://github.com/bytecodealliance/wasm-tools/actions/runs/40611648736) 34 passed, one skipped (release-tag gate), including C API, fuzz, platform and WASM tests.
+- **Verification performed:** Inspected README, root Cargo manifest, license files, wasmparser parser/validator, wit-component API, fuzz directory and CI jobs; no independent parser execution, fuzz campaign, build or security audit.
+- **Source discovery:** GitHub-first recursive Wasmtime ecosystem follow-up 2026-10-29; no playlist transcript attribution.
+- **Related projects:** bytecodealliance/wasmtime; bytecodealliance/wit-bindgen; WebAssembly/component-model.
+- **Caveats / risks:** Parsing/validation is not execution sandboxing or trust authorization. Bound untrusted input size and resource consumption; proposal/component compatibility and third-party crate licensing matter.
+- **Research notes:** `research/2026-10-29-wasm-tools-yggdrasil.md`.
+
+### Yggdrasil IPv6 Overlay
+
+- **Repository:** https://github.com/yggdrasil-network/yggdrasil-go
+- **Author / Org:** Yggdrasil Network contributors
+- **Category:** Encrypted IPv6 overlay / self-arranging routing / Go / peer-to-peer / private networking
+- **Evidence:** VERIFIED (upstream source and release CI; no independent deployment)
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 4 + Novelty 5 + Documentation 4 + Maintenance 4)
+- **What it does:** Experimental, encrypted IPv6 overlay that runs over IPv4 or IPv6 links and lets IPv6-capable applications communicate between configured peers.
+- **Why it is valuable:** Distinct self-arranging routing design and reusable encrypted node, peer transport, local discovery, TUN and admin components.
+- **Useful code/components:** `src/core/core.go` — node and Ironwood integration; `src/core/link_quic.go` — QUIC peer transport; `src/core/link_tls.go`, `link_ws.go` — peer transports; `src/config/config.go` — Ed25519 identity; `src/admin/admin.go` — JSON control socket; `src/tun/tun.go` — TUN; `src/multicast/` — discovery; `src/address/` — key-derived IPv6.
+- **Install / runtime:** Go >=1.26; `./build` or release packages; create configuration and provision peers. TUN setup typically requires elevated networking capability.
+- **Platforms:** Linux, macOS, Windows, FreeBSD, OpenBSD, OpenWrt; IPv6 applications over IPv4/IPv6 underlay.
+- **License:** LGPL-3.0 with explicit special static/dynamic linking exception; preserve terms and notices; review dependencies separately. No code copied.
+- **Maintenance signals:** [Stable v0.5.15](https://github.com/yggdrasil-network/yggdrasil-go/releases/tag/v0.5.15) 2026-10-24; [2026-10-24 release CI](https://github.com/yggdrasil-network/yggdrasil-go/actions/runs/40102009196) passed 13/13 lint, analysis, platform test and BSD cross-build jobs; two parallel runs cancelled.
+- **Verification performed:** Inspected README, license, go.mod, core/QUIC/admin/config/TUN source and CI; no independent peer session, routing stress test, hardware test or security audit.
+- **Source discovery:** GitHub-first encrypted-overlay networking research 2026-10-29; no playlist transcript attribution.
+- **Related projects:** Arceliar/ironwood (MPL-2.0 dependency), slackhq/nebula (architectural comparison), WireGuard TUN ecosystem, Reticulum.
+- **Caveats / risks:** **Admin API lacks built-in authentication** (`src/admin/admin.go` TODO), and supports TCP listeners: restrict access, preferably to protected local Unix sockets. Protect private keys, review peer exposure and topology, and treat experimental routing as unaudited.
+- **Research notes:** `research/2026-10-29-wasm-tools-yggdrasil.md`. Follow-up 2026-10-29: develop go.mod pins Ironwood 0712ecc (2026-10-23 low-order/identity public-key validation fix); release inclusion and independent regression testing not established. See research/2026-10-29-go-git-pyodide.md.
+
+### go-git
+
+- **Repository:** https://github.com/go-git/go-git
+- **Author / Org:** go-git maintainers
+- **Category:** Pure-Go Git library / version-control automation / extensible storage
+- **Evidence:** VERIFIED (upstream)
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Implements Git repository operations in pure Go, with porcelain and plumbing APIs and interchangeable object storage/filesystems.
+- **Why it is valuable:** Enables embedded Git operations, in-memory repositories, custom storage backends and cross-platform automation without shelling out to Git for every operation.
+- **Useful code/components:** `repository.go`, `worktree.go`; `plumbing/` object/pack/protocol parsers; `plumbing/transport/http/`; `storage/memory/`, `storage/filesystem/`; `EXTENDING.md` storer/transport interfaces; `_examples/` including sparse checkout and custom HTTP.
+- **Install / runtime:** Stable v5 module for production; current v6 main uses Go >=1.26 and import `github.com/go-git/go-git/v6`. v6.0.0-beta.1 is prerelease.
+- **Platforms:** Go-supported Linux, macOS, Windows; JS/Wasm and WASI have upstream CI coverage with feature limitations.
+- **License:** Apache-2.0; dependency and companion-project licenses separately reviewed before reuse.
+- **Maintenance signals:** Stable v5.19.3 published 2026-10-04; v6.0.0-beta.1 published same day. October 23 tree-mode compatibility commits. [2026-10-28 PR Test CI](https://github.com/go-git/go-git/actions/runs/40742346033) passed 10/10 jobs; same PR CodeQL, CIFuzz and Git Compatibility workflows passed. These are not main-branch results.
+- **Verification performed:** Inspected README, license, Go module, extensibility docs, transport source, storage, examples, release and CI jobs. No independent Git clone, parser execution, fuzzing or security audit.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript attribution.
+- **Related projects:** go-git/go-billy filesystem abstraction; go-git/go-git-fixtures; git/git; README-reported Gitea and Flux integrations.
+- **Caveats / risks:** Stable v5 versus prerelease v6 API compatibility. Treat remote Git data as untrusted; bound packfile and repository resource use, verify SSH host keys, and constrain credentials/redirects. v5.19.3 notes a credential-redirect containment fix.
+- **Research notes:** `research/2026-10-29-go-git-pyodide.md`.
+
+### Pyodide
+
+- **Repository:** https://github.com/pyodide/pyodide
+- **Author / Org:** Pyodide contributors
+- **Category:** WebAssembly / Python in browser / offline scientific computing / JavaScript interoperability
+- **Evidence:** PROMISING
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 5 + Documentation 4 + Maintenance 3)
+- **What it does:** Runs CPython compiled to WebAssembly in browsers and Node.js, with JavaScript/Python interop and browser-compatible Python packages.
+- **Why it is valuable:** Reusable local Python execution for browser-based analysis, education, offline apps, and client-side scientific tools without a remote Python server.
+- **Useful code/components:** `cpython/` CPython port; `src/core/pyproxy.c`, `js2python.c`, `python2js.c` bridge; `src/js/load-package.ts` package loading; `src/js/memory-limit.ts` bounded heap; `src/py/pyodide/webloop.py` event loop; `packages/` port recipes.
+- **Install / runtime:** Hosted or self-hosted Pyodide distribution; npm package or browser loader; pure Python wheels via micropip; compiled extensions need compatible Pyodide-built wheels and WebAssembly browser support.
+- **Platforms:** Modern browsers, Web Workers where configured, Node.js; Emscripten/WebAssembly.
+- **License:** MPL-2.0 for repository; CPython, scientific packages and bundled third-party wheels have separate licenses.
+- **Maintenance signals:** Stable release 0.29.5 published 2026-09-16; current main JS manifest reports 314.1.0-dev.0. [2026-10-29 PR CI](https://github.com/pyodide/pyodide/actions/runs/40829974568) had 13 passing jobs and one skipped. [2026-10-29 main CI](https://github.com/pyodide/pyodide/actions/runs/40838830915) FAILED: macOS linker undefined `mpd_*` symbols; downstream browser jobs skipped, Ubuntu core build passed.
+- **Verification performed:** Inspected README, MPL license, package manifest, Python/JS/C source layout, release metadata, CI job summaries and failed macOS build logs. No independent browser execution or package test.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript attribution.
+- **Related projects:** pyodide/micropip, python/cpython, emscripten-core/emsdk; Wasmtime is a different WebAssembly runtime model. sqlite-vec has a separate Pyodide extension build artifact, **not** verified runtime integration. SciPy has a separate Emscripten/Pyodide CI pathway; its 2026-10-30 build completed but pytest plugin import failed on unavailable `os.geteuid` ([upstream SciPy run](https://github.com/scipy/scipy/actions/runs/41117526067)); this is **not** a new Pyodide main-branch CI result.
+- **Caveats / risks:** Current main CI failure prevents VERIFIED classification. Enforce CPU/memory limits, browser permission boundaries, CSP, trusted package origins and third-party wheel licensing. WebAssembly alone is not a complete security boundary.
+- **Research notes:** `research/2026-10-29-go-git-pyodide.md`.
+
+
+### sqlite-vec
+
+- **Repository:** https://github.com/asg017/sqlite-vec
+- **Author / Org:** Alex Garcia (asg017)
+- **Category:** SQLite / embedded vector search / local-first AI / C extension
+- **Evidence:** PROMISING
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 3)
+- **What it does:** Implements float32, int8 and binary-vector storage and nearest-neighbor queries inside SQLite using a loadable C extension and vec0 virtual tables.
+- **Why it is valuable:** Offline vector retrieval in existing SQLite apps, without requiring a separate vector server; language bindings and small-device build targets.
+- **Useful code/components:** `sqlite-vec.c` (virtual table, KNN and distance functions), `sqlite-vec-ivf*.c` (experimental IVF), `sqlite-vec-rescore.c`, `ARCHITECTURE.md` (shadow tables/query planner), `bindings/{python,rust,go}/`, `tests/test-knn-distance-constraints.py` and `tests/test-cache-finalize.py`.
+- **Install / runtime:** SQLite with loadable extension enabled, or packaged Python (`pip install sqlite-vec`), Node.js, Rust or Go bindings. Android/iOS extension artifacts cross-built upstream; no device execution established.
+- **Platforms:** Linux, macOS, Windows, Android/iOS cross-builds, Wasm/Emscripten; Pyodide build artifact.
+- **License:** MIT OR Apache-2.0 root license files; review binding/package/dependency notices before reuse. No code copied.
+- **Maintenance signals:** [Stable v0.1.9](https://github.com/asg017/sqlite-vec/releases/tag/v0.1.9) 2026-03-31; [v0.1.10-alpha.4](https://github.com/asg017/sqlite-vec/releases/tag/v0.1.10-alpha.4) 2026-05-18; latest main commit observed 2026-05-18. [Main Test CI](https://github.com/asg017/sqlite-vec/actions/runs/26018140783) passed 16 jobs, skipped one on 2026-05-18. Desktop build jobs run pytest; mobile jobs cross-compile.
+- **Verification performed:** Inspected README, license files, C source, Makefile, architecture, tests and CI workflow/jobs. No independent extension loading, vector benchmark, device run or security audit.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript attribution.
+- **Related projects:** asg017/sqlite-vss (predecessor), asg017/sqlite-rembed (embedding companion), asg017/sqlite-ecosystem, Pyodide build target (not runtime-tested).
+- **Caveats / risks:** Explicitly pre-v1 with breaking-change warning; latest release is alpha. Brute-force KNN and experimental IVF require accuracy/resource benchmarks. Extension loading expands SQLite's native-code trust boundary; do not expose untrusted SQL or unbounded query inputs.
+- **Research notes:** `research/2026-10-29-sqlite-vec-ratatui.md`.
+
+### Ratatui
+
+- **Repository:** https://github.com/ratatui/ratatui
+- **Author / Org:** Ratatui maintainers
+- **Category:** Rust / terminal user interfaces / dashboard components / no_std
+- **Evidence:** VERIFIED (upstream)
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Builds cross-platform terminal interfaces with layout, buffers, widgets, event backends and optional no_std support.
+- **Why it is valuable:** Reusable modular TUI framework for local-first dashboards, offline/terminal tools and low-resource frontends.
+- **Useful code/components:** `ratatui-core/src/buffer/` (cell rendering), `ratatui-core/src/layout/` (constraint solver), `ratatui-core/src/widgets/` (widget traits), `ratatui-widgets/src/` (charts/tables/scrollbars), `ratatui-crossterm/`, `ratatui-termion/`, `ratatui-termina/`, `ratatui-termwiz/`, `ratatui-macros/`.
+- **Install / runtime:** `cargo add ratatui`; Rust >=1.88.0 per current workspace; select compatible terminal backend. no_std requires disabling default features and choosing alloc/backend/layout-cache support.
+- **Platforms:** Linux, macOS, Windows; embedded/no_std with suitable backend. Termux not independently tested.
+- **License:** MIT; preserve original copyright/license, review dependencies. No code copied.
+- **Maintenance signals:** [Stable ratatui-v0.30.2](https://github.com/ratatui/ratatui/releases/tag/ratatui-v0.30.2) 2026-06-19; main updated 2026-10-28. [2026-10-28 main CI](https://github.com/ratatui/ratatui/actions/runs/40630817143) passed 34/34 jobs including Linux/macOS/Windows, no_std build, backend tests and cargo-deny.
+- **Verification performed:** Inspected README, architecture, Cargo manifests, root MIT license, core layout/widget modules, upstream release and main CI job list. No independent TUI, mobile, microcontroller or security tests.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript attribution.
+- **Related projects:** ratatui/templates, ratatui/awesome-ratatui, ratatui/mousefood (embedded backend), tui-rs predecessor, Crossterm and kasuari dependencies.
+- **Caveats / risks:** 0.30 modular crate migration may affect imports/features. no_std targets need layout-cache/critical-section consideration. Applications must safely restore terminal raw mode and sanitize untrusted text/escape sequences.
+- **Research notes:** `research/2026-10-29-sqlite-vec-ratatui.md`.
+
+
+### Atuin
+
+- **Repository:** https://github.com/atuinsh/atuin
+- **Author / Org:** Atuin maintainers / atuinsh.
+- **Category:** Rust / local-first shell history / SQLite / optional encrypted synchronization / terminal UI.
+- **Evidence:** VERIFIED (upstream tests and releases; not independently executed).
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4).
+- **What it does:** Records searchable shell-command history and context in local SQLite, with optional encrypted cross-device synchronization and a self-hosted server.
+- **Why it is valuable:** Modular shell-history capture, offline search, sync and TUI components useful in local-first developer workflows.
+- **Useful code/components:** `crates/atuin-client/src/history/{capture.rs,store.rs}`; `crates/atuin-client/src/record/{sqlite_store.rs,sync/}`; `crates/atuin-client/src/tui/`; `crates/atuin-server/src/{handlers/,db/}`; `crates/atuin-client/tests/e2e_sync.rs`; `crates/atuin-history/src/{sort.rs,stats.rs}`.
+- **Install / runtime:** Upstream binaries or Rust toolchain; pinned toolchain 1.98.0, workspace MSRV 1.95.0. Sync is optional. Review remote install scripts before use.
+- **Platforms:** Linux/macOS/Windows; Bash, Zsh, Fish, Nushell, Xonsh and PowerShell integrations. Termux not independently tested.
+- **License:** MIT at root/workspace; dependencies separately licensed.
+- **Maintenance signals:** Stable v18.24.3 published 2026-10-29; main updated 2026-10-29. [Earlier main Windows run](https://github.com/atuinsh/atuin/actions/runs/40611984554) passed 2/2 jobs with `cargo test` and `cargo check` on 2026-10-28; [current main Docker build](https://github.com/atuinsh/atuin/actions/runs/40801883907) passed 2026-10-29, but is not a sync test. Main CI also uses Buildkite, not fully inspected.
+- **Verification performed:** Inspected README, LICENSE, Cargo workspace, source, test layout, releases and GitHub Actions. No independent shell hook, sync, key recovery, terminal or cryptographic test.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript evidence.
+- **Related projects:** nushell/nushell (supported integration); atuinsh/atuin server modules; ratatui/ratatui (comparable TUI ecosystem, not direct integration).
+- **Caveats / risks:** History can capture credentials and sensitive command arguments; encryption claims do not prove complete endpoint secrecy. Verify backup/key recovery and sync server trust; remote installation scripts need review.
+- **Research notes:** `research/2026-10-29-atuin-openbao.md`. No upstream source copied.
+
+### OpenBao
+
+- **Repository:** https://github.com/openbao/openbao
+- **Author / Org:** OpenBao / OpenSSF community.
+- **Category:** Go / secrets management / dynamic credentials / PKI / audit / self-hosting.
+- **Evidence:** VERIFIED (upstream main Go tests and race detection; not independently deployed).
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5).
+- **What it does:** Centralizes secret storage, dynamic credentials, encryption-as-a-service, leasing, renewal, revocation and access audit.
+- **Why it is valuable:** Production-oriented security infrastructure with reusable Go API and SDK modules and extensive tests; useful comparison to encrypted-file approaches.
+- **Useful code/components:** `api/client.go`, `api/kv_v2.go`, `api/lifetime_watcher.go`; supported `sdk/`; internal `internal/vault/{barrier/,seal/,expiration.go,token_store.go,policy/,audit.go,raft.go}`; `internal/builtin/{credential/,logical/,database/}`; Go test/race CI.
+- **Install / runtime:** Published binaries/containers or Go source (`.go-version` pins 1.27.3). `go build -o bin/bao .`; `-dev` mode is not for production.
+- **Platforms:** Server-oriented Go builds, Linux and containers; Go API/SDK consumers.
+- **License:** MPL-2.0, retaining historical HashiCorp copyright; dependencies have separate terms.
+- **Maintenance signals:** Stable v2.7.2 published 2026-10-26; 2026-10-29 [main CI](https://github.com/openbao/openbao/actions/runs/40850965740) passed 39/39 jobs including Go tests and race-detection matrix; [main linter](https://github.com/openbao/openbao/actions/runs/40850965627) passed. Earlier commits had CI failures, so this evidence is commit-specific.
+- **Verification performed:** Inspected README, root license, API/SDK, internal vault/builtin modules, Go toolchain and CI job steps. No independent HA failover, secret issuance, key rotation, unseal recovery or security audit.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript evidence.
+- **Related projects:** getsops/sops (encrypted-file configuration comparison, no integration verified); hashicorp/vault (historical upstream); OpenBao API/SDK modules.
+- **Caveats / risks:** Protect root tokens, unseal/recovery keys, storage and backups; enforce TLS, scoped policies and audit controls. Only `api/v2` and `sdk/v2` are supported imports; do not depend on the root application module. MPL-2.0 file-level copyleft applies to covered modifications.
+- **Research notes:** `research/2026-10-29-atuin-openbao.md`. No third-party source copied.
+
+
+### Obtainium
+
+- **Repository:** https://github.com/ImranR98/Obtainium
+- **Author / Org:** ImranR98
+- **Category:** Android / APK updates / release discovery / package installation / supply-chain inspection
+- **Evidence:** VERIFIED — upstream APK build and release artifacts; not independently device-tested
+- **Tier / Score:** S / 26 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Tracks Android app releases directly from upstream forges, package repositories and configured sources, then downloads and offers APK installation/update flows.
+- **Why it is valuable:** A practical reference for release discovery, asset selection, APK signature awareness and source-specific update logic outside centralized app stores.
+- **Useful code/components:** `lib/app_sources/{github,gitlab,fdroid,codeberg}.dart`; `lib/providers/apps_provider_updates.dart`; `lib/installers/{stock,shizuku,root}_installer.dart`; `lib/utils/signing_cert_utils.dart`; `lib/services/pinned_certificates.dart`; `test/{github_release_filter,pinned_certificates}_test.dart`.
+- **Install / runtime:** Android app; Flutter >=3.44.0 and Dart SDK ^3.12.0 for source builds; prebuilt Android APK assets for v1.7.3.
+- **Platforms:** Android, including arm64-v8a, armeabi-v7a and universal release APKs.
+- **License:** GPL-3.0 root LICENSE.txt; pinned package-installer forks and dependencies require separate license review.
+- **Maintenance signals:** v1.7.3 released 2026-10-25 with APKs and checksums; [Build and Release workflow](https://github.com/ImranR98/Obtainium/actions/runs/40148046321) succeeded on 2026-10-25. Main commit fcd1807 from 2026-10-25.
+- **Verification performed:** Inspected README, LICENSE.txt, pubspec.yaml, source/test tree, v1.7.3 assets and release workflow. The workflow built unsigned APKs and created a draft release; signing happens separately. No independent install/update test, signing check, or demonstrated execution of the repository's integration tests.
+- **Source discovery:** GitHub-first; no accessible YouTube transcript evidence.
+- **Related projects:** MuntashirAkon/AppManager (complementary package inspection); ImranR98/Obtainium-Wiki; ImranR98/apps.obtainium.imranr.dev.
+- **Caveats / risks:** Untrusted APK sources, asset-selection rules, signer changes and certificate rotation are supply-chain risks. A published checksum does not itself authenticate an untrusted release. Check signing lineage and permissions before installation; GPL-3.0 obligations apply to reuse.
+- **Research notes:** `research/2026-10-29-obtainium-litestream.md`. Verified here means upstream build/release evidence, not independently validated safe updating.
+
+### Litestream
+
+- **Repository:** https://github.com/benbjohnson/litestream
+- **Author / Org:** benbjohnson
+- **Category:** SQLite / disaster recovery / incremental replication / cloud storage / Go
+- **Evidence:** PROMISING — mixed current-main integration CI, successful PR-specific tests
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 4)
+- **What it does:** Incrementally replicates SQLite database changes to files or remote storage, with restoration and optional SQLite VFS functionality.
+- **Why it is valuable:** A composable SQLite recovery architecture with multiple backend implementations and explicit WAL/restore test infrastructure.
+- **Useful code/components:** `db.go`, `wal_reader.go`, `replica_client.go`, `s3/replica_client.go`, `nats/replica_client.go`, `cmd/litestream/restore.go`, `vfs.go`, `src/litestream-vfs.c`, `tests/integration/`.
+- **Install / runtime:** Go 1.26.0/toolchain go1.26.10 on inspected main; packaged binaries and containers; SQLite and configured file/S3/NATS/other replica destination.
+- **Platforms:** Linux amd64/arm64/armv6/armv7; macOS amd64/arm64. Windows binaries are offered but explicitly unsupported in v0.5.17 release notes.
+- **License:** Apache-2.0 root LICENSE; review dependency and backend SDK notices before copying code.
+- **Maintenance signals:** Stable v0.5.17 released 2026-08-31. 2026-10-29 [PR core workflow](https://github.com/benbjohnson/litestream/actions/runs/40930723107) passed unit/VFS and several backend jobs; [PR quick integration workflow](https://github.com/benbjohnson/litestream/actions/runs/40930723154) passed with long/scenario jobs skipped. [Current-main workflow](https://github.com/benbjohnson/litestream/actions/runs/40929579845) failed GCP and S3 integration jobs.
+- **Verification performed:** Inspected README, LICENSE, go.mod, source/test tree, release, CI job outcomes and exact NATS JetStream backend source. No independent replication, restore, crash recovery or security test. Successful PR jobs use SHA 8004de3, not the failing main SHA fb9c163.
+- **Source discovery:** GitHub-first; no accessible YouTube transcript evidence.
+- **Related projects:** nats-io/nats-server and nats-io/nats.go (JetStream Object Store client backend); superfly/ltx; kopia/kopia (complementary backup architecture).
+- **Caveats / risks:** Current-main S3/GCP integration failures prevent VERIFIED promotion. S3/R2/Azure/GCP live jobs were skipped in the successful PR core run. Upstream README notes an `_litestream_lock` table is added to source DB; do not assume byte-identical source. Exercise point-in-time restores and cloud credential isolation.
+- **Research notes:** `research/2026-10-29-obtainium-litestream.md`. No code copied.
+
+
+### Miller
+
+- **Repository:** https://github.com/johnkerl/miller
+- **Author / Org:** John Kerl
+- **Category:** Structured data / CSV / TSV / JSONL / CLI / streaming data transformations
+- **Evidence:** VERIFIED — upstream multi-platform build, unit and regression CI; not independently executed
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** `mlr` is a format-aware command-line record transformation engine for filtering, reshaping, joining, aggregation, statistics and conversion of CSV, TSV, JSON and JSON Lines.
+- **Why it is valuable:** Portable data-cleaning engine with reusable readers/writers, insertion-ordered records, expression DSL, streaming transforms and regression coverage.
+- **Useful code/components:** `pkg/input/record_reader_csv.go`, `record_reader_json.go`; `pkg/output/record_writer_json_jsonl.go`; `pkg/mlrval/mlrmap.go`; `pkg/dsl/cst/`; `pkg/transformers/{join,stats1,reshape,put_or_filter}.go`; `pkg/bifs/`; `test/`, `regression_test.go`.
+- **Install / runtime:** Go module `github.com/johnkerl/miller/v6`; executable `mlr`; current main `go.mod` declares Go 1.26.10; `make build` or official packages/binaries.
+- **Platforms:** Linux, macOS, Windows tested upstream; other Go platforms possible, but Termux/Android untested.
+- **License:** BSD-2-Clause root `LICENSE.txt`; `pkg/go-csv/LICENSE` preserves separate Go Authors BSD-3-Clause notice; dependency licenses separate.
+- **Maintenance signals:** [v6.22.0](https://github.com/johnkerl/miller/releases/tag/v6.22.0) released 2026-09-25. [2026-10-27 main Miller-Go CI](https://github.com/johnkerl/miller/actions/runs/40522448049) **3/3 jobs passed** (Linux/macOS/Windows), each with build, unit and regression steps. CodeQL and lint passed separately.
+- **Verification performed:** Inspected README, licenses, go.mod, source and test tree, release and workflow job steps. No independent execution, fuzzing, benchmarking or security audit.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript evidence.
+- **Related projects:** jqlang/jq (JSON filters), nushell/nushell (structured shell), johnkerl/lumin (Go dependency).
+- **Caveats / risks:** Some operations such as sorting and grouping buffer state; streaming is not a blanket bounded-memory guarantee. Inspect prepipe/config trust and file-level notices before reuse.
+- **Research notes:** `research/2026-10-29-miller-pico-sdk.md`. No third-party code copied.
+
+### Raspberry Pi Pico SDK
+
+- **Repository:** https://github.com/raspberrypi/pico-sdk
+- **Author / Org:** Raspberry Pi
+- **Category:** RP2040 / RP2350 / embedded C/C++ / PIO / DMA / firmware SDK
+- **Evidence:** VERIFIED — upstream stable release and successful build CI; not independently hardware-tested
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Official C/C++/assembly libraries and build system for RP-series microcontrollers, covering PIO, DMA, clocks, flash, multicore, USB and wireless integrations.
+- **Why it is valuable:** Reusable low-level peripheral abstractions, extensive board definitions, cross-platform build tooling and companion example ecosystem.
+- **Useful code/components:** `src/rp2_common/hardware_pio/pio.c`; `src/rp2_common/hardware_dma/dma.c`; `src/rp2_common/hardware_flash/flash.c`; `src/rp2_common/pico_multicore/`; `src/boards/include/boards/`; `src/rp2040/boot_stage2/`, `src/rp2350/boot_stage2/`; `pico_sdk_init.cmake`, `external/pico_sdk_import.cmake`.
+- **Install / runtime:** CMake >=3.13, Python 3, appropriate Arm GCC embedded toolchain or RP2350 RISC-V toolchain, initialized Git submodules; choose board using `PICO_BOARD`. Physical RP hardware required to run firmware.
+- **Platforms:** RP2040 Arm Cortex-M0+, RP2350 Arm Cortex-M33 and supported RISC-V targets; Pico/Pico W/Pico 2/Pico 2 W and supported third-party boards. Linux/macOS/Windows build hosts.
+- **License:** BSD-3-Clause root `LICENSE.TXT`; separate licenses for TinyUSB, CYW43 driver, lwIP, mbedTLS, BTstack submodules.
+- **Maintenance signals:** [Stable 2.3.1](https://github.com/raspberrypi/pico-sdk/releases/tag/2.3.1) published 2026-09-04. [2026-10-29 PR CMake CI](https://github.com/raspberrypi/pico-sdk/actions/runs/40919233317) built successfully on self-hosted Linux; PR Bazel/config checks passed. [2026-10-29 develop macOS CI](https://github.com/raspberrypi/pico-sdk/actions/runs/40865066254) failed during dependency installation; build steps skipped.
+- **Verification performed:** Inspected README, LICENSE.TXT, `.gitmodules`, source tree, PIO/DMA implementation, release and CI job steps. No independent build, CTest run, flashing or hardware test.
+- **Source discovery:** GitHub-first 2026-10-29; no YouTube transcript evidence.
+- **Related projects:** raspberrypi/pico-examples, raspberrypi/pico-extras, hathach/tinyusb (direct submodule), georgerobotics/cyw43-driver, lwip-tcpip/lwip, Mbed-TLS/mbedtls, bluekitchen/btstack.
+- **Caveats / risks:** CI compilation does not establish board runtime correctness. Flash operations and PIO/DMA require target-specific review. Submodules have separate licensing/security lifecycles.
+- **Research notes:** `research/2026-10-29-miller-pico-sdk.md`. No third-party code copied.
+
+### ArduinoJson
+
+- **Repository:** https://github.com/bblanchon/ArduinoJson
+- **Author / Org:** Benoit Blanchon
+- **Category:** Embedded C++ / JSON / MessagePack / IoT parsers
+- **Evidence:** VERIFIED — upstream source, stable release and 7.x CI; no independent embedded execution
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 4)
+- **What it does:** Header-oriented C++11+ JSON and MessagePack serialization/deserialization library for microcontrollers and desktop builds.
+- **Why it is valuable:** Portable parsers, custom allocators, stream adapters and selective JSON filtering, with broad cross-compiler and embedded-target CI.
+- **Useful code/components:** `src/ArduinoJson/Json/JsonDeserializer.hpp` (filtering and nesting controls); `JsonSerializer.hpp`; `src/ArduinoJson/MsgPack/{MsgPackDeserializer,MsgPackSerializer}.hpp`; `src/ArduinoJson/Memory/ResourceManager.hpp`; `src/ArduinoJson/Deserialization/deserialize.hpp`; `examples/JsonFilterExample/`; `extras/tests/`.
+- **Install / runtime:** C++11 or newer; Arduino Library Manager, PlatformIO, ESP-IDF component manager or CMake; hardware only needed for device execution.
+- **Platforms:** AVR, ESP32/ESP8266, SAMD, STM32, nRF52, Teensy and desktop compiler environments (upstream CI covers representative builds, not every device).
+- **License:** MIT, root `LICENSE.txt` (Benoit Blanchon); preserve copyright/license notice.
+- **Maintenance signals:** [Stable v7.4.3](https://github.com/bblanchon/ArduinoJson/releases/tag/v7.4.3) released **2026-03-02** with a documented numeric-string buffer-overrun fix. [2026-08-11 7.x CI](https://github.com/bblanchon/ArduinoJson/actions/runs/31512131312) passed **46/46 jobs**, including compiler matrices, sanitizers, Arduino/ESP-IDF/PlatformIO targets, Valgrind and CodeQL. Alternate experimental-branch failures are not stable-branch failures.
+- **Verification performed:** Inspected upstream source, license, example, tests, CI and release metadata; no independent parsing, fuzzing, build, hardware flash or memory benchmark.
+- **Source discovery:** GitHub-first 2026-10-30; no accessible YouTube transcript evidence.
+- **Related projects:** [ESPHome](https://github.com/esphome/esphome) directly pins ArduinoJson 7.4.3 in `esphome/components/json/__init__.py`; ESP-IDF and PlatformIO upstream CI targets.
+- **Caveats / risks:** Default 7.x `library.properties` still says **7.4.2** while stable release tag v7.4.3 says **7.4.3**; pin explicit release and inspect dependency resolution. Bound nesting, input size and memory; successful host tests are not physical-device tests.
+- **Research notes:** `research/2026-10-30-arduinojson-openzeppelin.md`. No source copied.
+
+### OpenZeppelin Contracts
+
+- **Repository:** https://github.com/OpenZeppelin/openzeppelin-contracts
+- **Author / Org:** OpenZeppelin
+- **Category:** EVM smart contracts / Solidity / token standards / cryptography / access control
+- **Evidence:** VERIFIED — upstream release, source and current-master CI; no independent deployment or security audit
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Reusable Solidity smart-contract implementations for EVM token standards, access policies, upgradeable proxies, governance and cryptographic verification.
+- **Why it is valuable:** Modular, widely reusable components with explicit security warnings, versioning, tests, static analysis and formal-verification infrastructure.
+- **Useful code/components:** `contracts/token/ERC20/ERC20.sol` (requires separate supply mechanism); `contracts/access/AccessControl.sol`; `contracts/proxy/ERC1967/ERC1967Proxy.sol`; `contracts/utils/cryptography/MerkleProof.sol`; `contracts/governance/`; `test/` and `fv/`.
+- **Install / runtime:** `@openzeppelin/contracts` via npm or pinned Foundry dependency; Solidity `^0.8.20` for many modules (some require `^0.8.22`); repository tooling Node.js `^22.12 || ^24 || >=26`. Deployment requires an EVM-compatible chain and appropriate gas.
+- **Platforms:** EVM-compatible networks; Hardhat/Foundry development environments. **Not** a Solana SPL token library.
+- **License:** MIT, root `LICENSE` and SPDX headers; preserve notices and inspect dependencies.
+- **Maintenance signals:** [Stable v5.7.0](https://github.com/OpenZeppelin/openzeppelin-contracts/releases/tag/v5.7.0) released **2026-07-29**. [2026-10-30 master checks](https://github.com/OpenZeppelin/openzeppelin-contracts/actions/runs/41000334840) passed **7/7 jobs** (tests, upgradeable tests, coverage, Slither, lint, harnesses, codespell); [Code Quality](https://github.com/OpenZeppelin/openzeppelin-contracts/actions/runs/41000334212) passed.
+- **Verification performed:** Inspected README, MIT license, package manifest, ERC20/AccessControl/ERC1967Proxy/MerkleProof source, tests, audits index and current-master CI. No independent compile, deployment, fuzzing, formal verification or security audit.
+- **Source discovery:** GitHub-first 2026-10-30; no accessible YouTube transcript evidence.
+- **Related projects:** [OpenZeppelin Merkle Tree](https://github.com/OpenZeppelin/merkle-tree) (inspected PROMISING/A23; v1.0.8, no passing CI runs established) for off-chain proofs; OpenZeppelin upgradeable-contract and upgrades tooling. Off-chain/on-chain Merkle pairing is documented upstream, not independently executed.
+- **Caveats / risks:** [Repository audit index](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/audits/README.md) lists reports through **v5.6.0**, not v5.7.0; do not infer a version-specific v5.7 audit. The latest master CI is not a test of the exact release tag. Default-admin roles, proxy initialization/storage layout, and Merkle leaf encoding are security-critical. Release notes flag EIP712 and ERC2771Forwarder breaking changes.
+- **Research notes:** `research/2026-10-30-arduinojson-openzeppelin.md`. No source copied.
+
+
+### Ruff
+
+- **Repository:** https://github.com/astral-sh/ruff
+- **Author / Org:** Astral
+- **Category:** Python developer tooling / Rust parser / linter / formatter / editor integrations
+- **Evidence:** VERIFIED — upstream release, source, current-main multi-platform CI; no independent execution
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Rust-based Python linter and formatter with fast incremental checking, automatic fixes, and editor integration.
+- **Why it is valuable:** Modular Python parsing/formatting/rule machinery, broad platform support, and extensive upstream regression, fuzz-build and release validation.
+- **Useful code/components:** `crates/ruff_linter/` rules and diagnostics; `crates/ruff_python_parser/` parser; `crates/ruff_python_formatter/` formatting; `crates/ruff_cache/` incremental caching; `crates/ruff_server/` LSP; `crates/ruff_wasm/`; `fuzz/fuzz_targets/` crash and idempotency harnesses.
+- **Install / runtime:** `uvx ruff@0.17.3 check`, `uvx ruff@0.17.3 format`, pip/pipx or binary installer; Rust toolchain for source builds. Runs as native executable; does not need a Python interpreter to lint.
+- **Platforms:** Linux, macOS, Windows; WebAssembly crate/tooling.
+- **License:** MIT root; preserve notice and inspect dependencies before source reuse.
+- **Maintenance signals:** [0.17.3 release](https://github.com/astral-sh/ruff/releases/tag/0.17.3) 2026-10-27. [2026-10-30 current-main CI](https://github.com/astral-sh/ruff/actions/runs/41016143966) succeeded: **39 jobs passed, seven skipped**; Linux/macOS/Windows cargo tests, WASM test, formatter comparison, fuzz build and cargo-deny among successful jobs. [Daily parser fuzz](https://github.com/astral-sh/ruff/actions/runs/40976955323) succeeded on preceding main SHA.
+- **Verification performed:** Inspected README, MIT license, crates, fuzz harness documentation, releases and current-main CI job results. No independent install, formatting, lint run, benchmark or security audit. Upstream speed claims are not independent measurements.
+- **Source discovery:** GitHub-first 2026-10-30; no accessible playlist transcripts.
+- **Related projects:** [uv](https://github.com/astral-sh/uv) (same org and CLI launcher), [ty](https://github.com/astral-sh/ty), [ruff-vscode](https://github.com/astral-sh/ruff-vscode).
+- **Caveats / risks:** Autofixes may alter semantics; review changes. Internal crates are not guaranteed stable integration APIs. Fuzz *build* success does not prove fuzz execution.
+- **Research notes:** `research/2026-10-30-ruff-markitdown-merkle-tree.md`. No source copied.
+
+### MarkItDown
+
+- **Repository:** https://github.com/microsoft/markitdown
+- **Author / Org:** Microsoft
+- **Category:** Python / document conversion / Markdown / LLM data ingestion / optional cloud OCR
+- **Evidence:** PROMISING — upstream release and 21 successful PR-branch test jobs; archive resource-limit caveat and no confirmed current-main core test
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 3 + Documentation 5 + Maintenance 4)
+- **What it does:** Converts PDF, Word, Excel, PowerPoint, HTML, EPUB, ZIP, images, audio and other inputs into Markdown for analysis pipelines.
+- **Why it is valuable:** Reusable format-specific Python converters, stream/local/URL APIs, test vectors, MCP server, optional OCR plugin, and extensible plugin architecture.
+- **Useful code/components:** `packages/markitdown/src/markitdown/_markitdown.py` converter dispatch; `_base_converter.py` interfaces; `converters/` format readers; `packages/markitdown-mcp/`; `packages/markitdown-ocr/`; `packages/markitdown/tests/`.
+- **Install / runtime:** Python **3.10–3.14**, `pip install 'markitdown[pdf,docx,pptx]'` or opt-in extras; optional ExifTool/FFmpeg and cloud API credentials for some capabilities. Core file conversion can be local; URL and Azure/LLM features use networks.
+- **Platforms:** Python-compatible Linux/Windows; optional dependency/platform support varies.
+- **License:** MIT root; dependencies/plugins and paid cloud services retain their own terms.
+- **Maintenance signals:** [v0.1.9](https://github.com/microsoft/markitdown/releases/tag/v0.1.9) 2026-10-21; [2026-10-28 PR tests](https://github.com/microsoft/markitdown/actions/runs/40717145636) **21/21 passed** across Ubuntu Python 3.10–3.14 and Windows x64/ARM, core/OCR/MCP. PR branch, not current-main or release-tag validation. [2026-10-30 ZIP mitigation branch run](https://github.com/microsoft/markitdown/actions/runs/41026922728) was `action_required`, not a passing fix.
+- **Verification performed:** Inspected README, LICENSE, Python manifest, converter registration, ZIP source, tests and workflow matrix. No independent conversion, archive stress test, OCR or security audit.
+- **Source discovery:** GitHub-first 2026-10-30; no usable YouTube playlist transcript.
+- **Related projects:** In-tree MCP and OCR companions; [OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF) and [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx) as complementary architectures, not tested integrations.
+- **Caveats / risks:** **Untrusted ZIP resource exhaustion:** current `_zip_converter.py` loops through members and calls unbounded `zipObj.read(entry)` into memory, with recursive conversion. Apply external file size, entry count, recursion and time limits; do not treat a pending fix as shipped. Plugins execute Python; URL fetching and optional paid cloud/LLM calls have privacy and cost implications.
+- **Research notes:** `research/2026-10-30-ruff-markitdown-merkle-tree.md`. As of 2026-10-30, [ZIP guard PR #2296](https://github.com/microsoft/markitdown/pull/2296) and [PR #2050](https://github.com/microsoft/markitdown/pull/2050) remain open; no shipped mitigation established. No source copied.
+
+### OpenZeppelin Merkle Tree
+
+- **Repository:** https://github.com/OpenZeppelin/merkle-tree
+- **Author / Org:** OpenZeppelin
+- **Category:** TypeScript / off-chain Merkle proofs / EVM cryptography / token distribution infrastructure
+- **Evidence:** PROMISING — inspected source and tests; no passing upstream CI run established
+- **Tier / Score:** A / 23 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 2)
+- **What it does:** Builds Ethereum-oriented Merkle trees, serialized trees, single proofs and multiproofs, designed to pair with Solidity MerkleProof.
+- **Why it is valuable:** Off-chain companion to existing OpenZeppelin Contracts; provides reusable standard double-hashed ABI leaves, proof processing, multiproofs and portable tree data.
+- **Useful code/components:** `src/standard.ts` StandardMerkleTree; `src/simple.ts` SimpleMerkleTree; `src/core.ts` multiproof logic; `src/merkletree.ts` construction/serialization; `src/hashes.ts`; `src/*.test.ts`, `test/dumps.test.ts`.
+- **Install / runtime:** Node.js/npm TypeScript/JavaScript; `npm install @openzeppelin/merkle-tree`. Solidity verification requires a separate EVM contract using compatible hashing and leaf encoding.
+- **Platforms:** Node.js and JavaScript tooling for proof creation; Ethereum/EVM contracts for on-chain verification. Not Solana SPL.
+- **License:** MIT root; dependencies such as `@metamask/abi-utils` and `ethereum-cryptography` separately licensed.
+- **Maintenance signals:** [v1.0.8](https://github.com/OpenZeppelin/merkle-tree/releases/tag/v1.0.8) released **2025-02-19**; latest inspected master commit 2025-02-25. AVA tests and a push/PR GitHub Actions workflow are present, but GitHub Actions run list returned **no runs**; no successful CI claimed.
+- **Verification performed:** Inspected README, package manifest, MIT license, StandardMerkleTree source, tests, release and commit history. No independent npm test, proof generation, Solidity round-trip or audit.
+- **Source discovery:** Recursive GitHub-first research from OpenZeppelin Contracts MerkleProof, 2026-10-30.
+- **Related projects:** [OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) Solidity MerkleProof; ABI and Keccak dependencies.
+- **Caveats / risks:** Standard trees double-hash ABI-encoded leaves; SimpleMerkleTree permits prehashed leaves and needs careful design. Multiproof leaf ordering matters; contracts must prevent claim replay. No current CI evidence; stale maintenance. No automatic cross-chain compatibility.
+- **Research notes:** `research/2026-10-30-ruff-markitdown-merkle-tree.md`. No source copied.
+
+
+### mise
+
+- **Repository:** https://github.com/jdx/mise
+- **Author / Org:** Jeff Dickey / jdx
+- **Category:** Developer tooling / runtime version management / environment configuration / task automation
+- **Evidence:** VERIFIED — upstream release and prior-release successful cross-platform CI; exact current tag not independently tested
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Manages project-scoped developer tools, environment variables, tasks, lockfiles and machine bootstrap through a Rust CLI and `mise.toml`.
+- **Why it is valuable:** Combines reproducible tool versions, task automation, environment handling, bootstrap and supply-chain verification in one composable workflow.
+- **Useful code/components:** `src/cli/` install/exec/lock/trust/run commands; `crates/mise-config/`, `crates/mise-dotenv/`, `crates/mise-sigstore/`, `crates/mise-lsp/`, `crates/mise-bootstrap/`, `crates/mise-shim/`.
+- **Install / runtime:** Published binaries and package managers on Linux/macOS/Windows; source `Cargo.toml` declares Rust 1.95. No independent installation.
+- **Platforms:** Linux, macOS, Windows; shells, editors and CI. Termux unverified.
+- **License:** MIT root; installed tools and dependencies separately licensed.
+- **Maintenance signals:** [v2026.10.24](https://github.com/jdx/mise/releases/tag/v2026.10.24) dated 2026-10-30 in CHANGELOG. [2026-10-26 release-branch test](https://github.com/jdx/mise/actions/runs/40394685264) succeeded with Linux/Windows builds, macOS/Windows unit/E2E, Linux E2E and lint, **not on the latest tag**.
+- **Verification performed:** Inspected README, root LICENSE, Cargo manifest, CLI modules, Sigstore crate manifest, test workflow and prior successful run; no local execution or security audit.
+- **Source discovery:** GitHub-first 2026-10-30; YouTube seed access throttled.
+- **Related projects:** [mise-action](https://github.com/jdx/mise-action), [uv](https://github.com/astral-sh/uv), [hyperfine](https://github.com/sharkdp/hyperfine) (used in upstream release-note benchmarks, not a runtime dependency).
+- **Caveats / risks:** Project configs, task hooks, installers and remote downloads can execute code; inspect before trusting, pin versions and verify artifacts. Root Rust library is not a stable public API.
+- **Research notes:** `research/2026-10-30-mise-hyperfine.md`. No code copied.
+
+### hyperfine
+
+- **Repository:** https://github.com/sharkdp/hyperfine
+- **Author / Org:** David Peter / sharkdp
+- **Category:** CLI benchmarking / performance analysis / Rust developer utilities
+- **Evidence:** VERIFIED — successful upstream CI on inspected master SHA; no independent benchmark execution
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 4 + Novelty 3 + Documentation 5 + Maintenance 5)
+- **What it does:** Benchmarks command execution with warmups, repeated measurements, parameter scans, statistical analysis and export formats.
+- **Why it is valuable:** Reproducible command-comparison workflows, reusable scheduler/timer/export modules, cross-platform testing and explicit shell execution controls.
+- **Useful code/components:** `src/benchmark/scheduler.rs` orchestration; `src/benchmark/` executors; `src/timer/`, `src/metric/`, `src/outlier_detection/`, `src/parameter/`, `src/export/`, `src/shell_syntax/`.
+- **Install / runtime:** [Stable v1.20.0](https://github.com/sharkdp/hyperfine/releases/tag/v1.20.0) (2025-11-18); current development manifest 2.0.0 and Rust 1.97 minimum, **not a confirmed stable v2 release**.
+- **Platforms:** Linux, macOS, Windows; ARM builds in upstream matrix. Android/Termux not tested.
+- **License:** MIT OR Apache-2.0; both root license files inspected.
+- **Maintenance signals:** [2026-10-12 master CI](https://github.com/sharkdp/hyperfine/actions/runs/38224324422) succeeded on SHA `c516152`, including 13 platform build jobs, tests, formatting and minimum Rust checks; active October PR activity.
+- **Verification performed:** Inspected README, Cargo manifest, both licenses, scheduler and main source, CI workflow and successful run; no independent timing measurements.
+- **Source discovery:** GitHub-first 2026-10-30; recursive lead from mise performance notes.
+- **Related projects:** [mise](https://github.com/jdx/mise) (documentation-based benchmarking relationship), other sharkdp Rust CLIs.
+- **Caveats / risks:** Runs arbitrary commands, including preparation hooks; never benchmark untrusted commands. Results vary with CPU load, caches, thermal state and shell behavior; v2 may change CLI/output schemas.
+- **Research notes:** `research/2026-10-30-mise-hyperfine.md`. No code copied.
+
+
+### AccessKit
+
+- **Repository:** https://github.com/AccessKit/accesskit
+- **Author / Org:** AccessKit contributors
+- **Category:** Accessibility / cross-platform UI toolkit integration / Rust
+- **Evidence:** VERIFIED — upstream multi-platform CI and source inspection; no independent assistive-technology test
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Bridges a semantic UI tree to native screen-reader and assistive-technology APIs on Windows, macOS, Unix, Android and iOS.
+- **Why it is valuable:** Provides reusable accessibility semantics for custom-rendered or immediate-mode interfaces, with one tree model and platform-specific adapters.
+- **Useful code/components:** `accesskit/src/lib.rs` Node/Role/TreeUpdate/Action schema; `accesskit_consumer/src/tree.rs` retained tree; `accesskit_consumer/src/text.rs` text ranges; `adapters/{unix,windows,macos,android,ios,winit}/` bridges; consumer unit tests.
+- **Install / runtime:** Rust workspace requires Rust 1.87+; integrate the platform-specific crate and supply stable node IDs, incremental tree updates and action handling.
+- **Platforms:** Windows, macOS, Linux/Unix AT-SPI, Android, iOS; winit integration.
+- **License:** Workspace MIT OR Apache-2.0; winit adapter Apache-2.0; Chromium-derived portions carry separate BSD-style notice in `LICENSE.chromium`.
+- **Maintenance signals:** Core crate manifest 0.25.2; latest inspected per-crate `accesskit_winit` release 0.34.2 on 2026-10-25; [main CI 40233340615](https://github.com/AccessKit/accesskit/actions/runs/40233340615) passed 26/26 cross-platform test, lint, docs and license-check jobs on 2026-10-25.
+- **Verification performed:** Inspected README, ARCHITECTURE, Cargo manifests, license files, schema, consumer test fixtures, adapter layout and CI job results; no independent screen-reader, build or device testing.
+- **Source discovery:** GitHub-first accessibility research, 2026-10-30; no YouTube transcript attribution.
+- **Related projects:** NVDA (complementary Windows screen-reader ecosystem, no direct integration claimed); winit; AT-SPI; Chromium accessibility schema.
+- **Caveats / risks:** Upstream says rich text/hypertext support is incomplete; test actual screen readers and focus/action behavior. Changed nodes must supply complete properties; preserve license notices for Chromium-derived material.
+- **Research notes:** `research/2026-10-30-accesskit-libkiwix.md`. No code copied.
+
+### libkiwix
+
+- **Repository:** https://github.com/kiwix/libkiwix
+- **Author / Org:** Kiwix
+- **Category:** Offline knowledge / ZIM libraries / HTTP serving / C++ / search
+- **Evidence:** VERIFIED — upstream CI and source inspection; no independent offline serving or recovery test
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Implements shared library, search, catalog, download and embedded HTTP-server functionality for Kiwix offline readers and tools.
+- **Why it is valuable:** Reusable offline knowledge-serving infrastructure and a directly consumed library in the already-cataloged Kiwix/ZIM ecosystem.
+- **Useful code/components:** `src/library.cpp` library/filter management; `src/manager.cpp` persistence; `src/server.cpp` and `src/server/internalServer.cpp` HTTP serving; `src/opds_catalog.cpp` OPDS; `src/search_renderer.cpp` search; `src/downloader.cpp`/ `src/aria2.cpp` downloads; `test/` suites.
+- **Install / runtime:** Meson/Ninja C++17; ICU, libzim >=9.4,<10 with Xapian, pugixml, curl, microhttpd, zlib, Xapian, mustache header; aria2 runtime.
+- **Platforms:** Linux, macOS, Windows; Android and iOS cross-build targets (not independently device-tested).
+- **License:** GPL-3.0-or-later per Meson and source headers; third-party dependencies have separate terms.
+- **Maintenance signals:** [Stable 14.2.1](https://github.com/kiwix/libkiwix/releases/tag/14.2.1) published 2026-05-11; main Meson manifest declares **unreleased 14.3.0**. [2026-10-30 main CI](https://github.com/kiwix/libkiwix/actions/runs/41027777528) passed 11/11 jobs; [same-commit Packages](https://github.com/kiwix/libkiwix/actions/runs/41027777537) failed Debian-unstable while Ubuntu Jammy/Noble packaging passed.
+- **Verification performed:** Inspected README, COPYING, Meson, headers, source map, test sources, workflow definitions and exact job results. Some cross-platform CI legs compile without runtime tests; no independent build or HTTP deployment.
+- **Source discovery:** Recursive GitHub-first follow-up from Kiwix Tools and libzim, 2026-10-30.
+- **Related projects:** kiwix/kiwix-tools (direct dependency >=14.2,<15); openzim/libzim; kiwix/java-libkiwix; kiwix/kiwix-build; kiwix/kiwix-android.
+- **Caveats / risks:** Copyleft obligations and dependency licenses; exposed HTTP service requires bind restrictions; inspect untrusted ZIM parsing, downloads, memory limits and packaging failure before production deployment.
+- **Research notes:** `research/2026-10-30-accesskit-libkiwix.md`. No source copied.
+
+
+### Dire Wolf
+
+- **Repository:** https://github.com/wb2osz/direwolf
+- **Author / Org:** John Langner (WB2OSZ)
+- **Category:** Amateur packet radio / APRS / AX.25 / audio DSP / KISS TNC / off-grid communications
+- **Evidence:** PROMISING — upstream dev build evidence, but published stable release predates documented security fixes
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 4 + Reusability 4 + Novelty 4 + Documentation 5 + Maintenance 3)
+- **What it does:** Software soundcard modem and terminal-node-controller replacement for AX.25/APRS packet radio; includes APRS IGate, digipeater, tracker, telemetry, FX.25 and IL2P FEC.
+- **Why it is valuable:** Reusable modem, packet framing, radio-to-network bridging and error-correction code for resilient communications; interfaces with existing KISS applications and commodity soundcards.
+- **Useful code/components:** `src/demod_afsk.c` / `src/demod_9600.c` DSP; `src/ax25_pad.c` / `src/ax25_link.c` AX.25; `src/kiss_frame.c` / `src/kissnet.c` / `src/kissserial.c` KISS; `src/fx25_*.c` and `src/il2p_*.c` FEC; `src/igate.c`, `src/digipeater.c`, `src/telemetry.c`; `test/CMakeLists.txt` and `test/scripts/`.
+- **Install / runtime:** CMake-based C build on Linux/macOS/Windows. Soundcard and compatible radio required for live RF; ALSA, PortAudio, Hamlib, GPSD and other integrations vary by host.
+- **Platforms:** Linux (including Raspberry Pi), Windows, macOS; RF hardware optional for software-only frame/test tooling.
+- **License:** GPL-2.0-or-later per C source headers; root `LICENSE` contains GPLv2; `external/LICENSE` warns of BSD, GPL and other bundled component terms.
+- **Maintenance signals:** Latest published non-prerelease **1.8.1 (2025-11-13)**; master CMake declares **1.8.2 Development** with May 2026 CVE backports, not a published 1.8.2 release. Dev commit `4edb377` (2026-10-16) [build CI](https://github.com/wb2osz/direwolf/actions/runs/38972134998) passed 5/5 Windows/macOS/Ubuntu jobs; the workflow marks the test step `continue-on-error: true`. Master CodeQL C++/Python succeeded 2026-10-29.
+- **Verification performed:** Inspected README, source headers, bundled licenses, CMake, modem/KISS/IGate source tree, test harness and dated Actions runs. No independent compilation, radio transmission, packet decoding or security testing.
+- **Source discovery:** GitHub-first APRS and offline communications research, 2026-10-30; no video evidence.
+- **Related projects:** wb2osz/hrot; Reticulum KISS interface (interoperability lead only); Xastir; APRS-IS.
+- **Caveats / risks:** **Security-critical:** stable 1.8.1 predates fixes documented in upstream `CHANGES.md` for KISS buffer overflow **CVE-2025-34457** and MIC-E packet crash **CVE-2025-34458**; verify actual patch inclusion before deployment and isolate untrusted KISS/TCP endpoints. Radio transmission is subject to local licensing and spectrum rules. Copyleft and bundled notices apply.
+- **Research notes:** `research/2026-10-30-direwolf-sqlite-utils.md`. No source copied.
+
+### sqlite-utils
+
+- **Repository:** https://github.com/simonw/sqlite-utils
+- **Author / Org:** Simon Willison
+- **Category:** Local-first SQLite / Python CLI / structured-data ingestion / schema migrations / full-text search
+- **Evidence:** VERIFIED — upstream tests and releases; no independent runtime test; current-main full test matrix has a known failure
+- **Tier / Score:** S / 26 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 3 + Documentation 5 + Maintenance 4)
+- **What it does:** Python library and CLI for importing CSV/TSV/JSON into SQLite, querying files in memory, evolving table schemas, adding FTS, running migrations and extending behavior with plugins.
+- **Why it is valuable:** Composable, portable, low-infrastructure data-processing primitives for research collections, local archives, offline analytics and automated ETL.
+- **Useful code/components:** `sqlite_utils/db.py` Database/Table and FTS; `sqlite_utils/cli.py` import/query/export; `sqlite_utils/migrations.py`; `sqlite_utils/plugins.py` / `hookspecs.py`; `sqlite_utils/create_table_parser.py`; `sqlite_utils/utils.py`; extensive `tests/` including migrations, FTS, streaming and transformations.
+- **Install / runtime:** `pip install sqlite-utils`; Python **>=3.10** and bundled dependencies; optional SpatiaLite/NumPy for selected features.
+- **Platforms:** Python 3.10+ on Linux, macOS and Windows; Termux not independently verified.
+- **License:** Apache-2.0 per root LICENSE and `pyproject.toml`; dependencies and plugins have their own licenses.
+- **Maintenance signals:** Stable **4.2.1 (2026-08-13)** fixes a 4.2 missing-dependency regression. [2026-09-22 main Test](https://github.com/simonw/sqlite-utils/actions/runs/35768210531) succeeded; [2026-10-11 SQLite-version tests](https://github.com/simonw/sqlite-utils/actions/runs/38097836285) and [coverage](https://github.com/simonw/sqlite-utils/actions/runs/38097836249) succeeded. **2026-10-11 full Test failed** in macOS Python 3.14 `ty` type checking, cancelling much of the matrix ([run](https://github.com/simonw/sqlite-utils/actions/runs/38097836294)). Main CodeQL succeeded 2026-10-30.
+- **Verification performed:** Inspected README, package manifest, license, source modules, tests and CI. Upstream evidence only; no independent database operations, migration, install, plugin or performance tests.
+- **Source discovery:** GitHub-first local data tooling, 2026-10-30; no video evidence.
+- **Related projects:** simonw/datasette (**current-main** `pyproject.toml` requires `sqlite-utils>=4.0`, but **stable 0.65.5** `setup.py` does not declare this dependency; no runtime integration test); simonw/csvs-to-sqlite; simonw/db-to-sqlite; sqlite-fts4; Miller as complementary CLI (not direct integration).
+- **Caveats / risks:** Plugins run arbitrary Python code, SQLite extensions and SQL need trust boundaries, and migrations should be tested against backups. Passing CodeQL/coverage does not imply a green full test matrix.
+- **Research notes:** `research/2026-10-30-direwolf-sqlite-utils.md`. No source copied.
+
+### SciPy
+
+- **Repository:** https://github.com/scipy/scipy
+- **Author / Org:** SciPy contributors
+- **Category:** Scientific computing / numerical algorithms / signal processing / optimization / spatial indexing / Python
+- **Evidence:** VERIFIED — upstream stable release, numerical test suites and passing main Linux CI; not independently executed
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Provides numerical integration, optimization, statistics, sparse matrix and graph routines, spatial algorithms, FFTs, signal/image processing and scientific utilities built around NumPy.
+- **Why it is valuable:** Broad, well-tested numerical building blocks for scientific software, robotics, DSP, engineering analysis, optimization and local Python applications.
+- **Useful code/components:** `scipy/signal/_peak_finding.py`, `_spectral_py.py`; `scipy/spatial/_ckdtree.pyx`; `scipy/optimize/_linprog_highs.py`, `_milp.py`; `scipy/sparse/csgraph/`; `scipy/integrate/`, `scipy/fft/`; associated `tests/` suites.
+- **Install / runtime:** Stable v1.18.1 requires Python >=3.12 and NumPy >=2.0,<2.8; binary wheels via pip/conda where supported, or Meson/Cython/compiled native dependencies for source builds. Current main is unreleased 2.0.0.dev0.
+- **Platforms:** Linux, macOS, Windows; Emscripten/Pyodide build pathway is experimental and its latest inspected CI failed.
+- **License:** BSD-3-Clause core `LICENSE.txt`; `LICENSES_bundled.txt` and subproject/file-level notices identify separately licensed native components.
+- **Maintenance signals:** [Stable v1.18.1](https://github.com/scipy/scipy/releases/tag/v1.18.1) released 2026-08-21. [2026-10-30 main Linux CI](https://github.com/scipy/scipy/actions/runs/41117526122) passed 15/15 jobs and [CodeQL](https://github.com/scipy/scipy/actions/runs/41117526068) passed. [Same-commit Emscripten/Pyodide CI](https://github.com/scipy/scipy/actions/runs/41117526067) failed after build during pytest plugin import (`os.geteuid` unavailable); [2026-10-27 earlier run](https://github.com/scipy/scipy/actions/runs/40562698528) succeeded.
+- **Verification performed:** Inspected README, stable and main package manifests, core and bundled licenses, source and test trees, CI job steps and failed WebAssembly test logs. No independent numerical execution, wheel build or security audit.
+- **Source discovery:** GitHub-first scientific-computing research 2026-10-30; no YouTube transcript attribution.
+- **Related projects:** numpy/numpy (runtime dependency); pyodide/pyodide (WebAssembly integration test pathway); ERGO-Code/HiGHS (optimization subproject); scientific-python/array-api-compat (bundled compatibility layer).
+- **Caveats / risks:** Platform/ABI compatibility and numerical tolerance require testing; Emscripten test failure is not a failure of stable native SciPy. Inspect bundled native-code licenses and constrain untrusted input sizes.
+- **Research notes:** `research/2026-10-30-scipy-lvgl.md`. No third-party code copied.
+
+### LVGL
+
+- **Repository:** https://github.com/lvgl/lvgl
+- **Author / Org:** LVGL contributors
+- **Category:** Embedded graphical interfaces / C / microcontrollers / display drivers / Zephyr / ESP-IDF
+- **Evidence:** VERIFIED — upstream release and 12/12 passing main build/test jobs; not independently flashed or rendered on hardware
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Portable C graphical user interface engine for microcontrollers and MPUs, with widgets, layouts, drawing backends, animations, input handling and platform adapters.
+- **Why it is valuable:** Composable embedded UI primitives with simulator, test, ESP-IDF and Zephyr integration for low-resource displays, local control panels and industrial interfaces.
+- **Useful code/components:** `src/core/lv_obj.c`, `lv_obj_event.c`; `src/display/lv_display.c`; `src/draw/lv_draw.c`; `src/widgets/`; `src/layouts/flex/`; `src/indev/lv_indev.c`; `src/drivers/`; `examples/`; `tests/main.py`; `idf_component.yml`; `zephyr/module.yml`.
+- **Install / runtime:** Portable C source via CMake, Arduino library, ESP-IDF component or Zephyr module. Requires display/input drivers and target-specific RAM/flash; upstream README suggests ~100 KB RAM and 200–300 KB flash for a typical UI, not a guaranteed per-project bound.
+- **Platforms:** ESP32/ESP-IDF, Arduino-capable MCUs, Zephyr, NuttX, Linux, Windows and desktop simulation; actual driver/hardware support varies.
+- **License:** MIT core (`LICENCE.txt`); `COPYRIGHTS.md` and `sbom/` record bundled third-party code, fonts and demo assets. Optional LVGL Pro editor is separately licensed.
+- **Maintenance signals:** [Stable v9.6.0](https://github.com/lvgl/lvgl/releases/tag/v9.6.0) released 2026-09-16. [2026-10-30 master Build and Test](https://github.com/lvgl/lvgl/actions/runs/41121901026) passed 12/12 jobs, including ESP-IDF ESP32-S3 compile and 32/64-bit tests. [Emulated performance run](https://github.com/lvgl/lvgl/actions/runs/41121901043) failed 64-bit Docker image pull (runner disk full), while 32-bit succeeded; [docs build](https://github.com/lvgl/lvgl/actions/runs/41121901212) failed at doxymark npm installation (`Unexpected token '?'`).
+- **Verification performed:** Inspected README, MIT license, bundled-license inventory, manifests, source modules, tests and CI job logs. Confirmed Zephyr's `west.yml` pins **zephyrproject-rtos/lvgl fork** commit `c9ffd469`, not upstream lvgl/lvgl; no independent runtime/display tests.
+- **Source discovery:** GitHub-first embedded-UI discovery 2026-10-30; no YouTube transcript attribution.
+- **Related projects:** zephyrproject-rtos/zephyr (west LVGL module); zephyrproject-rtos/lvgl (pinned fork); espressif/esp-idf (ESP-IDF component); lvgl/lv_micropython; lvgl/lv_port_esp32.
+- **Caveats / risks:** Runner disk and npm tooling failures do not prove core GUI failure, but leave CI partially red. Validate RAM/flash, hardware rendering, input event handling, driver safety and fork/version compatibility. Third-party assets have separate licenses.
+- **Research notes:** `research/2026-10-30-scipy-lvgl.md`. No third-party code copied.
+
+
+
+### libusb
+
+- **Repository:** https://github.com/libusb/libusb
+- **Author / Org:** libusb contributors
+- **Category:** USB / userspace device access / Android hardware interoperability / portable C
+- **Evidence:** VERIFIED — upstream release, cross-platform builds and Linux mock-device test; no independent device testing
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 5)
+- **What it does:** Portable C API for discovering USB devices, parsing descriptors, handling asynchronous/synchronous transfers, hotplug notifications and device access across supported operating systems.
+- **Why it is valuable:** Provides reusable USB transport and permission-aware hardware interfaces for desktop, embedded-host and Android applications.
+- **Useful code/components:** `libusb/core.c`, `descriptor.c`, `io.c`, `hotplug.c`, `sync.c`; `libusb/os/linux_usbfs.c`, `windows_winusb.c`, `darwin_usb.c`, `emscripten_webusb.cpp`; `android/README`; `tests/umockdev.c`, `tests/fuzz/`.
+- **Install / runtime:** Build with autotools, platform-native builds or Android NDK; device permissions/OS drivers required. Android unrooted applications can obtain permission via UsbManager, pass an opened FD to native code and call `libusb_wrap_sys_device`; this is not automatically equivalent to Termux plug-and-play.
+- **Platforms:** Linux, macOS, Windows, Android NDK, OpenBSD/NetBSD, Haiku, illumos/Solaris; Emscripten/WebUSB compile path.
+- **License:** LGPL-2.1-or-later (README, COPYING and API header); preserve notices and applicable relinking rights. Review example/dependency notices.
+- **Maintenance signals:** [v1.0.30](https://github.com/libusb/libusb/releases/tag/v1.0.30) released 2026-05-17; 2026-10-30 master commit `987c117`. Twelve master workflows passed, including [Linux](https://github.com/libusb/libusb/actions/runs/40983130249) and [Android](https://github.com/libusb/libusb/actions/runs/40983130732).
+- **Verification performed:** Inspected README, COPYING, public API, source/backend/test trees, Android permission guidance and CI job steps. Linux umockdev test passed upstream; Android NDK built three ABIs. Linux optional sanitizer and BOS-fuzzer steps were skipped. No independent USB transfer, browser execution or security audit.
+- **Source discovery:** GitHub-first hardware interoperability, 2026-10-31 UTC; no YouTube transcript evidence.
+- **Related projects:** nohajc/termux-adb (related Android USB FD pattern, not a direct dependency); libusb/hidapi (direct `libusb/hid.c` backend confirmed 2026-10-31; USB HID only, no device test); Android UsbManager.
+- **Caveats / risks:** USB access permissions and drivers vary by host; Android native build does not establish non-root USB runtime. Validate descriptors, transfer lifetimes and device trust boundaries; LGPL conditions apply.
+- **Research notes:** `research/2026-10-31-libusb-tippecanoe.md`. No third-party code copied.
+
+### Tippecanoe
+
+- **Repository:** https://github.com/felt/tippecanoe
+- **Author / Org:** Erica Fischer / Felt; originally Mapbox, with Protomaps copyright notices
+- **Category:** Offline mapping / vector tile generation / C++17 / FlatGeobuf / PMTiles / MBTiles
+- **Evidence:** VERIFIED — upstream 7/7 main CI build/test jobs; no independent tile-generation tests
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 3)
+- **What it does:** Converts GeoJSON, FlatGeobuf and CSV geographic features into multiscale vector tiles, writing MBTiles, PMTiles or directory outputs; includes tile-join, decoding and JSON tools.
+- **Why it is valuable:** Creates portable offline map data and reusable tile-processing components for MapLibre/PMTiles ecosystems without a hosted tile generator.
+- **Useful code/components:** `main.cpp`, `tile.cpp`, `geometry.cpp`; `geojson.cpp`, `flatgeobuf.cpp`; `pmtiles_file.cpp`, `pmtiles/pmtiles.hpp`; `mbtiles.cpp`, `mvt.cpp`; `tile-join.cpp`, `jsontool.cpp`, `jsonpull/`; `tests/`.
+- **Install / runtime:** C++17, make, SQLite3 development headers, zlib, pthreads; Homebrew on macOS or source build on Ubuntu/Linux. Large data may require substantial disk/RAM; `--temporary-directory` changes scratch storage location.
+- **Platforms:** Linux x86_64/aarch64 and macOS (upstream CI); other C++17 build targets not established.
+- **License:** BSD two-condition text in `LICENSE.md`; retain Mapbox/Protomaps notices and audit vendored libraries before copying.
+- **Maintenance signals:** [Stable 2.79.0](https://github.com/felt/tippecanoe/releases/tag/2.79.0) published 2025-07-24. Current main [2026-08-14 CI](https://github.com/felt/tippecanoe/actions/runs/31769908097) passed 7/7 jobs (Linux x86_64/ARM64 and macOS Release/Debug plus docs). Main CHANGELOG describes unreleased 2.82.0 JSON correctness/memory fixes.
+- **Verification performed:** Inspected upstream README, LICENSE.md, Makefile, CHANGELOG, source, tests and 7 CI job steps. No independent tile round trip, memory profile or security audit.
+- **Source discovery:** Recursive GitHub-first discovery from PMTiles and FlatGeobuf, 2026-10-31 UTC; no YouTube transcript evidence.
+- **Related projects:** protomaps/PMTiles (output format); flatgeobuf/flatgeobuf (input format); maplibre/maplibre-native (renderer, not direct integration); mapbox/vector-tile-spec; mapbox/tippecanoe (predecessor).
+- **Caveats / risks:** Published 2.79.0 predates unreleased 2.82.0 JSON fixes. Validate untrusted geodata, output integrity and storage usage. Bundled dependency licenses and source map-data rights are separate.
+- **Research notes:** `research/2026-10-31-libusb-tippecanoe.md`. No third-party code copied.
+
+
+
+### HIDAPI
+
+- **Repository:** https://github.com/libusb/hidapi
+- **Author / Org:** libusb/HIDAPI contributors; originated with Alan Ott (Signal 11 Software)
+- **Category:** USB and Bluetooth HID / portable C library / device interoperability
+- **Evidence:** VERIFIED — upstream cross-platform build matrix; not independently tested on devices
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** C API for HID device enumeration, connection, input/output and feature reports using native Windows/macOS, Linux hidraw or libusb backends.
+- **Why it is valuable:** Embeddable, portable device interface with a single public header and platform-specific implementation files; useful for authorized peripherals, assistive hardware and diagnostic tooling.
+- **Useful code/components:** `hidapi/hidapi.h`; `linux/hid.c` (hidraw, USB/Bluetooth); `libusb/hid.c` (libusb USB-only); `windows/hid.c`, `mac/hid.c`; `hidtest/test.c`; `udev/69-hid.rules`; CMake/Meson integration. Optional FOX test GUI is explicitly unmaintained.
+- **Install / runtime:** CMake recommended; Linux libusb backend requires libusb development headers; hidraw requires libudev and appropriate udev permissions; native backends use OS APIs. Shared or embedded source builds.
+- **Platforms:** Windows, Linux, FreeBSD, macOS; USB HID across backends and Bluetooth HID only on compatible native/hidraw backends.
+- **License:** Choice of BSD-style three-clause (`LICENSE-bsd.txt`), GPL-3.0 or original HIDAPI license; preserve chosen terms and inspect backend dependencies separately.
+- **Maintenance signals:** [Stable hidapi-0.15.0](https://github.com/libusb/hidapi/releases/tag/hidapi-0.15.0) published 2025-05-18; master header declares 0.16.0 (unreleased). [2026-08-14 master build](https://github.com/libusb/hidapi/actions/runs/31795529703) passed 9/9 jobs across Linux, Windows and macOS; [2026-10-25 master code checks](https://github.com/libusb/hidapi/actions/runs/40183200642) passed. [PR #837](https://github.com/libusb/hidapi/pull/837) for libusb report-queue handling remains unmerged.
+- **Verification performed:** Inspected README, build guide, licenses, header, libusb backend, source/test trees and CI jobs. No independent compilation, device traffic, USB/Bluetooth hardware validation or security audit.
+- **Source discovery:** GitHub-first recursive follow-up from libusb on 2026-10-31; no transcript evidence.
+- **Related projects:** libusb/libusb (actual libusb backend dependency); todbot/hidapitester (v0.7 upstream CI-verified CLI, CMake pins HIDAPI 0.15.0; hardware tests not established); original signal11/hidapi lineage.
+- **Caveats / risks:** HID reports can change device state; non-root access requires OS-specific permission configuration. Do not claim unmerged hotplug/report-queue work is released or hardware-tested.
+- **Research notes:** `research/2026-10-31-hidapi-datasette.md`. No upstream code copied.
+
+### Datasette
+
+- **Repository:** https://github.com/simonw/datasette
+- **Author / Org:** Simon Willison and contributors
+- **Category:** SQLite / local-first data publishing / Python / HTTP API / web exploration
+- **Evidence:** VERIFIED — upstream current-main Python, browser, SQLite and Pyodide CI; not independently deployed
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Serves SQLite datasets through a browsable web interface, interactive queries, metadata and a JSON API; supports plugins and deployment tooling.
+- **Why it is valuable:** Turns local archives and research datasets into inspectable, shareable interfaces and APIs with reusable permission, query, renderer and extension architecture.
+- **Useful code/components:** `datasette/app.py`, `database.py`, `views/`, `renderer.py`, `permissions.py`, `plugins.py`, `hookspecs.py`, `facets.py`, `filters.py`, `csrf.py`, `tokens.py`, `cli.py`, `publish/`; tests for API, auth, permissions, CSRF, SQL and Playwright.
+- **Install / runtime:** `pip install datasette` / `datasette serve database.db` or Docker. **Current main** `pyproject.toml` requires Python >=3.11 and `sqlite-utils>=4.0`; **stable 0.65.5** `setup.py` instead requires Python >=3.10 and does not declare `sqlite-utils` as a runtime dependency. Do not conflate release lines.
+- **Platforms:** Python-supported Linux, macOS, Windows and containers; browser UI. Datasette Lite is a separate Pyodide variant.
+- **License:** Apache-2.0 (root LICENSE and package manifest); plugins and dependencies have separate licenses.
+- **Maintenance signals:** [Stable 0.65.5](https://github.com/simonw/datasette/releases/tag/0.65.5) published 2026-09-16; [1.0a41](https://github.com/simonw/datasette/releases/tag/1.0a41) is a 2026-09-24 prerelease, not stable 1.0. [2026-10-22 main Test](https://github.com/simonw/datasette/actions/runs/39856323145) passed 5/5 Python jobs, [Playwright](https://github.com/simonw/datasette/actions/runs/39856323157) 3/3 browsers, [SQLite versions](https://github.com/simonw/datasette/actions/runs/39856323220) and [Pyodide](https://github.com/simonw/datasette/actions/runs/39856323261) passed.
+- **Verification performed:** Inspected README, Apache license, package manifest, application/auth/extension source and tests; verified upstream CI outcomes. No independent server deployment, query execution, authentication assessment or plugin sandbox testing.
+- **Source discovery:** GitHub-first recursive follow-up from sqlite-utils on 2026-10-31; no YouTube transcript evidence.
+- **Related projects:** simonw/sqlite-utils (current-main `>=4.0` dependency only; not declared in stable 0.65.5); simonw/datasette-lite (Pyodide browser companion; pinned `sqlite-utils==3.28` for import); simonw/datasette-studio.
+- **Caveats / risks:** Public SQL/API access can disclose data or consume resources; review permissions, plugins, token handling, query limits and extension trust before exposing to the internet. Stable and alpha branches differ.
+- **Research notes:** `research/2026-10-31-hidapi-datasette.md`. No upstream code copied.
+
+
+### hidapitester
+
+- **Repository:** https://github.com/todbot/hidapitester
+- **Author / Org:** Tod E. Kurt / todbot
+- **Category:** USB/Bluetooth HID / CLI diagnostics / C / cross-platform hardware interoperability
+- **Evidence:** VERIFIED — upstream builds and smoke tests; no independent device I/O
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Command-line HIDAPI client for enumerating devices, filtering by VID/PID/usage, opening endpoints and reading/writing HID input, output and feature reports.
+- **Why it is valuable:** Small, inspectable CLI and practical integration/test harness for HIDAPI and user-controlled USB/Bluetooth peripherals.
+- **Useful code/components:** `hidapitester.c` command parser/report I/O/JSON listing; `CMakeLists.txt` HIDAPI FetchContent pinned `hidapi-0.15.0`; `Makefile`; `tests/test_nohardware.sh`; `tests/test_hardware.sh`; `test_hardware/hidtest_tinyusb/` firmware; cross-platform GitHub Actions.
+- **Install / runtime:** Download v0.7 ZIPs or compile via Make/CMake with HIDAPI; OS-specific device permissions apply. Windows x86_64, macOS universal, Linux x86_64/aarch64 builds available.
+- **Platforms:** Linux, Raspberry Pi/aarch64, macOS and Windows; hardware access and permissions vary.
+- **License:** GPL-3.0 root license; HIDAPI and test firmware/dependencies require separate license review.
+- **Maintenance signals:** [v0.7](https://github.com/todbot/hidapitester/releases/tag/v0.7) published 2026-09-26 with four platform ZIPs. [Linux](https://github.com/todbot/hidapitester/actions/runs/36269273917), [macOS](https://github.com/todbot/hidapitester/actions/runs/36269273951), [Windows](https://github.com/todbot/hidapitester/actions/runs/36269273896) and [Raspberry Pi](https://github.com/todbot/hidapitester/actions/runs/36269273927) main CI all passed 2026-09-26.
+- **Verification performed:** Inspected README, C source, build scripts, test scripts, LICENSE, release assets and upstream workflow job steps. Linux/macOS CI compiles and runs `--version`/`--list`, but does not run `make test-hw` or demonstrate physical device communication. No independent execution.
+- **Source discovery:** GitHub-first follow-up from HIDAPI; no YouTube transcript attribution.
+- **Related projects:** libusb/hidapi (direct pinned build dependency), libusb/libusb (optional backend), TinyUSB (reference HID test firmware).
+- **Caveats / risks:** HID output/feature writes can change device state. Requires authorized devices and OS permissions; hardware test script exists but was not verified in CI. GPL-3.0 copyleft applies to CLI reuse.
+- **Research notes:** `research/2026-10-31-hidapitester-datasette-lite.md`. No upstream source copied.
+
+### Datasette Lite
+
+- **Repository:** https://github.com/simonw/datasette-lite
+- **Author / Org:** Simon Willison
+- **Category:** SQLite / browser-based data exploration / Pyodide / WebAssembly / local-first
+- **Evidence:** PROMISING — upstream browser CI and deployment; version compatibility and offline behavior not independently verified
+- **Tier / Score:** A / 24 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 3)
+- **What it does:** Runs Datasette's Python application in a browser Web Worker via Pyodide, loading remote SQLite, CSV, JSON/JSONL, Parquet, SQL and metadata for interactive exploration.
+- **Why it is valuable:** Reusable static-hosted database viewer, browser-side Python/SQLite architecture and CORS-aware data-loading patterns without a conventional backend server.
+- **Useful code/components:** `webworker.js` Pyodide v0.27.2 boot, Datasette ASGI test-client bridge, duplicate database naming and structured-data import; `index.html` URL routing/GitHub raw URL normalization; `tests/test_datasette_lite.py` Playwright browser regression tests.
+- **Install / runtime:** Static hosting (GitHub Pages) or local HTTP server; modern WebAssembly/Web Worker browser. Default startup fetches Pyodide CDN, Python packages and data: **not turnkey offline**.
+- **Platforms:** Modern desktop/mobile browsers; actual mobile performance and offline caching not independently tested.
+- **License:** Apache-2.0 root license; Pyodide, Datasette, installed Python packages and CDN assets have their own terms.
+- **Maintenance signals:** Last main commit 2026-08-09; [main Playwright Test](https://github.com/simonw/datasette-lite/actions/runs/31341071528) passed and [Pages deployment](https://github.com/simonw/datasette-lite/actions/runs/31341070505) succeeded that day. No tagged GitHub releases returned. 2026-10-20 PR workflow action_required, not a current-main failure.
+- **Verification performed:** Inspected README, LICENSE, `webworker.js`, `index.html`, Playwright tests, workflow and upstream CI job steps. No independent browser launch, import, plugin test or security audit.
+- **Source discovery:** GitHub-first follow-up from Datasette/Pyodide; two exact-ID YouTube searches produced no transcript material.
+- **Related projects:** simonw/datasette (server-side app run inside browser), pyodide/pyodide, simonw/sqlite-utils (worker pins `3.28` for imports).
+- **Caveats / risks:** `?install=` can install Python packages and `?sql=` executes supplied SQL; untrusted URLs and large data can consume resources or execute code in the browser context. Worker pins `sqlite-utils==3.28`, while current-main Datasette requires `>=4.0`; stable 0.65.5 does not declare that dependency. **Do not claim prerelease compatibility** without runtime testing.
+- **Research notes:** `research/2026-10-31-hidapitester-datasette-lite.md`. No upstream source copied.
 
 ## Entry format
 

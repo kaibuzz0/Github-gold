@@ -6,6 +6,7 @@ on:
       - "MASTER_LIST.md"
       - "catalog/**"
       - "scripts/catalog_audit.py"
+      - "scripts/test_catalog_audit.py"
       - ".github/workflows/catalog-audit.yml"
   push:
     branches:
@@ -15,6 +16,7 @@ on:
       - "MASTER_LIST.md"
       - "catalog/**"
       - "scripts/catalog_audit.py"
+      - "scripts/test_catalog_audit.py"
       - ".github/workflows/catalog-audit.yml"
 
 permissions:
@@ -34,3 +36,6 @@ jobs:
 
       - name: Audit catalog invariants
         run: python scripts/catalog_audit.py
+
+      - name: Run catalog-audit regression tests
+        run: python -m unittest discover -s scripts -p "test_*.py" -v
