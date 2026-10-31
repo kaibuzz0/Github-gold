@@ -8816,7 +8816,8 @@
         "2026-10-30 master CI 12/12 listed workflows succeeded across Linux, macOS, Windows, Android, BSD, Haiku, illumos, Cygwin and MSYS2; Linux job ran umockdev test and Emscripten build",
         "2026-10-30 Android CI 40983130732 built armeabi-v7a, arm64-v8a and x86_64 using NDK; did not execute on Android hardware",
         "2026-10-30 Linux CI 40983130249 skipped sanitizer rebuild and BOS fuzzer steps; do not claim those checks ran",
-        "No independent USB transfers, physical-device tests, security audit or WebUSB browser runtime test"
+        "No independent USB transfers, physical-device tests, security audit or WebUSB browser runtime test",
+        "2026-10-31 PyUSB backend source usb/backend/libusb1.py confirms direct libusb 1.0 API bindings; this is source-level integration, not a USB hardware test"
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
@@ -8825,7 +8826,8 @@
       "related_projects": [
         "nohajc/termux-adb (analogous permissioned Android USB FD bridging; no direct dependency established)",
         "libusb/hidapi (direct libusb/hid.c backend confirmed 2026-10-31; 0.15.0 stable; no hardware test)",
-        "Android UsbManager/UsbDeviceConnection (platform permission and FD handoff)"
+        "Android UsbManager/UsbDeviceConnection (platform permission and FD handoff)",
+        "pyusb/pyusb (Python ctypes backend directly binds libusb 1.0 via usb/backend/libusb1.py; upstream tox CI, no physical device tests)"
       ],
       "research_notes": "research/2026-10-31-libusb-tippecanoe.md. Android USB enumeration needs permissions or wrapped FD; CI compilation does not establish phone-to-device behavior. Restrict device access, validate untrusted descriptors, preserve LGPL notices and user relinking rights. No source copied."
     },
@@ -9272,6 +9274,135 @@
         "mapbox/vector-tile-js (PBF vector tile parser dependency)"
       ],
       "research_notes": "research/2026-10-31-pyserial-maplibre-gl-js.md. Rendering offline requires locally served/licensed style, tiles, fonts and sprites; README sample fetches remote demotiles and unpkg. Large/untrusted tiles, WebGL memory, CORS, and attribution need assessment. No upstream code copied."
+    },
+    {
+      "name": "PyUSB",
+      "repository": "https://github.com/pyusb/pyusb",
+      "owner": "pyusb / Wander Lairson Costa and contributors",
+      "category": [
+        "usb",
+        "python",
+        "libusb",
+        "hardware-interoperability",
+        "cross-platform",
+        "device-control"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 26,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 3
+      },
+      "license": "BSD-3-Clause (root LICENSE); libusb 1.0 backend has independent LGPL-2.1-or-later obligations",
+      "license_copy_status": "bsd-3-clause-preserve-notices-and-disclaimer-review-libusb-separately",
+      "platforms": [
+        "Python >=3.9",
+        "Linux",
+        "Windows",
+        "macOS",
+        "other ctypes-capable platforms with a working USB backend",
+        "Android/Termux hardware access not verified"
+      ],
+      "useful_components": [
+        "usb/core.py — Device, Configuration, Interface, Endpoint, find() and transfers",
+        "usb/backend/libusb1.py — ctypes bindings to libusb 1.0",
+        "usb/backend/libusb0.py and openusb.py — legacy alternative backends",
+        "usb/util.py — descriptor, endpoint, interface and resource helpers",
+        "usb/control.py — standard USB control requests",
+        "usb/libloader.py — backend library discovery",
+        "tests/test_backend.py, test_control.py, test_find.py and test_integration.py — unit/integration test harness"
+      ],
+      "verification": [
+        "2026-10-31 inspected README.rst, root LICENSE, setup.cfg, tox.ini, source/backends, tests/testall.py, test_integration.py and .github/workflows/run_tox.yml",
+        "Published v1.3.1 on 2025-01-08; master last push 2026-02-12, not an October 2026 release",
+        "2026-02-12 master push workflow 21952222286 succeeded in 18/18 Python 3.9–3.14 × Linux/macOS/Windows matrix jobs; workflow invokes tox -> tests/testall.py (upstream evidence only)",
+        "Integration test source expects a specific test USB device; passing generic CI does not establish physical-device transfer tests",
+        "2026-09-17 PR workflows succeeded but do not replace master validation",
+        "No independent installation, backend loading, device enumeration, physical transfers or Termux tests performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Last published release v1.3.1 (2025-01-08), master pushed 2026-02-12; 18/18 upstream master tox jobs passed that day. Newer PR checks are not master tests.",
+      "source": "GitHub-first recursive follow-up from cataloged libusb/HIDAPI/pySerial; two exact-ID YouTube seed searches returned no transcript evidence",
+      "related_projects": [
+        "libusb/libusb (direct ctypes backend via usb/backend/libusb1.py)",
+        "libusb/hidapi (related HID-specific transport, not a PyUSB dependency)",
+        "pyserial/pyserial (related serial-port abstraction, not a PyUSB dependency)",
+        "pyocd/libusb-package (optional Windows backend packaging documented in PyUSB README)"
+      ],
+      "research_notes": "research/2026-10-31-pyusb-rasterio.md. USB access requires host permissions/drivers; Android USB host permissioned FD integration is not proven for PyUSB. Prefer linking upstream source over copying. Do not treat tox success as real-device testing."
+    },
+    {
+      "name": "Rasterio",
+      "repository": "https://github.com/rasterio/rasterio",
+      "owner": "Rasterio contributors / Sean Gillies",
+      "category": [
+        "geospatial",
+        "raster",
+        "gdal",
+        "python",
+        "numpy",
+        "geotiff",
+        "cli",
+        "scientific-computing"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "BSD-3-Clause (LICENSE.txt and pyproject.toml); GDAL, PROJ, HDF5, netCDF, OpenJPEG and bundled wheels require separate license review",
+      "license_copy_status": "bsd-3-clause-preserve-notices-review-bundled-native-libraries-and-geodata-licenses",
+      "platforms": [
+        "Python >=3.12 for Rasterio 1.5+",
+        "Linux",
+        "macOS",
+        "Windows",
+        "GDAL >=3.8",
+        "NumPy >=2",
+        "Cython for source builds"
+      ],
+      "useful_components": [
+        "rasterio/_io.pyx and io.py — GDAL-backed raster reads/writes, MemoryFile",
+        "rasterio/windows.py — windowed reads and geographic bounds conversion",
+        "rasterio/warp.py and _warp.pyx — reprojection/resampling",
+        "rasterio/features.py and _features.pyx — rasterization and shape extraction",
+        "rasterio/merge.py — masked mosaic and first/last/min/max/sum/count merge methods",
+        "rasterio/vrt.py — WarpedVRT on-demand transformations",
+        "rasterio/rio/ — rio CLI commands including clip, merge, warp, rasterize and overview",
+        "tests/test_memoryfile.py, test_warp.py, test_merge.py, test_rio_* — broad regression tests"
+      ],
+      "verification": [
+        "2026-10-31 inspected README.rst, LICENSE.txt, pyproject.toml, rasterio/ source and tests trees, CI workflow and stable 1.5.2 release notes",
+        "Stable 1.5.2 published 2026-09-30; development main declares 1.6.0.dev0 (not a stable 1.6 release)",
+        "2026-10-25 main scheduled Tests run 40157367304 passed all 19 jobs across GDAL versions, Linux Docker, macOS Intel/ARM, Windows and Python versions",
+        "2026-10-26 main push Tests run 40346438112 concluded failure with 18 successful jobs and one cancelled macOS ARM/Python 3.13 job; not accurate to call latest full main matrix green",
+        "2026-10-31 GDAL-tag discovery workflow 41231881794 succeeded but test_gdal_tags and collect_failures were skipped; not evidence of new GDAL compatibility tests",
+        "No independent raster I/O, CLI execution, GDAL build, geodata security testing or tile rendering performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 1.5.2 (2026-09-30), main pushed 2026-10-26; 2026-10-25 full Tests passed 19/19, latest 2026-10-26 Tests marked failure due to one cancelled job despite 18 successes. Scheduled GDAL-tag discovery not a substitute.",
+      "source": "GitHub-first independent geospatial/raster discovery; two exact-ID YouTube seed searches yielded no usable transcripts",
+      "related_projects": [
+        "OSGeo/gdal (required underlying raster drivers and virtual filesystem)",
+        "felt/tippecanoe (complementary vector tile generation, no direct dependency)",
+        "protomaps/PMTiles (complementary map archive format; no direct rasterio integration established)",
+        "maplibre/maplibre-gl-js (browser raster/vector renderer; no end-to-end pipeline tested)",
+        "scipy/scipy (complementary numerical processing, no direct runtime dependency established)"
+      ],
+      "research_notes": "research/2026-10-31-pyusb-rasterio.md. GDAL drivers and network virtual filesystems need trust controls, data provenance and resource limits. Wheel-bundled native library licenses differ from Rasterio BSD source. No third-party source copied."
     }
   ],
   "deferred_or_rejected": [

@@ -3151,7 +3151,7 @@ Suggested tiers:
 - **Maintenance signals:** [v1.0.30](https://github.com/libusb/libusb/releases/tag/v1.0.30) released 2026-05-17; 2026-10-30 master commit `987c117`. Twelve master workflows passed, including [Linux](https://github.com/libusb/libusb/actions/runs/40983130249) and [Android](https://github.com/libusb/libusb/actions/runs/40983130732).
 - **Verification performed:** Inspected README, COPYING, public API, source/backend/test trees, Android permission guidance and CI job steps. Linux umockdev test passed upstream; Android NDK built three ABIs. Linux optional sanitizer and BOS-fuzzer steps were skipped. No independent USB transfer, browser execution or security audit.
 - **Source discovery:** GitHub-first hardware interoperability, 2026-10-31 UTC; no YouTube transcript evidence.
-- **Related projects:** nohajc/termux-adb (related Android USB FD pattern, not a direct dependency); libusb/hidapi (direct `libusb/hid.c` backend confirmed 2026-10-31; USB HID only, no device test); Android UsbManager.
+- **Related projects:** nohajc/termux-adb (related Android USB FD pattern, not a direct dependency); libusb/hidapi (direct `libusb/hid.c` backend confirmed 2026-10-31; USB HID only, no device test); pyusb/pyusb (direct Python ctypes `usb/backend/libusb1.py` backend; no hardware test); Android UsbManager.
 - **Caveats / risks:** USB access permissions and drivers vary by host; Android native build does not establish non-root USB runtime. Validate descriptors, transfer lifetimes and device trust boundaries; LGPL conditions apply.
 - **Research notes:** `research/2026-10-31-libusb-tippecanoe.md`. No third-party code copied.
 
@@ -3297,6 +3297,46 @@ Suggested tiers:
 - **Related projects:** protomaps/PMTiles (JS protocol adapter); felt/tippecanoe (tile generation); maplibre/maplibre-native (separate implementation); maplibre/maplibre-gl-style-spec.
 - **Caveats / risks:** CORS, large/untrusted tiles, GPU memory, CDN dependency, offline asset availability and data attribution require testing; docs/source integration does not prove end-to-end operation.
 - **Research notes:** `research/2026-10-31-pyserial-maplibre-gl-js.md`. No upstream code copied.
+
+### PyUSB
+
+- **Repository:** https://github.com/pyusb/pyusb
+- **Author / Org:** PyUSB contributors; originally Wander Lairson Costa
+- **Category:** USB / Python / ctypes / hardware interoperability / libusb
+- **Evidence:** VERIFIED — upstream cross-platform tox tests and inspectable USB backends; no independent device test
+- **Tier / Score:** S / 26 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 3)
+- **What it does:** Python API for USB device discovery, descriptors, control/bulk/interrupt transfers and resource management through pluggable native backends.
+- **Why it is valuable:** Reusable high-level Python USB control layer; direct bridge to cataloged libusb for instrument, embedded and hardware interoperability work.
+- **Useful code/components:** `usb/core.py` Device/find/transfer abstractions; `usb/backend/libusb1.py` ctypes bridge; `usb/backend/libusb0.py`, `openusb.py`; `usb/util.py`, `usb/control.py`, `usb/libloader.py`; `tests/testall.py` and `tests/test_integration.py`.
+- **Install / runtime:** `python -m pip install pyusb`; Python >=3.9 and host native libusb backend (1.0 recommended). USB drivers/permissions are separate. Android/Termux support not independently established.
+- **Platforms:** Linux, Windows, macOS and compatible ctypes/libusb hosts.
+- **License:** BSD-3-Clause in root LICENSE; linked/loaded libusb has separate LGPL-2.1-or-later obligations.
+- **Maintenance signals:** [v1.3.1](https://github.com/pyusb/pyusb/releases/tag/v1.3.1) published 2025-01-08; master pushed 2026-02-12; [2026-02-12 upstream tox workflow](https://github.com/pyusb/pyusb/actions/runs/21952222286) passed 18/18 Linux/macOS/Windows × Python 3.9–3.14 jobs.
+- **Verification performed:** Inspected README, license, tox.ini, workflow, source/backends and integration test source. `tests/testall.py` runs via tox; test device requirements prevent treating this as confirmed hardware-in-loop coverage. No independent execution.
+- **Source discovery:** GitHub-first recursive research from libusb, HIDAPI and pySerial; no YouTube transcript evidence.
+- **Related projects:** libusb/libusb (direct backend); libusb/hidapi (adjacent HID transport); pyserial/pyserial (adjacent serial abstraction); pyocd/libusb-package (Windows libusb packaging).
+- **Caveats / risks:** Native backend/permissions and kernel driver conflicts vary by platform. Untrusted USB devices and descriptors require careful handling. Do not assume Android UsbManager FD support in PyUSB.
+- **Research notes:** `research/2026-10-31-pyusb-rasterio.md`. No third-party code copied.
+
+### Rasterio
+
+- **Repository:** https://github.com/rasterio/rasterio
+- **Author / Org:** Sean Gillies / Rasterio contributors
+- **Category:** Geospatial raster / GDAL / GeoTIFF / Python / NumPy / CLI
+- **Evidence:** VERIFIED — upstream cross-platform raster tests; latest full-main workflow not wholly green
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Python/Cython interface to GDAL raster data, enabling GeoTIFF reads/writes, windowing, reprojection, rasterization, mosaics and `rio` CLI workflows.
+- **Why it is valuable:** Mature offline geospatial raster-processing toolkit complementary to vector-tile generators and browser renderers in this catalog.
+- **Useful code/components:** `rasterio/_io.pyx`, `io.py` (MemoryFile); `windows.py`; `warp.py`, `_warp.pyx`; `features.py`; `merge.py`; `vrt.py`; `rasterio/rio/`; `tests/test_memoryfile.py`, `test_merge.py`, `test_warp.py`.
+- **Install / runtime:** `pip install rasterio` official wheels or GDAL-linked source build; Rasterio 1.5+ requires Python >=3.12, NumPy >=2, GDAL >=3.8; source builds require Cython and native GDAL headers.
+- **Platforms:** Linux, macOS and Windows (upstream Docker/Conda test matrices).
+- **License:** BSD-3-Clause (`LICENSE.txt`, `pyproject.toml`); bundled GDAL, PROJ, netCDF, HDF5, OpenJPEG and datasets have separate licenses.
+- **Maintenance signals:** [Stable 1.5.2](https://github.com/rasterio/rasterio/releases/tag/1.5.2) 2026-09-30; development main reports 1.6.0.dev0. [2026-10-25 full main Tests](https://github.com/rasterio/rasterio/actions/runs/40157367304) passed 19/19 jobs; [2026-10-26 main Tests](https://github.com/rasterio/rasterio/actions/runs/40346438112) marked failure (18 passed, one macOS ARM/Python 3.13 cancelled). [2026-10-31 GDAL-tag discovery](https://github.com/rasterio/rasterio/actions/runs/41231881794) succeeded with actual GDAL test jobs skipped.
+- **Verification performed:** Inspected upstream README, LICENSE, pyproject, source tree, regression tests, workflows, releases and job conclusions. No independent raster processing or CLI execution.
+- **Source discovery:** GitHub-first geospatial discovery; no YouTube transcript evidence.
+- **Related projects:** OSGeo/gdal (native driver dependency); felt/tippecanoe (vector-tile complement, not direct dependency); protomaps/PMTiles (archive complement); maplibre/maplibre-gl-js (renderer); scipy/scipy (numerical complement).
+- **Caveats / risks:** Large/untrusted raster files and GDAL virtual filesystems can consume memory, disk or network resources; protect access and inspect driver/security settings. Raster data licensing separate. No end-to-end offline map pipeline established.
+- **Research notes:** `research/2026-10-31-pyusb-rasterio.md`. No third-party code copied.
 
 ## Entry format
 
