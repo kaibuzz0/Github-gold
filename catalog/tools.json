@@ -1975,7 +1975,9 @@
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
-      "related_projects": ["felt/tippecanoe (reads FlatGeobuf input via flatgeobuf.cpp and produces PMTiles/MBTiles; source-level only)"],
+      "related_projects": [
+        "felt/tippecanoe (reads FlatGeobuf input via flatgeobuf.cpp and produces PMTiles/MBTiles; source-level only)"
+      ],
       "copy_restriction_note": "Root LICENSE is BSD-2-Clause, package.json declares BSD-3-Clause, src/ts/LICENSE is ISC, Rust manifest declares BSD-2-Clause. Review relevant file notices before copying. Remote filtering requires HTTP Range and suitable CORS.",
       "source": "GitHub-first upstream review 2026-10-18; research/2026-10-18-spatial-stack-interoperability-maintenance.md"
     },
@@ -8613,14 +8615,15 @@
         "Stable release 4.2.1 dated 2026-08-13 fixes missing typing_extensions dependency in 4.2",
         "2026-09-22 main Test workflow 35768210531 succeeded; first page of 30 jobs all succeeded, no claim about any additional jobs",
         "2026-10-11 main Test SQLite versions run 38097836285 and coverage run 38097836249 passed; 2026-10-11 main full Test run 38097836294 FAILED in macOS Python 3.14 ty type-check step, many matrix jobs cancelled",
-        "2026-10-30 main CodeQL run 41001821939 passed; no independent import, database migration, file ingest or plugin execution"
+        "2026-10-30 main CodeQL run 41001821939 passed; no independent import, database migration, file ingest or plugin execution",
+        "2026-10-31 corrected Datasette relationship after comparing stable 0.65.5 setup.py with current-main pyproject.toml; do not infer stable 0.65.x depends on sqlite-utils."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
       "maintenance_signals": "Release 4.2.1 (2026-08-13); main commit 9c66baf (2026-10-11); CodeQL 2026-10-30 passed; 2026-10-11 main full Test failed ty check while SQLite version and coverage workflows passed.",
       "source": "GitHub-first local-data/CLI research 2026-10-30; no YouTube transcript attribution",
       "related_projects": [
-        "simonw/datasette (direct runtime dependency: datasette pyproject.toml requires sqlite-utils>=4.0; no runtime integration test)",
+        "simonw/datasette (>=4.0 dependency in current-main pyproject.toml ONLY; stable 0.65.5 setup.py does not require sqlite-utils; no runtime integration test)",
         "simonw/csvs-to-sqlite (data import ecosystem)",
         "simonw/db-to-sqlite (database export ecosystem)",
         "sqlite-fts4 (declared dependency)",
@@ -8936,7 +8939,8 @@
         "2026-08-14 master GitHub Builds run 31795529703 passed 9/9 jobs: Ubuntu, Alpine, Arch, Fedora MinGW, macOS CMake/Automake, Windows MSBuild/CMake MSVC/MinGW",
         "2026-10-25 master Code checks run 40183200642 passed, but this is not a current-master hardware test",
         "2026-10-21 PR #837 for libusb input report loss/queue statistics remains open and unmerged; PR virtual-device test workflows skipped/action_required, not proof of master hardware validation",
-        "No independent device communication, build, USB/Bluetooth runtime, fuzzing or security audit"
+        "No independent device communication, build, USB/Bluetooth runtime, fuzzing or security audit",
+        "2026-10-31 confirmed todbot/hidapitester CMake FetchContent pins HIDAPI hidapi-0.15.0; 2026-09-26 cross-platform CLI builds pass, but upstream CI does not run its separate hardware-in-loop suite."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
@@ -8944,7 +8948,7 @@
       "source": "GitHub-first recursive discovery from existing libusb entry on 2026-10-31; no YouTube transcript attribution",
       "related_projects": [
         "libusb/libusb (direct dependency of libusb/hid.c backend)",
-        "todbot/hidapitester (upstream recommended CLI test client; not independently reviewed)",
+        "todbot/hidapitester (verified upstream CLI v0.7 with HIDAPI 0.15.0, source-level and CI relationship; hardware tests not established)",
         "signal11/hidapi (original upstream lineage)",
         "Linux kernel hidraw and udev"
       ],
@@ -9000,19 +9004,140 @@
         "2026-10-22 main Test run 39856323145 passed 5/5 Python 3.11-3.15 jobs; same-commit Playwright 39856323157 passed 3/3 browsers, SQLite version 39856323220 passed, Pyodide test 39856323261 passed",
         "2026-10-31 PR Test 41151936230 passed; PR result not substituted for current-main status",
         "pyproject.toml explicitly declares sqlite-utils>=4.0 runtime dependency; source-level relationship, no independent interoperability test",
-        "No independent deployment, authentication penetration test, database execution, SQL load test or plugin sandbox verification"
+        "No independent deployment, authentication penetration test, database execution, SQL load test or plugin sandbox verification",
+        "2026-10-31 compared stable 0.65.5 setup.py (Python >=3.10; no sqlite-utils requirement) with current-main pyproject.toml (Python >=3.11; sqlite-utils>=4.0). Previous catalog text had incorrectly generalized current-main requirements to stable."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
       "maintenance_signals": "Stable 0.65.5 (2026-09-16), prerelease 1.0a41 (2026-09-24); main commit 2026-10-22 with green 5-job Python matrix, 3-browser Playwright, SQLite-version and Pyodide workflows.",
       "source": "GitHub-first recursive discovery from sqlite-utils ecosystem on 2026-10-31; no YouTube transcript attribution",
       "related_projects": [
-        "simonw/sqlite-utils (declared runtime dependency >=4.0)",
-        "simonw/datasette-lite (browser-only WebAssembly variant, not reviewed here)",
+        "simonw/sqlite-utils (>=4.0 required by Datasette current-main pyproject.toml; stable 0.65.5 setup.py does NOT declare this runtime dependency)",
+        "simonw/datasette-lite (browser Pyodide Web Worker companion; default downloads stable Datasette, optional ref=pre; compatibility caveats)",
         "simonw/datasette-studio (related development project)",
         "simonw/datasette-publish-fly (deployment ecosystem; not reviewed)"
       ],
-      "research_notes": "research/2026-10-31-hidapi-datasette.md. Treat 1.0 alpha and 0.65 stable as distinct release lines. Public hosting requires permissions, SQL query limits, trusted plugins, protected tokens, and careful database disclosure review. No code copied."
+      "research_notes": "research/2026-10-31-hidapi-datasette.md. Treat 1.0 alpha and 0.65 stable as distinct release lines. Public hosting requires permissions, SQL query limits, trusted plugins, protected tokens, and careful database disclosure review. No code copied. 2026-10-31 release-line correction: stable 0.65.5 setup.py differs from current-main pyproject.toml; Datasette Lite pins sqlite-utils==3.28 for data import and its compatibility with 1.0 prereleases must be verified."
+    },
+    {
+      "name": "hidapitester",
+      "repository": "https://github.com/todbot/hidapitester",
+      "owner": "todbot",
+      "category": [
+        "hid",
+        "usb",
+        "bluetooth-hid",
+        "cli",
+        "hardware-diagnostics",
+        "device-interoperability",
+        "c"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "GPL-3.0 (root LICENSE); HIDAPI backend offers separate licensing alternatives; review bundled/test firmware and dependencies",
+      "license_copy_status": "gpl-3.0-copyleft-review-required-preserve-notices-no-code-copied",
+      "platforms": [
+        "Linux x86_64 and aarch64/Raspberry Pi",
+        "macOS universal",
+        "Windows x86_64",
+        "other HIDAPI-supported platforms require build/permissions review"
+      ],
+      "useful_components": [
+        "hidapitester.c — CLI argument dispatcher, HID enumeration, device filtering, input/output/feature reports, report descriptor and JSON listing",
+        "CMakeLists.txt — local/installed HIDAPI or FetchContent pin to hidapi-0.15.0",
+        "Makefile — native OS-specific builds and no-hardware/hardware test targets",
+        "tests/test_nohardware.sh — 21 CLI/argument/error-path checks (script exists; not shown running in CI)",
+        "tests/test_hardware.sh — device-in-loop checks by HID report mode (not shown running in CI)",
+        "test_hardware/hidtest_tinyusb/ — reference RP2040/ESP32/SAMD HID test firmware",
+        "GitHub Actions linux/macos/windows/raspberrypi workflows and release artifacts"
+      ],
+      "verification": [
+        "2026-10-31 inspected README, GPL-3.0 LICENSE, CMakeLists.txt, Makefile, hidapitester.c, test scripts and CI definitions",
+        "v0.7 stable release published 2026-09-26 with Linux x86_64/aarch64, macOS universal, Windows x86_64 ZIP assets",
+        "2026-09-26 main CI linux 36269273917, macOS 36269273951, Windows 36269273896 and Raspberry Pi 36269273927 all succeeded",
+        "Linux CI actually compiles Makefile and CMake builds and runs --version and --list; macOS CI also signs/notarizes and runs both binaries; this is upstream evidence, not independent execution",
+        "No-hardware and hardware-in-loop test scripts are present, but reviewed CI jobs do not invoke make test or make test-hw; no physical HID device testing established",
+        "No independent binary execution, hardware I/O, flashing, firmware testing or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Release v0.7 2026-09-26; main commits through 2026-09-26; four cross-platform main CI workflows green on 2026-09-26; release ZIPs present.",
+      "source": "GitHub-first recursive follow-up from existing libusb/HIDAPI catalog on 2026-10-31; YouTube playlist searches yielded no transcripts",
+      "related_projects": [
+        "libusb/hidapi (direct CMake FetchContent dependency pinned hidapi-0.15.0)",
+        "libusb/libusb (optional HIDAPI USB backend)",
+        "hathach/tinyusb (test_hardware/hidtest_tinyusb integration)",
+        "raspberrypi/pico-sdk (related RP2040 firmware development; not direct build dependency established)"
+      ],
+      "research_notes": "research/2026-10-31-hidapitester-datasette-lite.md. Use only on owned/authorized devices: feature/output reports can alter device state; permissions differ by OS. Static/no-hardware CI does not prove device interoperability. GPL-3.0 licensing applies to copied CLI code; no code copied."
+    },
+    {
+      "name": "Datasette Lite",
+      "repository": "https://github.com/simonw/datasette-lite",
+      "owner": "simonw",
+      "category": [
+        "sqlite",
+        "browser",
+        "webassembly",
+        "pyodide",
+        "local-first",
+        "data-exploration",
+        "javascript"
+      ],
+      "evidence": "PROMISING",
+      "tier": "A",
+      "score": 24,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 3
+      },
+      "license": "Apache-2.0 (root LICENSE); Datasette, Pyodide, dynamically loaded Python packages and JS CDN assets carry their own licenses",
+      "license_copy_status": "apache-2.0-preserve-license-notices-review-runtime-dependencies-no-code-copied",
+      "platforms": [
+        "Modern desktop/mobile browsers with WebAssembly and Web Workers",
+        "GitHub Pages/static hosting",
+        "network access required for default Pyodide CDN, package installation and remote data sources; not turnkey offline"
+      ],
+      "useful_components": [
+        "webworker.js — Pyodide v0.27.2 boot, Python package installation, Datasette ASGI test client in browser worker",
+        "webworker.js databaseFiles() — deterministic duplicate SQLite filename disambiguation",
+        "webworker.js — CSV/JSON/JSONL/Parquet and SQLite URL loaders, SQL initialization, metadata/plugin loading",
+        "index.html — URL parameter routing, GitHub/Gist URL normalization and browser navigation",
+        "tests/test_datasette_lite.py — Playwright startup, multi-DB, navigation/SQL and version-ref tests",
+        "test.sh, dev-requirements.txt, .github/workflows/test.yml — local and upstream browser-test harness"
+      ],
+      "verification": [
+        "2026-10-31 inspected README, Apache-2.0 LICENSE, webworker.js, index.html, Playwright tests and CI workflow",
+        "2026-08-09 main Test workflow 31341071528 passed one Playwright test job; GitHub Pages deployment 31341070505 succeeded; latest main commit 779b2d4 on 2026-08-09",
+        "2026-10-20 PR workflow 39417619053 was action_required; it is not a current-main test failure or proof of compatibility",
+        "No tagged GitHub releases returned by release API; deployment follows main branch; worker loads Pyodide v0.27.2 from CDN",
+        "Worker pins sqlite-utils==3.28 for CSV/JSON/Parquet ingestion, while Datasette current-main declares sqlite-utils>=4.0; stable Datasette 0.65.5 setup.py does not require sqlite-utils. Compatibility with newer prereleases is unproven",
+        "No independent browser launch, data import, offline test, package-resolution test or security assessment"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Main last commit 2026-08-09, Playwright CI and Pages deployment passed same day; no release tags; CDN and dynamically installed packages create dependency drift.",
+      "source": "GitHub-first recursive follow-up from existing Datasette and Pyodide entries on 2026-10-31; two exact-ID YouTube playlist searches produced no transcripts",
+      "related_projects": [
+        "simonw/datasette (runs full server-side Python application in Web Worker; stable and alpha lines differ)",
+        "pyodide/pyodide (WebAssembly Python runtime)",
+        "simonw/sqlite-utils (worker explicitly pins 3.28 for structured data import)",
+        "simonw/datasette-studio (related ecosystem; not reviewed)"
+      ],
+      "research_notes": "research/2026-10-31-hidapitester-datasette-lite.md. User-provided ?install= can install arbitrary Python packages and ?sql= executes supplied SQL in browser environment; untrusted links/data can consume resources or run code. Avoid claiming privacy/offline safety without testing. No source copied."
     }
   ],
   "deferred_or_rejected": [

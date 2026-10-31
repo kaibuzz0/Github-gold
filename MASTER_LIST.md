@@ -3089,7 +3089,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable **4.2.1 (2026-08-13)** fixes a 4.2 missing-dependency regression. [2026-09-22 main Test](https://github.com/simonw/sqlite-utils/actions/runs/35768210531) succeeded; [2026-10-11 SQLite-version tests](https://github.com/simonw/sqlite-utils/actions/runs/38097836285) and [coverage](https://github.com/simonw/sqlite-utils/actions/runs/38097836249) succeeded. **2026-10-11 full Test failed** in macOS Python 3.14 `ty` type checking, cancelling much of the matrix ([run](https://github.com/simonw/sqlite-utils/actions/runs/38097836294)). Main CodeQL succeeded 2026-10-30.
 - **Verification performed:** Inspected README, package manifest, license, source modules, tests and CI. Upstream evidence only; no independent database operations, migration, install, plugin or performance tests.
 - **Source discovery:** GitHub-first local data tooling, 2026-10-30; no video evidence.
-- **Related projects:** simonw/datasette (direct `sqlite-utils>=4.0` dependency in Datasette `pyproject.toml`, no runtime integration test); simonw/csvs-to-sqlite; simonw/db-to-sqlite; sqlite-fts4; Miller as complementary CLI (not direct integration).
+- **Related projects:** simonw/datasette (**current-main** `pyproject.toml` requires `sqlite-utils>=4.0`, but **stable 0.65.5** `setup.py` does not declare this dependency; no runtime integration test); simonw/csvs-to-sqlite; simonw/db-to-sqlite; sqlite-fts4; Miller as complementary CLI (not direct integration).
 - **Caveats / risks:** Plugins run arbitrary Python code, SQLite extensions and SQL need trust boundaries, and migrations should be tested against backups. Passing CodeQL/coverage does not imply a green full test matrix.
 - **Research notes:** `research/2026-10-30-direwolf-sqlite-utils.md`. No source copied.
 
@@ -3193,7 +3193,7 @@ Suggested tiers:
 - **Maintenance signals:** [Stable hidapi-0.15.0](https://github.com/libusb/hidapi/releases/tag/hidapi-0.15.0) published 2025-05-18; master header declares 0.16.0 (unreleased). [2026-08-14 master build](https://github.com/libusb/hidapi/actions/runs/31795529703) passed 9/9 jobs across Linux, Windows and macOS; [2026-10-25 master code checks](https://github.com/libusb/hidapi/actions/runs/40183200642) passed. [PR #837](https://github.com/libusb/hidapi/pull/837) for libusb report-queue handling remains unmerged.
 - **Verification performed:** Inspected README, build guide, licenses, header, libusb backend, source/test trees and CI jobs. No independent compilation, device traffic, USB/Bluetooth hardware validation or security audit.
 - **Source discovery:** GitHub-first recursive follow-up from libusb on 2026-10-31; no transcript evidence.
-- **Related projects:** libusb/libusb (actual libusb backend dependency); todbot/hidapitester; original signal11/hidapi lineage.
+- **Related projects:** libusb/libusb (actual libusb backend dependency); todbot/hidapitester (v0.7 upstream CI-verified CLI, CMake pins HIDAPI 0.15.0; hardware tests not established); original signal11/hidapi lineage.
 - **Caveats / risks:** HID reports can change device state; non-root access requires OS-specific permission configuration. Do not claim unmerged hotplug/report-queue work is released or hardware-tested.
 - **Research notes:** `research/2026-10-31-hidapi-datasette.md`. No upstream code copied.
 
@@ -3207,15 +3207,56 @@ Suggested tiers:
 - **What it does:** Serves SQLite datasets through a browsable web interface, interactive queries, metadata and a JSON API; supports plugins and deployment tooling.
 - **Why it is valuable:** Turns local archives and research datasets into inspectable, shareable interfaces and APIs with reusable permission, query, renderer and extension architecture.
 - **Useful code/components:** `datasette/app.py`, `database.py`, `views/`, `renderer.py`, `permissions.py`, `plugins.py`, `hookspecs.py`, `facets.py`, `filters.py`, `csrf.py`, `tokens.py`, `cli.py`, `publish/`; tests for API, auth, permissions, CSRF, SQL and Playwright.
-- **Install / runtime:** `pip install datasette` (Python >=3.11), `datasette serve database.db` or Docker; `pyproject.toml` requires `sqlite-utils>=4.0`.
+- **Install / runtime:** `pip install datasette` / `datasette serve database.db` or Docker. **Current main** `pyproject.toml` requires Python >=3.11 and `sqlite-utils>=4.0`; **stable 0.65.5** `setup.py` instead requires Python >=3.10 and does not declare `sqlite-utils` as a runtime dependency. Do not conflate release lines.
 - **Platforms:** Python-supported Linux, macOS, Windows and containers; browser UI. Datasette Lite is a separate Pyodide variant.
 - **License:** Apache-2.0 (root LICENSE and package manifest); plugins and dependencies have separate licenses.
 - **Maintenance signals:** [Stable 0.65.5](https://github.com/simonw/datasette/releases/tag/0.65.5) published 2026-09-16; [1.0a41](https://github.com/simonw/datasette/releases/tag/1.0a41) is a 2026-09-24 prerelease, not stable 1.0. [2026-10-22 main Test](https://github.com/simonw/datasette/actions/runs/39856323145) passed 5/5 Python jobs, [Playwright](https://github.com/simonw/datasette/actions/runs/39856323157) 3/3 browsers, [SQLite versions](https://github.com/simonw/datasette/actions/runs/39856323220) and [Pyodide](https://github.com/simonw/datasette/actions/runs/39856323261) passed.
 - **Verification performed:** Inspected README, Apache license, package manifest, application/auth/extension source and tests; verified upstream CI outcomes. No independent server deployment, query execution, authentication assessment or plugin sandbox testing.
 - **Source discovery:** GitHub-first recursive follow-up from sqlite-utils on 2026-10-31; no YouTube transcript evidence.
-- **Related projects:** simonw/sqlite-utils (direct `>=4.0` runtime dependency); simonw/datasette-lite; simonw/datasette-studio.
+- **Related projects:** simonw/sqlite-utils (current-main `>=4.0` dependency only; not declared in stable 0.65.5); simonw/datasette-lite (Pyodide browser companion; pinned `sqlite-utils==3.28` for import); simonw/datasette-studio.
 - **Caveats / risks:** Public SQL/API access can disclose data or consume resources; review permissions, plugins, token handling, query limits and extension trust before exposing to the internet. Stable and alpha branches differ.
 - **Research notes:** `research/2026-10-31-hidapi-datasette.md`. No upstream code copied.
+
+
+### hidapitester
+
+- **Repository:** https://github.com/todbot/hidapitester
+- **Author / Org:** Tod E. Kurt / todbot
+- **Category:** USB/Bluetooth HID / CLI diagnostics / C / cross-platform hardware interoperability
+- **Evidence:** VERIFIED — upstream builds and smoke tests; no independent device I/O
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Command-line HIDAPI client for enumerating devices, filtering by VID/PID/usage, opening endpoints and reading/writing HID input, output and feature reports.
+- **Why it is valuable:** Small, inspectable CLI and practical integration/test harness for HIDAPI and user-controlled USB/Bluetooth peripherals.
+- **Useful code/components:** `hidapitester.c` command parser/report I/O/JSON listing; `CMakeLists.txt` HIDAPI FetchContent pinned `hidapi-0.15.0`; `Makefile`; `tests/test_nohardware.sh`; `tests/test_hardware.sh`; `test_hardware/hidtest_tinyusb/` firmware; cross-platform GitHub Actions.
+- **Install / runtime:** Download v0.7 ZIPs or compile via Make/CMake with HIDAPI; OS-specific device permissions apply. Windows x86_64, macOS universal, Linux x86_64/aarch64 builds available.
+- **Platforms:** Linux, Raspberry Pi/aarch64, macOS and Windows; hardware access and permissions vary.
+- **License:** GPL-3.0 root license; HIDAPI and test firmware/dependencies require separate license review.
+- **Maintenance signals:** [v0.7](https://github.com/todbot/hidapitester/releases/tag/v0.7) published 2026-09-26 with four platform ZIPs. [Linux](https://github.com/todbot/hidapitester/actions/runs/36269273917), [macOS](https://github.com/todbot/hidapitester/actions/runs/36269273951), [Windows](https://github.com/todbot/hidapitester/actions/runs/36269273896) and [Raspberry Pi](https://github.com/todbot/hidapitester/actions/runs/36269273927) main CI all passed 2026-09-26.
+- **Verification performed:** Inspected README, C source, build scripts, test scripts, LICENSE, release assets and upstream workflow job steps. Linux/macOS CI compiles and runs `--version`/`--list`, but does not run `make test-hw` or demonstrate physical device communication. No independent execution.
+- **Source discovery:** GitHub-first follow-up from HIDAPI; no YouTube transcript attribution.
+- **Related projects:** libusb/hidapi (direct pinned build dependency), libusb/libusb (optional backend), TinyUSB (reference HID test firmware).
+- **Caveats / risks:** HID output/feature writes can change device state. Requires authorized devices and OS permissions; hardware test script exists but was not verified in CI. GPL-3.0 copyleft applies to CLI reuse.
+- **Research notes:** `research/2026-10-31-hidapitester-datasette-lite.md`. No upstream source copied.
+
+### Datasette Lite
+
+- **Repository:** https://github.com/simonw/datasette-lite
+- **Author / Org:** Simon Willison
+- **Category:** SQLite / browser-based data exploration / Pyodide / WebAssembly / local-first
+- **Evidence:** PROMISING — upstream browser CI and deployment; version compatibility and offline behavior not independently verified
+- **Tier / Score:** A / 24 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 3)
+- **What it does:** Runs Datasette's Python application in a browser Web Worker via Pyodide, loading remote SQLite, CSV, JSON/JSONL, Parquet, SQL and metadata for interactive exploration.
+- **Why it is valuable:** Reusable static-hosted database viewer, browser-side Python/SQLite architecture and CORS-aware data-loading patterns without a conventional backend server.
+- **Useful code/components:** `webworker.js` Pyodide v0.27.2 boot, Datasette ASGI test-client bridge, duplicate database naming and structured-data import; `index.html` URL routing/GitHub raw URL normalization; `tests/test_datasette_lite.py` Playwright browser regression tests.
+- **Install / runtime:** Static hosting (GitHub Pages) or local HTTP server; modern WebAssembly/Web Worker browser. Default startup fetches Pyodide CDN, Python packages and data: **not turnkey offline**.
+- **Platforms:** Modern desktop/mobile browsers; actual mobile performance and offline caching not independently tested.
+- **License:** Apache-2.0 root license; Pyodide, Datasette, installed Python packages and CDN assets have their own terms.
+- **Maintenance signals:** Last main commit 2026-08-09; [main Playwright Test](https://github.com/simonw/datasette-lite/actions/runs/31341071528) passed and [Pages deployment](https://github.com/simonw/datasette-lite/actions/runs/31341070505) succeeded that day. No tagged GitHub releases returned. 2026-10-20 PR workflow action_required, not a current-main failure.
+- **Verification performed:** Inspected README, LICENSE, `webworker.js`, `index.html`, Playwright tests, workflow and upstream CI job steps. No independent browser launch, import, plugin test or security audit.
+- **Source discovery:** GitHub-first follow-up from Datasette/Pyodide; two exact-ID YouTube searches produced no transcript material.
+- **Related projects:** simonw/datasette (server-side app run inside browser), pyodide/pyodide, simonw/sqlite-utils (worker pins `3.28` for imports).
+- **Caveats / risks:** `?install=` can install Python packages and `?sql=` executes supplied SQL; untrusted URLs and large data can consume resources or execute code in the browser context. Worker pins `sqlite-utils==3.28`, while current-main Datasette requires `>=4.0`; stable 0.65.5 does not declare that dependency. **Do not claim prerelease compatibility** without runtime testing.
+- **Research notes:** `research/2026-10-31-hidapitester-datasette-lite.md`. No upstream source copied.
 
 ## Entry format
 
