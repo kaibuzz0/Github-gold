@@ -1975,6 +1975,7 @@
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
+      "related_projects": ["felt/tippecanoe (reads FlatGeobuf input via flatgeobuf.cpp and produces PMTiles/MBTiles; source-level only)"],
       "copy_restriction_note": "Root LICENSE is BSD-2-Clause, package.json declares BSD-3-Clause, src/ts/LICENSE is ISC, Rust manifest declares BSD-2-Clause. Review relevant file notices before copying. Remote filtering requires HTTP Range and suitable CORS.",
       "source": "GitHub-first upstream review 2026-10-18; research/2026-10-18-spatial-stack-interoperability-maintenance.md"
     },
@@ -2798,7 +2799,8 @@
       "copy_restriction_note": "No source copied. Preserve BSD-3-Clause notices; map data and samples carry separate rights. HTTP range/CORS and untrusted archive metadata need validation.",
       "related_projects": [
         "protomaps/go-pmtiles",
-        "maplibre/maplibre-native (native PMTilesFileSource; APK assets)"
+        "maplibre/maplibre-native (native PMTilesFileSource; APK assets)",
+        "felt/tippecanoe (C++ vector-tile generator writes PMTiles output via pmtiles_file.cpp)"
       ]
     },
     {
@@ -8756,6 +8758,135 @@
         "lvgl/lv_port_esp32 (ESP32 port)"
       ],
       "research_notes": "research/2026-10-30-scipy-lvgl.md. MIT core does not cover every bundled codec/font/demo asset or optional LVGL Pro editor; assess memory budgets, display drivers, event handling, version/fork compatibility and embedded device tests before production use. No upstream code copied."
+    },
+    {
+      "name": "libusb",
+      "repository": "https://github.com/libusb/libusb",
+      "owner": "libusb",
+      "category": [
+        "usb",
+        "userspace-device-access",
+        "hardware-interoperability",
+        "android",
+        "c-library",
+        "cross-platform"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 5
+      },
+      "license": "LGPL-2.1-or-later (README.md, COPYING, libusb/libusb.h SPDX); examples/dependencies may carry other notices",
+      "license_copy_status": "lgpl-linking-relinking-and-notice-obligations-review-per-file-licenses",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Android NDK",
+        "OpenBSD/NetBSD",
+        "Haiku",
+        "illumos/Solaris",
+        "Emscripten/WebUSB (build evidence only)"
+      ],
+      "useful_components": [
+        "libusb/core.c — context/device lifecycle",
+        "libusb/descriptor.c — USB descriptor parsing",
+        "libusb/io.c — asynchronous transfer event handling",
+        "libusb/hotplug.c — device attach/detach notifications",
+        "libusb/sync.c — synchronous transfer wrappers",
+        "libusb/os/linux_usbfs.c, windows_winusb.c, darwin_usb.c — OS backends",
+        "libusb/os/emscripten_webusb.cpp — WebUSB backend",
+        "android/README — permissioned Android USB file-descriptor wrapping",
+        "tests/umockdev.c and tests/fuzz/ — device simulation and fuzz harnesses"
+      ],
+      "verification": [
+        "2026-10-31 UTC inspected upstream README.md, COPYING, public API SPDX header, source/backend directories, Android guide, examples and tests",
+        "Stable v1.0.30 published 2026-05-17; master commit 987c117 from 2026-10-30",
+        "2026-10-30 master CI 12/12 listed workflows succeeded across Linux, macOS, Windows, Android, BSD, Haiku, illumos, Cygwin and MSYS2; Linux job ran umockdev test and Emscripten build",
+        "2026-10-30 Android CI 40983130732 built armeabi-v7a, arm64-v8a and x86_64 using NDK; did not execute on Android hardware",
+        "2026-10-30 Linux CI 40983130249 skipped sanitizer rebuild and BOS fuzzer steps; do not claim those checks ran",
+        "No independent USB transfers, physical-device tests, security audit or WebUSB browser runtime test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v1.0.30 2026-05-17; 2026-10-30 master commit and 12 passing CI workflows; Linux umockdev test passed, optional sanitizer/fuzzer steps skipped.",
+      "source": "GitHub-first USB/Android hardware-interoperability discovery 2026-10-31 UTC; no YouTube transcript attribution",
+      "related_projects": [
+        "nohajc/termux-adb (analogous permissioned Android USB FD bridging; no direct dependency established)",
+        "libusb/hidapi (related HID interface project, not inspected in this batch)",
+        "Android UsbManager/UsbDeviceConnection (platform permission and FD handoff)"
+      ],
+      "research_notes": "research/2026-10-31-libusb-tippecanoe.md. Android USB enumeration needs permissions or wrapped FD; CI compilation does not establish phone-to-device behavior. Restrict device access, validate untrusted descriptors, preserve LGPL notices and user relinking rights. No source copied."
+    },
+    {
+      "name": "Tippecanoe",
+      "repository": "https://github.com/felt/tippecanoe",
+      "owner": "felt",
+      "category": [
+        "geospatial",
+        "vector-tiles",
+        "offline-mapping",
+        "mbtiles",
+        "pmtiles",
+        "flatgeobuf",
+        "c++",
+        "cli"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 3
+      },
+      "license": "BSD-2-Clause-like two-condition license in LICENSE.md (Mapbox/Protomaps copyrights); vendored components require per-directory review",
+      "license_copy_status": "retain-bsd-copyright-and-disclaimer-review-vendored-dependencies",
+      "platforms": [
+        "Linux x86_64/aarch64",
+        "macOS",
+        "C++17 build hosts with SQLite3/zlib/pthreads; Windows not established"
+      ],
+      "useful_components": [
+        "main.cpp, tile.cpp and geometry.cpp — tile pyramid generation and geometry processing",
+        "geojson.cpp and geojson-loop.cpp — GeoJSON ingestion",
+        "flatgeobuf.cpp and flatgeobuf.hpp — FlatGeobuf input",
+        "pmtiles_file.cpp, pmtiles_file.hpp and pmtiles/pmtiles.hpp — PMTiles output",
+        "mbtiles.cpp — SQLite MBTiles output",
+        "mvt.cpp — Mapbox Vector Tile encoding/decoding",
+        "tile-join.cpp — tile merge/filter and metadata processing",
+        "jsontool.cpp and jsonpull/ — JSON conversion and parser",
+        "tests/ and Makefile — regression tests and release/debug builds"
+      ],
+      "verification": [
+        "2026-10-31 UTC inspected README, LICENSE.md, Makefile, CHANGELOG, source tree, tests and GitHub Actions workflow",
+        "Last published stable GitHub release 2.79.0 on 2025-07-24; current main CHANGELOG starts 2.82.0 but no corresponding stable GitHub release was established",
+        "2026-08-14 main CI 31769908097 passed 7/7 jobs: Ubuntu x86_64/aarch64 and macOS Release/Debug builds and make test, plus documentation regeneration",
+        "2026-08-14 main commit 4f262118 includes JSON parser ownership and memory-safety fixes described in unreleased 2.82.0 changelog; no security audit or stable backport established",
+        "README documents FlatGeobuf/GeoJSON/CSV input and .mbtiles/.pmtiles or directory output; Makefile links SQLite3, zlib, pthread and uses C++17",
+        "No independent geodata conversion, tile round-trip, memory benchmark, fuzzing or untrusted-data security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable release 2.79.0 (2025-07-24); main updated 2026-08-14 and 7/7 main CI jobs passed; unreleased 2.82.0 changelog contains JSON correctness/memory fixes.",
+      "source": "Recursive GitHub-first offline-mapping research from existing PMTiles and FlatGeobuf entries 2026-10-31 UTC; no YouTube transcript attribution",
+      "related_projects": [
+        "protomaps/PMTiles (output archive format)",
+        "flatgeobuf/flatgeobuf (input vector format)",
+        "maplibre/maplibre-native (downstream tile renderer; no direct runtime integration established)",
+        "mapbox/vector-tile-spec (MVT encoding format)",
+        "mapbox/tippecanoe (original predecessor, 1.36.0 equivalent to felt 2.0.0)"
+      ],
+      "research_notes": "research/2026-10-31-libusb-tippecanoe.md. Untrusted GeoJSON/FlatGeobuf parsing and disk/RAM usage need testing. Main 2.82.0 memory fixes are not proven present in 2.79.0 release. Review licenses in vendored clipper2, protozero, FlatBuffers and PMTiles source before extraction; source and map data not copied."
     }
   ],
   "deferred_or_rejected": [

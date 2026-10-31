@@ -768,7 +768,7 @@ Suggested tiers:
 - **Maintenance signals:** 2026-10-07 TypeScript R-tree boundary/duplicate regression fix; cross-language CI configuration.
 - **Verification performed:** Inspected upstream source, test, license files and CI 2026-10-18. No independent execution or audit.
 - **Source discovery:** GitHub-first; `research/2026-10-18-spatial-stack-interoperability-maintenance.md`.
-- **Related projects:** DuckDB Spatial, PMTiles, MapLibre, GDAL, geozero.
+- **Related projects:** DuckDB Spatial, PMTiles, MapLibre, GDAL, geozero. Tippecanoe (FlatGeobuf input -> PMTiles/MBTiles output; source-level).
 - **Caveats / risks:** Static feature format, not a tile renderer or in-place random-write database; mixed license declarations; range-request latency and version-specific APIs.
 - **Research notes:** No upstream implementation code copied.
 
@@ -1095,7 +1095,7 @@ Suggested tiers:
 - **Maintenance signals:** Latest inspected main commit 2026-09-16 (Python pmtiles 3.8.1); 2026-10-19 PR CI run 39281511827 passed build_app and test. No root GitHub Releases; packages published separately.
 - **Verification performed:** README, LICENSE, V3 spec, CI and source structure inspected; upstream PR tests passed. No independent archive, range-read, browser or security tests.
 - **Source discovery:** GitHub-first offline-mapping ecosystem; `research/2026-09-05-protomaps-pmtiles-single-file-offline-map-archive.md` and `research/2026-10-22-pmtiles-go-pmtiles-promotion.md`.
-- **Related projects:** protomaps/go-pmtiles; maplibre/maplibre-native (native `PMTilesFileSource`; Android APK assets); Planetiler; Protomaps Basemaps.
+- **Related projects:** protomaps/go-pmtiles; maplibre/maplibre-native (native `PMTilesFileSource`; Android APK assets); Planetiler; Protomaps Basemaps.; felt/tippecanoe (PMTiles output from geospatial source features).
 - **Caveats / risks:** Range/CORS and untrusted archive parsing require validation. Large-object corruption or replacement affects a whole map. Map-data licenses independent. CI uses mutable Action tags.
 - **Research notes:** No third-party implementation code or map data copied.
 
@@ -3132,6 +3132,48 @@ Suggested tiers:
 - **Related projects:** zephyrproject-rtos/zephyr (west LVGL module); zephyrproject-rtos/lvgl (pinned fork); espressif/esp-idf (ESP-IDF component); lvgl/lv_micropython; lvgl/lv_port_esp32.
 - **Caveats / risks:** Runner disk and npm tooling failures do not prove core GUI failure, but leave CI partially red. Validate RAM/flash, hardware rendering, input event handling, driver safety and fork/version compatibility. Third-party assets have separate licenses.
 - **Research notes:** `research/2026-10-30-scipy-lvgl.md`. No third-party code copied.
+
+
+
+### libusb
+
+- **Repository:** https://github.com/libusb/libusb
+- **Author / Org:** libusb contributors
+- **Category:** USB / userspace device access / Android hardware interoperability / portable C
+- **Evidence:** VERIFIED — upstream release, cross-platform builds and Linux mock-device test; no independent device testing
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 5)
+- **What it does:** Portable C API for discovering USB devices, parsing descriptors, handling asynchronous/synchronous transfers, hotplug notifications and device access across supported operating systems.
+- **Why it is valuable:** Provides reusable USB transport and permission-aware hardware interfaces for desktop, embedded-host and Android applications.
+- **Useful code/components:** `libusb/core.c`, `descriptor.c`, `io.c`, `hotplug.c`, `sync.c`; `libusb/os/linux_usbfs.c`, `windows_winusb.c`, `darwin_usb.c`, `emscripten_webusb.cpp`; `android/README`; `tests/umockdev.c`, `tests/fuzz/`.
+- **Install / runtime:** Build with autotools, platform-native builds or Android NDK; device permissions/OS drivers required. Android unrooted applications can obtain permission via UsbManager, pass an opened FD to native code and call `libusb_wrap_sys_device`; this is not automatically equivalent to Termux plug-and-play.
+- **Platforms:** Linux, macOS, Windows, Android NDK, OpenBSD/NetBSD, Haiku, illumos/Solaris; Emscripten/WebUSB compile path.
+- **License:** LGPL-2.1-or-later (README, COPYING and API header); preserve notices and applicable relinking rights. Review example/dependency notices.
+- **Maintenance signals:** [v1.0.30](https://github.com/libusb/libusb/releases/tag/v1.0.30) released 2026-05-17; 2026-10-30 master commit `987c117`. Twelve master workflows passed, including [Linux](https://github.com/libusb/libusb/actions/runs/40983130249) and [Android](https://github.com/libusb/libusb/actions/runs/40983130732).
+- **Verification performed:** Inspected README, COPYING, public API, source/backend/test trees, Android permission guidance and CI job steps. Linux umockdev test passed upstream; Android NDK built three ABIs. Linux optional sanitizer and BOS-fuzzer steps were skipped. No independent USB transfer, browser execution or security audit.
+- **Source discovery:** GitHub-first hardware interoperability, 2026-10-31 UTC; no YouTube transcript evidence.
+- **Related projects:** nohajc/termux-adb (related Android USB FD pattern, not a direct dependency); libusb/hidapi; Android UsbManager.
+- **Caveats / risks:** USB access permissions and drivers vary by host; Android native build does not establish non-root USB runtime. Validate descriptors, transfer lifetimes and device trust boundaries; LGPL conditions apply.
+- **Research notes:** `research/2026-10-31-libusb-tippecanoe.md`. No third-party code copied.
+
+### Tippecanoe
+
+- **Repository:** https://github.com/felt/tippecanoe
+- **Author / Org:** Erica Fischer / Felt; originally Mapbox, with Protomaps copyright notices
+- **Category:** Offline mapping / vector tile generation / C++17 / FlatGeobuf / PMTiles / MBTiles
+- **Evidence:** VERIFIED — upstream 7/7 main CI build/test jobs; no independent tile-generation tests
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 3)
+- **What it does:** Converts GeoJSON, FlatGeobuf and CSV geographic features into multiscale vector tiles, writing MBTiles, PMTiles or directory outputs; includes tile-join, decoding and JSON tools.
+- **Why it is valuable:** Creates portable offline map data and reusable tile-processing components for MapLibre/PMTiles ecosystems without a hosted tile generator.
+- **Useful code/components:** `main.cpp`, `tile.cpp`, `geometry.cpp`; `geojson.cpp`, `flatgeobuf.cpp`; `pmtiles_file.cpp`, `pmtiles/pmtiles.hpp`; `mbtiles.cpp`, `mvt.cpp`; `tile-join.cpp`, `jsontool.cpp`, `jsonpull/`; `tests/`.
+- **Install / runtime:** C++17, make, SQLite3 development headers, zlib, pthreads; Homebrew on macOS or source build on Ubuntu/Linux. Large data may require substantial disk/RAM; `--temporary-directory` changes scratch storage location.
+- **Platforms:** Linux x86_64/aarch64 and macOS (upstream CI); other C++17 build targets not established.
+- **License:** BSD two-condition text in `LICENSE.md`; retain Mapbox/Protomaps notices and audit vendored libraries before copying.
+- **Maintenance signals:** [Stable 2.79.0](https://github.com/felt/tippecanoe/releases/tag/2.79.0) published 2025-07-24. Current main [2026-08-14 CI](https://github.com/felt/tippecanoe/actions/runs/31769908097) passed 7/7 jobs (Linux x86_64/ARM64 and macOS Release/Debug plus docs). Main CHANGELOG describes unreleased 2.82.0 JSON correctness/memory fixes.
+- **Verification performed:** Inspected upstream README, LICENSE.md, Makefile, CHANGELOG, source, tests and 7 CI job steps. No independent tile round trip, memory profile or security audit.
+- **Source discovery:** Recursive GitHub-first discovery from PMTiles and FlatGeobuf, 2026-10-31 UTC; no YouTube transcript evidence.
+- **Related projects:** protomaps/PMTiles (output format); flatgeobuf/flatgeobuf (input format); maplibre/maplibre-native (renderer, not direct integration); mapbox/vector-tile-spec; mapbox/tippecanoe (predecessor).
+- **Caveats / risks:** Published 2.79.0 predates unreleased 2.82.0 JSON fixes. Validate untrusted geodata, output integrity and storage usage. Bundled dependency licenses and source map-data rights are separate.
+- **Research notes:** `research/2026-10-31-libusb-tippecanoe.md`. No third-party code copied.
 
 
 ## Entry format
