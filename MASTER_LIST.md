@@ -3089,7 +3089,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable **4.2.1 (2026-08-13)** fixes a 4.2 missing-dependency regression. [2026-09-22 main Test](https://github.com/simonw/sqlite-utils/actions/runs/35768210531) succeeded; [2026-10-11 SQLite-version tests](https://github.com/simonw/sqlite-utils/actions/runs/38097836285) and [coverage](https://github.com/simonw/sqlite-utils/actions/runs/38097836249) succeeded. **2026-10-11 full Test failed** in macOS Python 3.14 `ty` type checking, cancelling much of the matrix ([run](https://github.com/simonw/sqlite-utils/actions/runs/38097836294)). Main CodeQL succeeded 2026-10-30.
 - **Verification performed:** Inspected README, package manifest, license, source modules, tests and CI. Upstream evidence only; no independent database operations, migration, install, plugin or performance tests.
 - **Source discovery:** GitHub-first local data tooling, 2026-10-30; no video evidence.
-- **Related projects:** simonw/datasette; simonw/csvs-to-sqlite; simonw/db-to-sqlite; sqlite-fts4; Miller as complementary CLI (not direct integration).
+- **Related projects:** simonw/datasette (direct `sqlite-utils>=4.0` dependency in Datasette `pyproject.toml`, no runtime integration test); simonw/csvs-to-sqlite; simonw/db-to-sqlite; sqlite-fts4; Miller as complementary CLI (not direct integration).
 - **Caveats / risks:** Plugins run arbitrary Python code, SQLite extensions and SQL need trust boundaries, and migrations should be tested against backups. Passing CodeQL/coverage does not imply a green full test matrix.
 - **Research notes:** `research/2026-10-30-direwolf-sqlite-utils.md`. No source copied.
 
@@ -3151,7 +3151,7 @@ Suggested tiers:
 - **Maintenance signals:** [v1.0.30](https://github.com/libusb/libusb/releases/tag/v1.0.30) released 2026-05-17; 2026-10-30 master commit `987c117`. Twelve master workflows passed, including [Linux](https://github.com/libusb/libusb/actions/runs/40983130249) and [Android](https://github.com/libusb/libusb/actions/runs/40983130732).
 - **Verification performed:** Inspected README, COPYING, public API, source/backend/test trees, Android permission guidance and CI job steps. Linux umockdev test passed upstream; Android NDK built three ABIs. Linux optional sanitizer and BOS-fuzzer steps were skipped. No independent USB transfer, browser execution or security audit.
 - **Source discovery:** GitHub-first hardware interoperability, 2026-10-31 UTC; no YouTube transcript evidence.
-- **Related projects:** nohajc/termux-adb (related Android USB FD pattern, not a direct dependency); libusb/hidapi; Android UsbManager.
+- **Related projects:** nohajc/termux-adb (related Android USB FD pattern, not a direct dependency); libusb/hidapi (direct `libusb/hid.c` backend confirmed 2026-10-31; USB HID only, no device test); Android UsbManager.
 - **Caveats / risks:** USB access permissions and drivers vary by host; Android native build does not establish non-root USB runtime. Validate descriptors, transfer lifetimes and device trust boundaries; LGPL conditions apply.
 - **Research notes:** `research/2026-10-31-libusb-tippecanoe.md`. No third-party code copied.
 
@@ -3175,6 +3175,47 @@ Suggested tiers:
 - **Caveats / risks:** Published 2.79.0 predates unreleased 2.82.0 JSON fixes. Validate untrusted geodata, output integrity and storage usage. Bundled dependency licenses and source map-data rights are separate.
 - **Research notes:** `research/2026-10-31-libusb-tippecanoe.md`. No third-party code copied.
 
+
+
+### HIDAPI
+
+- **Repository:** https://github.com/libusb/hidapi
+- **Author / Org:** libusb/HIDAPI contributors; originated with Alan Ott (Signal 11 Software)
+- **Category:** USB and Bluetooth HID / portable C library / device interoperability
+- **Evidence:** VERIFIED — upstream cross-platform build matrix; not independently tested on devices
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** C API for HID device enumeration, connection, input/output and feature reports using native Windows/macOS, Linux hidraw or libusb backends.
+- **Why it is valuable:** Embeddable, portable device interface with a single public header and platform-specific implementation files; useful for authorized peripherals, assistive hardware and diagnostic tooling.
+- **Useful code/components:** `hidapi/hidapi.h`; `linux/hid.c` (hidraw, USB/Bluetooth); `libusb/hid.c` (libusb USB-only); `windows/hid.c`, `mac/hid.c`; `hidtest/test.c`; `udev/69-hid.rules`; CMake/Meson integration. Optional FOX test GUI is explicitly unmaintained.
+- **Install / runtime:** CMake recommended; Linux libusb backend requires libusb development headers; hidraw requires libudev and appropriate udev permissions; native backends use OS APIs. Shared or embedded source builds.
+- **Platforms:** Windows, Linux, FreeBSD, macOS; USB HID across backends and Bluetooth HID only on compatible native/hidraw backends.
+- **License:** Choice of BSD-style three-clause (`LICENSE-bsd.txt`), GPL-3.0 or original HIDAPI license; preserve chosen terms and inspect backend dependencies separately.
+- **Maintenance signals:** [Stable hidapi-0.15.0](https://github.com/libusb/hidapi/releases/tag/hidapi-0.15.0) published 2025-05-18; master header declares 0.16.0 (unreleased). [2026-08-14 master build](https://github.com/libusb/hidapi/actions/runs/31795529703) passed 9/9 jobs across Linux, Windows and macOS; [2026-10-25 master code checks](https://github.com/libusb/hidapi/actions/runs/40183200642) passed. [PR #837](https://github.com/libusb/hidapi/pull/837) for libusb report-queue handling remains unmerged.
+- **Verification performed:** Inspected README, build guide, licenses, header, libusb backend, source/test trees and CI jobs. No independent compilation, device traffic, USB/Bluetooth hardware validation or security audit.
+- **Source discovery:** GitHub-first recursive follow-up from libusb on 2026-10-31; no transcript evidence.
+- **Related projects:** libusb/libusb (actual libusb backend dependency); todbot/hidapitester; original signal11/hidapi lineage.
+- **Caveats / risks:** HID reports can change device state; non-root access requires OS-specific permission configuration. Do not claim unmerged hotplug/report-queue work is released or hardware-tested.
+- **Research notes:** `research/2026-10-31-hidapi-datasette.md`. No upstream code copied.
+
+### Datasette
+
+- **Repository:** https://github.com/simonw/datasette
+- **Author / Org:** Simon Willison and contributors
+- **Category:** SQLite / local-first data publishing / Python / HTTP API / web exploration
+- **Evidence:** VERIFIED — upstream current-main Python, browser, SQLite and Pyodide CI; not independently deployed
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Serves SQLite datasets through a browsable web interface, interactive queries, metadata and a JSON API; supports plugins and deployment tooling.
+- **Why it is valuable:** Turns local archives and research datasets into inspectable, shareable interfaces and APIs with reusable permission, query, renderer and extension architecture.
+- **Useful code/components:** `datasette/app.py`, `database.py`, `views/`, `renderer.py`, `permissions.py`, `plugins.py`, `hookspecs.py`, `facets.py`, `filters.py`, `csrf.py`, `tokens.py`, `cli.py`, `publish/`; tests for API, auth, permissions, CSRF, SQL and Playwright.
+- **Install / runtime:** `pip install datasette` (Python >=3.11), `datasette serve database.db` or Docker; `pyproject.toml` requires `sqlite-utils>=4.0`.
+- **Platforms:** Python-supported Linux, macOS, Windows and containers; browser UI. Datasette Lite is a separate Pyodide variant.
+- **License:** Apache-2.0 (root LICENSE and package manifest); plugins and dependencies have separate licenses.
+- **Maintenance signals:** [Stable 0.65.5](https://github.com/simonw/datasette/releases/tag/0.65.5) published 2026-09-16; [1.0a41](https://github.com/simonw/datasette/releases/tag/1.0a41) is a 2026-09-24 prerelease, not stable 1.0. [2026-10-22 main Test](https://github.com/simonw/datasette/actions/runs/39856323145) passed 5/5 Python jobs, [Playwright](https://github.com/simonw/datasette/actions/runs/39856323157) 3/3 browsers, [SQLite versions](https://github.com/simonw/datasette/actions/runs/39856323220) and [Pyodide](https://github.com/simonw/datasette/actions/runs/39856323261) passed.
+- **Verification performed:** Inspected README, Apache license, package manifest, application/auth/extension source and tests; verified upstream CI outcomes. No independent server deployment, query execution, authentication assessment or plugin sandbox testing.
+- **Source discovery:** GitHub-first recursive follow-up from sqlite-utils on 2026-10-31; no YouTube transcript evidence.
+- **Related projects:** simonw/sqlite-utils (direct `>=4.0` runtime dependency); simonw/datasette-lite; simonw/datasette-studio.
+- **Caveats / risks:** Public SQL/API access can disclose data or consume resources; review permissions, plugins, token handling, query limits and extension trust before exposing to the internet. Stable and alpha branches differ.
+- **Research notes:** `research/2026-10-31-hidapi-datasette.md`. No upstream code copied.
 
 ## Entry format
 

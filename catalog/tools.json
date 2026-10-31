@@ -8620,7 +8620,7 @@
       "maintenance_signals": "Release 4.2.1 (2026-08-13); main commit 9c66baf (2026-10-11); CodeQL 2026-10-30 passed; 2026-10-11 main full Test failed ty check while SQLite version and coverage workflows passed.",
       "source": "GitHub-first local-data/CLI research 2026-10-30; no YouTube transcript attribution",
       "related_projects": [
-        "simonw/datasette (SQLite browsing and publishing)",
+        "simonw/datasette (direct runtime dependency: datasette pyproject.toml requires sqlite-utils>=4.0; no runtime integration test)",
         "simonw/csvs-to-sqlite (data import ecosystem)",
         "simonw/db-to-sqlite (database export ecosystem)",
         "sqlite-fts4 (declared dependency)",
@@ -8819,7 +8819,7 @@
       "source": "GitHub-first USB/Android hardware-interoperability discovery 2026-10-31 UTC; no YouTube transcript attribution",
       "related_projects": [
         "nohajc/termux-adb (analogous permissioned Android USB FD bridging; no direct dependency established)",
-        "libusb/hidapi (related HID interface project, not inspected in this batch)",
+        "libusb/hidapi (direct libusb/hid.c backend confirmed 2026-10-31; 0.15.0 stable; no hardware test)",
         "Android UsbManager/UsbDeviceConnection (platform permission and FD handoff)"
       ],
       "research_notes": "research/2026-10-31-libusb-tippecanoe.md. Android USB enumeration needs permissions or wrapped FD; CI compilation does not establish phone-to-device behavior. Restrict device access, validate untrusted descriptors, preserve LGPL notices and user relinking rights. No source copied."
@@ -8887,6 +8887,132 @@
         "mapbox/tippecanoe (original predecessor, 1.36.0 equivalent to felt 2.0.0)"
       ],
       "research_notes": "research/2026-10-31-libusb-tippecanoe.md. Untrusted GeoJSON/FlatGeobuf parsing and disk/RAM usage need testing. Main 2.82.0 memory fixes are not proven present in 2.79.0 release. Review licenses in vendored clipper2, protozero, FlatBuffers and PMTiles source before extraction; source and map data not copied."
+    },
+    {
+      "name": "HIDAPI",
+      "repository": "https://github.com/libusb/hidapi",
+      "owner": "libusb",
+      "category": [
+        "hid",
+        "usb",
+        "bluetooth-hid",
+        "device-interoperability",
+        "c-library",
+        "cross-platform"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Dual/triple choice: BSD-style 3-clause (LICENSE-bsd.txt), GPL-3.0 (LICENSE-gpl3.txt), or original HIDAPI license (LICENSE-orig.txt); select and comply with one; backend dependencies separately licensed",
+      "license_copy_status": "choose-one-of-three-licenses-preserve-copyright-and-conditions-audit-backend-dependencies",
+      "platforms": [
+        "Windows HID API",
+        "Linux hidraw",
+        "Linux/BSD libusb backend",
+        "macOS IOHIDManager",
+        "FreeBSD; other platforms backend-dependent"
+      ],
+      "useful_components": [
+        "hidapi/hidapi.h — portable HID enumeration, open/read/write/feature-report API",
+        "linux/hid.c — Linux hidraw USB/Bluetooth HID backend",
+        "libusb/hid.c — USB HID backend directly using libusb-1.0",
+        "windows/hid.c and mac/hid.c — native platform backends",
+        "hidtest/test.c — console API example",
+        "udev/69-hid.rules — Linux non-root device permission example",
+        "BUILD.cmake.md, CMakeLists.txt and meson.build — CMake and Meson integration",
+        "hidtest/ and testgui/ — test clients; FOX GUI explicitly unmaintained"
+      ],
+      "verification": [
+        "2026-10-31 inspected README.md, BUILD.md, hidapi/hidapi.h, libusb/hid.c, LICENSE.txt and LICENSE-bsd.txt; root source tree and tests inspected",
+        "Published stable hidapi-0.15.0 on 2025-05-18; master API header declares 0.16.0 but no corresponding stable release established",
+        "2026-08-14 master GitHub Builds run 31795529703 passed 9/9 jobs: Ubuntu, Alpine, Arch, Fedora MinGW, macOS CMake/Automake, Windows MSBuild/CMake MSVC/MinGW",
+        "2026-10-25 master Code checks run 40183200642 passed, but this is not a current-master hardware test",
+        "2026-10-21 PR #837 for libusb input report loss/queue statistics remains open and unmerged; PR virtual-device test workflows skipped/action_required, not proof of master hardware validation",
+        "No independent device communication, build, USB/Bluetooth runtime, fuzzing or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 0.15.0 (2025-05-18); master commit 852cc68 (2026-08-14), cross-platform 9/9 build jobs passed; weekly code checks through 2026-10-25; report-queue PR #837 unmerged.",
+      "source": "GitHub-first recursive discovery from existing libusb entry on 2026-10-31; no YouTube transcript attribution",
+      "related_projects": [
+        "libusb/libusb (direct dependency of libusb/hid.c backend)",
+        "todbot/hidapitester (upstream recommended CLI test client; not independently reviewed)",
+        "signal11/hidapi (original upstream lineage)",
+        "Linux kernel hidraw and udev"
+      ],
+      "research_notes": "research/2026-10-31-hidapi-datasette.md. Linux hidraw supports USB and Bluetooth HID; libusb backend is USB-only. udev permissions needed for non-root access. Do not describe unmerged hotplug or queue fixes as released. No upstream code copied."
+    },
+    {
+      "name": "Datasette",
+      "repository": "https://github.com/simonw/datasette",
+      "owner": "simonw",
+      "category": [
+        "sqlite",
+        "local-first",
+        "data-publishing",
+        "api",
+        "python",
+        "web-ui",
+        "data-exploration"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 (root LICENSE and pyproject.toml); plugins, templates/assets and dependencies may have independent notices",
+      "license_copy_status": "apache-2.0-preserve-license-and-notices-review-plugins-and-dependencies",
+      "platforms": [
+        "Python >=3.11 on Linux",
+        "macOS",
+        "Windows",
+        "Docker/containerized hosts",
+        "browser UI; Datasette Lite separate Pyodide project"
+      ],
+      "useful_components": [
+        "datasette/app.py — ASGI application and lifecycle",
+        "datasette/database.py — SQLite database abstraction",
+        "datasette/views/ and datasette/renderer.py — HTML/JSON response and query presentation",
+        "datasette/permissions.py and datasette/default_permissions/ — actor/resource authorization",
+        "datasette/plugins.py and datasette/hookspecs.py — pluggy plugin architecture",
+        "datasette/facets.py and datasette/filters.py — interactive data exploration",
+        "datasette/cli.py and datasette/publish/ — CLI and publication adapters",
+        "datasette/csrf.py, datasette/tokens.py and datasette/stored_queries.py — security and query interfaces",
+        "tests/test_api.py, test_auth.py, test_permissions.py, test_csrf_middleware.py and test_playwright.py — upstream regression suites"
+      ],
+      "verification": [
+        "2026-10-31 inspected README.md, Apache-2.0 LICENSE, pyproject.toml, datasette/ source tree and extensive tests/ including auth, CSRF, permissions, API, SQL and Playwright",
+        "Stable 0.65.5 published 2026-09-16; 1.0a41 published 2026-09-24 as prerelease, not stable 1.0",
+        "2026-10-22 main Test run 39856323145 passed 5/5 Python 3.11-3.15 jobs; same-commit Playwright 39856323157 passed 3/3 browsers, SQLite version 39856323220 passed, Pyodide test 39856323261 passed",
+        "2026-10-31 PR Test 41151936230 passed; PR result not substituted for current-main status",
+        "pyproject.toml explicitly declares sqlite-utils>=4.0 runtime dependency; source-level relationship, no independent interoperability test",
+        "No independent deployment, authentication penetration test, database execution, SQL load test or plugin sandbox verification"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 0.65.5 (2026-09-16), prerelease 1.0a41 (2026-09-24); main commit 2026-10-22 with green 5-job Python matrix, 3-browser Playwright, SQLite-version and Pyodide workflows.",
+      "source": "GitHub-first recursive discovery from sqlite-utils ecosystem on 2026-10-31; no YouTube transcript attribution",
+      "related_projects": [
+        "simonw/sqlite-utils (declared runtime dependency >=4.0)",
+        "simonw/datasette-lite (browser-only WebAssembly variant, not reviewed here)",
+        "simonw/datasette-studio (related development project)",
+        "simonw/datasette-publish-fly (deployment ecosystem; not reviewed)"
+      ],
+      "research_notes": "research/2026-10-31-hidapi-datasette.md. Treat 1.0 alpha and 0.65 stable as distinct release lines. Public hosting requires permissions, SQL query limits, trusted plugins, protected tokens, and careful database disclosure review. No code copied."
     }
   ],
   "deferred_or_rejected": [
