@@ -1095,7 +1095,7 @@ Suggested tiers:
 - **Maintenance signals:** Latest inspected main commit 2026-09-16 (Python pmtiles 3.8.1); 2026-10-19 PR CI run 39281511827 passed build_app and test. No root GitHub Releases; packages published separately.
 - **Verification performed:** README, LICENSE, V3 spec, CI and source structure inspected; upstream PR tests passed. No independent archive, range-read, browser or security tests.
 - **Source discovery:** GitHub-first offline-mapping ecosystem; `research/2026-09-05-protomaps-pmtiles-single-file-offline-map-archive.md` and `research/2026-10-22-pmtiles-go-pmtiles-promotion.md`.
-- **Related projects:** protomaps/go-pmtiles; maplibre/maplibre-native (native `PMTilesFileSource`; Android APK assets); Planetiler; Protomaps Basemaps.; felt/tippecanoe (PMTiles output from geospatial source features).
+- **Related projects:** protomaps/go-pmtiles; maplibre/maplibre-native (native `PMTilesFileSource`; Android APK assets); Planetiler; Protomaps Basemaps.; felt/tippecanoe (PMTiles output from geospatial source features); maplibre/maplibre-gl-js (custom `addProtocol` with PMTiles JS adapter; source/docs relationship, not an executed test).
 - **Caveats / risks:** Range/CORS and untrusted archive parsing require validation. Large-object corruption or replacement affects a whole map. Map-data licenses independent. CI uses mutable Action tags.
 - **Research notes:** No third-party implementation code or map data copied.
 
@@ -2399,7 +2399,7 @@ Suggested tiers:
 - **Maintenance signals:** Android v13.7.1 2026-10-15; iOS v7.0.0 2026-10-28; main platform CI passed 2026-10-27.
 - **Verification performed:** [Android main 10/10](https://github.com/maplibre/maplibre-native/actions/runs/40603579515), [iOS main 6/6](https://github.com/maplibre/maplibre-native/actions/runs/40603579220), [Linux main 6/6](https://github.com/maplibre/maplibre-native/actions/runs/40603579610) passed 2026-10-27. Separate [pr-linux-tests](https://github.com/maplibre/maplibre-native/actions/runs/40632794426) benchmark/bloat jobs failed 2026-10-28. Inspected source, licenses and release notes; no independent builds, deployment or security audits.
 - **Source discovery:** GitHub-first; previous research dossier and 2026-10-28 follow-up; no transcript attribution.
-- **Related projects:** protomaps/PMTiles; protomaps/go-pmtiles; maplibre/maplibre-compose; maplibre/maplibre-native-qt.
+- **Related projects:** protomaps/PMTiles; protomaps/go-pmtiles; maplibre/maplibre-compose; maplibre/maplibre-native-qt; maplibre/maplibre-gl-js (separate browser/WebView renderer, not a direct dependency).
 - **Caveats / risks:** iOS v7 raises minimum to 15.5 and changes Objective-C header. Experimental native plugins require special builds. Validate untrusted tile/PMTiles inputs; no offline map data bundled.
 - **Research notes:** `research/2026-10-28-maplibre-native-nats-server.md`. No third-party code copied.
 
@@ -3171,7 +3171,7 @@ Suggested tiers:
 - **Maintenance signals:** [Stable 2.79.0](https://github.com/felt/tippecanoe/releases/tag/2.79.0) published 2025-07-24. Current main [2026-08-14 CI](https://github.com/felt/tippecanoe/actions/runs/31769908097) passed 7/7 jobs (Linux x86_64/ARM64 and macOS Release/Debug plus docs). Main CHANGELOG describes unreleased 2.82.0 JSON correctness/memory fixes.
 - **Verification performed:** Inspected upstream README, LICENSE.md, Makefile, CHANGELOG, source, tests and 7 CI job steps. No independent tile round trip, memory profile or security audit.
 - **Source discovery:** Recursive GitHub-first discovery from PMTiles and FlatGeobuf, 2026-10-31 UTC; no YouTube transcript evidence.
-- **Related projects:** protomaps/PMTiles (output format); flatgeobuf/flatgeobuf (input format); maplibre/maplibre-native (renderer, not direct integration); mapbox/vector-tile-spec; mapbox/tippecanoe (predecessor).
+- **Related projects:** protomaps/PMTiles (output format); flatgeobuf/flatgeobuf (input format); maplibre/maplibre-native (renderer, not direct integration); mapbox/vector-tile-spec; mapbox/tippecanoe (predecessor); maplibre/maplibre-gl-js (browser vector-tile renderer; pipeline not independently executed).
 - **Caveats / risks:** Published 2.79.0 predates unreleased 2.82.0 JSON fixes. Validate untrusted geodata, output integrity and storage usage. Bundled dependency licenses and source map-data rights are separate.
 - **Research notes:** `research/2026-10-31-libusb-tippecanoe.md`. No third-party code copied.
 
@@ -3193,7 +3193,7 @@ Suggested tiers:
 - **Maintenance signals:** [Stable hidapi-0.15.0](https://github.com/libusb/hidapi/releases/tag/hidapi-0.15.0) published 2025-05-18; master header declares 0.16.0 (unreleased). [2026-08-14 master build](https://github.com/libusb/hidapi/actions/runs/31795529703) passed 9/9 jobs across Linux, Windows and macOS; [2026-10-25 master code checks](https://github.com/libusb/hidapi/actions/runs/40183200642) passed. [PR #837](https://github.com/libusb/hidapi/pull/837) for libusb report-queue handling remains unmerged.
 - **Verification performed:** Inspected README, build guide, licenses, header, libusb backend, source/test trees and CI jobs. No independent compilation, device traffic, USB/Bluetooth hardware validation or security audit.
 - **Source discovery:** GitHub-first recursive follow-up from libusb on 2026-10-31; no transcript evidence.
-- **Related projects:** libusb/libusb (actual libusb backend dependency); todbot/hidapitester (v0.7 upstream CI-verified CLI, CMake pins HIDAPI 0.15.0; hardware tests not established); original signal11/hidapi lineage.
+- **Related projects:** libusb/libusb (actual libusb backend dependency); todbot/hidapitester (v0.7 upstream CI-verified CLI, CMake pins HIDAPI 0.15.0; hardware tests not established); original signal11/hidapi lineage; pyserial/pyserial (optional CP2110/CP2114 backend uses Python `hid` bindings; not a direct C-library dependency).
 - **Caveats / risks:** HID reports can change device state; non-root access requires OS-specific permission configuration. Do not claim unmerged hotplug/report-queue work is released or hardware-tested.
 - **Research notes:** `research/2026-10-31-hidapi-datasette.md`. No upstream code copied.
 
@@ -3257,6 +3257,46 @@ Suggested tiers:
 - **Related projects:** simonw/datasette (server-side app run inside browser), pyodide/pyodide, simonw/sqlite-utils (worker pins `3.28` for imports).
 - **Caveats / risks:** `?install=` can install Python packages and `?sql=` executes supplied SQL; untrusted URLs and large data can consume resources or execute code in the browser context. Worker pins `sqlite-utils==3.28`, while current-main Datasette requires `>=4.0`; stable 0.65.5 does not declare that dependency. **Do not claim prerelease compatibility** without runtime testing.
 - **Research notes:** `research/2026-10-31-hidapitester-datasette-lite.md`. No upstream source copied.
+
+### pySerial
+
+- **Repository:** https://github.com/pyserial/pyserial
+- **Author / Org:** Chris Liechti / pyserial
+- **Category:** Serial ports / Python / USB-UART / RFC2217 / hardware interoperability
+- **Evidence:** VERIFIED — upstream cross-platform tox CI, source and tests inspected; no physical serial device tested
+- **Tier / Score:** S / 26 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 3)
+- **What it does:** Portable Python serial-port API with POSIX/Windows backends, virtual loop ports, TCP/RFC2217 serial bridging, device listing and serial terminal.
+- **Why it is valuable:** Common serial abstraction, testable loop:// transport, and useful CP2110/CP2114 HID-to-UART adapter for embedded diagnostics.
+- **Useful code/components:** `serial/__init__.py` OS dispatch and `serial_for_url`; `serial/serialposix.py`, `serial/serialwin32.py`; `serial/rfc2217.py`; `serial/urlhandler/protocol_loop.py`, `protocol_cp2110.py`; `serial/tools/miniterm.py`, `list_ports.py`; `test/`, `examples/`.
+- **Install / runtime:** `pip install pyserial`; current master declares Python >=3.10. Serial device access/permissions required; CP2110 optional `hid` dependency.
+- **Platforms:** Linux, macOS, Windows, BSD/POSIX; Cygwin tested upstream. Termux not independently verified.
+- **License:** BSD-3-Clause, preserve notices; optional dependencies independently licensed.
+- **Maintenance signals:** Last observed master commit 2026-02-27; [2026-02-27 master tox workflow](https://github.com/pyserial/pyserial/actions/runs/22471324995) passed Linux/macOS/Windows/Cygwin. GitHub v3.5 release metadata dated 2025-11-20 but upstream changelog dates v3.5 to 2020.
+- **Verification performed:** Inspected README, LICENSE, pyproject, changelog, URL backends, CI, tests, examples and release. Upstream CI only; no independent serial/RFC2217/hardware execution.
+- **Source discovery:** GitHub-first follow-up from HIDAPI; no YouTube transcript evidence.
+- **Related projects:** libusb/hidapi (`hid` Python binding used by optional CP2110 backend, not direct C repository dependency); todbot/hidapitester; RFC2217.
+- **Caveats / risks:** Network serial bridges must be access-controlled; CP2110 backend documents incomplete flow control, cancellation and baudrate validation. PR action_required runs are not green CI.
+- **Research notes:** `research/2026-10-31-pyserial-maplibre-gl-js.md`. No upstream code copied.
+
+### MapLibre GL JS
+
+- **Repository:** https://github.com/maplibre/maplibre-gl-js
+- **Author / Org:** MapLibre
+- **Category:** Browser vector mapping / WebGL / TypeScript / geospatial
+- **Evidence:** VERIFIED — upstream main CI including render tests; no independent browser rendering
+- **Tier / Score:** S / 29 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** GPU-accelerated browser/WebView renderer for interactive vector/raster maps, GeoJSON, terrain and custom tile sources.
+- **Why it is valuable:** Extensible client renderer for local map pipelines, including PMTiles archives produced by Tippecanoe; strong CI and documented worker/render architecture.
+- **Useful code/components:** `src/ui/map.ts`; `src/source/protocol_crud.ts` (`addProtocol`); `src/source/vector_tile_source.ts`, `geojson_source.ts`, `worker_tile.ts`; `src/tile/tile_manager.ts`; `src/render/`, `src/shaders/`, `src/style/`; `test/integration/render/`.
+- **Install / runtime:** npm package `maplibre-gl`, WebGL browser, Web Workers and CSS. Offline requires local map style/tiles/fonts/sprites and a suitable serving method; README CDN example is online.
+- **Platforms:** WebGL-capable desktop/mobile browsers and WebViews; CI covers Linux/Windows rendering and integration, not physical mobile devices.
+- **License:** BSD-3-Clause with inherited Mapbox and additional component notices in LICENSE.txt; map assets/data separately licensed.
+- **Maintenance signals:** Stable [v6.16.0](https://github.com/maplibre/maplibre-gl-js/releases/tag/v6.16.0) 2026-10-25; [2026-10-29 main Tests](https://github.com/maplibre/maplibre-gl-js/actions/runs/40871400391) 20 successful jobs and one skipped bundle-size job; [2026-10-31 CodeQL](https://github.com/maplibre/maplibre-gl-js/actions/runs/41151201935) passed.
+- **Verification performed:** Inspected README, LICENSE, package manifest, ARCHITECTURE, source tree, protocol API, test workflow, releases and upstream CI; no independent map render/PMTiles round trip.
+- **Source discovery:** GitHub-first follow-up from PMTiles/Tippecanoe/MapLibre Native; no YouTube transcript evidence.
+- **Related projects:** protomaps/PMTiles (JS protocol adapter); felt/tippecanoe (tile generation); maplibre/maplibre-native (separate implementation); maplibre/maplibre-gl-style-spec.
+- **Caveats / risks:** CORS, large/untrusted tiles, GPU memory, CDN dependency, offline asset availability and data attribution require testing; docs/source integration does not prove end-to-end operation.
+- **Research notes:** `research/2026-10-31-pyserial-maplibre-gl-js.md`. No upstream code copied.
 
 ## Entry format
 
