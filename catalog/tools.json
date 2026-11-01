@@ -916,7 +916,8 @@
       },
       "maintenance_signals": "Stable v5.6.0 released 2026-10-15. Master commit 93477ace (2026-10-20) adds --encrypt-files alignment validation, not necessarily in v5.6.0. Upstream CI 39435542641 passed 7/7 host test/stub-check jobs (Python 3.10-3.15); build CI 39435542027 passed six platform builds, release step skipped.",
       "related_projects": [
-        "esp-rs/esp-hal (complementary bare-metal Rust HAL, not a dependency)"
+        "esp-rs/esp-hal (complementary bare-metal Rust HAL, not a dependency)",
+        "esp-rs/espflash (independent Rust flasher inspired by esptool; not a direct dependency)"
       ],
       "research_notes": "research/2026-10-21-termux-esptool-reticulum-maintenance.md"
     },
@@ -9400,9 +9401,137 @@
         "felt/tippecanoe (complementary vector tile generation, no direct dependency)",
         "protomaps/PMTiles (complementary map archive format; no direct rasterio integration established)",
         "maplibre/maplibre-gl-js (browser raster/vector renderer; no end-to-end pipeline tested)",
-        "scipy/scipy (complementary numerical processing, no direct runtime dependency established)"
+        "scipy/scipy (complementary numerical processing, no direct runtime dependency established)",
+        "cogeotiff/rio-cogeo (direct rasterio.rio_plugins extension; requires rasterio>=1.3.3)"
       ],
       "research_notes": "research/2026-10-31-pyusb-rasterio.md. GDAL drivers and network virtual filesystems need trust controls, data provenance and resource limits. Wheel-bundled native library licenses differ from Rasterio BSD source. No third-party source copied."
+    },
+    {
+      "name": "rio-cogeo",
+      "repository": "https://github.com/cogeotiff/rio-cogeo",
+      "owner": "cogeotiff / Vincent Sarago and contributors",
+      "category": [
+        "geospatial",
+        "cloud-optimized-geotiff",
+        "raster",
+        "gdal",
+        "rasterio-plugin",
+        "python",
+        "cli",
+        "offline-processing"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "BSD-3-Clause (root LICENSE and pyproject.toml); Rasterio, GDAL, codecs and input datasets separately licensed",
+      "license_copy_status": "bsd-3-clause-preserve-copyright-license-disclaimer-review-native-dependencies-and-datasets",
+      "platforms": [
+        "Python >=3.11",
+        "Linux/macOS/Windows subject to Rasterio/GDAL installation and native codec availability",
+        "CI tests on Ubuntu with Python 3.11–3.14"
+      ],
+      "useful_components": [
+        "rio_cogeo/cogeo.py — cog_translate() builds tiled/overview GeoTIFFs and cog_validate() checks COG layout",
+        "rio_cogeo/cogeo.py — cog_info(), WarpedVRT alignment, GDAL COG-driver option and temporary raster management",
+        "rio_cogeo/profiles.py — named compression/tiling output profiles",
+        "rio_cogeo/scripts/cli.py — Rasterio rio_plugins entry point with create, validate and info commands",
+        "rio_cogeo/models.py and utils.py — COG metadata models and raster helper routines",
+        "tests/test_validate.py — invalid overview, tiling, sparse/nodata, zero-offset and modified-layout fixtures",
+        "tests/test_cogeo.py and test_cli.py — conversion and CLI regression coverage"
+      ],
+      "verification": [
+        "2026-10-31 inspected README, BSD LICENSE, pyproject.toml, CHANGES.md, rio_cogeo/cogeo.py, scripts/cli.py, tests/test_validate.py and CI workflow",
+        "Release 7.0.4 published 2026-10-09; CHANGES.md documents fix for no-data COG validation index error",
+        "2026-10-09 main push CI 37951388263 succeeded in four Python 3.11/3.12/3.13/3.14 Ubuntu pytest matrix jobs; upstream CI evidence only",
+        "2026-10-26 dependency-update PR CI 40305721217 succeeded; not proof of current-main full-matrix execution",
+        "pyproject.toml declares rasterio>=1.3.3, morecantile>=5,<8, pydantic~=2.0 and Click>=7; registered Rasterio CLI entry point",
+        "No independent COG conversion, GDAL runtime, network range-request, cloud-storage or security test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 7.0.4 (2026-10-09); repository pushed 2026-10-26; 2026-10-09 main CI 4/4 passed; 2026-10-26 dependency PR CI passed. CI only Ubuntu.",
+      "source": "GitHub-first recursive follow-up from cataloged Rasterio; two exact-ID YouTube seed searches on 2026-10-31 yielded no indexed transcripts",
+      "related_projects": [
+        "rasterio/rasterio (direct runtime dependency and rio_plugins integration)",
+        "OSGeo/gdal (COG driver and GeoTIFF I/O via Rasterio)",
+        "developmentseed/morecantile (tile-matrix-set dependency, follow-up candidate)",
+        "cogeotiff/cog-spec (COG layout specification)",
+        "cogeotiff/rio-tiler (adjacent tile-serving ecosystem; not evaluated)"
+      ],
+      "research_notes": "research/2026-10-31-rio-cogeo-espflash.md. Source fixture tests support layout checks but do not establish production object-store HTTP range performance; untrusted raster/GDAL virtual filesystems can exhaust resources or fetch remote content. No upstream code copied."
+    },
+    {
+      "name": "espflash",
+      "repository": "https://github.com/esp-rs/espflash",
+      "owner": "esp-rs / Espressif Rust contributors",
+      "category": [
+        "embedded-tooling",
+        "esp32",
+        "rust",
+        "firmware-flashing",
+        "serial",
+        "cli",
+        "device-interoperability"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 5
+      },
+      "license": "MIT OR Apache-2.0 (root LICENSE-MIT, LICENSE-APACHE and espflash/Cargo.toml); bundled ESP-IDF bootloaders/flasher stubs and dependencies require separate review",
+      "license_copy_status": "permissive-dual-license-preserve-notices-review-bundled-bootloaders-flasher-stubs-and-dependencies",
+      "platforms": [
+        "Rust >=1.95.0 for source build",
+        "Linux x86_64/aarch64/armv7",
+        "macOS x86_64",
+        "Windows x86_64",
+        "Espressif ESP32/C2/C3/C5/C6/C61/H2/H4/P4/S2/S3/S31 targets; board support varies",
+        "Android/Termux not established"
+      ],
+      "useful_components": [
+        "espflash/src/flasher/mod.rs — Flasher, flash frequency/mode/size and read/write operations",
+        "espflash/src/connection/ — serial transport, bootloader reset/handshake and device communication",
+        "espflash/src/target/ — chip-specific registers and target metadata",
+        "espflash/src/image_format/ — ELF-to-flash image assembly and segment handling",
+        "espflash/src/cli/ and espflash/src/bin/espflash.rs — board-info, flash, read/erase, monitor, image and partition commands",
+        "cargo-espflash/ — Cargo subcommand integrating firmware builds and flashing",
+        "xtask/ and .github/workflows/hil.yml — offline tests and authorized hardware-in-loop harness",
+        ".github/workflows/ci.yml — cross-platform compilation, library feature/MSRV checks, unit tests, Clippy and rustfmt"
+      ],
+      "verification": [
+        "2026-10-31 inspected README, both license files, CHANGELOG.md, Cargo workspace, espflash/Cargo.toml, espflash/README.md, flasher source, CI and HIL workflows",
+        "Stable v4.7.0 published 2026-10-29; changelog documents ESP-IDF bootloader/stub updates, monitor recovery and RISC-V panic decoding",
+        "2026-10-29 merge-group CI run 40885355916 passed all 16 jobs: cross-platform host builds, library/MSRV checks, xtask offline tests, unit tests, Clippy and rustfmt",
+        "2026-10-31 pull-request CI/HIL 41151200465/41151200468 concluded action_required; no passing HIL run independently established",
+        "CI workflow intentionally excludes push to main; merge-group success is not a direct current-main hardware test",
+        "No independent flash, physical ESP board, USB/serial communication, Windows, Termux or provisioning tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v4.7.0 (2026-10-29), repository pushed 2026-10-29; 2026-10-29 merge-group CI passed 16/16; HIL workflow requires authorized dispatch/merge queue and no passing HIL run confirmed.",
+      "source": "GitHub-first recursive follow-up from existing esp-hal and Espressif esptool entries; two exact-ID YouTube seed searches on 2026-10-31 yielded no indexed transcripts",
+      "related_projects": [
+        "espressif/esptool (independent Python flasher that inspired Rust implementation; not direct runtime dependency)",
+        "esp-rs/esp-hal (complementary embedded Rust HAL)",
+        "esp-rs/esp-generate (Rust project scaffolding)",
+        "esp-idf-part (partition table parsing dependency)",
+        "Espressif ESP-IDF bootloader and flasher stubs (bundled binary/source provenance requires review)"
+      ],
+      "research_notes": "research/2026-10-31-rio-cogeo-espflash.md. Flash erase/write can destroy device data; inspect port permissions, firmware authenticity, board/chip matching, flash-mode settings and bundled binary provenance. CLI update check enabled by default but can be disabled via Cargo feature. No third-party code copied."
     }
   ],
   "deferred_or_rejected": [

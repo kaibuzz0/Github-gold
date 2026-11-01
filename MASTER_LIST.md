@@ -382,7 +382,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable v5.6.0 released 2026-10-15. Master commit 93477ace (2026-10-20) adds --encrypt-files alignment validation, not necessarily in v5.6.0. Upstream CI 39435542641 passed 7/7 host test/stub-check jobs (Python 3.10-3.15); build CI 39435542027 passed six platform builds, release step skipped.
 - **Verification performed:** 2026-10-21 inspected README, LICENSE, pyproject.toml, loader/image source, commits, release and CI; no independent flash, provisioning or runtime test.
 - **Source discovery:** Embedded/Android tooling pass.
-- **Related projects:** ESP-IDF; Espressif flasher stubs and provisioning tooling; esp-rs/esp-hal (complementary Rust bare-metal HAL, not a dependency).
+- **Related projects:** ESP-IDF; Espressif flasher stubs and provisioning tooling; esp-rs/esp-hal (complementary Rust bare-metal HAL, not a dependency); esp-rs/espflash (independent Rust flasher inspired by esptool, not a direct dependency).
 - **Caveats / risks:** GPL-2.0-or-later; check bundled stub/dependency licenses. Host CI is not hardware validation; eFuse/provisioning can be irreversible.
 - **Research notes:** See `research/2026-10-21-termux-esptool-reticulum-maintenance.md` for source evidence and verification boundaries.
 
@@ -3334,9 +3334,49 @@ Suggested tiers:
 - **Maintenance signals:** [Stable 1.5.2](https://github.com/rasterio/rasterio/releases/tag/1.5.2) 2026-09-30; development main reports 1.6.0.dev0. [2026-10-25 full main Tests](https://github.com/rasterio/rasterio/actions/runs/40157367304) passed 19/19 jobs; [2026-10-26 main Tests](https://github.com/rasterio/rasterio/actions/runs/40346438112) marked failure (18 passed, one macOS ARM/Python 3.13 cancelled). [2026-10-31 GDAL-tag discovery](https://github.com/rasterio/rasterio/actions/runs/41231881794) succeeded with actual GDAL test jobs skipped.
 - **Verification performed:** Inspected upstream README, LICENSE, pyproject, source tree, regression tests, workflows, releases and job conclusions. No independent raster processing or CLI execution.
 - **Source discovery:** GitHub-first geospatial discovery; no YouTube transcript evidence.
-- **Related projects:** OSGeo/gdal (native driver dependency); felt/tippecanoe (vector-tile complement, not direct dependency); protomaps/PMTiles (archive complement); maplibre/maplibre-gl-js (renderer); scipy/scipy (numerical complement).
+- **Related projects:** OSGeo/gdal (native driver dependency); felt/tippecanoe (vector-tile complement, not direct dependency); protomaps/PMTiles (archive complement); maplibre/maplibre-gl-js (renderer); scipy/scipy (numerical complement); cogeotiff/rio-cogeo (direct Rasterio CLI plugin, requires rasterio>=1.3.3).
 - **Caveats / risks:** Large/untrusted raster files and GDAL virtual filesystems can consume memory, disk or network resources; protect access and inspect driver/security settings. Raster data licensing separate. No end-to-end offline map pipeline established.
 - **Research notes:** `research/2026-10-31-pyusb-rasterio.md`. No third-party code copied.
+
+### rio-cogeo
+
+- **Repository:** https://github.com/cogeotiff/rio-cogeo
+- **Author / Org:** cogeotiff / Vincent Sarago and contributors
+- **Category:** Cloud Optimized GeoTIFF / Rasterio plugin / GDAL / Python / geospatial CLI
+- **Evidence:** VERIFIED — upstream code, fixtures and four-job release-main CI; no independent conversion
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Creates, validates and inspects Cloud Optimized GeoTIFF files using Rasterio/GDAL, internal tiling, overviews and configurable compression profiles.
+- **Why it is valuable:** A practical reusable component for offline raster packaging and COG layout validation, directly extending the existing Rasterio entry.
+- **Useful code/components:** `rio_cogeo/cogeo.py` (`cog_translate`, `cog_validate`, `cog_info`, `TemporaryRasterFile`); `profiles.py`; `scripts/cli.py` (`rasterio.rio_plugins`); `models.py`; `tests/test_validate.py` (sparse, malformed and overview fixtures).
+- **Install / runtime:** `pip install rio-cogeo`; Python >=3.11, Rasterio >=1.3.3, morecantile >=5,<8, pydantic 2.x, Click; native GDAL available through Rasterio.
+- **Platforms:** Python on GDAL/Rasterio-capable hosts; CI explicitly covers Ubuntu Python 3.11–3.14.
+- **License:** BSD-3-Clause; GDAL, Rasterio, codecs and datasets have independent licensing obligations.
+- **Maintenance signals:** [7.0.4](https://github.com/cogeotiff/rio-cogeo/releases/tag/7.0.4) published 2026-10-09; [2026-10-09 main CI](https://github.com/cogeotiff/rio-cogeo/actions/runs/37951388263) passed all 4 Python matrix jobs. Repository pushed 2026-10-26.
+- **Verification performed:** Inspected README, license, manifest, changelog, conversion/validation code, CLI, fixtures and CI. Successful upstream pytest workflow confirmed; no independent conversion, cloud-range performance or security test.
+- **Source discovery:** GitHub-first recursive follow-up from Rasterio; two playlist exact-ID searches produced no transcripts.
+- **Related projects:** rasterio/rasterio (direct runtime dependency); OSGeo/gdal (COG driver); developmentseed/morecantile (tile-matrix-set dependency); cogeotiff/cog-spec (layout standard).
+- **Caveats / risks:** Untrusted GDAL drivers, raster files and remote virtual filesystems can exhaust resources or trigger network access. Fixture validation does not establish HTTP range-request efficiency in cloud object stores.
+- **Research notes:** `research/2026-10-31-rio-cogeo-espflash.md`. No upstream code copied.
+
+### espflash
+
+- **Repository:** https://github.com/esp-rs/espflash
+- **Author / Org:** esp-rs / Espressif Rust contributors
+- **Category:** Embedded Rust / ESP32 flashing / firmware image generation / serial monitor / CLI
+- **Evidence:** VERIFIED — upstream source, offline tests and 16-job merge-group CI; no independently verified HIL success
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 5)
+- **What it does:** Rust library, standalone CLI and Cargo extension for Espressif chip identification, image conversion, flashing, flash read/erase, serial monitoring and partition-table handling.
+- **Why it is valuable:** Reusable Rust flasher/transport implementation and offline test harness complementing Python esptool and the existing esp-hal ecosystem.
+- **Useful code/components:** `espflash/src/flasher/mod.rs` (flash operations); `connection/` (bootloader/serial transport); `target/` (chip metadata); `image_format/` (ELF/image conversion); `cli/`; `cargo-espflash/`; `xtask/` (offline/HIL harness).
+- **Install / runtime:** `cargo install espflash --locked` (Rust >=1.95.0) or upstream release binaries; host serial/USB access and supported ESP32 device required for physical flashing.
+- **Platforms:** Linux x86_64/aarch64/armv7, macOS x86_64, Windows x86_64 host builds in CI; ESP32, C2/C3/C5/C6/C61, H2/H4, P4, S2/S3/S31 targets. Termux/Android not verified.
+- **License:** MIT OR Apache-2.0; inspect bundled ESP-IDF bootloaders, flasher stubs and transitive dependency licenses separately.
+- **Maintenance signals:** [v4.7.0](https://github.com/esp-rs/espflash/releases/tag/v4.7.0) published 2026-10-29; [2026-10-29 merge-group CI](https://github.com/esp-rs/espflash/actions/runs/40885355916) passed 16/16 build, unit, offline, lint and MSRV jobs. New PR CI/HIL on 2026-10-31 was action_required, not a verified hardware result.
+- **Verification performed:** Inspected README, Cargo manifests, licenses, changelog, flasher source and CI/HIL workflows. Upstream CI success confirmed; no physical flashing, host installation, HIL or Termux testing.
+- **Source discovery:** GitHub-first recursive follow-up from esp-hal and Espressif esptool; no transcript evidence.
+- **Related projects:** espressif/esptool (independent Python implementation); esp-rs/esp-hal (embedded Rust HAL); esp-rs/esp-generate (scaffolding); Espressif ESP-IDF (bundled bootloader lineage).
+- **Caveats / risks:** Erasing/writing flash can irreversibly destroy device data. Validate board, firmware, port permissions, flash mode and bundled binary provenance. `update-check` is a default-enabled Cargo feature.
+- **Research notes:** `research/2026-10-31-rio-cogeo-espflash.md`. No upstream code copied.
 
 ## Entry format
 
