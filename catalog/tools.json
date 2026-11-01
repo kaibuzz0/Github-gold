@@ -9774,7 +9774,8 @@
         "Unreleased main manifest raises Python to >=3.12, Rasterio to >=1.5.1 and adds affine>=3.0; changelog documents breaking experimental Zarr/N-D changes",
         "2026-10-31 main push CI 41243335207 passed 3/3 Python 3.12–3.14 pytest jobs; 2026-11-01 dependency PR CI 41259299838 also passed 3/3",
         "No independent tile extraction, GDAL execution, STAC fetching or HTTP range benchmark",
-        "2026-11-01: TiTiler core manifest confirms rio-tiler>=9.1,<10.0 and Morecantile as direct dependencies; no end-to-end tile server executed"
+        "2026-11-01: TiTiler core manifest confirms rio-tiler>=9.1,<10.0 and Morecantile as direct dependencies; no end-to-end tile server executed",
+        "2026-11-01: 9.4.12 pyproject.toml directly requires pystac>=1.9,<2.0; rio_tiler/io/stac.py imports pystac for STAC Item parsing. Source-level evidence only."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
@@ -9785,7 +9786,8 @@
         "developmentseed/morecantile (direct dependency)",
         "cogeotiff/rio-cogeo (complementary COG creator/validator, not a dependency)",
         "developmentseed/titiler (downstream tile server ecosystem)",
-        "developmentseed/titiler (TiTiler core pyproject.toml directly requires rio-tiler>=9.1,<10.0; dynamic tile server, not part of rio-tiler itself)"
+        "developmentseed/titiler (TiTiler core pyproject.toml directly requires rio-tiler>=9.1,<10.0; dynamic tile server, not part of rio-tiler itself)",
+        "stac-utils/pystac (direct stable 9.4.12 dependency pystac>=1.9,<2; rio_tiler/io/stac.py imports PySTAC)"
       ],
       "research_notes": "research/2026-11-01-pyvisa-sim-rio-tiler.md. Untrusted rasters and remote GDAL paths may trigger network/resource risks. No upstream code copied."
     },
@@ -9900,7 +9902,8 @@
         "2026-09-18 main CI run 35358292721 passed 4/4 Ubuntu Python 3.11–3.14 jobs; current main includes newer dependency updates not covered by this specific run",
         "Core manifest directly requires rio-tiler>=9.1,<10.0, Morecantile, Rasterio, FastAPI and Starlette",
         "README explicitly warns not to install deprecated PyPI 'titiler' metapackage; install titiler.application or named namespace packages",
-        "No independent API serving, raster processing, container deployment, cloud deployment or security audit"
+        "No independent API serving, raster processing, container deployment, cloud deployment or security audit",
+        "2026-11-01: src/titiler/extensions/titiler/extensions/stac.py conditionally imports pystac; extensions pyproject.toml lists pystac[validation] in test group. Not a core requirement or executed integration."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
@@ -9913,9 +9916,124 @@
         "cogeotiff/rio-cogeo (complementary COG creator/validator, not direct core dependency)",
         "developmentseed/cogeo-tiler and cogeo-mosaic-tiler (predecessors)",
         "MosaicJSON and STAC specifications",
-        "FastAPI/Starlette"
+        "FastAPI/Starlette",
+        "stac-utils/pystac (optional STAC extension import and extension test dependency, not TiTiler core dependency)"
       ],
       "research_notes": "research/2026-11-01-pyvisa-py-titiler.md. Public remote-dataset URLs can create SSRF and filesystem-read risk through GDAL/VRT; upstream SECURITY.md recommends allowlisting hosts, restricting filesystem access and GDAL driver options. Expression evaluation is another attack surface. No third-party code copied."
+    },
+    {
+      "name": "PySTAC",
+      "repository": "https://github.com/stac-utils/pystac",
+      "owner": "stac-utils / Rob Emanuele, Jon Duckworth, Pete Gadomski and contributors",
+      "category": [
+        "geospatial",
+        "stac",
+        "metadata",
+        "data-catalog",
+        "python",
+        "geospatial-interoperability"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 (root LICENSE; extension packages and dependencies require individual notice review)",
+      "license_copy_status": "apache-2.0-preserve-license-notices-and-attribution-review-extension-package-licenses",
+      "platforms": [
+        "Python >=3.10 (v1.15.2)",
+        "Linux/macOS/Windows (upstream CI matrix)"
+      ],
+      "useful_components": [
+        "core/pystac/catalog.py, collection.py, item.py, asset.py — STAC object model",
+        "core/pystac/stac_io.py — pluggable local/remote JSON I/O and serialization",
+        "core/pystac/validation/ — optional JSON schema validation",
+        "core/pystac/layout.py and link.py — catalog hierarchy and link resolution",
+        "extensions/ — independently versioned STAC extension implementations",
+        "tests/test_catalog.py, test_item.py, test_stac_io.py, validation/ — regression tests"
+      ],
+      "verification": [
+        "2026-11-01 inspected README, root LICENSE, stable v1.15.2 and main pyproject.toml, changelog, core source tree, stac_io.py and tests",
+        "v1.15.2 published 2026-07-27; tag requires Python>=3.10 and pystac-core>=1.15.0,<2",
+        "Since spring 2026 extension implementations are separate versioned packages; core semver does not guarantee extension API compatibility",
+        "2026-10-29 main push CI run 40940313953 passed 16/16 jobs (Linux/macOS/Windows Python 3.10–3.13, coverage, docs, benchmarks)",
+        "No independent install, STAC validation, catalog serialization or remote data access performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable v1.15.2 (2026-07-27); main commits 2026-10-29; upstream main CI 16/16 passed 2026-10-29; separate 2026-10-30 dependency automation failures were not main CI.",
+      "source": "GitHub-first recursive follow-up from rio-tiler and TiTiler; playlist IDs not indexed",
+      "related_projects": [
+        "cogeotiff/rio-tiler (direct stable dependency pystac>=1.9,<2)",
+        "developmentseed/titiler (optional STAC extension import/test dependency, not core)",
+        "stac-utils/pystac-client (related STAC API client, not inspected in this batch)",
+        "radiantearth/stac-spec (STAC specification)"
+      ],
+      "research_notes": "research/2026-11-01-pystac-zeroconf.md. Treat remote STAC URLs and schema fetching as untrusted I/O; extension versions may change independently. No third-party code copied."
+    },
+    {
+      "name": "python-zeroconf",
+      "repository": "https://github.com/python-zeroconf/python-zeroconf",
+      "owner": "python-zeroconf contributors / J. Nick Koston (maintainer)",
+      "category": [
+        "networking",
+        "mdns",
+        "dns-sd",
+        "service-discovery",
+        "local-first",
+        "python",
+        "asyncio"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 5
+      },
+      "license": "LGPL-2.1-or-later (COPYING, pyproject.toml); Apache-2.0 relicensing under discussion, not completed",
+      "license_copy_status": "lgpl-2.1-or-later-preserve-copyright-notices-and-lgpl-obligations-do-not-assume-apache-relicense",
+      "platforms": [
+        "CPython/PyPy >=3.11 for v0.153.0",
+        "Linux/macOS/Windows (upstream CI)",
+        "IPv4 and limited IPv6; multicast-capable LAN"
+      ],
+      "useful_components": [
+        "src/zeroconf/_core.py — multicast DNS engine and service registration",
+        "src/zeroconf/_services/browser.py, info.py, registry.py — discovery and service metadata",
+        "src/zeroconf/_dns.py and _protocol/ — DNS packet/record parsing",
+        "src/zeroconf/_cache.py and _handlers/ — caching and query/response management",
+        "src/zeroconf/_utils/net.py and _transport.py — interface/socket handling",
+        "src/zeroconf/asyncio.py — asynchronous API; optional Cython acceleration",
+        "tests/test_dns.py, test_services.py, test_fuzz_incoming.py — regression/fuzz coverage"
+      ],
+      "verification": [
+        "2026-11-01 inspected README.rst, COPYING, RELICENSING.md, stable/current manifest, changelog, core source and tests",
+        "Stable 0.153.0 published 2026-10-31; changelog and manifest confirm Python 3.10 support dropped, requires Python>=3.11",
+        "2026-11-01 PR CI run 41274832304: 35 jobs succeeded, 3 release/upload jobs skipped; matrix covers CPython/PyPy, optional Cython, lint and fuzz-related checks",
+        "README documents Bonjour/Avahi interoperability and IPv6 limitations; no independent multicast discovery or cross-device tests",
+        "RELICENSING.md documents consent-gathering for prospective Apache-2.0 license; current release remains LGPL-2.1-or-later"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Stable 0.153.0 released 2026-10-31; master commit 3caf0b7 on 2026-10-31; 2026-11-01 PR CI 35 passed/3 skipped; active contributor relicensing discussion.",
+      "source": "Independent GitHub-first local-first networking discovery; playlist IDs not indexed",
+      "related_projects": [
+        "paulsm/pyzeroconf and wmcbrine/pyzeroconf (historical ancestors)",
+        "Bonjour / Avahi (interoperable mDNS/DNS-SD implementations, not Python package dependencies)",
+        "RFC 6762 (mDNS), RFC 6763 (DNS-SD)"
+      ],
+      "research_notes": "research/2026-11-01-pystac-zeroconf.md. Multicast may be blocked on mobile/Wi-Fi networks; service records are unauthenticated and not proof of device identity. No third-party code copied."
     }
   ],
   "deferred_or_rejected": [

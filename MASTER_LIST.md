@@ -3455,7 +3455,7 @@ Suggested tiers:
 - **Maintenance signals:** [2026-10-31 main CI](https://github.com/cogeotiff/rio-tiler/actions/runs/41243335207) passed 3/3 pytest jobs; [9.4.12](https://github.com/cogeotiff/rio-tiler/releases/tag/9.4.12) published 2026-10-08.
 - **Verification performed:** 2026-11-01 inspected README, BSD LICENSE, 9.4.12 tag and main manifests, CHANGES.md, source tree, mosaic and Rasterio reader, test tree and Actions jobs; Stable 9.4.12 released 2026-10-08; stable manifest Python>=3.11, rasterio>=1.4.0, morecantile>=5,<8; Unreleased main manifest raises Python to >=3.12, Rasterio to >=1.5.1 and adds affine>=3.0; changelog documents breaking experimental Zarr/N-D changes; 2026-10-31 main push CI 41243335207 passed 3/3 Python 3.12–3.14 pytest jobs; 2026-11-01 dependency PR CI 41259299838 also passed 3/3; No independent tile extraction, GDAL execution, STAC fetching or HTTP range benchmark.
 - **Source discovery:** GitHub-first recursive ecosystem research; two exact-ID YouTube searches returned no transcripts.
-- **Related projects:** rasterio/rasterio (direct dependency); developmentseed/morecantile (direct dependency); cogeotiff/rio-cogeo (complementary COG creator/validator, not a dependency); developmentseed/titiler (downstream tile server ecosystem).; developmentseed/titiler now separately cataloged (direct core requirement rio-tiler>=9.1,<10.0; source-level integration, no independent server test)
+- **Related projects:** rasterio/rasterio (direct dependency); developmentseed/morecantile (direct dependency); cogeotiff/rio-cogeo (complementary COG creator/validator, not a dependency); developmentseed/titiler (downstream tile server ecosystem).; developmentseed/titiler now separately cataloged (direct core requirement rio-tiler>=9.1,<10.0; source-level integration, no independent server test); stac-utils/pystac (direct stable >=1.9,<2.0 dependency; rio_tiler/io/stac.py import)
 - **Caveats / risks:** Main's Python/affine/Rasterio minimum and experimental N-D/Zarr changes are unreleased. Untrusted GDAL raster/remote inputs can exhaust resources or trigger network access.
 - **Research notes:** `research/2026-11-01-pyvisa-sim-rio-tiler.md`. No upstream code copied.
 
@@ -3496,9 +3496,51 @@ Suggested tiers:
 - **Maintenance signals:** [v2.4.0](https://github.com/developmentseed/titiler/releases/tag/v2.4.0) published 2026-09-21; [2026-09-18 main CI](https://github.com/developmentseed/titiler/actions/runs/35358292721) passed 4/4 Python 3.11–3.14 jobs. Newer main dependency changes not covered by that run.
 - **Verification performed:** README, LICENSE, SECURITY.md, root/core manifests, changelog, factory and application source, CI jobs inspected; direct `rio-tiler>=9.1,<10.0` and Morecantile dependencies established. No independent HTTP/raster/COG or deployment tests.
 - **Source discovery:** GitHub-first follow-up from rio-tiler and Morecantile; playlist fetch throttled.
-- **Related projects:** cogeotiff/rio-tiler (direct); developmentseed/morecantile (direct); rasterio/rasterio (direct); cogeotiff/rio-cogeo (complementary, not direct).
+- **Related projects:** cogeotiff/rio-tiler (direct); developmentseed/morecantile (direct); rasterio/rasterio (direct); cogeotiff/rio-cogeo (complementary, not direct).; stac-utils/pystac (optional STAC extension import/test requirement, not core)
 - **Caveats / risks:** Unrestricted dataset URLs and GDAL VRT can expose filesystem or remote network resources. Upstream SECURITY.md recommends host allowlisting, filesystem restrictions, GDAL driver controls and careful band-expression handling. No public-service security audit.
 - **Research notes:** `research/2026-11-01-pyvisa-py-titiler.md`. No upstream code copied.
+
+
+### PySTAC
+
+- **Repository:** https://github.com/stac-utils/pystac
+- **Author / Org:** stac-utils / Rob Emanuele, Jon Duckworth, Pete Gadomski and contributors
+- **Category:** Python / STAC / geospatial metadata / data catalog interoperability
+- **Evidence:** VERIFIED — upstream source, tests and CI; no independent execution
+- **Tier / Score:** S / 28 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 5 + maintenance 4)
+- **What it does:** Python STAC Item, Collection and Catalog object model with serialization, link management, schema validation and independently versioned extensions.
+- **Why it is valuable:** Reusable standards-based metadata plumbing for COG/raster pipelines, local catalogs and STAC ecosystem interoperability.
+- **Useful code/components:** `core/pystac/{catalog,collection,item,asset,stac_io,layout,link}.py`; `core/pystac/validation/`; `extensions/`; `tests/test_stac_io.py`.
+- **Install / runtime:** `pip install pystac` (optional `pystac[validation]`); Python >=3.10 for v1.15.2. Extensions became separately versioned packages in 2026.
+- **Platforms:** Linux/macOS/Windows, Python 3.10–3.13 in inspected CI.
+- **License:** Apache-2.0; retain notices; inspect independently packaged extensions.
+- **Maintenance signals:** [v1.15.2](https://github.com/stac-utils/pystac/releases/tag/v1.15.2) published 2026-07-27; [2026-10-29 main CI](https://github.com/stac-utils/pystac/actions/runs/40940313953) passed 16/16 jobs.
+- **Verification performed:** README, LICENSE, stable/main manifests, changelog, source tree, tests and upstream CI jobs inspected; no local STAC execution.
+- **Source discovery:** GitHub-first follow-up from rio-tiler and TiTiler; no accessible playlist transcript.
+- **Related projects:** cogeotiff/rio-tiler (direct stable dependency); developmentseed/titiler (optional STAC extension); stac-utils/pystac-client (follow-up); radiantearth/stac-spec.
+- **Caveats / risks:** Independent extension versions need compatibility checks; remote STAC/schema URLs are untrusted input. Main's core package floor differs from the stable tag.
+- **Research notes:** `research/2026-11-01-pystac-zeroconf.md`. No upstream code copied.
+
+### python-zeroconf
+
+- **Repository:** https://github.com/python-zeroconf/python-zeroconf
+- **Author / Org:** python-zeroconf contributors / J. Nick Koston
+- **Category:** Python / mDNS / DNS-SD / local-first service discovery / asyncio
+- **Evidence:** VERIFIED — upstream source, tests and CI; no independent LAN test
+- **Tier / Score:** S / 28 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 4 + maintenance 5)
+- **What it does:** Pure-Python multicast DNS service registration, browsing and resolution, with optional Cython acceleration and asynchronous APIs.
+- **Why it is valuable:** Reusable cross-platform LAN discovery for local-first and offline-capable software without requiring Bonjour/Avahi system libraries.
+- **Useful code/components:** `src/zeroconf/_core.py`, `_dns.py`, `_protocol/`, `_cache.py`, `_services/{browser,info,registry}.py`, `_utils/net.py`, `asyncio.py`.
+- **Install / runtime:** `pip install zeroconf`; v0.153.0 requires Python >=3.11; multicast-capable LAN; optional Cython speedups.
+- **Platforms:** Linux/macOS/Windows, CPython/PyPy; IPv6 support has documented limitations.
+- **License:** **LGPL-2.1-or-later**; pending Apache-2.0 relicensing consent is not a license change.
+- **Maintenance signals:** [0.153.0](https://github.com/python-zeroconf/python-zeroconf/releases/tag/0.153.0) published 2026-10-31 (drops Python 3.10); [2026-11-01 PR CI](https://github.com/python-zeroconf/python-zeroconf/actions/runs/41274832304) 35 successful, 3 skipped.
+- **Verification performed:** README, COPYING, RELICENSING.md, changelog, manifest, source and tests inspected; upstream CI job conclusions checked; no independent multicast test.
+- **Source discovery:** Independent GitHub-first local-first networking discovery; no accessible playlist transcript.
+- **Related projects:** paulsm/pyzeroconf; wmcbrine/pyzeroconf; Bonjour; Avahi; RFC 6762 and RFC 6763.
+- **Caveats / risks:** mDNS records do not authenticate devices; multicast can be filtered; IPv6 limitations; observe LGPL obligations and future license changes carefully.
+- **Research notes:** `research/2026-11-01-pystac-zeroconf.md`. No upstream code copied.
+
 
 ## Entry format
 
