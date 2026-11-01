@@ -3274,7 +3274,7 @@ Suggested tiers:
 - **Maintenance signals:** Last observed master commit 2026-02-27; [2026-02-27 master tox workflow](https://github.com/pyserial/pyserial/actions/runs/22471324995) passed Linux/macOS/Windows/Cygwin. GitHub v3.5 release metadata dated 2025-11-20 but upstream changelog dates v3.5 to 2020.
 - **Verification performed:** Inspected README, LICENSE, pyproject, changelog, URL backends, CI, tests, examples and release. Upstream CI only; no independent serial/RFC2217/hardware execution.
 - **Source discovery:** GitHub-first follow-up from HIDAPI; no YouTube transcript evidence.
-- **Related projects:** libusb/hidapi (`hid` Python binding used by optional CP2110 backend, not direct C repository dependency); todbot/hidapitester; RFC2217.
+- **Related projects:** libusb/hidapi (`hid` Python binding used by optional CP2110 backend, not direct C repository dependency); todbot/hidapitester; RFC2217.; pyvisa/pyvisa (PyVISA-Py optional serial backend declares pyserial>=3.0; no direct PyVISA core dependency)
 - **Caveats / risks:** Network serial bridges must be access-controlled; CP2110 backend documents incomplete flow control, cancellation and baudrate validation. PR action_required runs are not green CI.
 - **Research notes:** `research/2026-10-31-pyserial-maplibre-gl-js.md`. No upstream code copied.
 
@@ -3314,7 +3314,7 @@ Suggested tiers:
 - **Maintenance signals:** [v1.3.1](https://github.com/pyusb/pyusb/releases/tag/v1.3.1) published 2025-01-08; master pushed 2026-02-12; [2026-02-12 upstream tox workflow](https://github.com/pyusb/pyusb/actions/runs/21952222286) passed 18/18 Linux/macOS/Windows × Python 3.9–3.14 jobs.
 - **Verification performed:** Inspected README, license, tox.ini, workflow, source/backends and integration test source. `tests/testall.py` runs via tox; test device requirements prevent treating this as confirmed hardware-in-loop coverage. No independent execution.
 - **Source discovery:** GitHub-first recursive research from libusb, HIDAPI and pySerial; no YouTube transcript evidence.
-- **Related projects:** libusb/libusb (direct backend); libusb/hidapi (adjacent HID transport); pyserial/pyserial (adjacent serial abstraction); pyocd/libusb-package (Windows libusb packaging).
+- **Related projects:** libusb/libusb (direct backend); libusb/hidapi (adjacent HID transport); pyserial/pyserial (adjacent serial abstraction); pyocd/libusb-package (Windows libusb packaging).; pyvisa/pyvisa (PyVISA-Py optional USB backend declares pyusb; no direct PyVISA core dependency)
 - **Caveats / risks:** Native backend/permissions and kernel driver conflicts vary by platform. Untrusted USB devices and descriptors require careful handling. Do not assume Android UsbManager FD support in PyUSB.
 - **Research notes:** `research/2026-10-31-pyusb-rasterio.md`. No third-party code copied.
 
@@ -3377,6 +3377,47 @@ Suggested tiers:
 - **Related projects:** espressif/esptool (independent Python implementation); esp-rs/esp-hal (embedded Rust HAL); esp-rs/esp-generate (scaffolding); Espressif ESP-IDF (bundled bootloader lineage).
 - **Caveats / risks:** Erasing/writing flash can irreversibly destroy device data. Validate board, firmware, port permissions, flash mode and bundled binary provenance. `update-check` is a default-enabled Cargo feature.
 - **Research notes:** `research/2026-10-31-rio-cogeo-espflash.md`. No upstream code copied.
+
+### Morecantile
+
+- **Repository:** https://github.com/developmentseed/morecantile
+- **Author / Org:** Development Seed / Vincent Sarago and contributors
+- **Category:** OGC TileMatrixSet / geospatial tile grids / CRS / Python / CLI
+- **Evidence:** VERIFIED — inspected source, tests, release and 4-job upstream main CI; no independent tile execution
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Models OGC 2D Tile Matrix Set 2.0 grids and converts between geographic coordinates, tile indices, bounds, zoom levels, quadkeys and GeoJSON.
+- **Why it is valuable:** Reusable tile-grid arithmetic and CRS-aware map indexing for offline geospatial tooling, polar/regional grids and the Rasterio/COG ecosystem.
+- **Useful code/components:** `morecantile/models.py` (`TileMatrixSet`, `tile`, `bounds`, `tiles`, `quadkey`, `matrix_to_geojson`); `defaults.py` and `data/*.json` (built-in and custom grids); `scripts/cli.py`; `tests/test_tms_variable_width.py` and `test_mercantile_conform.py`.
+- **Install / runtime:** `pip install morecantile`; Python >=3.11, pyproj >=3.1,<4, Pydantic 2.x, attrs and Click. Optional Rasterio extra.
+- **Platforms:** Python-compatible Linux/macOS/Windows; upstream CI explicitly tested Ubuntu Python 3.11–3.14.
+- **License:** MIT; CLI source credits BSD-3 Mapbox mercantile-derived code. Preserve original notices; review dependencies separately.
+- **Maintenance signals:** [7.1.0](https://github.com/developmentseed/morecantile/releases/tag/7.1.0) published 2026-09-16; [2026-10-25 main CI](https://github.com/developmentseed/morecantile/actions/runs/40181168224) passed 4/4 Python jobs; 2026-10-26 PR CI passed.
+- **Verification performed:** Inspected README, license, manifest, changelog, models, CLI, test tree, upstream release and CI job steps. No independent coordinate accuracy or integration test.
+- **Source discovery:** GitHub-first follow-up from rio-cogeo; no accessible YouTube transcript.
+- **Related projects:** cogeotiff/rio-cogeo (direct morecantile>=5,<8 dependency); cogeotiff/rio-tiler; developmentseed/titiler; mapbox/mercantile; OGC TMS 2.0.
+- **Caveats / risks:** v7 introduced breaking coordinate/bounds behavior and Python minimum changes; custom TileMatrixSet JSON and CRS assumptions need validation. Manifest compatibility does not prove an executed rio-cogeo integration.
+- **Research notes:** `research/2026-10-31-morecantile-pyvisa.md`. No upstream code copied.
+
+### PyVISA
+
+- **Repository:** https://github.com/pyvisa/pyvisa
+- **Author / Org:** PyVISA contributors / Torsten Bronger, Gregor Thalhammer, Hernan E. Grecco; maintained by Matthieu Dartiailh
+- **Category:** Scientific instrumentation / VISA / GPIB / RS232 / USB / TCPIP / Python
+- **Evidence:** VERIFIED — inspected source, tests and cross-platform upstream CI; no physical instrument testing
+- **Tier / Score:** S / 27 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Python VISA interface for discovering, controlling and querying laboratory instruments via vendor VISA libraries or an optional alternative backend.
+- **Why it is valuable:** Reusable automation layer for measurement hardware, remote lab control, data acquisition and instrument interoperability.
+- **Useful code/components:** `pyvisa/highlevel.py` (ResourceManager, VisaLibraryBase); `resources/messagebased.py` (binary/ASCII queries and termination); `rname.py` (resource parsing); `ctwrapper/` (native VISA bindings); `events.py`; `cmd_line_tools.py`; `testsuite/`.
+- **Install / runtime:** `pip install pyvisa`; Python >=3.10 and a compatible vendor VISA shared library, or install/configure PyVISA-Py for a pure-Python backend. USB/serial access requires optional drivers and permissions.
+- **Platforms:** Linux/macOS/Windows; upstream unit CI tests Python 3.10–3.14 on all three OS families.
+- **License:** MIT for PyVISA; separately review vendor VISA drivers, PyVISA-Py, third-party packages and hardware firmware.
+- **Maintenance signals:** Latest observed GitHub release [1.16.2](https://github.com/pyvisa/pyvisa/releases/tag/1.16.2) published 2026-02-27; [2026-10-27 main CI](https://github.com/pyvisa/pyvisa/actions/runs/40440465093) passed 17/17 jobs across 15 Python/OS test combinations plus lint and aggregate. CHANGES lists 1.17.0 dated 2026-07-06 but no corresponding GitHub release established.
+- **Verification performed:** Inspected README, license, manifest, changelog, resource/session code, message parsing, test tree and CI job steps; PyVISA-Py manifest verifies optional pyserial/pyusb extras. No independent physical or backend execution.
+- **Source discovery:** GitHub-first scientific instrumentation discovery; no accessible YouTube transcript.
+- **Related projects:** pyvisa/pyvisa-py (optional backend); pyserial/pyserial and pyusb/pyusb (optional PyVISA-Py transport dependencies, not PyVISA core dependencies); VISA specification.
+- **Caveats / risks:** Vendor driver compatibility and actual GPIB/USB/RS232 hardware behavior remain untested; instrument commands may alter settings or actuate equipment. New third-party PR CI jobs were action_required, not test failures.
+- **Research notes:** `research/2026-10-31-morecantile-pyvisa.md`. No upstream code copied.
+
 
 ## Entry format
 

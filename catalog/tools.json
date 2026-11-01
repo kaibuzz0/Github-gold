@@ -9207,7 +9207,8 @@
         "libusb/hidapi (Python `hid` binding used by CP2110 backend; not a direct C library link)",
         "todbot/hidapitester (complementary HID diagnostics)",
         "Silicon Labs CP2110/CP2114 and AN434 HID-to-UART protocol",
-        "RFC2217 network serial protocol"
+        "RFC2217 network serial protocol",
+        "pyvisa/pyvisa (instrument automation front end; optional pyvisa/pyvisa-py serial backend declares pyserial>=3.0, not a direct PyVISA core dependency)"
       ],
       "research_notes": "research/2026-10-31-pyserial-maplibre-gl-js.md. RFC2217/socket:// transports cross network trust boundaries; protect remote serial services. CP2110 backend notes incomplete flow-control signals, cancellation and baudrate validation. No third-party code copied."
     },
@@ -9334,7 +9335,8 @@
         "libusb/libusb (direct ctypes backend via usb/backend/libusb1.py)",
         "libusb/hidapi (related HID-specific transport, not a PyUSB dependency)",
         "pyserial/pyserial (related serial-port abstraction, not a PyUSB dependency)",
-        "pyocd/libusb-package (optional Windows backend packaging documented in PyUSB README)"
+        "pyocd/libusb-package (optional Windows backend packaging documented in PyUSB README)",
+        "pyvisa/pyvisa (instrument automation front end; optional pyvisa/pyvisa-py USB backend declares pyusb, not a direct PyVISA core dependency)"
       ],
       "research_notes": "research/2026-10-31-pyusb-rasterio.md. USB access requires host permissions/drivers; Android USB host permissioned FD integration is not proven for PyUSB. Prefer linking upstream source over copying. Do not treat tox success as real-device testing."
     },
@@ -9532,6 +9534,130 @@
         "Espressif ESP-IDF bootloader and flasher stubs (bundled binary/source provenance requires review)"
       ],
       "research_notes": "research/2026-10-31-rio-cogeo-espflash.md. Flash erase/write can destroy device data; inspect port permissions, firmware authenticity, board/chip matching, flash-mode settings and bundled binary provenance. CLI update check enabled by default but can be disabled via Cargo feature. No third-party code copied."
+    },
+    {
+      "name": "Morecantile",
+      "repository": "https://github.com/developmentseed/morecantile",
+      "owner": "Development Seed / Vincent Sarago and contributors",
+      "category": [
+        "geospatial",
+        "tile-matrix-set",
+        "ogc",
+        "python",
+        "coordinate-reference-systems",
+        "mapping",
+        "cli",
+        "offline-processing"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE); morecantile/scripts/cli.py credits Mapbox mercantile BSD-3-derived code; dependencies pyproj, pydantic, attrs, click separately licensed",
+      "license_copy_status": "mit-preserve-notices-review-attributed-bsd-3-derived-cli-code-and-dependencies",
+      "platforms": [
+        "Python >=3.11",
+        "Linux/macOS/Windows where pyproj and Python dependencies are available",
+        "2026-10-25 upstream CI tests Python 3.11–3.14 on Ubuntu"
+      ],
+      "useful_components": [
+        "morecantile/models.py — TileMatrixSet/TileMatrix Pydantic models, OGC TMS 2.0 serialization, tile/bounds/zoom conversions, quadkeys, parent/children and matrix_to_geojson",
+        "morecantile/defaults.py and morecantile/data/*.json — built-in global/polar/regional TileMatrixSets and custom TMS registration",
+        "morecantile/utils.py and commons.py — coordinate/tile helpers",
+        "morecantile/scripts/cli.py — tile and shape commands, TMS inspection, GeoJSON conversion; credits BSD-3 Mapbox mercantile-derived code",
+        "tests/test_models.py, test_morecantile.py, test_tms_variable_width.py, test_mercantile_conform.py — tile-grid, variable-width and compatibility regression coverage"
+      ],
+      "verification": [
+        "2026-10-31 inspected README, MIT LICENSE, pyproject.toml, CHANGES.md, models.py, defaults.py, CLI source, test tree, CI and GitHub release metadata",
+        "Stable GitHub release 7.1.0 published 2026-09-16; changelog adds TileMatrixSet.matrix_to_geojson; v7.0.0 documented breaking changes in bounds, strict tile validation and minimum Python version",
+        "2026-10-25 main push CI run 40181168224 passed 4/4 Python 3.11–3.14 test jobs; upstream test evidence, not independent execution",
+        "2026-10-26 dependency PR CI run 40309866338 succeeded; 2026-10-28 dependency update bot reported failure, not a Morecantile application CI failure",
+        "rio-cogeo pyproject.toml directly declares morecantile>=5,<8, so 7.1.0 satisfies the declared version range; no integration execution performed",
+        "No independent tile conversion, geospatial accuracy, alternate-platform installation, CLI or security testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "7.1.0 release 2026-09-16; 2026-10-25 main CI passed 4/4; 2026-10-26 PR CI passed; upstream active with dependency updates. CI observed on Ubuntu only.",
+      "source": "GitHub-first recursive investigation of rio-cogeo's direct dependency; exact-ID YouTube seed searches yielded no indexed transcripts",
+      "related_projects": [
+        "cogeotiff/rio-cogeo (direct runtime dependency morecantile>=5,<8)",
+        "cogeotiff/rio-tiler (raster tile extraction; listed upstream implementation, not tested)",
+        "developmentseed/titiler (tile server, upstream listed implementation, not tested)",
+        "mapbox/mercantile (Web Mercator predecessor and credited CLI code)",
+        "OGC 2D Tile Matrix Set 2.0 (specification)"
+      ],
+      "research_notes": "research/2026-10-31-morecantile-pyvisa.md. Validate custom TileMatrixSet inputs, coordinate precision and 7.x breaking changes before deployment. No upstream code copied."
+    },
+    {
+      "name": "PyVISA",
+      "repository": "https://github.com/pyvisa/pyvisa",
+      "owner": "PyVISA contributors / Torsten Bronger, Gregor Thalhammer, Hernan E. Grecco; maintained by Matthieu Dartiailh",
+      "category": [
+        "scientific-instrumentation",
+        "python",
+        "visa",
+        "gpib",
+        "usb",
+        "serial",
+        "tcpip",
+        "laboratory-automation",
+        "hardware-interoperability"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE); optional vendor VISA shared libraries, PyVISA-Py backends and drivers independently licensed",
+      "license_copy_status": "mit-preserve-notices-review-vendored-thirdparty-and-vendor-visa-libraries",
+      "platforms": [
+        "Python >=3.10",
+        "Linux/macOS/Windows",
+        "GPIB/RS232/USB/TCPIP instrument support depends on installed VISA or optional PyVISA-Py backend and drivers",
+        "2026-10-27 upstream CI matrix covers Linux/macOS/Windows and Python 3.10–3.14"
+      ],
+      "useful_components": [
+        "pyvisa/highlevel.py — VisaLibraryBase and ResourceManager backend discovery, resource lifecycle and sessions",
+        "pyvisa/resources/messagebased.py — instrument read/write/query, ASCII/binary blocks, termination and timeout behavior",
+        "pyvisa/rname.py — VISA resource-name parsing, validation, canonicalization and filtering",
+        "pyvisa/ctwrapper/ — ctypes bindings to vendor VISA libraries",
+        "pyvisa/events.py and attributes.py — event handling and instrument attribute metadata",
+        "pyvisa/cmd_line_tools.py — pyvisa-shell and pyvisa-info entry points",
+        "pyvisa/testsuite/ — parser, backend, message, binary and resource tests"
+      ],
+      "verification": [
+        "2026-10-31 inspected README, MIT LICENSE, pyproject.toml, CHANGES, highlevel.py, resources/messagebased.py, rname.py, testsuite, GitHub release records and Actions jobs",
+        "Latest GitHub release observed 1.16.2 published 2026-02-27; CHANGES separately contains a 1.17.0 section dated 2026-07-06 and repeated unreleased headings, but no corresponding GitHub release was established",
+        "2026-10-27 scheduled main CI run 40440465093 passed 17/17 jobs (15 Python/OS pytest combinations, one formatting/lint/type-check job and one aggregate result)",
+        "2026-10-26 main push CI run 40313328536 also passed 17/17; newer 2026-10-30/31 third-party PR CI jobs were action_required and not proof of test failure",
+        "pyvisa-py pyproject.toml directly requires pyvisa>=1.15.0 and declares optional pyserial>=3.0 and pyusb USB/serial extras; PyVISA core does not directly depend on these packages",
+        "No independent instrument, GPIB, RS232, USB, network VISA, vendor driver or PyVISA-Py runtime tests"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Latest GitHub release 1.16.2 (2026-02-27); main CI 2026-10-26 and scheduled 2026-10-27 passed all 17 jobs; open PR activity 2026-10-31. Changelog 1.17.0 release-status discrepancy unresolved.",
+      "source": "GitHub-first scientific instrument interoperability discovery, recursively verified pyvisa/pyvisa-py manifest and existing PyUSB/pySerial ecosystem; no transcript evidence",
+      "related_projects": [
+        "pyvisa/pyvisa-py (optional pure-Python VISA backend; directly depends on PyVISA)",
+        "pyserial/pyserial (optional serial dependency of PyVISA-Py, not PyVISA core)",
+        "pyusb/pyusb (optional USB dependency of PyVISA-Py, not PyVISA core)",
+        "libusb/libusb (possible native backend under PyUSB; not PyVISA core dependency)",
+        "VISA instrument specification and vendor VISA implementations"
+      ],
+      "research_notes": "research/2026-10-31-morecantile-pyvisa.md. Instrument commands can change settings or actuate equipment; use authorized hardware, safe query commands and network controls. CI is unit tests, not physical device validation. No upstream code copied."
     }
   ],
   "deferred_or_rejected": [
