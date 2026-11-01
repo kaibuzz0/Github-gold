@@ -3517,7 +3517,7 @@ Suggested tiers:
 - **Maintenance signals:** [v1.15.2](https://github.com/stac-utils/pystac/releases/tag/v1.15.2) published 2026-07-27; [2026-10-29 main CI](https://github.com/stac-utils/pystac/actions/runs/40940313953) passed 16/16 jobs.
 - **Verification performed:** README, LICENSE, stable/main manifests, changelog, source tree, tests and upstream CI jobs inspected; no local STAC execution.
 - **Source discovery:** GitHub-first follow-up from rio-tiler and TiTiler; no accessible playlist transcript.
-- **Related projects:** cogeotiff/rio-tiler (direct stable dependency); developmentseed/titiler (optional STAC extension); stac-utils/pystac-client (follow-up); radiantearth/stac-spec.
+- **Related projects:** cogeotiff/rio-tiler (direct stable dependency); developmentseed/titiler (optional STAC extension); stac-utils/pystac-client (verified v0.9.1 STAC API client; direct PySTAC dependency; 2026-10-30 upstream CI 13/13); radiantearth/stac-spec.
 - **Caveats / risks:** Independent extension versions need compatibility checks; remote STAC/schema URLs are untrusted input. Main's core package floor differs from the stable tag.
 - **Research notes:** `research/2026-11-01-pystac-zeroconf.md`. No upstream code copied.
 
@@ -3541,6 +3541,46 @@ Suggested tiers:
 - **Caveats / risks:** mDNS records do not authenticate devices; multicast can be filtered; IPv6 limitations; observe LGPL obligations and future license changes carefully.
 - **Research notes:** `research/2026-11-01-pystac-zeroconf.md`. No upstream code copied.
 
+
+### PySTAC Client
+
+- **Repository:** https://github.com/stac-utils/pystac-client
+- **Author / Org:** stac-utils / Jon Duckworth, Matthew Hanson; maintained by Pete Gadomski
+- **Category:** Python / STAC API / geospatial metadata / search / interoperability
+- **Evidence:** VERIFIED — upstream source, release, tests and CI inspected; no independent API execution
+- **Tier / Score:** S / 27 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 4 + maintenance 4)
+- **What it does:** Client for STAC APIs, supporting catalog and collection discovery, filtered item searches, pagination and supported transaction extensions.
+- **Why it is valuable:** Complements PySTAC's object model with reusable HTTP API integration, search/conformance negotiation and controlled STAC transactions.
+- **Useful code/components:** `pystac_client/{client,item_search,collection_search,collection_client,stac_api_io,conformance,cli}.py`; `tests/test_item_search.py`, `test_stac_api_io.py`.
+- **Install / runtime:** `pip install pystac-client`; v0.9.1 requires Python >=3.10, `pystac>=1.10.0`, requests and python-dateutil. Network access for remote APIs.
+- **Platforms:** Linux/macOS/Windows; upstream CI Python 3.10–3.12.
+- **License:** Apache-2.0; preserve attribution/license; inspect dependencies separately.
+- **Maintenance signals:** [v0.9.1](https://github.com/stac-utils/pystac-client/releases/tag/v0.9.1) published 2026-10-20; [2026-10-30 main CI](https://github.com/stac-utils/pystac-client/actions/runs/41075734547) passed 13/13 jobs.
+- **Verification performed:** README, LICENSE, v0.9.1 manifest, changelog, client/search/HTTP source, tests and upstream CI job conclusions inspected. No local install or STAC API transaction performed.
+- **Source discovery:** GitHub-first follow-up from PySTAC; no accessible playlist transcript.
+- **Related projects:** stac-utils/pystac (direct dependency); radiantearth/stac-api-spec; cogeotiff/rio-tiler (complementary STAC reader).
+- **Caveats / risks:** Remote endpoints/asset URLs may be untrusted; API transactions can modify remote data and require server conformance and authorization. Main-only SQLite free-text fix is unreleased.
+- **Research notes:** `research/2026-11-01-pystac-client-bleak.md`. No third-party code copied.
+
+### Bleak
+
+- **Repository:** https://github.com/hbldh/bleak
+- **Author / Org:** Henrik Blidh and contributors
+- **Category:** Python / Bluetooth Low Energy / GATT / asyncio / Android / hardware interoperability
+- **Evidence:** VERIFIED — upstream source, virtual-controller integration tests and CI inspected; no physical BLE device test
+- **Tier / Score:** S / 28 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 4 + maintenance 5)
+- **What it does:** Cross-platform asynchronous Bluetooth LE device discovery and GATT client for connecting, reading, writing and notifications.
+- **Why it is valuable:** Portable BLE access to sensors and peripherals, with separate BlueZ, WinRT, CoreBluetooth and python-for-Android backends and useful test fixtures.
+- **Useful code/components:** `bleak/backends/{scanner,client,service,characteristic,descriptor}.py`; `bluezdbus/`, `winrt/`, `corebluetooth/`, `p4android/`; `tests/integration/`; `examples/`.
+- **Install / runtime:** `pip install bleak`; v3.0.2 Python >=3.10. Linux BlueZ >=5.55; Windows 11 build >=22000; macOS >=10.15; Android python-for-android backend requires app packaging/permissions.
+- **Platforms:** Linux, Windows, macOS, Android (backend/packaging dependent).
+- **License:** MIT; preserve notice; inspect platform binding/dependency licenses.
+- **Maintenance signals:** [v3.0.2](https://github.com/hbldh/bleak/releases/tag/v3.0.2) published 2026-05-02; [2026-09-30 develop CI](https://github.com/hbldh/bleak/actions/runs/36764733562) passed 27/27 jobs including desktop and simulated integration tests.
+- **Verification performed:** README, LICENSE, stable manifest, changelog, backend and tests trees, workflow and job conclusions inspected. No physical BLE communication, pairing or APK build performed.
+- **Source discovery:** Independent GitHub-first Bluetooth interoperability research; no accessible playlist transcript.
+- **Related projects:** BlueZ; Apple CoreBluetooth; Windows Bluetooth WinRT; python-for-android; python-zeroconf (complementary LAN discovery, not a dependency).
+- **Caveats / risks:** BLE advertisements are unauthenticated; permissions, pairing and platform restrictions vary. Develop-only BeeWare/Briefcase Android backend and dbus-fast>=4 requirement are not stable v3.0.2 features.
+- **Research notes:** `research/2026-11-01-pystac-client-bleak.md`. No third-party code copied.
 
 ## Entry format
 

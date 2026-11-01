@@ -9972,7 +9972,7 @@
       "related_projects": [
         "cogeotiff/rio-tiler (direct stable dependency pystac>=1.9,<2)",
         "developmentseed/titiler (optional STAC extension import/test dependency, not core)",
-        "stac-utils/pystac-client (related STAC API client, not inspected in this batch)",
+        "stac-utils/pystac-client (verified v0.9.1 STAC API client, direct PySTAC dependency; upstream CI 2026-10-30 13/13)",
         "radiantearth/stac-spec (STAC specification)"
       ],
       "research_notes": "research/2026-11-01-pystac-zeroconf.md. Treat remote STAC URLs and schema fetching as untrusted I/O; extension versions may change independently. No third-party code copied."
@@ -10034,6 +10034,129 @@
         "RFC 6762 (mDNS), RFC 6763 (DNS-SD)"
       ],
       "research_notes": "research/2026-11-01-pystac-zeroconf.md. Multicast may be blocked on mobile/Wi-Fi networks; service records are unauthenticated and not proof of device identity. No third-party code copied."
+    },
+    {
+      "name": "PySTAC Client",
+      "repository": "https://github.com/stac-utils/pystac-client",
+      "owner": "stac-utils / Jon Duckworth, Matthew Hanson; maintained by Pete Gadomski",
+      "category": [
+        "geospatial",
+        "stac-api",
+        "python",
+        "metadata-search",
+        "data-catalog",
+        "http-client",
+        "interoperability"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 (root LICENSE; dependencies separately licensed)",
+      "license_copy_status": "apache-2.0-preserve-license-copyright-and-notices-review-dependencies",
+      "platforms": [
+        "Python >=3.10 (v0.9.1)",
+        "Linux/macOS/Windows (upstream CI Python 3.10–3.12)"
+      ],
+      "useful_components": [
+        "pystac_client/client.py — STAC API client, conformance negotiation, collection discovery and transactions",
+        "pystac_client/item_search.py and collection_search.py — bounding-box, time, CQL2/query, pagination and result iteration",
+        "pystac_client/stac_api_io.py — requests sessions, retry, timeouts, headers and request modification",
+        "pystac_client/conformance.py and warnings.py — advertised capability checks and warnings",
+        "pystac_client/collection_client.py — item CRUD against STAC Transaction extension",
+        "pystac_client/cli.py — stac-client command-line interface",
+        "tests/test_item_search.py, test_stac_api_io.py, test_collection_client.py — regression coverage"
+      ],
+      "verification": [
+        "2026-11-01 inspected README, Apache LICENSE, v0.9.1 manifest, changelog, client.py, item_search.py, stac_api_io.py, source/test trees and CI job conclusions",
+        "v0.9.1 GitHub release published 2026-10-20; tag requires Python>=3.10 and directly depends on pystac>=1.10.0, requests>=2.28.2, python-dateutil>=2.8.2",
+        "2026-10-30 main push CI run 41075734547 passed 13/13 jobs including Linux/macOS/Windows Python 3.10–3.12, docs, min-versions, prerelease and upstream dependency checks; upstream evidence, not local execution",
+        "v0.9.1 changelog adds STAC Item and Collection transaction operations and conformance handling; such calls require server support and authorization",
+        "Current main changelog lists unreleased SQLite free-text connection cleanup; not assumed in v0.9.1",
+        "No independent install, remote STAC API call, transaction, auth, network-security or data-validation test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v0.9.1 released 2026-10-20; main push CI 2026-10-30 passed 13/13; active fixes and dependency updates in late October.",
+      "source": "GitHub-first recursive follow-up from stac-utils/pystac and rio-tiler/TiTiler; two playlist identifier searches on 2026-11-01 returned no indexed transcript material",
+      "related_projects": [
+        "stac-utils/pystac (direct runtime dependency >=1.10.0; separate core metadata model)",
+        "radiantearth/stac-api-spec (STAC API specification)",
+        "cogeotiff/rio-tiler (STAC raster reader; not a direct pystac-client dependency)",
+        "developmentseed/titiler (optional STAC integration; not a direct pystac-client dependency)"
+      ],
+      "research_notes": "research/2026-11-01-pystac-client-bleak.md. Remote endpoints, redirects, asset URLs and server-side transactions require explicit trust/permission controls. No third-party code copied."
+    },
+    {
+      "name": "Bleak",
+      "repository": "https://github.com/hbldh/bleak",
+      "owner": "Henrik Blidh and Bleak contributors",
+      "category": [
+        "bluetooth-low-energy",
+        "gatt",
+        "python",
+        "asyncio",
+        "hardware-interoperability",
+        "cross-platform",
+        "android"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 5
+      },
+      "license": "MIT (root LICENSE; platform Bluetooth bindings, OS stacks and optional dependencies separately licensed)",
+      "license_copy_status": "mit-preserve-copyright-and-permission-notice-review-platform-dependencies",
+      "platforms": [
+        "Python >=3.10 (v3.0.2)",
+        "Linux BlueZ >=5.55",
+        "Windows 11 build >=22000",
+        "macOS >=10.15 CoreBluetooth",
+        "Android via python-for-android backend; other Android packaging paths are version-specific"
+      ],
+      "useful_components": [
+        "bleak/backends/scanner.py and client.py — abstract BLE discovery and asynchronous GATT client interfaces",
+        "bleak/backends/bluezdbus/ — Linux BlueZ D-Bus scanner/client and notification handling",
+        "bleak/backends/winrt/ — Windows Bluetooth WinRT backend",
+        "bleak/backends/corebluetooth/ — macOS CoreBluetooth backend",
+        "bleak/backends/p4android/ — Android python-for-android backend and Java bridge",
+        "bleak/backends/service.py, characteristic.py, descriptor.py — GATT services and characteristic models",
+        "examples/ and tests/integration/ — usage patterns and virtual-controller integration tests"
+      ],
+      "verification": [
+        "2026-11-01 inspected README, MIT LICENSE, v3.0.2 pyproject.toml, changelog, backend source trees, test/integration layout and upstream workflow source",
+        "v3.0.2 released 2026-05-02; stable manifest Python>=3.10, Linux dbus-fast>=1.83.0, platform-specific pyobjc/WinRT dependencies",
+        "2026-09-30 develop push Build and Test run 36764733562 passed 27/27 jobs: 15 desktop OS/Python jobs, five BlueZ virtual-controller jobs, five Windows integration jobs and two Android integration jobs; upstream CI, not physical-device testing",
+        "Upstream build_and_test.yml documents pytest, type checking and BlueZ QEMU virtual-HCI testing; successful CI does not establish arbitrary BLE hardware interoperability",
+        "Develop changelog documents unreleased BeeWare/Briefcase Android backend requiring Python>=3.13 and Linux dbus-fast>=4.0; not stable v3.0.2 features",
+        "Some later October third-party PR CI runs failed or required action; not evidence that the cited September develop push CI failed",
+        "No independent BLE scan, pairing, GATT read/write, Android APK build or physical-device execution"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v3.0.2 release 2026-05-02; 2026-09-30 develop CI passed 27/27; October 2026 PR and dependency activity, with some failed PR checks.",
+      "source": "Independent GitHub-first BLE interoperability discovery; no accessible seed playlist transcript evidence",
+      "related_projects": [
+        "python-zeroconf/python-zeroconf (complementary LAN discovery, not a dependency)",
+        "BlueZ (Linux Bluetooth stack)",
+        "Apple CoreBluetooth",
+        "Microsoft Windows Runtime Bluetooth APIs",
+        "python-for-android (Android backend packaging)"
+      ],
+      "research_notes": "research/2026-11-01-pystac-client-bleak.md. Bluetooth permissions, pairing, identity/spoofing, platform-specific restrictions and Android packaging need verification; do not treat BLE advertisement as authenticated identity. No upstream code copied."
     }
   ],
   "deferred_or_rejected": [

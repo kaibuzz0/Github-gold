@@ -60,3 +60,7 @@ Exact-ID searches for `PLIzKw1zY_ruBUkaijwskxrfApmK_sKPvO` and `PLPKYjlUn3Lxl-XO
 ## Access check — 2026-10-27 (remaining seed IDs)
 
 Exact-ID searches for `PLI99ObbYUvDn_0tkbXsOYB4ApTyHFQxSi` and `PLMy8ocrgmZ9yfqy1-bgSX4q3HPezvTMAr` returned no indexed playlist or transcript material. No video or subtitles were accessed and neither discovery was attributed to video evidence. All six IDs have now been searched at least once; direct metadata/subtitle access remains queued.
+
+## Access check — 2026-11-01 (GitHub-first BLE/STAC API batch)
+
+Exact-ID web searches for `PLMI6SBmd587c` and `PLfidXW0BixTc` returned no indexed playlist or transcript results. No video title, subtitle or transcript was accessed and neither new catalog entry is attributed to YouTube. The other four playlists were not revisited in this batch; all six remain queued for direct metadata/subtitle access.
