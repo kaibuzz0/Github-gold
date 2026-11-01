@@ -3414,7 +3414,7 @@ Suggested tiers:
 - **Maintenance signals:** Latest observed GitHub release [1.16.2](https://github.com/pyvisa/pyvisa/releases/tag/1.16.2) published 2026-02-27; [2026-10-27 main CI](https://github.com/pyvisa/pyvisa/actions/runs/40440465093) passed 17/17 jobs across 15 Python/OS test combinations plus lint and aggregate. CHANGES lists 1.17.0 dated 2026-07-06 but no corresponding GitHub release established.
 - **Verification performed:** Inspected README, license, manifest, changelog, resource/session code, message parsing, test tree and CI job steps; PyVISA-Py manifest verifies optional pyserial/pyusb extras. No independent physical or backend execution.
 - **Source discovery:** GitHub-first scientific instrumentation discovery; no accessible YouTube transcript.
-- **Related projects:** pyvisa/pyvisa-py (optional backend); pyserial/pyserial and pyusb/pyusb (optional PyVISA-Py transport dependencies, not PyVISA core dependencies); VISA specification; pyvisa/pyvisa-sim (simulated VISA backend; pyvisa>=1.15.0; upstream 2026-10-27 CI 14/14).
+- **Related projects:** pyvisa/pyvisa-py (optional backend); pyserial/pyserial and pyusb/pyusb (optional PyVISA-Py transport dependencies, not PyVISA core dependencies); VISA specification; pyvisa/pyvisa-sim (simulated VISA backend; pyvisa>=1.15.0; upstream 2026-10-27 CI 14/14).; pyvisa/pyvisa-py now separately cataloged (MIT optional backend; 0.8.1 stable, upstream 2026-08-18 CI 14/14; 0.9.0 changes unreleased)
 - **Caveats / risks:** Vendor driver compatibility and actual GPIB/USB/RS232 hardware behavior remain untested; instrument commands may alter settings or actuate equipment. New third-party PR CI jobs were action_required, not test failures.
 - **Research notes:** `research/2026-10-31-morecantile-pyvisa.md`. No upstream code copied.
 
@@ -3455,9 +3455,50 @@ Suggested tiers:
 - **Maintenance signals:** [2026-10-31 main CI](https://github.com/cogeotiff/rio-tiler/actions/runs/41243335207) passed 3/3 pytest jobs; [9.4.12](https://github.com/cogeotiff/rio-tiler/releases/tag/9.4.12) published 2026-10-08.
 - **Verification performed:** 2026-11-01 inspected README, BSD LICENSE, 9.4.12 tag and main manifests, CHANGES.md, source tree, mosaic and Rasterio reader, test tree and Actions jobs; Stable 9.4.12 released 2026-10-08; stable manifest Python>=3.11, rasterio>=1.4.0, morecantile>=5,<8; Unreleased main manifest raises Python to >=3.12, Rasterio to >=1.5.1 and adds affine>=3.0; changelog documents breaking experimental Zarr/N-D changes; 2026-10-31 main push CI 41243335207 passed 3/3 Python 3.12–3.14 pytest jobs; 2026-11-01 dependency PR CI 41259299838 also passed 3/3; No independent tile extraction, GDAL execution, STAC fetching or HTTP range benchmark.
 - **Source discovery:** GitHub-first recursive ecosystem research; two exact-ID YouTube searches returned no transcripts.
-- **Related projects:** rasterio/rasterio (direct dependency); developmentseed/morecantile (direct dependency); cogeotiff/rio-cogeo (complementary COG creator/validator, not a dependency); developmentseed/titiler (downstream tile server ecosystem).
+- **Related projects:** rasterio/rasterio (direct dependency); developmentseed/morecantile (direct dependency); cogeotiff/rio-cogeo (complementary COG creator/validator, not a dependency); developmentseed/titiler (downstream tile server ecosystem).; developmentseed/titiler now separately cataloged (direct core requirement rio-tiler>=9.1,<10.0; source-level integration, no independent server test)
 - **Caveats / risks:** Main's Python/affine/Rasterio minimum and experimental N-D/Zarr changes are unreleased. Untrusted GDAL raster/remote inputs can exhaust resources or trigger network access.
 - **Research notes:** `research/2026-11-01-pyvisa-sim-rio-tiler.md`. No upstream code copied.
+
+
+### PyVISA-py
+
+- **Repository:** https://github.com/pyvisa/pyvisa-py
+- **Author / Org:** PyVISA contributors / Hernan E. Grecco; maintained by Matthieu C. Dartiailh
+- **Category:** Python / scientific instrumentation / VISA backends / serial / USB / GPIB / TCPIP
+- **Evidence:** VERIFIED — upstream source, regression tests and CI inspected; no physical instrument execution
+- **Tier / Score:** S / 27 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 4)
+- **What it does:** Pure-Python PyVISA backend for controlling message-based laboratory instruments without requiring a proprietary vendor VISA implementation for supported transports.
+- **Why it is valuable:** Provides reusable cross-platform session dispatch, protocol implementations and optional USB/serial/network/GPIB adapters for laboratory automation.
+- **Useful code/components:** `pyvisa_py/highlevel.py` (PyVisaLibrary); `sessions.py`; `usb.py` and `protocols/usbtmc.py`; `serial.py`; `tcpip.py` and VXI-11/HiSLIP protocols; `prologix.py`; `testsuite/`.
+- **Install / runtime:** `pip install pyvisa-py`; Python >=3.10, PyVISA >=1.15.0; install `pyserial`, `pyusb`, `libusb-package`, GPIB or discovery extras only as needed. Select PyVISA `@py` backend.
+- **Platforms:** Linux/macOS/Windows, subject to transport and device permissions.
+- **License:** MIT; preserve notice; optional drivers, USB libraries and vendor firmware independently licensed.
+- **Maintenance signals:** [0.8.1](https://github.com/pyvisa/pyvisa-py/releases/tag/0.8.1) published 2025-09-04. [2026-08-18 main CI](https://github.com/pyvisa/pyvisa-py/actions/runs/32085356622) passed 14/14 jobs. Current CHANGES has 0.9.0 explicitly marked unreleased.
+- **Verification performed:** README, LICENSE, manifest, changelog, highlevel/USB source and tests inspected; upstream CI jobs inspected. No independent build, device, HiSLIP or VXI-11 test.
+- **Source discovery:** GitHub-first follow-up from PyVISA, PyVISA-sim, PyUSB and pySerial; seed playlist fetch throttled.
+- **Related projects:** pyvisa/pyvisa (direct dependency); pyvisa/pyvisa-sim (alternative simulation backend); pyserial/pyserial and pyusb/pyusb (optional transports); libusb/libusb (possible PyUSB native backend).
+- **Caveats / risks:** Current-main USB RAW and network protocol fixes are not established in stable 0.8.1. CI tests do not establish physical instrument interoperability. Use controlled hardware and networks.
+- **Research notes:** `research/2026-11-01-pyvisa-py-titiler.md`. No upstream code copied.
+
+### TiTiler
+
+- **Repository:** https://github.com/developmentseed/titiler
+- **Author / Org:** Development Seed / Vincent Sarago and contributors
+- **Category:** Geospatial / dynamic raster tiles / FastAPI / COG / STAC / MosaicJSON / Zarr
+- **Evidence:** VERIFIED — upstream source, package manifests, tests and CI inspected; no independent serving or security test
+- **Tier / Score:** S / 28 (utility 5 + working evidence 4 + reusability 5 + novelty 5 + documentation 5 + maintenance 4)
+- **What it does:** Modular Python/FastAPI infrastructure for dynamically serving COG, STAC, mosaic and multidimensional raster tiles, TileJSON and OGC-compatible endpoints.
+- **Why it is valuable:** Connects reusable geospatial readers to configurable API routers, tile matrices, image rendering, mosaics and deployable map services.
+- **Useful code/components:** `src/titiler/core/titiler/core/factory.py` (TilerFactory); `core/dependencies.py`; `application/titiler/application/main.py`; `mosaic/titiler/mosaic/factory.py`; `xarray/titiler/xarray/factory.py`; `extensions/`.
+- **Install / runtime:** Python >=3.11; `pip install titiler.application uvicorn` then `uvicorn titiler.application.main:app`. **Do not install the deprecated `titiler` PyPI metapackage.** Core namespace packages are installed individually.
+- **Platforms:** Linux/container/cloud or other Python+GDAL compatible hosts. v2.3.0+ image runs as nonroot uid 65532.
+- **License:** MIT core; GDAL/Rasterio, codecs, dependencies and datasets require separate license review.
+- **Maintenance signals:** [v2.4.0](https://github.com/developmentseed/titiler/releases/tag/v2.4.0) published 2026-09-21; [2026-09-18 main CI](https://github.com/developmentseed/titiler/actions/runs/35358292721) passed 4/4 Python 3.11–3.14 jobs. Newer main dependency changes not covered by that run.
+- **Verification performed:** README, LICENSE, SECURITY.md, root/core manifests, changelog, factory and application source, CI jobs inspected; direct `rio-tiler>=9.1,<10.0` and Morecantile dependencies established. No independent HTTP/raster/COG or deployment tests.
+- **Source discovery:** GitHub-first follow-up from rio-tiler and Morecantile; playlist fetch throttled.
+- **Related projects:** cogeotiff/rio-tiler (direct); developmentseed/morecantile (direct); rasterio/rasterio (direct); cogeotiff/rio-cogeo (complementary, not direct).
+- **Caveats / risks:** Unrestricted dataset URLs and GDAL VRT can expose filesystem or remote network resources. Upstream SECURITY.md recommends host allowlisting, filesystem restrictions, GDAL driver controls and careful band-expression handling. No public-service security audit.
+- **Research notes:** `research/2026-11-01-pyvisa-py-titiler.md`. No upstream code copied.
 
 ## Entry format
 
