@@ -3334,7 +3334,7 @@ Suggested tiers:
 - **Maintenance signals:** [Stable 1.5.2](https://github.com/rasterio/rasterio/releases/tag/1.5.2) 2026-09-30; development main reports 1.6.0.dev0. [2026-10-25 full main Tests](https://github.com/rasterio/rasterio/actions/runs/40157367304) passed 19/19 jobs; [2026-10-26 main Tests](https://github.com/rasterio/rasterio/actions/runs/40346438112) marked failure (18 passed, one macOS ARM/Python 3.13 cancelled). [2026-10-31 GDAL-tag discovery](https://github.com/rasterio/rasterio/actions/runs/41231881794) succeeded with actual GDAL test jobs skipped.
 - **Verification performed:** Inspected upstream README, LICENSE, pyproject, source tree, regression tests, workflows, releases and job conclusions. No independent raster processing or CLI execution.
 - **Source discovery:** GitHub-first geospatial discovery; no YouTube transcript evidence.
-- **Related projects:** OSGeo/gdal (native driver dependency); felt/tippecanoe (vector-tile complement, not direct dependency); protomaps/PMTiles (archive complement); maplibre/maplibre-gl-js (renderer); scipy/scipy (numerical complement); cogeotiff/rio-cogeo (direct Rasterio CLI plugin, requires rasterio>=1.3.3).
+- **Related projects:** OSGeo/gdal (native driver dependency); felt/tippecanoe (vector-tile complement, not direct dependency); protomaps/PMTiles (archive complement); maplibre/maplibre-gl-js (renderer); scipy/scipy (numerical complement); cogeotiff/rio-cogeo (direct Rasterio CLI plugin, requires rasterio>=1.3.3); cogeotiff/rio-tiler (direct Rasterio dependency: stable >=1.4.0; development main >=1.5.1).
 - **Caveats / risks:** Large/untrusted raster files and GDAL virtual filesystems can consume memory, disk or network resources; protect access and inspect driver/security settings. Raster data licensing separate. No end-to-end offline map pipeline established.
 - **Research notes:** `research/2026-10-31-pyusb-rasterio.md`. No third-party code copied.
 
@@ -3354,7 +3354,7 @@ Suggested tiers:
 - **Maintenance signals:** [7.0.4](https://github.com/cogeotiff/rio-cogeo/releases/tag/7.0.4) published 2026-10-09; [2026-10-09 main CI](https://github.com/cogeotiff/rio-cogeo/actions/runs/37951388263) passed all 4 Python matrix jobs. Repository pushed 2026-10-26.
 - **Verification performed:** Inspected README, license, manifest, changelog, conversion/validation code, CLI, fixtures and CI. Successful upstream pytest workflow confirmed; no independent conversion, cloud-range performance or security test.
 - **Source discovery:** GitHub-first recursive follow-up from Rasterio; two playlist exact-ID searches produced no transcripts.
-- **Related projects:** rasterio/rasterio (direct runtime dependency); OSGeo/gdal (COG driver); developmentseed/morecantile (tile-matrix-set dependency); cogeotiff/cog-spec (layout standard).
+- **Related projects:** rasterio/rasterio (direct runtime dependency); OSGeo/gdal (COG driver); developmentseed/morecantile (tile-matrix-set dependency); cogeotiff/cog-spec (layout standard); cogeotiff/rio-tiler (complementary raster tile reader, not a direct dependency).
 - **Caveats / risks:** Untrusted GDAL drivers, raster files and remote virtual filesystems can exhaust resources or trigger network access. Fixture validation does not establish HTTP range-request efficiency in cloud object stores.
 - **Research notes:** `research/2026-10-31-rio-cogeo-espflash.md`. No upstream code copied.
 
@@ -3394,7 +3394,7 @@ Suggested tiers:
 - **Maintenance signals:** [7.1.0](https://github.com/developmentseed/morecantile/releases/tag/7.1.0) published 2026-09-16; [2026-10-25 main CI](https://github.com/developmentseed/morecantile/actions/runs/40181168224) passed 4/4 Python jobs; 2026-10-26 PR CI passed.
 - **Verification performed:** Inspected README, license, manifest, changelog, models, CLI, test tree, upstream release and CI job steps. No independent coordinate accuracy or integration test.
 - **Source discovery:** GitHub-first follow-up from rio-cogeo; no accessible YouTube transcript.
-- **Related projects:** cogeotiff/rio-cogeo (direct morecantile>=5,<8 dependency); cogeotiff/rio-tiler; developmentseed/titiler; mapbox/mercantile; OGC TMS 2.0.
+- **Related projects:** cogeotiff/rio-cogeo (direct morecantile>=5,<8 dependency); cogeotiff/rio-tiler; developmentseed/titiler; mapbox/mercantile; OGC TMS 2.0; cogeotiff/rio-tiler (direct morecantile>=5,<8 requirement; inspected 2026-11-01).
 - **Caveats / risks:** v7 introduced breaking coordinate/bounds behavior and Python minimum changes; custom TileMatrixSet JSON and CRS assumptions need validation. Manifest compatibility does not prove an executed rio-cogeo integration.
 - **Research notes:** `research/2026-10-31-morecantile-pyvisa.md`. No upstream code copied.
 
@@ -3414,10 +3414,50 @@ Suggested tiers:
 - **Maintenance signals:** Latest observed GitHub release [1.16.2](https://github.com/pyvisa/pyvisa/releases/tag/1.16.2) published 2026-02-27; [2026-10-27 main CI](https://github.com/pyvisa/pyvisa/actions/runs/40440465093) passed 17/17 jobs across 15 Python/OS test combinations plus lint and aggregate. CHANGES lists 1.17.0 dated 2026-07-06 but no corresponding GitHub release established.
 - **Verification performed:** Inspected README, license, manifest, changelog, resource/session code, message parsing, test tree and CI job steps; PyVISA-Py manifest verifies optional pyserial/pyusb extras. No independent physical or backend execution.
 - **Source discovery:** GitHub-first scientific instrumentation discovery; no accessible YouTube transcript.
-- **Related projects:** pyvisa/pyvisa-py (optional backend); pyserial/pyserial and pyusb/pyusb (optional PyVISA-Py transport dependencies, not PyVISA core dependencies); VISA specification.
+- **Related projects:** pyvisa/pyvisa-py (optional backend); pyserial/pyserial and pyusb/pyusb (optional PyVISA-Py transport dependencies, not PyVISA core dependencies); VISA specification; pyvisa/pyvisa-sim (simulated VISA backend; pyvisa>=1.15.0; upstream 2026-10-27 CI 14/14).
 - **Caveats / risks:** Vendor driver compatibility and actual GPIB/USB/RS232 hardware behavior remain untested; instrument commands may alter settings or actuate equipment. New third-party PR CI jobs were action_required, not test failures.
 - **Research notes:** `research/2026-10-31-morecantile-pyvisa.md`. No upstream code copied.
 
+
+### PyVISA-sim
+
+- **Repository:** https://github.com/pyvisa/pyvisa-sim
+- **Author / Org:** PyVISA contributors / Hernan E. Grecco; maintained by Matthieu Dartiailh
+- **Category:** scientific-instrumentation / instrument-simulation / python / visa / gpib / usb / serial / tcpip / testing
+- **Evidence:** VERIFIED — upstream source, regression tests and successful CI; no independent execution
+- **Tier / Score:** S / 26 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 4 + maintenance 4)
+- **What it does:** Configurable simulated PyVISA backend with YAML-defined device responses, channels, errors and GPIB/USB/serial/TCPIP resource sessions.
+- **Why it is valuable:** Reproducible laboratory automation testing without physical instruments or vendor VISA drivers.
+- **Useful code/components:** pyvisa_sim/highlevel.py — SimVisaLibrary backend and sessions; pyvisa_sim/parser.py — versioned YAML device configuration; pyvisa_sim/devices.py, component.py, channels.py — simulated state, responses and channels; pyvisa_sim/sessions/{gpib,serial,tcpip,usb}.py — protocol-specific session emulation; pyvisa_sim/default.yaml — instrument fixtures; pyvisa_sim/testsuite/ — parser, binary-dialogue and serial regression tests.
+- **Install / runtime:** `pip install pyvisa-sim`; Python >=3.10; PyVISA >=1.15.0, PyYAML, stringparser, typing-extensions; select `@sim` backend.
+- **Platforms:** Python >=3.10; Linux/macOS/Windows; Simulated GPIB, USB, RS232 and TCPIP; no physical instrument required.
+- **License:** MIT; dependencies independently licensed; preserve notices and review dependencies separately.
+- **Maintenance signals:** [2026-10-27 main CI](https://github.com/pyvisa/pyvisa-sim/actions/runs/40446315171) passed 14/14 jobs; [0.8.1](https://github.com/pyvisa/pyvisa-sim/releases/tag/0.8.1) published 2025-09-04.
+- **Verification performed:** 2026-11-01 inspected README, MIT LICENSE.txt, pyproject.toml at main and 0.8.1 tag, CHANGES.rst, dispatcher, parser, sessions, testsuite and Actions jobs; GitHub release 0.8.1 published 2025-09-04; changelog stops at 0.7.1 and includes unreleased items; 2026-10-27 main scheduled CI 40446315171 passed 14/14 jobs, including pytest on Linux/macOS/Windows with Python 3.10–3.13; Current/tag manifest requires pyvisa>=1.15.0, Python>=3.10; README older Python 3.8–3.11 and PyVISA 1.11+ claims are outdated; No independent simulator execution or physical device tests.
+- **Source discovery:** GitHub-first recursive ecosystem research; two exact-ID YouTube searches returned no transcripts.
+- **Related projects:** pyvisa/pyvisa (direct runtime dependency >=1.15.0); pyvisa/pyvisa-py (alternative hardware backend, not a dependency).
+- **Caveats / risks:** README has stale Python/PyVISA version claims; 0.8.1 release not reflected in changelog. Simulation does not prove real instrument interoperability.
+- **Research notes:** `research/2026-11-01-pyvisa-sim-rio-tiler.md`. No upstream code copied.
+
+### rio-tiler
+
+- **Repository:** https://github.com/cogeotiff/rio-tiler
+- **Author / Org:** cogeotiff / Vincent Sarago and contributors
+- **Category:** geospatial / raster-tiles / cloud-optimized-geotiff / stac / gdal / rasterio / morecantile / python
+- **Evidence:** VERIFIED — upstream source, regression tests and successful CI; no independent execution
+- **Tier / Score:** S / 28 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 5 + maintenance 4)
+- **What it does:** Rasterio/GDAL-backed extraction of dynamic map tiles, bounding boxes, point samples and GeoJSON features from local/remote raster and STAC datasets.
+- **Why it is valuable:** Reusable COG and raster tile processing for offline maps, mosaics and map-serving APIs.
+- **Useful code/components:** rio_tiler/io/rasterio.py — Reader.tile/part/feature/point; rio_tiler/io/stac.py — STAC assets; rio_tiler/io/xarray.py and experimental/ — optional xarray/Zarr/async readers; rio_tiler/mosaic/reader.py and methods/ — mosaic assembly and pixel selection; rio_tiler/models.py — ImageData and PointData; rio_tiler/reader.py, _warp.py — windowing and reprojection; tests/test_io_rasterio.py, test_io_stac.py, test_mosaic.py — regression tests.
+- **Install / runtime:** `pip install rio-tiler`; stable 9.4.12 Python >=3.11, Rasterio >=1.4.0, Morecantile >=5,<8; main development requires Python >=3.12 and Rasterio >=1.5.1.
+- **Platforms:** Stable 9.4.12: Python >=3.11; development main: Python >=3.12; Linux/macOS/Windows subject to GDAL/Rasterio availability; CI Python 3.12–3.14.
+- **License:** BSD-3-Clause; Rasterio, GDAL, codecs and data independently licensed; preserve notices and review dependencies separately.
+- **Maintenance signals:** [2026-10-31 main CI](https://github.com/cogeotiff/rio-tiler/actions/runs/41243335207) passed 3/3 pytest jobs; [9.4.12](https://github.com/cogeotiff/rio-tiler/releases/tag/9.4.12) published 2026-10-08.
+- **Verification performed:** 2026-11-01 inspected README, BSD LICENSE, 9.4.12 tag and main manifests, CHANGES.md, source tree, mosaic and Rasterio reader, test tree and Actions jobs; Stable 9.4.12 released 2026-10-08; stable manifest Python>=3.11, rasterio>=1.4.0, morecantile>=5,<8; Unreleased main manifest raises Python to >=3.12, Rasterio to >=1.5.1 and adds affine>=3.0; changelog documents breaking experimental Zarr/N-D changes; 2026-10-31 main push CI 41243335207 passed 3/3 Python 3.12–3.14 pytest jobs; 2026-11-01 dependency PR CI 41259299838 also passed 3/3; No independent tile extraction, GDAL execution, STAC fetching or HTTP range benchmark.
+- **Source discovery:** GitHub-first recursive ecosystem research; two exact-ID YouTube searches returned no transcripts.
+- **Related projects:** rasterio/rasterio (direct dependency); developmentseed/morecantile (direct dependency); cogeotiff/rio-cogeo (complementary COG creator/validator, not a dependency); developmentseed/titiler (downstream tile server ecosystem).
+- **Caveats / risks:** Main's Python/affine/Rasterio minimum and experimental N-D/Zarr changes are unreleased. Untrusted GDAL raster/remote inputs can exhaust resources or trigger network access.
+- **Research notes:** `research/2026-11-01-pyvisa-sim-rio-tiler.md`. No upstream code copied.
 
 ## Entry format
 
