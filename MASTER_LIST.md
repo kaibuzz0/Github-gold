@@ -3764,7 +3764,7 @@ Suggested tiers:
 - **Maintenance signals:** [v4.6.1](https://github.com/hardbyte/python-can/releases/tag/v4.6.1) 2025-08-12; main pushed 2026-07-01; [2026-10-25 PR CI](https://github.com/hardbyte/python-can/actions/runs/40224110111) 25 successful jobs, one skipped release. Later PRs show `action_required`.
 - **Verification performed:** README, tagged/main manifests, LGPL license, virtual tests, source tree and upstream CI jobs inspected. No independent install, virtual-bus or physical-bus execution.
 - **Source discovery:** GitHub-first CAN research; no usable playlist transcript.
-- **Related projects:** cantools/cantools (direct consumer >=4.6.0); pyserial/pyserial (optional serial transport); pyusb/pyusb (optional gs-usb ecosystem); Linux SocketCAN/vcan.
+- **Related projects:** cantools/cantools (direct consumer >=4.6.0); pyserial/pyserial (optional serial transport); pyusb/pyusb (optional gs-usb ecosystem); Linux SocketCAN/vcan; pylessard/python-can-isotp (optional ISO-TP layer, not a core dependency).
 - **Caveats / risks:** CAN frames can control real equipment; use virtual or isolated authorized testing. Stable/main Python minimum differs; `action_required` does not mean successful tests.
 - **Research notes:** `research/2026-11-02-python-can-cantools.md`. No third-party source copied.
 
@@ -3788,6 +3788,46 @@ Suggested tiers:
 - **Related projects:** hardbyte/python-can (direct runtime dependency); bitstruct/bitstruct; Linux can-utils `candump` (CLI input); AUTOSAR and DBC formats.
 - **Caveats / risks:** DBC/ARXML files may be proprietary. Generated C and physical CAN use need separate validation for safety-critical systems.
 - **Research notes:** `research/2026-11-02-python-can-cantools.md`. No third-party source copied.
+
+### python-can-isotp
+
+- **Repository:** https://github.com/pylessard/python-can-isotp
+- **Author / Org:** Pier-Yves Lessard / pylessard
+- **Category:** Python / CAN / ISO-TP / ISO 15765-2 / automotive interoperability
+- **Evidence:** VERIFIED — upstream source, tests, release and Jenkins configuration; no confirmed passing Jenkins run
+- **Tier / Score:** A / 24 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 3)
+- **What it does:** Implements ISO-TP CAN frame segmentation, reassembly and flow control through user-space callbacks, optional python-can adapters, and Linux kernel ISO-TP sockets.
+- **Why it is valuable:** Reusable transport protocol layer for diagnostic and embedded interoperability with virtual-test potential.
+- **Useful code/components:** `isotp/protocol.py` PDU/TransportLayer/CanStack/NotifierBasedCanStack; `isotp/address.py` addressing; `isotp/tpsock/` kernel socket wrapper; `test/test_transport_layer_logic.py`, `test/test_socket.py` fixtures.
+- **Install / runtime:** `pip install can-isotp`; v2.0.7 declares Python >=3.7; python-can optional; kernel SocketCAN ISO-TP path Linux-only.
+- **Platforms:** User-space Python on compatible hosts; Linux for kernel ISO-TP; physical adapters require drivers.
+- **License:** MIT, copyright Pier-Yves Lessard; retain notices.
+- **Maintenance signals:** [v2.0.7](https://github.com/pylessard/python-can-isotp/releases/tag/v2.0.7) published 2025-05-14; v2.x commit 2026-08-22 changes reserved STmin handling; Jenkinsfile defines vcan/Python 3.7–3.11 matrix but no successful run confirmed.
+- **Verification performed:** README, tagged manifest, license, source/tests, Jenkinsfile, release and commits inspected. No independent install, test, virtual or physical CAN execution.
+- **Source discovery:** GitHub-first follow-up from python-can; no usable playlist transcript.
+- **Related projects:** hardbyte/python-can (optional), cantools/cantools (complementary), Linux CAN_ISOTP.
+- **Caveats / risks:** 2026 STmin fix postdates v2.0.7; do not assume stable has it. CAN can actuate equipment; use authorized isolated/virtual networks.
+- **Research notes:** `research/2026-11-02-can-isotp-pip-audit.md`; no third-party source copied.
+
+### pip-audit
+
+- **Repository:** https://github.com/pypa/pip-audit
+- **Author / Org:** Python Packaging Authority (PyPA); originally Trail of Bits contributors
+- **Category:** Python / defensive security / dependency auditing / supply chain / SBOM
+- **Evidence:** VERIFIED — upstream code, tests, release and successful CI; no independent execution
+- **Tier / Score:** S / 28 (Utility 5 + Working Evidence 5 + Reusability 5 + Novelty 4 + Documentation 5 + Maintenance 4)
+- **What it does:** Audits Python environments, requirements and project lockfiles for known vulnerabilities; exports reports/SBOMs and optionally fixes dependencies.
+- **Why it is valuable:** Modular, CI-ready vulnerability audit with multiple advisory services, dependency sources and structured output.
+- **Useful code/components:** `pip_audit/_dependency_source/` requirements/pyproject/PEP 751; `_service/` PyPI/OSV/Ecosyste.ms; `_format/` JSON/Markdown/CycloneDX; `_fix.py`; `test/`.
+- **Install / runtime:** `python -m pip install pip-audit`; Python >=3.10; advisory services generally require network or compatible mirror.
+- **Platforms:** Linux/macOS/Windows; upstream CI Linux Python 3.10–3.14 and Windows.
+- **License:** Apache-2.0; retain notices and check dependencies and advisory data separately.
+- **Maintenance signals:** [v2.10.1](https://github.com/pypa/pip-audit/releases/tag/v2.10.1) published 2026-06-10; main updated 2026-10-30; [2026-11-02 scheduled CI](https://github.com/pypa/pip-audit/actions/runs/41443587420) eight successful jobs including coverage gate.
+- **Verification performed:** README, license, pyproject, changelog, source/tests, CI workflow/jobs inspected; no independent scan, SBOM, fix or installation.
+- **Source discovery:** Independent GitHub-first supply-chain discovery; no usable playlist transcript.
+- **Related projects:** pypa/gh-action-pip-audit, pypa/advisory-database (CC-BY-4.0 data), OSV, CycloneDX, PEP 751.
+- **Caveats / risks:** Clean results do not establish security; advisory coverage and dependency resolution can miss issues; `--fix` modifies dependencies.
+- **Research notes:** `research/2026-11-02-can-isotp-pip-audit.md`; no third-party source copied.
 
 ## Entry format
 

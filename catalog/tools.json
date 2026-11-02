@@ -10721,7 +10721,8 @@
         "cantools/cantools (direct consumer; depends on python-can>=4.6.0)",
         "pyserial/pyserial (optional serial transport extras, not core dependency)",
         "pyusb/pyusb (optional gs-usb ecosystem, not core dependency)",
-        "Linux SocketCAN/vcan"
+        "Linux SocketCAN/vcan",
+        "pylessard/python-can-isotp (optional ISO-TP layer; not a core dependency)"
       ],
       "research_notes": "research/2026-11-02-python-can-cantools.md. CAN traffic can actuate real equipment; prefer offline virtual bus or authorized isolated testing. No third-party source copied."
     },
@@ -10784,6 +10785,113 @@
         "AUTOSAR ARXML, DBC, KCD and SYM formats"
       ],
       "research_notes": "research/2026-11-02-python-can-cantools.md. Input CAN databases may be proprietary. Generated code and safety-critical controls require separate validation. No third-party source copied."
+    },
+    {
+      "name": "python-can-isotp",
+      "repository": "https://github.com/pylessard/python-can-isotp",
+      "owner": "Pier-Yves Lessard / pylessard",
+      "category": [
+        "python",
+        "can-bus",
+        "iso-tp",
+        "iso-15765-2",
+        "automotive-interoperability"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "A",
+      "score": 24,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 3
+      },
+      "license": "MIT (LICENSE.txt, 2017 Pier-Yves Lessard)",
+      "license_copy_status": "Upstream link only; no third-party code copied. Preserve license and notices if reused.",
+      "platforms": [
+        "Tagged v2.0.7 setup.py declares Python >=3.7; not independently tested",
+        "User-space ISO-TP on Python; Linux required for SocketCAN ISO-TP kernel wrapper",
+        "python-can integration optional; device support depends on OS and CAN adapter"
+      ],
+      "useful_components": [
+        "isotp/protocol.py: PDU, flow-control, TransportLayer, CanStack, NotifierBasedCanStack",
+        "isotp/address.py: ISO-TP addressing modes",
+        "isotp/tpsock/: Linux kernel ISO-TP socket wrapper",
+        "test/test_transport_layer_logic.py: timing and segmentation fixtures",
+        "test/test_can_stack.py and test/test_socket.py: integration tests"
+      ],
+      "verification": [
+        "2026-11-02 inspected README, v2.0.7 manifest, MIT license, source and tests, Jenkinsfile, release and recent commits",
+        "v2.0.7 published 2025-05-14; 2026-08-22 commit 5593c219f fixes reserved STmin values on v2.x; post-release fix not established in stable tag",
+        "Jenkinsfile defines Docker/vcan and Python 3.7–3.11 test stages; successful Jenkins run not independently confirmed; GitHub Actions query returned no runs",
+        "No independent installation, virtual CAN test, SocketCAN operation or physical hardware verification"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v2.0.7 2025-05-14; v2.x updated 2026-08-22; Jenkins test configuration present, execution outcome unconfirmed.",
+      "source": "GitHub-first follow-up from python-can; no usable YouTube transcript",
+      "related_projects": [
+        "hardbyte/python-can (optional CAN integration)",
+        "cantools/cantools (complementary signal decoding)",
+        "Linux SocketCAN CAN_ISOTP"
+      ],
+      "research_notes": "research/2026-11-02-can-isotp-pip-audit.md. CAN messages may actuate real equipment; test on virtual/authorized isolated buses."
+    },
+    {
+      "name": "pip-audit",
+      "repository": "https://github.com/pypa/pip-audit",
+      "owner": "Python Packaging Authority (PyPA); originally Trail of Bits contributors",
+      "category": [
+        "python",
+        "defensive-security",
+        "dependency-auditing",
+        "sbom",
+        "supply-chain",
+        "developer-tools"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 (root LICENSE; dependencies and advisory data separately licensed)",
+      "license_copy_status": "Upstream link only; no third-party code copied. Preserve license and notices if reused.",
+      "platforms": [
+        "Python >=3.10, Linux/macOS/Windows CLI",
+        "2026-11-02 upstream CI Linux Python 3.10–3.14 and Windows",
+        "Advisory lookups generally require network access or a compatible mirror"
+      ],
+      "useful_components": [
+        "pip_audit/_dependency_source/: requirements, pyproject and PEP 751 pylock ingestion",
+        "pip_audit/_service/: PyPI, OSV and Ecosyste.ms adapters",
+        "pip_audit/_format/: JSON, Markdown and CycloneDX SBOM exports",
+        "pip_audit/_fix.py: optional dependency remediation",
+        "test/service/, test/dependency_source/, test/format/: regression fixtures"
+      ],
+      "verification": [
+        "2026-11-02 inspected README, Apache license, main pyproject, changelog, source/tests and GitHub Actions workflow/jobs",
+        "v2.10.1 released 2026-06-10; main commit 2026-10-30",
+        "2026-11-02 scheduled CI run 41443587420: eight successful jobs (Linux Python 3.10–3.14, Windows, coverage and aggregate); workflow coverage gate requires >=100% reported coverage",
+        "No independent install, vulnerability scan, SBOM export, fix or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v2.10.1 2026-06-10; main updated 2026-10-30; 2026-11-02 scheduled CI eight successful jobs.",
+      "source": "Independent GitHub-first defensive supply-chain discovery; no usable YouTube transcript",
+      "related_projects": [
+        "pypa/gh-action-pip-audit (official GitHub Action)",
+        "pypa/advisory-database (CC-BY-4.0 advisory data)",
+        "OSV API, CycloneDX and PEP 751"
+      ],
+      "research_notes": "research/2026-11-02-can-isotp-pip-audit.md. Clean results are not proof of safety; --fix changes dependencies."
     }
   ],
   "deferred_or_rejected": [
