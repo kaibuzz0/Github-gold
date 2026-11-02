@@ -10347,7 +10347,7 @@
       "research_notes": "research/2026-11-01-bleak-retry-stac-validator.md. Linux Python 3.10 must resolve a dbus-fast release compatible with 3.10; package supports retries but does not authenticate BLE peers. Backoff/retries can increase latency; bound attempts and trust device identities. No source copied."
     },
     {
-      "name": "STAC Validator (stac-valid)",
+      "name": "STAC Validator",
       "repository": "https://github.com/StacLabs/stac-validator",
       "owner": "StacLabs / Jonathan Healy, James Banting (historical stac-utils repository references)",
       "category": [
