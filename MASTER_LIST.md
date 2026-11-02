@@ -3682,7 +3682,7 @@ Suggested tiers:
 - **Maintenance signals:** Stable [v2.4.0](https://github.com/Bluetooth-Devices/bluetooth-adapters/releases/tag/v2.4.0) published 2026-05-26; latest main commit 2026-05-27. [2026-05-27 main CI](https://github.com/Bluetooth-Devices/bluetooth-adapters/actions/runs/26489407596) passed 18/18 jobs, including 15 cross-platform Python tests. [2026-10-26 bot PR CI](https://github.com/Bluetooth-Devices/bluetooth-adapters/actions/runs/40377620756) failed lint, while 15/15 test jobs passed.
 - **Verification performed:** Inspected README, manifest, LICENSE, source, tests, workflows, release and CI job results on 2026-11-02; no physical Bluetooth adapter, Linux D-Bus session, Android or Windows hardware testing.
 - **Source discovery:** GitHub-first follow-up from Bleak Retry Connector's Linux dependency; no accessible YouTube transcript.
-- **Related projects:** Bluetooth-Devices/bleak-retry-connector (direct Linux dependency >=2.3.0); Bluetooth-Devices/dbus-fast; hbldh/bleak; BlueZ; Bluetooth-Devices/usb-devices and uart-devices.
+- **Related projects:** Bluetooth-Devices/bleak-retry-connector (direct Linux dependency >=2.3.0); Bluetooth-Devices/dbus-fast; hbldh/bleak; BlueZ; Bluetooth-Devices/usb-devices (MIT, Linux sysfs USB helper; see 2026-11-02 dossier) and uart-devices.
 - **Caveats / risks:** Python 3.10 dependency resolution with newer dbus-fast requires care; Windows placeholder adapter is not physical-device discovery; failed dependency-bot lint is not a failing main test suite. BLE device identity is not authenticated by adapter enumeration.
 - **Research notes:** `research/2026-11-02-bluetooth-adapters-stac-geoparquet.md`. No third-party code copied.
 
@@ -3702,10 +3702,50 @@ Suggested tiers:
 - **Maintenance signals:** [0.8.3](https://github.com/stac-utils/stac-geoparquet/releases/tag/0.8.3) published 2026-10-21; 2026-10-28 main commits. [2026-10-28 main CI](https://github.com/stac-utils/stac-geoparquet/actions/runs/40688846105) passed 5/5 Python jobs with tests, lint, pre-commit and strict docs build.
 - **Verification performed:** Inspected README, manifest, MIT license, source and test tree, Arrow conversion/Parquet metadata writer and upstream CI on 2026-11-02; no independent round-trip or benchmark.
 - **Source discovery:** GitHub-first recursive STAC ecosystem follow-up from PySTAC; no accessible playlist transcript.
-- **Related projects:** stac-utils/pystac (direct dependency); stac-utils/pystac-client; stac-utils/pgstac; radiantearth/stac-geoparquet-spec; apache/arrow; duckdb/duckdb (potential consumer, not tested).
+- **Related projects:** stac-utils/pystac (direct dependency); stac-utils/pystac-client; stac-utils/pgstac (database-side STAC; stable tag differs from main development tree); radiantearth/stac-geoparquet-spec; apache/arrow; duckdb/duckdb (potential consumer, not tested).
 - **Caveats / risks:** FullFile inference can materialize the whole input; FirstBatch may reject heterogeneous later batches; ChunksToDisk requires temporary storage. Data licensing, geometry/CRS fidelity and untrusted inputs require separate checks.
 - **Research notes:** `research/2026-11-02-bluetooth-adapters-stac-geoparquet.md`. No upstream source copied.
 
+
+### USB Devices
+
+- **Repository:** https://github.com/Bluetooth-Devices/usb-devices
+- **Author / Org:** Bluetooth-Devices / J. Nick Koston
+- **Category:** Python / Linux USB / Bluetooth adapter mapping / sysfs / device interoperability
+- **Evidence:** VERIFIED — upstream source, tests and CI; no independent USB-device execution
+- **Tier / Score:** A / 24 (utility 4 + working evidence 5 + reusability 4 + novelty 3 + documentation 4 + maintenance 4)
+- **What it does:** Maps Linux Bluetooth hci devices to underlying USB device descriptors and provides synchronous/asynchronous USB reset wrappers.
+- **Why it is valuable:** Small reusable Linux hardware inventory and adapter troubleshooting primitives, with explicit source for sysfs mapping and device reset.
+- **Useful code/components:** `src/usb_devices/__init__.py` — `BluetoothDevice`, `USBDevice`, sysfs metadata, USBDEVFS_RESET ioctl, async wrappers; `examples/info.py`, `examples/reset.py`, mocked `tests/`.
+- **Install / runtime:** `pip install usb-devices`; Python >=3.10; Linux sysfs and device nodes for actual USB discovery/reset; reset requires sufficient device permissions.
+- **Platforms:** Linux for functional sysfs/ioctl operations; upstream CI tests Python 3.10–3.14 on Linux/macOS/Windows but that does not establish non-Linux hardware functionality.
+- **License:** MIT, copyright J. Nick Koston 2022; preserve license/copyright notice.
+- **Maintenance signals:** [v0.5.1](https://github.com/Bluetooth-Devices/usb-devices/releases/tag/v0.5.1) published 2026-05-27; June 22 main maintenance commits; [2026-10-26 PR CI](https://github.com/Bluetooth-Devices/usb-devices/actions/runs/40377578152) passed 15 cross-platform Python test jobs, lint, PR-title lint and release dry run (release skipped).
+- **Verification performed:** Inspected README, manifest, license, implementation, example and CI; no installation, USB enumeration, hardware reset or security audit.
+- **Source discovery:** GitHub-first follow-up from Bluetooth Adapters' USB metadata dependency; no usable YouTube transcript.
+- **Related projects:** Bluetooth-Devices/bluetooth-adapters (consumer); Bluetooth-Devices/uart-devices (sibling); pyusb/pyusb (different, general USB-transfer library).
+- **Caveats / risks:** USBDEVFS_RESET is disruptive and may interrupt hardware/services; requires explicit authorization. Linux-specific code is not cross-platform USB support.
+- **Research notes:** `research/2026-11-02-usb-devices-pgstac.md`. No upstream source copied.
+
+### PgSTAC
+
+- **Repository:** https://github.com/stac-utils/pgstac
+- **Author / Org:** stac-utils / PgSTAC contributors
+- **Category:** PostgreSQL / PostGIS / STAC / CQL2 / geospatial catalog database / Rust development tooling
+- **Evidence:** VERIFIED — upstream source, SQL tests and CI; no independent database deployment
+- **Tier / Score:** S / 27 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 4 + maintenance 4)
+- **What it does:** Implements STAC catalog storage, indexed search, filtering and partition management inside PostgreSQL; separately integrates with HTTP STAC API backends.
+- **Why it is valuable:** Practical high-volume catalog infrastructure and reusable SQL/search/migration primitives, with production-oriented partitioning and CI across PostgreSQL versions.
+- **Useful code/components:** `src/pgstac/sql/` functions; `src/pgstac/migrations/`; `src/pgstac/tests/`; v0.10.0 tag `src/pypgstac/` Python tooling; main-development `src/pgstac-rs/` Rust ingest/search/dump and `src/pgstac-migrate/` migration CLI (not in v0.10.0 tag).
+- **Install / runtime:** PostgreSQL with PostGIS; v0.10.0 tagged Python tooling; main development Rust crate declares Rust >=1.88 and migration CLI Python >=3.11. Follow matching database/client versions and official migration guidance.
+- **Platforms:** PostgreSQL 16–18 covered in inspected main CI containers; not an HTTP-facing API by itself.
+- **License:** MIT (root LICENSE); review separate dependency and asset notices before code reuse.
+- **Maintenance signals:** [v0.10.0](https://github.com/stac-utils/pgstac/releases/tag/v0.10.0) published 2026-10-01; [2026-11-01 scheduled main CI](https://github.com/stac-utils/pgstac/actions/runs/41301500534) 12/12 successful jobs, including PostgreSQL 16/17/18 tests.
+- **Verification performed:** Inspected README, MIT license, tagged release tree/changelog, SQL, Rust CLI and ingest source, manifests, workflow and CI jobs. No independent install, SQL migration, query, benchmark or security audit.
+- **Source discovery:** GitHub-first follow-up from STAC-GeoParquet's optional pgstac source; no usable playlist transcript.
+- **Related projects:** stac-utils/stac-geoparquet (optional database reader); stac-utils/stac-fastapi (HTTP API layer); stac-utils/pystac; PostgreSQL/PostGIS; stac-utils/rustac (main development patch).
+- **Caveats / risks:** Breaking v0.10.0 migration requires coordinated database/Python upgrades; paging tokens change. Main tree includes newer development tooling absent from v0.10.0 tag; do not attribute those features to stable release. Production migrations need backup and compatibility testing.
+- **Research notes:** `research/2026-11-02-usb-devices-pgstac.md`. No upstream source copied.
 
 ## Entry format
 

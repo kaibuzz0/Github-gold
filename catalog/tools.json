@@ -10469,9 +10469,10 @@
         "Bluetooth-Devices/dbus-fast (Linux D-Bus backend dependency)",
         "hbldh/bleak (BLE scan/GATT library; required by this package)",
         "BlueZ (Linux daemon)",
-        "Bluetooth-Devices/usb-devices and uart-devices (adapter metadata helpers)"
+        "Bluetooth-Devices/usb-devices and uart-devices (adapter metadata helpers)",
+        "Bluetooth-Devices/usb-devices (MIT Linux sysfs USB metadata and reset helper; hardware reset requires explicit permission)"
       ],
-      "research_notes": "research/2026-11-02-bluetooth-adapters-stac-geoparquet.md. Adapter presence/advertisement is not peer authentication; OS permissions and Linux Python 3.10 dependency resolution need verification. No upstream source copied."
+      "research_notes": "research/2026-11-02-bluetooth-adapters-stac-geoparquet.md. Adapter presence/advertisement is not peer authentication; OS permissions and Linux Python 3.10 dependency resolution need verification. No upstream source copied. USB helper verified via source/CI 2026-11-02; see research/2026-11-02-usb-devices-pgstac.md."
     },
     {
       "name": "STAC-GeoParquet",
@@ -10534,9 +10535,135 @@
         "stac-utils/pgstac (optional database source)",
         "radiantearth/stac-geoparquet-spec (format specification)",
         "apache/arrow (PyArrow columnar engine)",
-        "duckdb/duckdb (potential analytic consumer; interoperability untested)"
+        "duckdb/duckdb (potential analytic consumer; interoperability untested)",
+        "stac-utils/pgstac (database-side STAC SQL/search and optional data source; stable v0.10.0 tag differs from main development tree)"
       ],
-      "research_notes": "research/2026-11-02-bluetooth-adapters-stac-geoparquet.md. FullFile schema inference can load the entire input; test heterogeneous STAC properties and verify data licensing before redistributing datasets. No source copied."
+      "research_notes": "research/2026-11-02-bluetooth-adapters-stac-geoparquet.md. FullFile schema inference can load the entire input; test heterogeneous STAC properties and verify data licensing before redistributing datasets. No source copied. PgSTAC tagged-release vs main layout caveat documented 2026-11-02 in research/2026-11-02-usb-devices-pgstac.md."
+    },
+    {
+      "name": "USB Devices",
+      "repository": "https://github.com/Bluetooth-Devices/usb-devices",
+      "owner": "Bluetooth-Devices / J. Nick Koston",
+      "category": [
+        "python",
+        "linux",
+        "usb",
+        "bluetooth-adapters",
+        "sysfs",
+        "hardware-inventory",
+        "device-interoperability"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "A",
+      "score": 24,
+      "score_breakdown": {
+        "utility": 4,
+        "working_evidence": 5,
+        "reusability": 4,
+        "novelty": 3,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE, copyright J. Nick Koston 2022)",
+      "license_copy_status": "mit-preserve-copyright-and-license-notice",
+      "platforms": [
+        "Python >=3.10 declared (Poetry ^3.10, under 4.0)",
+        "Linux sysfs /sys/class/bluetooth and /sys/bus/usb/devices; /dev/bus/usb for reset",
+        "CI runs Python 3.10–3.14 on Linux/macOS/Windows; functional USB discovery/reset is Linux-specific",
+        "USB reset needs access permissions and can interrupt connected hardware"
+      ],
+      "useful_components": [
+        "src/usb_devices/__init__.py — BluetoothDevice resolves hciN sysfs symlink to USBDevice",
+        "src/usb_devices/__init__.py — USBDevice reads vendor/product/bus/devnum from sysfs and maps /dev/bus/usb path",
+        "src/usb_devices/__init__.py — USBDEVFS_RESET ioctl and sync/async reset wrappers (disruptive operation)",
+        "examples/info.py — enumerate hci adapters and show USB IDs",
+        "examples/reset.py — explicit reset example",
+        "tests/ — mock-based behavior tests; no physical-device validation inferred"
+      ],
+      "verification": [
+        "2026-11-02 inspected README, MIT LICENSE, pyproject.toml, source, examples and CI workflow",
+        "v0.5.1 GitHub release published 2026-05-27; latest main commits 2026-06-22 maintenance",
+        "2026-10-26 PR CI 40377578152 successful: 15 Python test jobs across Ubuntu/macOS/Windows (3.10–3.14), lint, PR-title lint, release dry run; release job skipped",
+        "Code explicitly uses Linux sysfs and fcntl ioctl; CI success on Windows/macOS does not prove device functionality there",
+        "No independent installation, USB enumeration, hardware reset or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v0.5.1 2026-05-27; main maintenance commits 2026-06-22; 2026-10-26 PR CI successful (18 passed, release skipped).",
+      "source": "GitHub-first recursive follow-up of Bluetooth-Devices/bluetooth-adapters USB metadata helper; no usable playlist transcript",
+      "related_projects": [
+        "Bluetooth-Devices/bluetooth-adapters (upstream Linux adapter metadata consumer)",
+        "Bluetooth-Devices/uart-devices (sibling UART metadata helper; deferred deeper review)",
+        "hbldh/bleak (BLE integration ecosystem; not a direct usb-devices dependency)",
+        "pyusb/pyusb (separate general USB transfer library; not a dependency)"
+      ],
+      "research_notes": "research/2026-11-02-usb-devices-pgstac.md. Device reset can disconnect hardware or interrupt services; do not execute without explicit device ownership and intent. No code copied."
+    },
+    {
+      "name": "PgSTAC",
+      "repository": "https://github.com/stac-utils/pgstac",
+      "owner": "stac-utils / PgSTAC contributors",
+      "category": [
+        "postgresql",
+        "postgis",
+        "stac",
+        "geospatial",
+        "database",
+        "sql",
+        "cql2",
+        "data-engineering",
+        "rust",
+        "catalog-infrastructure"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE, Microsoft Corporation and other contributors; component/dependency licenses separately reviewed before reuse)",
+      "license_copy_status": "mit-preserve-copyright-and-license-notice-review-component-dependencies",
+      "platforms": [
+        "PostgreSQL with PostGIS; upstream main CI exercises PostgreSQL 16/17/18 in containers",
+        "Stable v0.10.0 release contains pypgstac Python tooling and SQL/migrations",
+        "Main development tree has Rust CLI/extension and pgstac-migrate (Python >=3.11); not present in v0.10.0 tag",
+        "Main Rust Cargo.toml declares Rust >=1.88 and optional CLI/export/pool features; do not treat as stable v0.10.0 features",
+        "PgSTAC itself is database-side only, not an HTTP STAC API"
+      ],
+      "useful_components": [
+        "src/pgstac/sql/ — STAC Item/Collection tables, search, filters, queryables and partitioning SQL",
+        "src/pgstac/migrations/ — versioned database migration scripts",
+        "src/pgstac/tests/ — SQL regression tests",
+        "v0.10.0 tag src/pypgstac/ — stable Python migration/ingestion tooling",
+        "main src/pgstac-rs/src/bin/pgstac.rs — development Rust CLI for load/search/dump/restore",
+        "main src/pgstac-rs/src/load/pool_ingest.rs — development Rust dehydrate/binary-COPY ingest path",
+        "main src/pgstac-migrate/ — development Python migration CLI; versioned 0.9.11-dev in inspected main manifest"
+      ],
+      "verification": [
+        "2026-11-02 inspected root MIT LICENSE, README, tagged v0.10.0 README/changelog/tree, main SQL, Rust source and Cargo.toml, migration manifest, CI workflow",
+        "GitHub v0.10.0 release published 2026-10-01; tag tree contains src/pypgstac and src/pgstac, not main's Rust/migrate layout",
+        "v0.10.0 changelog warns breaking database/Python version coupling, queryables migration changes, and invalidation of old paging tokens",
+        "2026-11-01 scheduled main CI run 41301500534 completed 12/12 jobs successfully, including PostgreSQL 16/17/18 tests and lowest-direct dependency resolutions",
+        "Main Rust Cargo.toml includes a git patch to rustac pgstac-search-parity branch with explicit warning not to merge into published crate; do not assume releasability",
+        "No independent PostgreSQL installation, migration, query benchmark, API deployment, or security audit"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v0.10.0 released 2026-10-01; main branch CI 2026-11-01 12/12 passing across PostgreSQL 16–18. Main tree and release tag have divergent tooling layouts.",
+      "source": "GitHub-first recursive investigation of STAC-GeoParquet's optional pgstac data source; no usable playlist transcript",
+      "related_projects": [
+        "stac-utils/stac-geoparquet (optional pgstac source integration)",
+        "stac-utils/stac-fastapi (HTTP STAC API layer; PgSTAC itself is not HTTP-facing)",
+        "stac-utils/pystac (STAC Python object model)",
+        "PostgreSQL/PostGIS (database and spatial extension)",
+        "stac-utils/rustac (main Rust code uses development branch patch; version coupling unverified)"
+      ],
+      "research_notes": "research/2026-11-02-usb-devices-pgstac.md. Distinguish v0.10.0 tag from main development tree; migration changes can be destructive on large production catalogs. Test backups, permissions, pagination and version compatibility before deployment. No code copied."
     }
   ],
   "deferred_or_rejected": [
