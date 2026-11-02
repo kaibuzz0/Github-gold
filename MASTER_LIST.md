@@ -3517,7 +3517,7 @@ Suggested tiers:
 - **Maintenance signals:** [v1.15.2](https://github.com/stac-utils/pystac/releases/tag/v1.15.2) published 2026-07-27; [2026-10-29 main CI](https://github.com/stac-utils/pystac/actions/runs/40940313953) passed 16/16 jobs.
 - **Verification performed:** README, LICENSE, stable/main manifests, changelog, source tree, tests and upstream CI jobs inspected; no local STAC execution.
 - **Source discovery:** GitHub-first follow-up from rio-tiler and TiTiler; no accessible playlist transcript.
-- **Related projects:** cogeotiff/rio-tiler (direct stable dependency); developmentseed/titiler (optional STAC extension); stac-utils/pystac-client (verified v0.9.1 STAC API client; direct PySTAC dependency; 2026-10-30 upstream CI 13/13); radiantearth/stac-spec.; stac-utils/stac-api-validator (downstream direct dependency, not a PySTAC core dependency)
+- **Related projects:** cogeotiff/rio-tiler (direct stable dependency); developmentseed/titiler (optional STAC extension); stac-utils/pystac-client (verified v0.9.1 STAC API client; direct PySTAC dependency; 2026-10-30 upstream CI 13/13); radiantearth/stac-spec.; stac-utils/stac-geoparquet (direct PySTAC dependency for STAC Item→GeoParquet conversion; stable 0.8.3, 2026-10-21); stac-utils/stac-api-validator (downstream direct dependency, not a PySTAC core dependency)
 - **Caveats / risks:** Independent extension versions need compatibility checks; remote STAC/schema URLs are untrusted input. Main's core package floor differs from the stable tag.
 - **Research notes:** `research/2026-11-01-pystac-zeroconf.md`. No upstream code copied. 2026-11-01 downstream validation audit: `research/2026-11-01-dbus-fast-stac-api-validator.md`.
 
@@ -3641,7 +3641,7 @@ Suggested tiers:
 - **Verification performed:** 2026-11-01 inspected README, root MIT LICENSE, pyproject.toml, changelog, core Python source, Linux BlueZ helper, mocked tests, workflow YAML and GitHub Actions job results; Stable v4.7.1 published 2026-09-14; changelog fixes incorrect ESP_GATT_CONN_CONN_CANCEL out-of-slots classification; 2026-09-14 main push CI run 34881176180: 8/8 jobs succeeded (Python 3.10–3.14 on Ubuntu, lint, commitlint, release); no physical BLE hardware test established; Stable manifest requires bleak>=3.0.2; Linux-only dbus-fast>=5.0.22 and bluetooth-adapters>=2.3.0; async-timeout on Python<3.11; No independent installation, live GATT session, Android packaging, or Bluetooth hardware testing.
 - **Source discovery:** GitHub-first recursive BLE dependency discovery from hbldh/bleak and Bluetooth-Devices/dbus-fast; no accessible YouTube transcript.
 - **Related projects:** hbldh/bleak (direct required runtime library >=3.0.2); Bluetooth-Devices/dbus-fast (Linux-only dependency >=5.0.22; latest 5.2.0 requires Python>=3.11); Bluetooth-Devices/bluetooth-adapters (Linux adapter metadata dependency); BlueZ (Linux Bluetooth daemon); esphome/esphome (related BLE proxy ecosystem; not a direct declared dependency).
-- **Caveats / risks:** Retries do not authenticate BLE peers; Linux Python 3.10 needs compatible dbus-fast resolution; no real hardware session tested.
+- **Caveats / risks:** Retries do not authenticate BLE peers; Linux Python 3.10 needs compatible dbus-fast resolution; bluetooth-adapters>=2.3.0 is a Linux-only direct dependency (confirmed 2026-11-02). Adapter library v2.4.0 main CI passed 18/18 (2026-05-27); newer bot PR lint failed (2026-10-26). No real hardware session tested.
 - **Research notes:** research/2026-11-01-bleak-retry-stac-validator.md. No third-party code copied.
 
 ### STAC Validator (stac-valid)
@@ -3663,6 +3663,48 @@ Suggested tiers:
 - **Related projects:** stac-utils/stac-check (STAC best-practice linting; stable v1.14.0 requires stac-valid~=4.2.2, not necessarily compatible with 4.6.1); stac-utils/stac-api-validator (API conformance; manifest still depends on legacy stac-validator>=3.10.1, not the renamed stac-valid distribution); stac-utils/pystac (STAC object model; separate library); radiantearth/stac-spec (schema/specification source).
 - **Caveats / risks:** Old package name and historical GitHub links are misleading; remote schema fetching may access untrusted URLs; upstream CI does not prove all extension combinations.
 - **Research notes:** research/2026-11-01-bleak-retry-stac-validator.md. No third-party code copied.
+
+
+
+### Bluetooth Adapters
+
+- **Repository:** https://github.com/Bluetooth-Devices/bluetooth-adapters
+- **Author / Org:** Bluetooth-Devices / J. Nick Koston
+- **Category:** Python / BLE / adapter enumeration / Linux BlueZ / USB-UART hardware metadata
+- **Evidence:** VERIFIED — upstream source, tests and CI; no independent device execution
+- **Tier / Score:** A / 24 (utility 5 + working evidence 5 + reusability 5 + novelty 3 + documentation 3 + maintenance 3)
+- **What it does:** Enumerates Bluetooth adapter information, merging Linux BlueZ D-Bus/HCI state with USB/UART metadata; offers platform-specific adapter abstractions.
+- **Why it is valuable:** Reusable adapter discovery, hardware metadata and state introspection for Linux BLE integrations and Bleak-based connection management.
+- **Useful code/components:** `src/bluetooth_adapters/adapters.py` abstract interface; `systems/linux.py` BlueZ/HCI/USB/UART merge; `systems/linux_hci.py` HCI state; `dbus.py` D-Bus; `history.py`, `models.py`, `storage.py`; platform adapters and `tests/test_linux_hci.py`.
+- **Install / runtime:** `pip install bluetooth-adapters`; Python >=3.10 (Poetry <3.15); Bleak >=3.0.2, Linux-only dbus-fast>=5.0.14, usb-devices, uart-devices, aiooui.
+- **Platforms:** Linux/BlueZ with hardware metadata; Windows/macOS platform representations; Windows implementation uses synthetic/default adapter values, not detailed physical enumeration. Android/Termux not established.
+- **License:** Apache-2.0 (root LICENSE); preserve notices and review dependency licenses separately.
+- **Maintenance signals:** Stable [v2.4.0](https://github.com/Bluetooth-Devices/bluetooth-adapters/releases/tag/v2.4.0) published 2026-05-26; latest main commit 2026-05-27. [2026-05-27 main CI](https://github.com/Bluetooth-Devices/bluetooth-adapters/actions/runs/26489407596) passed 18/18 jobs, including 15 cross-platform Python tests. [2026-10-26 bot PR CI](https://github.com/Bluetooth-Devices/bluetooth-adapters/actions/runs/40377620756) failed lint, while 15/15 test jobs passed.
+- **Verification performed:** Inspected README, manifest, LICENSE, source, tests, workflows, release and CI job results on 2026-11-02; no physical Bluetooth adapter, Linux D-Bus session, Android or Windows hardware testing.
+- **Source discovery:** GitHub-first follow-up from Bleak Retry Connector's Linux dependency; no accessible YouTube transcript.
+- **Related projects:** Bluetooth-Devices/bleak-retry-connector (direct Linux dependency >=2.3.0); Bluetooth-Devices/dbus-fast; hbldh/bleak; BlueZ; Bluetooth-Devices/usb-devices and uart-devices.
+- **Caveats / risks:** Python 3.10 dependency resolution with newer dbus-fast requires care; Windows placeholder adapter is not physical-device discovery; failed dependency-bot lint is not a failing main test suite. BLE device identity is not authenticated by adapter enumeration.
+- **Research notes:** `research/2026-11-02-bluetooth-adapters-stac-geoparquet.md`. No third-party code copied.
+
+### STAC-GeoParquet
+
+- **Repository:** https://github.com/stac-utils/stac-geoparquet
+- **Author / Org:** stac-utils / Tom Augspurger and contributors
+- **Category:** Python / STAC / GeoParquet / Arrow / columnar geospatial metadata
+- **Evidence:** VERIFIED — upstream source, tests and CI; no independent conversion
+- **Tier / Score:** S / 27 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 4 + maintenance 4)
+- **What it does:** Converts bulk STAC Items between JSON, Arrow/GeoParquet and optional pgstac/Delta Lake formats for columnar geospatial metadata processing.
+- **Why it is valuable:** Practical, reusable streaming and chunking primitives for high-volume STAC metadata; avoids one-request-per-item API access for bulk analytics.
+- **Useful code/components:** `stac_geoparquet/arrow/_api.py` Item→Arrow/Parquet and schema strategies; `arrow/_to_parquet.py` streaming WKB/GeoParquet writer; `arrow/_from_arrow.py` property/bbox restoration; `arrow/_schema/models.py`; `json_reader.py`; `pgstac_reader.py`; `arrow/_delta_lake.py`; tests and cassettes.
+- **Install / runtime:** `pip install stac-geoparquet`; Python >=3.10; PyArrow>=16 excluding 19.0.0; PySTAC, GeoPandas, pandas, Shapely, pyproj. Optional `[pgstac]` and `[deltalake]` extras.
+- **Platforms:** Python 3.10–3.14 tested on Ubuntu in inspected CI; native dependency portability and resource use vary.
+- **License:** MIT (root LICENSE, Tom Augspurger 2022); preserve copyright notice, review dependencies and datasets separately.
+- **Maintenance signals:** [0.8.3](https://github.com/stac-utils/stac-geoparquet/releases/tag/0.8.3) published 2026-10-21; 2026-10-28 main commits. [2026-10-28 main CI](https://github.com/stac-utils/stac-geoparquet/actions/runs/40688846105) passed 5/5 Python jobs with tests, lint, pre-commit and strict docs build.
+- **Verification performed:** Inspected README, manifest, MIT license, source and test tree, Arrow conversion/Parquet metadata writer and upstream CI on 2026-11-02; no independent round-trip or benchmark.
+- **Source discovery:** GitHub-first recursive STAC ecosystem follow-up from PySTAC; no accessible playlist transcript.
+- **Related projects:** stac-utils/pystac (direct dependency); stac-utils/pystac-client; stac-utils/pgstac; radiantearth/stac-geoparquet-spec; apache/arrow; duckdb/duckdb (potential consumer, not tested).
+- **Caveats / risks:** FullFile inference can materialize the whole input; FirstBatch may reject heterogeneous later batches; ChunksToDisk requires temporary storage. Data licensing, geometry/CRS fidelity and untrusted inputs require separate checks.
+- **Research notes:** `research/2026-11-02-bluetooth-adapters-stac-geoparquet.md`. No upstream source copied.
 
 
 ## Entry format

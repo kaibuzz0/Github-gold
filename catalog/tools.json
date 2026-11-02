@@ -9964,7 +9964,8 @@
         "Since spring 2026 extension implementations are separate versioned packages; core semver does not guarantee extension API compatibility",
         "2026-10-29 main push CI run 40940313953 passed 16/16 jobs (Linux/macOS/Windows Python 3.10–3.13, coverage, docs, benchmarks)",
         "No independent install, STAC validation, catalog serialization or remote data access performed",
-        "2026-11-01 inspected STAC API Validator v0.6.8 manifest; direct downstream PySTAC dependency, not a core PySTAC requirement."
+        "2026-11-01 inspected STAC API Validator v0.6.8 manifest; direct downstream PySTAC dependency, not a core PySTAC requirement.",
+        "2026-11-02 inspected downstream stac-utils/stac-geoparquet manifest requiring pystac and its Arrow conversion code; no runtime compatibility test."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
@@ -9975,7 +9976,8 @@
         "developmentseed/titiler (optional STAC extension import/test dependency, not core)",
         "stac-utils/pystac-client (verified v0.9.1 STAC API client, direct PySTAC dependency; upstream CI 2026-10-30 13/13)",
         "radiantearth/stac-spec (STAC specification)",
-        "stac-utils/stac-api-validator (downstream STAC API tester directly depends on pystac[orjson]>=1.13.0)"
+        "stac-utils/stac-api-validator (downstream STAC API tester directly depends on pystac[orjson]>=1.13.0)",
+        "stac-utils/stac-geoparquet (direct pystac dependency for STAC Item to Arrow/GeoParquet conversion; 0.8.3, 2026-10-21)"
       ],
       "research_notes": "research/2026-11-01-pystac-zeroconf.md. Treat remote STAC URLs and schema fetching as untrusted I/O; extension versions may change independently. No third-party code copied. Related dependency audit: research/2026-11-01-dbus-fast-stac-api-validator.md."
     },
@@ -10331,7 +10333,8 @@
         "Stable v4.7.1 published 2026-09-14; changelog fixes incorrect ESP_GATT_CONN_CONN_CANCEL out-of-slots classification",
         "2026-09-14 main push CI run 34881176180: 8/8 jobs succeeded (Python 3.10–3.14 on Ubuntu, lint, commitlint, release); no physical BLE hardware test established",
         "Stable manifest requires bleak>=3.0.2; Linux-only dbus-fast>=5.0.22 and bluetooth-adapters>=2.3.0; async-timeout on Python<3.11",
-        "No independent installation, live GATT session, Android packaging, or Bluetooth hardware testing"
+        "No independent installation, live GATT session, Android packaging, or Bluetooth hardware testing",
+        "2026-11-02 verified bluetooth-adapters>=2.3.0 is Linux-only direct runtime dependency in v4.7.1 pyproject.toml; adapter library v2.4.0 main CI passed 18/18 on 2026-05-27, but later bot PR lint failed."
       ],
       "hardware_tested_by_github_gold": false,
       "research_priority": "high",
@@ -10344,7 +10347,7 @@
         "BlueZ (Linux Bluetooth daemon)",
         "esphome/esphome (related BLE proxy ecosystem; not a direct declared dependency)"
       ],
-      "research_notes": "research/2026-11-01-bleak-retry-stac-validator.md. Linux Python 3.10 must resolve a dbus-fast release compatible with 3.10; package supports retries but does not authenticate BLE peers. Backoff/retries can increase latency; bound attempts and trust device identities. No source copied."
+      "research_notes": "research/2026-11-01-bleak-retry-stac-validator.md. Linux Python 3.10 must resolve a dbus-fast release compatible with 3.10; package supports retries but does not authenticate BLE peers. Backoff/retries can increase latency; bound attempts and trust device identities. No source copied. See 2026-11-02 Bluetooth Adapters source/CI caveats in research/2026-11-02-bluetooth-adapters-stac-geoparquet.md."
     },
     {
       "name": "STAC Validator",
@@ -10406,6 +10409,134 @@
         "radiantearth/stac-spec (schema/specification source)"
       ],
       "research_notes": "research/2026-11-01-bleak-retry-stac-validator.md. Validate untrusted remote schema URLs only in restricted environments; schema cache and extensions change behavior. Old package distribution and historical repository URLs must not be mistaken for current canonical identity. No source copied."
+    },
+    {
+      "name": "Bluetooth Adapters",
+      "repository": "https://github.com/Bluetooth-Devices/bluetooth-adapters",
+      "owner": "Bluetooth-Devices / J. Nick Koston",
+      "category": [
+        "python",
+        "bluetooth-low-energy",
+        "adapter-enumeration",
+        "linux",
+        "bluez",
+        "usb",
+        "uart",
+        "device-interoperability"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "A",
+      "score": 24,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 3,
+        "maintenance": 3
+      },
+      "license": "Apache-2.0 (root LICENSE; dependency licenses and notices reviewed separately before reuse)",
+      "license_copy_status": "apache-2.0-preserve-license-and-notices-review-dependencies",
+      "platforms": [
+        "Python >=3.10 declared; Poetry constraint <3.15",
+        "Linux BlueZ HCI, D-Bus, USB and UART metadata",
+        "Windows/macOS have platform-specific adapter representations; Windows adapter details are generic placeholders",
+        "No Android/Termux or physical Bluetooth adapter testing by GitHub Gold"
+      ],
+      "useful_components": [
+        "src/bluetooth_adapters/adapters.py — abstract asynchronous adapter interface",
+        "src/bluetooth_adapters/systems/linux.py — merge BlueZ D-Bus, HCI, USB/UART metadata and vendor lookup",
+        "src/bluetooth_adapters/systems/linux_hci.py — HCI adapter state extraction",
+        "src/bluetooth_adapters/systems/windows.py and macos.py — platform-specific adapter representations",
+        "src/bluetooth_adapters/dbus.py — BlueZ D-Bus object integration",
+        "src/bluetooth_adapters/history.py, storage.py, models.py — discovery history and typed adapter records",
+        "tests/test_adapters.py, test_linux_hci.py, test_init.py — mocked behavior and interface tests"
+      ],
+      "verification": [
+        "2026-11-02 inspected README, root Apache-2.0 LICENSE, pyproject.toml, source tree, Linux/Windows implementations, tests and CI workflow",
+        "Stable v2.4.0 published 2026-05-26; latest main commit ece711c8 dated 2026-05-27",
+        "2026-05-27 main push CI 26489407596: 18/18 jobs passed including 15 Python 3.10–3.14 Linux/macOS/Windows test jobs",
+        "2026-10-26 pre-commit update PR CI 40377620756 failed lint while 15/15 platform test jobs passed; do not call all recent CI green",
+        "Manifest Linux dependency dbus-fast>=5.0.14 requires version resolution on Python 3.10; latest dbus-fast v5.2.0 requires Python>=3.11",
+        "Windows source returns a synthetic/default adapter record rather than hardware-specific enumeration; no physical-device or Android tests performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v2.4.0 released 2026-05-26; main commit 2026-05-27; main push CI 18/18 successful 2026-05-27; 2026-10-26 dependency-bot PR lint failure with all 15 test jobs successful.",
+      "source": "GitHub-first recursive investigation of Bluetooth-Devices/bleak-retry-connector Linux dependency; YouTube seed searches did not yield usable transcripts",
+      "related_projects": [
+        "Bluetooth-Devices/bleak-retry-connector (Linux-only direct dependency bluetooth-adapters>=2.3.0)",
+        "Bluetooth-Devices/dbus-fast (Linux D-Bus backend dependency)",
+        "hbldh/bleak (BLE scan/GATT library; required by this package)",
+        "BlueZ (Linux daemon)",
+        "Bluetooth-Devices/usb-devices and uart-devices (adapter metadata helpers)"
+      ],
+      "research_notes": "research/2026-11-02-bluetooth-adapters-stac-geoparquet.md. Adapter presence/advertisement is not peer authentication; OS permissions and Linux Python 3.10 dependency resolution need verification. No upstream source copied."
+    },
+    {
+      "name": "STAC-GeoParquet",
+      "repository": "https://github.com/stac-utils/stac-geoparquet",
+      "owner": "stac-utils / Tom Augspurger and contributors",
+      "category": [
+        "python",
+        "geospatial",
+        "stac",
+        "geoparquet",
+        "arrow",
+        "data-engineering",
+        "bulk-metadata",
+        "columnar-storage"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE, copyright Tom Augspurger 2022; dependencies and data licenses separate)",
+      "license_copy_status": "mit-preserve-copyright-and-license-notice-review-dependencies-and-data",
+      "platforms": [
+        "Python >=3.10; CI Python 3.10–3.14 on Ubuntu",
+        "PyArrow >=16 except 19.0.0, PySTAC, GeoPandas, pandas, Shapely, pyproj",
+        "Optional pgstac/PostgreSQL and Delta Lake integrations",
+        "Large datasets can require substantial memory/disk; chunking and temporary files supported"
+      ],
+      "useful_components": [
+        "stac_geoparquet/arrow/_api.py — STAC Item iterable to Arrow batches/Parquet, FullFile/FirstBatch/ChunksToDisk schema strategies",
+        "stac_geoparquet/arrow/_to_parquet.py — Arrow streaming Parquet writer, GeoParquet WKB metadata and bbox covering",
+        "stac_geoparquet/arrow/_from_arrow.py — restore STAC properties, datetimes and bbox arrays from Arrow",
+        "stac_geoparquet/arrow/_schema/models.py — inferred schema models",
+        "stac_geoparquet/json_reader.py — chunked JSON reader",
+        "stac_geoparquet/pgstac_reader.py — optional pgstac data source",
+        "stac_geoparquet/arrow/_delta_lake.py — optional Delta Lake integration",
+        "tests/ and cassettes — STAC sample conversion and regression fixtures"
+      ],
+      "verification": [
+        "2026-11-02 inspected README, MIT LICENSE, pyproject.toml, Arrow conversion source, GeoParquet metadata writer, source/test tree and CI workflow",
+        "Stable release 0.8.3 published 2026-10-21; latest main commits 2026-10-28 dependency maintenance",
+        "2026-10-28 main push CI 40688846105: 5/5 Python 3.10–3.14 Ubuntu jobs succeeded; workflow runs uv sync, pre-commit, lint, pytest and strict docs build",
+        "Manifest requires Python>=3.10, PyArrow>=16 excluding 19.0.0; optional Delta Lake dependency deltalake<1 and optional pgstac extras",
+        "Source supports schema strategies FullFile, FirstBatch and ChunksToDisk; FirstBatch may fail when later batches have different schemas; ChunksToDisk needs an existing tmpdir",
+        "Source explicitly supports WKB geometry and GeoParquet metadata; no independent round-trip, performance, large-data, or security test performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "0.8.3 released 2026-10-21; 2026-10-28 main commits and CI 5/5 passing; active PR CI also successful.",
+      "source": "GitHub-first recursive STAC ecosystem discovery from stac-utils/pystac and STAC metadata processing; no accessible YouTube transcript",
+      "related_projects": [
+        "stac-utils/pystac (direct dependency, STAC Item models)",
+        "stac-utils/pystac-client (complementary STAC API discovery)",
+        "stac-utils/pgstac (optional database source)",
+        "radiantearth/stac-geoparquet-spec (format specification)",
+        "apache/arrow (PyArrow columnar engine)",
+        "duckdb/duckdb (potential analytic consumer; interoperability untested)"
+      ],
+      "research_notes": "research/2026-11-02-bluetooth-adapters-stac-geoparquet.md. FullFile schema inference can load the entire input; test heterogeneous STAC properties and verify data licensing before redistributing datasets. No source copied."
     }
   ],
   "deferred_or_rejected": [
@@ -10420,6 +10551,10 @@
     {
       "repository": "https://github.com/pocketbase/pocketbase",
       "reason": "Deferred 2026-10-30: GitHub repository is archived and README states development moved to https://ganigeorgiev.com/pocketbase/pocketbase. Do not present the old GitHub URL as an actively maintained upstream. Reassess new host, provenance, license and release evidence before cataloging."
+    },
+    {
+      "repository": "https://github.com/stac-utils/stac-check",
+      "reason": "Deferred 2026-11-02: v1.14.0 released 2026-05-02, main Test Runner CI 25250726363 passed 6/6 jobs on that date, but latest 2026-08-03 dependency-update PR CI 30780981239 failed; stable manifest pins stac-valid~=4.2.2 and has not established compatibility with newer 4.6.1. Not dead; investigate dependency failure and version bounds before scoring."
     }
   ]
 }
