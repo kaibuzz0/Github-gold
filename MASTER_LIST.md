@@ -3517,9 +3517,9 @@ Suggested tiers:
 - **Maintenance signals:** [v1.15.2](https://github.com/stac-utils/pystac/releases/tag/v1.15.2) published 2026-07-27; [2026-10-29 main CI](https://github.com/stac-utils/pystac/actions/runs/40940313953) passed 16/16 jobs.
 - **Verification performed:** README, LICENSE, stable/main manifests, changelog, source tree, tests and upstream CI jobs inspected; no local STAC execution.
 - **Source discovery:** GitHub-first follow-up from rio-tiler and TiTiler; no accessible playlist transcript.
-- **Related projects:** cogeotiff/rio-tiler (direct stable dependency); developmentseed/titiler (optional STAC extension); stac-utils/pystac-client (verified v0.9.1 STAC API client; direct PySTAC dependency; 2026-10-30 upstream CI 13/13); radiantearth/stac-spec.
+- **Related projects:** cogeotiff/rio-tiler (direct stable dependency); developmentseed/titiler (optional STAC extension); stac-utils/pystac-client (verified v0.9.1 STAC API client; direct PySTAC dependency; 2026-10-30 upstream CI 13/13); radiantearth/stac-spec.; stac-utils/stac-api-validator (downstream direct dependency, not a PySTAC core dependency)
 - **Caveats / risks:** Independent extension versions need compatibility checks; remote STAC/schema URLs are untrusted input. Main's core package floor differs from the stable tag.
-- **Research notes:** `research/2026-11-01-pystac-zeroconf.md`. No upstream code copied.
+- **Research notes:** `research/2026-11-01-pystac-zeroconf.md`. No upstream code copied. 2026-11-01 downstream validation audit: `research/2026-11-01-dbus-fast-stac-api-validator.md`.
 
 ### python-zeroconf
 
@@ -3558,9 +3558,9 @@ Suggested tiers:
 - **Maintenance signals:** [v0.9.1](https://github.com/stac-utils/pystac-client/releases/tag/v0.9.1) published 2026-10-20; [2026-10-30 main CI](https://github.com/stac-utils/pystac-client/actions/runs/41075734547) passed 13/13 jobs.
 - **Verification performed:** README, LICENSE, v0.9.1 manifest, changelog, client/search/HTTP source, tests and upstream CI job conclusions inspected. No local install or STAC API transaction performed.
 - **Source discovery:** GitHub-first follow-up from PySTAC; no accessible playlist transcript.
-- **Related projects:** stac-utils/pystac (direct dependency); radiantearth/stac-api-spec; cogeotiff/rio-tiler (complementary STAC reader).
+- **Related projects:** stac-utils/pystac (direct dependency); radiantearth/stac-api-spec; cogeotiff/rio-tiler (complementary STAC reader).; stac-utils/stac-api-validator (downstream conformance tester, not a client dependency)
 - **Caveats / risks:** Remote endpoints/asset URLs may be untrusted; API transactions can modify remote data and require server conformance and authorization. Main-only SQLite free-text fix is unreleased.
-- **Research notes:** `research/2026-11-01-pystac-client-bleak.md`. No third-party code copied.
+- **Research notes:** `research/2026-11-01-pystac-client-bleak.md`. No third-party code copied. 2026-11-01 downstream validation audit: `research/2026-11-01-dbus-fast-stac-api-validator.md`.
 
 ### Bleak
 
@@ -3578,9 +3578,51 @@ Suggested tiers:
 - **Maintenance signals:** [v3.0.2](https://github.com/hbldh/bleak/releases/tag/v3.0.2) published 2026-05-02; [2026-09-30 develop CI](https://github.com/hbldh/bleak/actions/runs/36764733562) passed 27/27 jobs including desktop and simulated integration tests.
 - **Verification performed:** README, LICENSE, stable manifest, changelog, backend and tests trees, workflow and job conclusions inspected. No physical BLE communication, pairing or APK build performed.
 - **Source discovery:** Independent GitHub-first Bluetooth interoperability research; no accessible playlist transcript.
-- **Related projects:** BlueZ; Apple CoreBluetooth; Windows Bluetooth WinRT; python-for-android; python-zeroconf (complementary LAN discovery, not a dependency).
+- **Related projects:** BlueZ; Apple CoreBluetooth; Windows Bluetooth WinRT; python-for-android; python-zeroconf (complementary LAN discovery, not a dependency).; Bluetooth-Devices/dbus-fast (Linux backend dependency; v5.2 requires Python >=3.11, so check Bleak's Python 3.10 compatibility)
 - **Caveats / risks:** BLE advertisements are unauthenticated; permissions, pairing and platform restrictions vary. Develop-only BeeWare/Briefcase Android backend and dbus-fast>=4 requirement are not stable v3.0.2 features.
-- **Research notes:** `research/2026-11-01-pystac-client-bleak.md`. No third-party code copied.
+- **Research notes:** `research/2026-11-01-pystac-client-bleak.md`. No third-party code copied. 2026-11-01 dependency audit: `research/2026-11-01-dbus-fast-stac-api-validator.md`.
+
+
+### dbus-fast
+
+- **Repository:** https://github.com/Bluetooth-Devices/dbus-fast
+- **Author / Org:** Bluetooth Devices Authors.
+- **Category:** Python / D-Bus IPC / Linux / asyncio / GLib / serialization / BLE infrastructure
+- **Evidence:** VERIFIED — upstream source and CI, not an independently executed D-Bus session
+- **Tier / Score:** S / 28 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 4 + maintenance 5)
+- **What it does:** Typed Python D-Bus clients and services with asyncio/GLib integration and optional Cython serialization acceleration.
+- **Why it is valuable:** Reusable low-level D-Bus transport, marshalling, auth and signal handling used by Linux desktop software and Bleak's BlueZ backend.
+- **Useful code/components:** `src/dbus_fast/aio/message_bus.py`, `aio/proxy_object.py`, `glib/`, `_private/marshaller.py`, `service.py`, `auth.py`, `signature.py`; `examples/`, `tests/test_{marshaller,auth,fd_passing,message_bus}.py`.
+- **Install / runtime:** `pip install dbus-fast`; stable v5.2.0 Python >=3.11; Linux D-Bus daemon for typical integration; pure-Python source install available with `SKIP_CYTHON=1`.
+- **Platforms:** Linux D-Bus (primary), Python 3.11–3.15 upstream CI; cross-platform bus transport not independently verified.
+- **License:** MIT; preserve copyright and license notices; review optional build dependencies.
+- **Maintenance signals:** [v5.2.0](https://github.com/Bluetooth-Devices/dbus-fast/releases/tag/v5.2.0) published 2026-10-02; [2026-10-02 main CI](https://github.com/Bluetooth-Devices/dbus-fast/actions/runs/37015505832) 18 passed, 3 skipped. A separate 2026-11-01 scheduled workflow failed and was not diagnosed.
+- **Verification performed:** README, MIT LICENSE, v5.2.0 manifest/changelog, source, tests and CI jobs inspected; no independent installation, bus communication, BLE hardware or security test.
+- **Source discovery:** GitHub-first recursive follow-up from Bleak's Linux BlueZ backend; no playlist transcript.
+- **Related projects:** hbldh/bleak (Linux direct dependency >=1.83.0; Python 3.10 installations must select a compatible older dbus-fast); altdesktop/python-dbus-next (predecessor); BlueZ.
+- **Caveats / risks:** D-Bus system policy and service identity require care; do not assume all BLE/OS combinations work. Newest dbus-fast requires Python >=3.11.
+- **Research notes:** `research/2026-11-01-dbus-fast-stac-api-validator.md`. No third-party code copied.
+
+### STAC API Validator
+
+- **Repository:** https://github.com/stac-utils/stac-api-validator
+- **Author / Org:** stac-utils / Phil Varner; Radiant Earth Foundation attribution.
+- **Category:** Python / STAC API / conformance / CQL2 / geospatial API testing
+- **Evidence:** VERIFIED — upstream source, tests and CI; conformance coverage incomplete
+- **Tier / Score:** A / 24 (utility 5 + working evidence 4 + reusability 4 + novelty 4 + documentation 4 + maintenance 3)
+- **What it does:** Tests advertised STAC API conformance classes, link relations, search parameters, filtering and HTTP behavior.
+- **Why it is valuable:** Reusable standards-based integration checks for STAC API servers, distinct from validating standalone STAC objects.
+- **Useful code/components:** `src/stac_api_validator/{validations,filters,geometries,__main__}.py`, `tests/test_{validations,main,landing_page}.py`, `tests/resources/`.
+- **Install / runtime:** `pip install stac-api-validator`; v0.6.8 Python >=3.11, pystac-client, pystac, requests, stac-check, stac-validator and other declared dependencies; target STAC endpoint.
+- **Platforms:** Linux/macOS/Windows; upstream CI Python 3.11–3.14.
+- **License:** Apache-2.0; preserve notices; inspect dependencies independently.
+- **Maintenance signals:** [v0.6.8](https://github.com/stac-utils/stac-api-validator/releases/tag/v0.6.8) published 2026-02-20; [2026-03-23 main Tests CI](https://github.com/stac-utils/stac-api-validator/actions/runs/23437566679) passed 8/8 jobs; June 2026 dependency PR activity.
+- **Verification performed:** README, LICENSE, pyproject, validation/filter source, test fixtures and CI jobs inspected. No live STAC endpoint test or independent install.
+- **Source discovery:** GitHub-first STAC API ecosystem follow-up; no playlist transcript.
+- **Related projects:** stac-utils/pystac-client and stac-utils/pystac (direct dependencies); stac-utils/stac-check; StacLabs/stac-validator; radiantearth/stac-api-spec.
+- **Caveats / risks:** README explicitly calls coverage a subset and work in progress; project coverage gate is 10%. Validation can issue costly requests to untrusted endpoints and send bearer credentials; use trusted roots and limited credentials.
+- **Research notes:** `research/2026-11-01-dbus-fast-stac-api-validator.md`. No third-party code copied.
+
 
 ## Entry format
 
