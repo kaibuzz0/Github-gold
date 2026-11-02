@@ -3578,7 +3578,7 @@ Suggested tiers:
 - **Maintenance signals:** [v3.0.2](https://github.com/hbldh/bleak/releases/tag/v3.0.2) published 2026-05-02; [2026-09-30 develop CI](https://github.com/hbldh/bleak/actions/runs/36764733562) passed 27/27 jobs including desktop and simulated integration tests.
 - **Verification performed:** README, LICENSE, stable manifest, changelog, backend and tests trees, workflow and job conclusions inspected. No physical BLE communication, pairing or APK build performed.
 - **Source discovery:** Independent GitHub-first Bluetooth interoperability research; no accessible playlist transcript.
-- **Related projects:** BlueZ; Apple CoreBluetooth; Windows Bluetooth WinRT; python-for-android; python-zeroconf (complementary LAN discovery, not a dependency).; Bluetooth-Devices/dbus-fast (Linux backend dependency; v5.2 requires Python >=3.11, so check Bleak's Python 3.10 compatibility)
+- **Related projects:** BlueZ; Apple CoreBluetooth; Windows Bluetooth WinRT; python-for-android; python-zeroconf (complementary LAN discovery, not a dependency).; Bluetooth-Devices/dbus-fast (Linux backend dependency; v5.2 requires Python >=3.11, so check Bleak's Python 3.10 compatibility); Bluetooth-Devices/bleak-retry-connector (v4.7.1 companion with retry/backoff, BlueZ slot management and Python 3.10/Linux dependency caveat; see research/2026-11-01-bleak-retry-stac-validator.md)
 - **Caveats / risks:** BLE advertisements are unauthenticated; permissions, pairing and platform restrictions vary. Develop-only BeeWare/Briefcase Android backend and dbus-fast>=4 requirement are not stable v3.0.2 features.
 - **Research notes:** `research/2026-11-01-pystac-client-bleak.md`. No third-party code copied. 2026-11-01 dependency audit: `research/2026-11-01-dbus-fast-stac-api-validator.md`.
 
@@ -3619,9 +3619,50 @@ Suggested tiers:
 - **Maintenance signals:** [v0.6.8](https://github.com/stac-utils/stac-api-validator/releases/tag/v0.6.8) published 2026-02-20; [2026-03-23 main Tests CI](https://github.com/stac-utils/stac-api-validator/actions/runs/23437566679) passed 8/8 jobs; June 2026 dependency PR activity.
 - **Verification performed:** README, LICENSE, pyproject, validation/filter source, test fixtures and CI jobs inspected. No live STAC endpoint test or independent install.
 - **Source discovery:** GitHub-first STAC API ecosystem follow-up; no playlist transcript.
-- **Related projects:** stac-utils/pystac-client and stac-utils/pystac (direct dependencies); stac-utils/stac-check; StacLabs/stac-validator; radiantearth/stac-api-spec.
+- **Related projects:** stac-utils/pystac-client and stac-utils/pystac (direct dependencies); stac-utils/stac-check; StacLabs/stac-validator; radiantearth/stac-api-spec.; StacLabs/stac-validator (canonical v4.6.1, now pip package stac-valid; existing API Validator dependency still names legacy stac-validator; see research/2026-11-01-bleak-retry-stac-validator.md)
 - **Caveats / risks:** README explicitly calls coverage a subset and work in progress; project coverage gate is 10%. Validation can issue costly requests to untrusted endpoints and send bearer credentials; use trusted roots and limited credentials.
 - **Research notes:** `research/2026-11-01-dbus-fast-stac-api-validator.md`. No third-party code copied.
+
+
+### Bleak Retry Connector
+
+- **Repository:** https://github.com/Bluetooth-Devices/bleak-retry-connector
+- **Author / Org:** Bluetooth-Devices / J. Nick Koston
+- **Category:** python / bluetooth-low-energy / bleak / connection-retries / asyncio / linux / bluez / device-interoperability
+- **Evidence:** VERIFIED — upstream source, tests, and CI (not independent execution)
+- **Tier / Score:** S / 27 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 4 + maintenance 4)
+- **What it does:** Retries transient BLE connection failures and handles BlueZ device/adapter state and connection slots around the Bleak client API.
+- **Why it is valuable:** Reusable bounded retry/backoff, BLE service caching and Linux adapter state management for resilient user-controlled device integrations.
+- **Useful code/components:** src/bleak_retry_connector/__init__.py — establish_connection retries, typed error classification, bounded timeouts, service-cache client; src/bleak_retry_connector/bluez.py — Linux adapter connection-slot tracking, device reappearance, stale connection cleanup; src/bleak_retry_connector/bleak_manager.py — BlueZ D-Bus manager and socket handling; src/bleak_retry_connector/dbus.py — Linux D-Bus device disconnect support; tests/test_init.py — scripted fake-client retry and failure-mode assertions; tests/test_bluez.py, test_dbus.py, test_bleak_manager.py — mocked backend behavior.
+- **Install / runtime:** pip install bleak-retry-connector; Python >=3.10 declared; Bleak >=3.0.2; Linux BlueZ plus dbus-fast and bluetooth-adapters.
+- **Platforms:** Python >=3.10 declared in v4.7.1 manifest; Linux BlueZ with dbus-fast and bluetooth-adapters; Bleak-supported Windows/macOS; no independent device testing; Android not independently established.
+- **License:** MIT (root LICENSE, copyright J. Nick Koston 2022; dependencies licensed separately).
+- **Maintenance signals:** Stable v4.7.1 published 2026-09-14; latest repository push observed 2026-10-26; 2026-09-14 main CI 8/8 successful. Separate scheduled Hacktoberfest workflow failed 2026-11-01; not evidence of failing package tests.
+- **Verification performed:** 2026-11-01 inspected README, root MIT LICENSE, pyproject.toml, changelog, core Python source, Linux BlueZ helper, mocked tests, workflow YAML and GitHub Actions job results; Stable v4.7.1 published 2026-09-14; changelog fixes incorrect ESP_GATT_CONN_CONN_CANCEL out-of-slots classification; 2026-09-14 main push CI run 34881176180: 8/8 jobs succeeded (Python 3.10–3.14 on Ubuntu, lint, commitlint, release); no physical BLE hardware test established; Stable manifest requires bleak>=3.0.2; Linux-only dbus-fast>=5.0.22 and bluetooth-adapters>=2.3.0; async-timeout on Python<3.11; No independent installation, live GATT session, Android packaging, or Bluetooth hardware testing.
+- **Source discovery:** GitHub-first recursive BLE dependency discovery from hbldh/bleak and Bluetooth-Devices/dbus-fast; no accessible YouTube transcript.
+- **Related projects:** hbldh/bleak (direct required runtime library >=3.0.2); Bluetooth-Devices/dbus-fast (Linux-only dependency >=5.0.22; latest 5.2.0 requires Python>=3.11); Bluetooth-Devices/bluetooth-adapters (Linux adapter metadata dependency); BlueZ (Linux Bluetooth daemon); esphome/esphome (related BLE proxy ecosystem; not a direct declared dependency).
+- **Caveats / risks:** Retries do not authenticate BLE peers; Linux Python 3.10 needs compatible dbus-fast resolution; no real hardware session tested.
+- **Research notes:** research/2026-11-01-bleak-retry-stac-validator.md. No third-party code copied.
+
+### STAC Validator (stac-valid)
+
+- **Repository:** https://github.com/StacLabs/stac-validator
+- **Author / Org:** StacLabs / Jonathan Healy, James Banting (historical stac-utils repository references)
+- **Category:** python / geospatial / stac / json-schema / metadata-validation / batch-validation / developer-tools
+- **Evidence:** VERIFIED — upstream source, tests, and CI (not independent execution)
+- **Tier / Score:** S / 27 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 4 + maintenance 4)
+- **What it does:** Validates STAC JSON objects and extensions with JSON Schema, optional fast/batch validation, recursive link checking and command-line/Python APIs.
+- **Why it is valuable:** A practical metadata validation layer with schema caching, extension-composition fixes and local/remote workflows; complements STAC API conformance testing.
+- **Useful code/components:** stac_validator/validate.py — StacValidate core JSON Schema validation, recursive links and asset checks; stac_validator/fast_validator.py — fastjsonschema compilation, caching, batch processing, extension error aggregation; stac_validator/batch_validator.py — multi-item batch validation; stac_validator/utilities.py — schema and document fetch helpers, mapping and resolver functions; stac_validator/stac_validator.py — stac-validator and stac-valid CLI entry points; local_schemas/ and stac_validator/local_schemas/ — schema resources; provenance/license review required; tests/test_fast_validator.py, test_extensions.py, test_schema_cache.py, test_batch_validator.py — regression fixtures.
+- **Install / runtime:** pip install stac-valid (NOT the unmaintained stac-validator PyPI distribution); Python >=3.8; imports remain stac_validator; CLI remains stac-validator.
+- **Platforms:** Python >=3.8 declared in v4.6.1 manifest; Linux/macOS/Windows in principle; latest inspected upstream CI is Ubuntu Python 3.10–3.13; CLI, Python API, optional FastAPI server; Remote schema fetching requires network unless pre-cached/local schemas supplied.
+- **License:** Apache-2.0 (root LICENSE; separately licensed dependencies and schema assets).
+- **Maintenance signals:** Stable v4.6.1 published 2026-09-04; upstream main push test CI 2026-09-07 4/4 jobs successful; latest repository push observed 2026-09-07.
+- **Verification performed:** 2026-11-01 inspected README package-rename warning, root Apache-2.0 LICENSE, v4.6.1 pyproject.toml, changelog, fast_validator.py, validate.py, tests and workflow YAML; Stable v4.6.1 published 2026-09-04; fixes multi-extension composition false positives and allOf/oneOf schema unrolling; 2026-09-07 main push Test Runner CI run 34086424246: 4/4 Ubuntu Python 3.10–3.13 jobs succeeded; no independent local validation executed; Manifest distribution is stac_valid; install pip install stac-valid, but imports remain stac_validator and CLI remains stac-validator; old PyPI stac-validator distribution is unmaintained; Current canonical GitHub repository resolves to StacLabs/stac-validator; README and project URLs still contain historical stac-utils links; No independent install, remote schema fetch, JSON schema performance benchmark, or security audit.
+- **Source discovery:** GitHub-first recursive STAC dependency discovery from stac-utils/stac-api-validator and stac-utils/stac-check; no accessible YouTube transcript.
+- **Related projects:** stac-utils/stac-check (STAC best-practice linting; stable v1.14.0 requires stac-valid~=4.2.2, not necessarily compatible with 4.6.1); stac-utils/stac-api-validator (API conformance; manifest still depends on legacy stac-validator>=3.10.1, not the renamed stac-valid distribution); stac-utils/pystac (STAC object model; separate library); radiantearth/stac-spec (schema/specification source).
+- **Caveats / risks:** Old package name and historical GitHub links are misleading; remote schema fetching may access untrusted URLs; upstream CI does not prove all extension combinations.
+- **Research notes:** research/2026-11-01-bleak-retry-stac-validator.md. No third-party code copied.
 
 
 ## Entry format
