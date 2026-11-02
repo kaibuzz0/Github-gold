@@ -9208,9 +9208,10 @@
         "todbot/hidapitester (complementary HID diagnostics)",
         "Silicon Labs CP2110/CP2114 and AN434 HID-to-UART protocol",
         "RFC2217 network serial protocol",
-        "pyvisa/pyvisa (instrument automation front end; optional pyvisa/pyvisa-py serial backend declares pyserial>=3.0, not a direct PyVISA core dependency)"
+        "pyvisa/pyvisa (instrument automation front end; optional pyvisa/pyvisa-py serial backend declares pyserial>=3.0, not a direct PyVISA core dependency)",
+        "hardbyte/python-can (stable v4.6.1 optional serial and SeeedStudio backends declare pyserial; not a core dependency)"
       ],
-      "research_notes": "research/2026-10-31-pyserial-maplibre-gl-js.md. RFC2217/socket:// transports cross network trust boundaries; protect remote serial services. CP2110 backend notes incomplete flow-control signals, cancellation and baudrate validation. No third-party code copied."
+      "research_notes": "research/2026-10-31-pyserial-maplibre-gl-js.md. RFC2217/socket:// transports cross network trust boundaries; protect remote serial services. CP2110 backend notes incomplete flow-control signals, cancellation and baudrate validation. No third-party code copied. 2026-11-02: python-can optional serial transport relationship verified in stable manifest; see research/2026-11-02-python-can-cantools.md."
     },
     {
       "name": "MapLibre GL JS",
@@ -10664,6 +10665,125 @@
         "stac-utils/rustac (main Rust code uses development branch patch; version coupling unverified)"
       ],
       "research_notes": "research/2026-11-02-usb-devices-pgstac.md. Distinguish v0.10.0 tag from main development tree; migration changes can be destructive on large production catalogs. Test backups, permissions, pagination and version compatibility before deployment. No code copied."
+    },
+    {
+      "name": "python-can",
+      "repository": "https://github.com/hardbyte/python-can",
+      "owner": "hardbyte / python-can contributors",
+      "category": [
+        "python",
+        "can-bus",
+        "hardware-interoperability",
+        "socketcan",
+        "embedded",
+        "data-logging",
+        "automation"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "LGPL-3.0-only (root LICENSE.txt and stable/main manifests)",
+      "license_copy_status": "lgpl-3.0-only-review-linking-distribution-and-notice-obligations",
+      "platforms": [
+        "Stable v4.6.1 requires Python >=3.9; main requires >=3.10",
+        "Linux SocketCAN and virtual CAN; macOS/Windows with compatible backends",
+        "Hardware adapters require vendor drivers/optional extras"
+      ],
+      "useful_components": [
+        "can/bus.py — BusABC, send/receive and filters",
+        "can/interfaces/virtual.py — in-memory virtual CAN for offline tests",
+        "can/interfaces/socketcan/ — Linux SocketCAN",
+        "can/notifier.py and can/listener.py — async message listeners",
+        "can/io/ — CAN log readers and writers",
+        "can/broadcastmanager.py — cyclic transmission",
+        "can/logger.py, can/player.py, can/bridge.py, can/viewer.py — CLI tools"
+      ],
+      "verification": [
+        "2026-11-02 inspected README, LGPL LICENSE, v4.6.1/main manifests, source/test trees, virtual interface tests, releases and CI jobs",
+        "v4.6.1 published 2025-08-12; stable Python >=3.9 versus main >=3.10",
+        "2026-10-25 PR Tests run 40224110111: 25 successful jobs, one skipped release; Python 3.10–3.14, PyPy, Linux/macOS/Windows, docs, lint and packaging (upstream PR evidence, not stable-tag CI)",
+        "Later October PR workflows frequently action_required, not proof of passing tests",
+        "No independent install, virtual CAN execution, physical bus or safety test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v4.6.1 published 2025-08-12; main pushed 2026-07-01; October 25 PR CI 25 successful/one skipped; later PR workflows action_required.",
+      "source": "GitHub-first CAN bus interoperability research; two YouTube seed searches returned no indexed transcripts",
+      "related_projects": [
+        "cantools/cantools (direct consumer; depends on python-can>=4.6.0)",
+        "pyserial/pyserial (optional serial transport extras, not core dependency)",
+        "pyusb/pyusb (optional gs-usb ecosystem, not core dependency)",
+        "Linux SocketCAN/vcan"
+      ],
+      "research_notes": "research/2026-11-02-python-can-cantools.md. CAN traffic can actuate real equipment; prefer offline virtual bus or authorized isolated testing. No third-party source copied."
+    },
+    {
+      "name": "cantools",
+      "repository": "https://github.com/cantools/cantools",
+      "owner": "cantools / Erik Moqvist and contributors",
+      "category": [
+        "python",
+        "can-bus",
+        "dbc",
+        "arxml",
+        "kcd",
+        "sym",
+        "diagnostics",
+        "code-generation",
+        "parsers"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 28,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 5,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 5,
+        "maintenance": 4
+      },
+      "license": "MIT (root LICENSE, Erik Moqvist 2015–2019)",
+      "license_copy_status": "mit-preserve-copyright-license-and-dependency-notices",
+      "platforms": [
+        "Python >=3.10 in v45.1.2 tag and main",
+        "Linux, macOS, Windows; PyPy 3.11 covered in CI",
+        "Physical CAN access through python-can and compatible adapter"
+      ],
+      "useful_components": [
+        "src/cantools/database/can/formats/dbc/ — DBC parser/serializer",
+        "src/cantools/database/can/formats/arxml/ — AUTOSAR ARXML parser",
+        "src/cantools/database/can/formats/kcd.py and sym.py — KCD/SYM formats",
+        "src/cantools/database/diagnostics/ — DID codec",
+        "src/cantools/database/can/ — signal encoding, decoding, multiplexing",
+        "src/cantools/subparsers/ — decode, dump, plot, monitor and C code generation",
+        "src/cantools/tester.py and tests/ — CAN node tester and regression fixtures"
+      ],
+      "verification": [
+        "2026-11-02 inspected README, MIT LICENSE, v45.1.2 manifest, parser/test trees, release and GitHub Actions jobs",
+        "v45.1.2 released 2026-10-29; Python >=3.10, direct python-can>=4.6.0; optional matplotlib plotting",
+        "2026-10-29 main push CI 40835067598: 18 successful jobs and one skipped release, covering Linux/macOS/Windows, Python 3.10/3.14, PyPy, C codegen, docs, lint and build",
+        "No independent DBC round-trip, generated C compilation, installation or physical CAN test"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v45.1.2 published 2026-10-29; main pushed 2026-10-29; upstream main CI 18 successful/one skipped.",
+      "source": "GitHub-first recursive follow-up from python-can ecosystem; no accessible playlist transcript",
+      "related_projects": [
+        "hardbyte/python-can (direct runtime dependency >=4.6.0)",
+        "bitstruct/bitstruct (signal packing dependency)",
+        "Linux can-utils candump (CLI input)",
+        "AUTOSAR ARXML, DBC, KCD and SYM formats"
+      ],
+      "research_notes": "research/2026-11-02-python-can-cantools.md. Input CAN databases may be proprietary. Generated code and safety-critical controls require separate validation. No third-party source copied."
     }
   ],
   "deferred_or_rejected": [

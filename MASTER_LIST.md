@@ -3274,7 +3274,7 @@ Suggested tiers:
 - **Maintenance signals:** Last observed master commit 2026-02-27; [2026-02-27 master tox workflow](https://github.com/pyserial/pyserial/actions/runs/22471324995) passed Linux/macOS/Windows/Cygwin. GitHub v3.5 release metadata dated 2025-11-20 but upstream changelog dates v3.5 to 2020.
 - **Verification performed:** Inspected README, LICENSE, pyproject, changelog, URL backends, CI, tests, examples and release. Upstream CI only; no independent serial/RFC2217/hardware execution.
 - **Source discovery:** GitHub-first follow-up from HIDAPI; no YouTube transcript evidence.
-- **Related projects:** libusb/hidapi (`hid` Python binding used by optional CP2110 backend, not direct C repository dependency); todbot/hidapitester; RFC2217.; pyvisa/pyvisa (PyVISA-Py optional serial backend declares pyserial>=3.0; no direct PyVISA core dependency)
+- **Related projects:** libusb/hidapi (`hid` Python binding used by optional CP2110 backend, not direct C repository dependency); todbot/hidapitester; RFC2217.; pyvisa/pyvisa (PyVISA-Py optional serial backend declares pyserial>=3.0; no direct PyVISA core dependency); hardbyte/python-can (v4.6.1 optional serial transport; not a core dependency)
 - **Caveats / risks:** Network serial bridges must be access-controlled; CP2110 backend documents incomplete flow control, cancellation and baudrate validation. PR action_required runs are not green CI.
 - **Research notes:** `research/2026-10-31-pyserial-maplibre-gl-js.md`. No upstream code copied.
 
@@ -3746,6 +3746,48 @@ Suggested tiers:
 - **Related projects:** stac-utils/stac-geoparquet (optional database reader); stac-utils/stac-fastapi (HTTP API layer); stac-utils/pystac; PostgreSQL/PostGIS; stac-utils/rustac (main development patch).
 - **Caveats / risks:** Breaking v0.10.0 migration requires coordinated database/Python upgrades; paging tokens change. Main tree includes newer development tooling absent from v0.10.0 tag; do not attribute those features to stable release. Production migrations need backup and compatibility testing.
 - **Research notes:** `research/2026-11-02-usb-devices-pgstac.md`. No upstream source copied.
+
+
+### python-can
+
+- **Repository:** https://github.com/hardbyte/python-can
+- **Author / Org:** hardbyte / python-can contributors
+- **Category:** Python / CAN bus / SocketCAN / hardware interoperability / logging / embedded
+- **Evidence:** VERIFIED — upstream source, tests and CI; no independent CAN bus execution
+- **Tier / Score:** S / 27 (utility 5 + working evidence 4 + reusability 5 + novelty 4 + documentation 5 + maintenance 4)
+- **What it does:** Portable Python CAN bus abstraction with physical and virtual backends, asynchronous listeners, periodic sends and CAN log tools.
+- **Why it is valuable:** Reusable transport layer and in-memory virtual CAN backend suitable for offline testing, with many hardware adapters and log formats.
+- **Useful code/components:** `can/bus.py` BusABC; `can/interfaces/virtual.py` virtual bus; `can/interfaces/socketcan/` Linux transport; `can/notifier.py`, `can/listener.py` dispatch; `can/io/` logs; `can/broadcastmanager.py` cyclic sends; logger/player/bridge/viewer CLIs.
+- **Install / runtime:** `pip install python-can`; stable v4.6.1 Python >=3.9, main >=3.10; hardware drivers and optional extras depend on interface.
+- **Platforms:** Linux, macOS, Windows; upstream October 2026 PR CI Python 3.10–3.14 and PyPy. Physical adapters require platform-specific support.
+- **License:** LGPL-3.0-only (LICENSE.txt and manifests); review redistribution/linking obligations and notices. No source copied.
+- **Maintenance signals:** [v4.6.1](https://github.com/hardbyte/python-can/releases/tag/v4.6.1) 2025-08-12; main pushed 2026-07-01; [2026-10-25 PR CI](https://github.com/hardbyte/python-can/actions/runs/40224110111) 25 successful jobs, one skipped release. Later PRs show `action_required`.
+- **Verification performed:** README, tagged/main manifests, LGPL license, virtual tests, source tree and upstream CI jobs inspected. No independent install, virtual-bus or physical-bus execution.
+- **Source discovery:** GitHub-first CAN research; no usable playlist transcript.
+- **Related projects:** cantools/cantools (direct consumer >=4.6.0); pyserial/pyserial (optional serial transport); pyusb/pyusb (optional gs-usb ecosystem); Linux SocketCAN/vcan.
+- **Caveats / risks:** CAN frames can control real equipment; use virtual or isolated authorized testing. Stable/main Python minimum differs; `action_required` does not mean successful tests.
+- **Research notes:** `research/2026-11-02-python-can-cantools.md`. No third-party source copied.
+
+
+### cantools
+
+- **Repository:** https://github.com/cantools/cantools
+- **Author / Org:** cantools / Erik Moqvist and contributors
+- **Category:** CAN bus / Python / DBC / ARXML / KCD / SYM / diagnostic parsing / C codegen
+- **Evidence:** VERIFIED — upstream source, tests, releases and CI; no independent execution
+- **Tier / Score:** S / 28 (utility 5 + working evidence 5 + reusability 5 + novelty 4 + documentation 5 + maintenance 4)
+- **What it does:** Parses CAN database formats, encodes/decodes signals, handles multiplexing and diagnostics, generates C and provides decode/plot/monitor CLIs.
+- **Why it is valuable:** Reusable DBC/ARXML/KCD/SYM parsers and signal conversion infrastructure with extensive fixtures and codegen CI.
+- **Useful code/components:** `src/cantools/database/can/formats/dbc/`, `arxml/`, `kcd.py`, `sym.py`; `database/diagnostics/` DID codec; `database/can/` signal codecs; `subparsers/` CLI/codegen; `tester.py` and `tests/`.
+- **Install / runtime:** `pip install cantools`; v45.1.2 Python >=3.10, direct python-can>=4.6.0, bitstruct, textparser, argparse_addons, crccheck; optional `cantools[plot]` matplotlib.
+- **Platforms:** Linux, macOS, Windows; upstream CI Python 3.10/3.14 and PyPy 3.11. Physical bus access via python-can.
+- **License:** MIT (root LICENSE, Erik Moqvist 2015–2019). Preserve notice; review dependencies and input database rights.
+- **Maintenance signals:** [v45.1.2](https://github.com/cantools/cantools/releases/tag/45.1.2) 2026-10-29; [2026-10-29 main CI](https://github.com/cantools/cantools/actions/runs/40835067598) 18 successful jobs, one skipped release (codegen, tests, docs, build and lint).
+- **Verification performed:** README, license, tagged manifest, parser/test trees, release and CI inspected. No independent DBC round-trip, generated C compilation or CAN hardware testing.
+- **Source discovery:** GitHub-first recursive follow-up from python-can; no usable playlist transcript.
+- **Related projects:** hardbyte/python-can (direct runtime dependency); bitstruct/bitstruct; Linux can-utils `candump` (CLI input); AUTOSAR and DBC formats.
+- **Caveats / risks:** DBC/ARXML files may be proprietary. Generated C and physical CAN use need separate validation for safety-critical systems.
+- **Research notes:** `research/2026-11-02-python-can-cantools.md`. No third-party source copied.
 
 ## Entry format
 
