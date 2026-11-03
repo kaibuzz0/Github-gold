@@ -3850,3 +3850,23 @@ Suggested tiers:
 - **Related projects:**
 - **Caveats / risks:**
 - **Research notes:**
+
+### python-udsoncan
+
+- **Repository:** https://github.com/pylessard/python-udsoncan
+- **Author / Org:** Pier-Yves Lessard / pylessard
+- **Category:** Python / automotive diagnostics / UDS / ISO-14229
+- **Evidence:** VERIFIED (upstream source, release and test configuration; no confirmed successful CI)
+- **Tier / Score:** A / 24 (Utility 5 + Working Evidence 3 + Reusability 5 + Novelty 4 + Documentation 4 + Maintenance 3)
+- **What it does:** Implements ISO-14229 Unified Diagnostic Services request/response handling, service codecs and client connections.
+- **Why it is valuable:** Reusable diagnostic protocol implementation that complements ISO-TP transport and CAN interfaces, with documented APIs and regression fixtures.
+- **Useful code/components:** `udsoncan/client.py`; `udsoncan/connections.py`; `udsoncan/services/`; `udsoncan/Request.py`; `udsoncan/Response.py`; `udsoncan/j2534.py`; `test/client/`.
+- **Install / runtime:** `pip install udsoncan`; setup.py declares Python >=3.7; transport-specific dependencies/hardware may be needed.
+- **Platforms:** Python; SocketCAN example targets Linux; other connection backends depend on host adapters.
+- **License:** MIT (LICENSE.txt; 2017 Pier-Yves Lessard). No upstream source copied.
+- **Maintenance signals:** v1.26.1 released 2026-06-25; master updated 2026-10-26. Jenkinsfile configures Python 3.7–3.13 testing, but successful execution was not confirmed; no GitHub Actions runs reported.
+- **Verification performed:** Inspected upstream README, package manifest, license, source/test tree, Jenkinsfile, release and commits. No installation, execution or hardware verification by GitHub Gold.
+- **Source discovery:** GitHub-first recursive follow-up from python-can-isotp.
+- **Related projects:** pylessard/python-can-isotp; hardbyte/python-can; cantools/cantools.
+- **Caveats / risks:** README example includes state-changing ECU operations; use only on simulated or explicitly authorized equipment. Source/tests alone do not prove hardware interoperability.
+- **Research notes:** research/2026-11-02-python-udsoncan.md; next investigate mock transport, negative response handling and version compatibility.

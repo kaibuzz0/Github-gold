@@ -10892,6 +10892,59 @@
         "OSV API, CycloneDX and PEP 751"
       ],
       "research_notes": "research/2026-11-02-can-isotp-pip-audit.md. Clean results are not proof of safety; --fix changes dependencies."
+    },
+    {
+      "name": "python-udsoncan",
+      "repository": "https://github.com/pylessard/python-udsoncan",
+      "owner": "Pier-Yves Lessard / pylessard",
+      "category": [
+        "python",
+        "automotive-interoperability",
+        "uds",
+        "iso-14229",
+        "diagnostics"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "A",
+      "score": 24,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 3,
+        "reusability": 5,
+        "novelty": 4,
+        "documentation": 4,
+        "maintenance": 3
+      },
+      "license": "MIT (LICENSE.txt, 2017 Pier-Yves Lessard)",
+      "license_copy_status": "Upstream link only; no third-party code copied; preserve copyright and license on reuse.",
+      "platforms": [
+        "Python >=3.7 declared in setup.py; no independent runtime verification",
+        "Linux SocketCAN ISO-TP example; other transports depend on connection backend"
+      ],
+      "useful_components": [
+        "udsoncan/client.py: diagnostic client orchestration",
+        "udsoncan/connections.py: transport adapters including ISO-TP",
+        "udsoncan/services/: UDS service implementations",
+        "udsoncan/Request.py and Response.py: diagnostic message models",
+        "udsoncan/j2534.py: J2534 adapter",
+        "test/client/, test/test_connection.py: regression fixtures"
+      ],
+      "verification": [
+        "2026-11-02 inspected upstream README, setup.py, LICENSE.txt, source tree, test tree, Jenkinsfile, release and commits",
+        "Latest GitHub release v1.26.1 published 2026-06-25; latest inspected master commit 2026-10-26",
+        "Jenkinsfile defines Python 3.7–3.13 test stages; no successful Jenkins execution confirmed; GitHub Actions API reported zero runs",
+        "No independent installation, diagnostic operation, CAN bus or physical hardware testing"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "v1.26.1 2026-06-25; master commit 2026-10-26; Jenkins test configuration present, outcomes unconfirmed.",
+      "source": "GitHub-first follow-up from python-can-isotp; no YouTube transcript evidence",
+      "related_projects": [
+        "pylessard/python-can-isotp",
+        "hardbyte/python-can",
+        "cantools/cantools"
+      ],
+      "research_notes": "research/2026-11-02-python-udsoncan.md. UDS commands can alter ECU state; restrict evaluation to simulated or authorized systems."
     }
   ],
   "deferred_or_rejected": [
