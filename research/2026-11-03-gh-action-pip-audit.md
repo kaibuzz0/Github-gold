@@ -16,3 +16,10 @@ VERIFIED (source/test definitions; execution unconfirmed), A25 = Utility 5, Work
 
 ## Next
 Confirm current self-test CI status; verify lockfile and Windows coverage; check GitHub Action tag versus immutable commit pin; investigate index credential redaction and failure propagation.
+
+## Follow-up verification — 2026-11-03
+
+- GitHub Gold PR #7 head `465313031a9f16c4a22a79bafbd61de4fdd132ca` has a **successful pull-request Catalog Audit** (run 41585212700). This confirms the previous batch's pending PR-side audit, not any upstream action self-test.
+- Re-read upstream `action.yml` and `.github/workflows/selftest.yml` from the default branch. `selftest-locked` exercises `locked: true` with `test/pylock/`, but **`all-selftests-pass` omits `selftest-locked` from its `needs` list**. Therefore the aggregate green job does not gate on lockfile self-test success. Check that job separately before citing lockfile coverage as passing. This is an observed CI configuration gap, not proof that lockfile auditing fails.
+- The action's `index-url` and `extra-index-urls` inputs are forwarded as environment variables to its Python wrapper. This inspection does **not** establish credential masking or safe private-index handling; use short-lived credentials and inspect logs before production adoption.
+- Upstream source links: https://github.com/pypa/gh-action-pip-audit/blob/main/.github/workflows/selftest.yml and https://github.com/pypa/gh-action-pip-audit/blob/main/action.yml. No independent execution performed; no third-party code copied.
