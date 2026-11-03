@@ -10945,6 +10945,58 @@
         "cantools/cantools"
       ],
       "research_notes": "research/2026-11-02-python-udsoncan.md. UDS commands can alter ECU state; restrict evaluation to simulated or authorized systems."
+    },
+    {
+      "name": "gh-action-pip-audit",
+      "repository": "https://github.com/pypa/gh-action-pip-audit",
+      "owner": "Python Packaging Authority (PyPA); maintained in part by Trail of Bits",
+      "category": [
+        "python",
+        "supply-chain-security",
+        "github-actions",
+        "dependency-auditing",
+        "ci-automation"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "A",
+      "score": 25,
+      "score_breakdown": {
+        "utility": 5,
+        "working_evidence": 4,
+        "reusability": 5,
+        "novelty": 3,
+        "documentation": 4,
+        "maintenance": 4
+      },
+      "license": "Apache-2.0 (root LICENSE)",
+      "license_copy_status": "permissive-with-license-and-notice-obligations; no source copied",
+      "platforms": [
+        "GitHub Actions composite action",
+        "Linux runner documented; Windows included in upstream self-test workflow",
+        "Python environment with pip; underlying pip-audit currently requires Python >=3.10"
+      ],
+      "useful_components": [
+        "action.yml: composite action inputs and environment wiring",
+        "action.py: CLI argument assembly, audit execution, Markdown summary and base64 output",
+        "setup/setup.bash and setup/venv.bash: environment preparation",
+        "templates/: job-summary rendering",
+        ".github/workflows/selftest.yml: intentionally vulnerable dependency fixtures and regression scenarios"
+      ],
+      "verification": [
+        "2026-11-02 inspected upstream README, action.yml, action.py, setup/setup.bash, requirements.txt, LICENSE, CI and selftest workflows",
+        "Upstream selftest workflow defines requirements, installed-environment, virtualenv, pyproject and failure-path tests; no successful run outcome independently confirmed",
+        "Latest observed commit 2026-06-08 was dependency-maintenance; no local action execution or audit performed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "maintenance_signals": "Latest inspected upstream commit 2026-06-08; README documents action v1.1.0; CI and self-test workflows present; actual passing CI not independently confirmed.",
+      "source": "GitHub-first follow-up from cataloged pypa/pip-audit; no YouTube transcript evidence",
+      "related_projects": [
+        "pypa/pip-audit",
+        "pypa/advisory-database",
+        "OSV vulnerability service"
+      ],
+      "research_notes": "research/2026-11-03-gh-action-pip-audit.md. Action setup checks Python >=3.7 but pip-audit current runtime requires >=3.10; audit results depend on advisory coverage. Internal allow-failure setting can suppress audit failures. Review private index credentials and pin action commit for production."
     }
   ],
   "deferred_or_rejected": [
