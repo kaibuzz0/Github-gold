@@ -3850,6 +3850,26 @@ Suggested tiers:
 - **Caveats / risks:** README example includes state-changing ECU operations; use only on simulated or explicitly authorized equipment. Source/tests alone do not prove hardware interoperability.
 - **Research notes:** research/2026-11-02-python-udsoncan.md; next investigate mock transport, negative response handling and version compatibility.
 
+### gh-action-pip-audit
+
+- **Repository:** https://github.com/pypa/gh-action-pip-audit
+- **Author / Org:** Python Packaging Authority (PyPA); maintained in part by Trail of Bits.
+- **Category:** Python / dependency vulnerability auditing / GitHub Actions / supply-chain security.
+- **Evidence:** VERIFIED (upstream source and self-test definitions inspected; no successful run confirmed).
+- **Tier / Score:** A / 25 (Utility 5 + Working Evidence 4 + Reusability 5 + Novelty 3 + Documentation 4 + Maintenance 4).
+- **What it does:** Composite GitHub Action that invokes pip-audit on Python environments, requirements files, projects or supported lockfiles.
+- **Why it is valuable:** Reusable CI security gate with configurable advisory service, index resolution, audit summaries and regression fixtures.
+- **Useful code/components:** `action.yml` input wiring; `action.py` CLI/output handling; `setup/setup.bash` and `setup/venv.bash`; `templates/`; `.github/workflows/selftest.yml`.
+- **Install / runtime:** Use `pypa/gh-action-pip-audit@v1.1.0` in GitHub Actions as documented upstream; pin immutable commit for production. Setup checks Python >=3.7 but currently installed pip-audit requires >=3.10; use a compatible Python version.
+- **Platforms:** GitHub Actions; upstream self-test workflow includes Linux and Windows jobs.
+- **License:** Apache-2.0 root LICENSE. No third-party implementation copied.
+- **Maintenance signals:** Latest inspected upstream commit 2026-06-08; CI and self-test workflows present. No successful workflow run independently confirmed.
+- **Verification performed:** Inspected README, action metadata, runner script, setup script, requirements, license and test workflows; no local execution or live audit.
+- **Source discovery:** GitHub-first follow-up from pypa/pip-audit; no usable YouTube transcript.
+- **Related projects:** pypa/pip-audit; pypa/advisory-database; OSV.
+- **Caveats / risks:** Advisory completeness limits results; private index URLs require secret handling; internal allow-failure setting suppresses audit failure; avoid assuming Python 3.7 compatibility from setup check.
+- **Research notes:** `research/2026-11-03-gh-action-pip-audit.md`; next check passing upstream CI, version pinning and lockfile coverage.
+
 ## Entry format
 
 ### Project / Tool Name
