@@ -10997,6 +10997,48 @@
         "OSV vulnerability service"
       ],
       "research_notes": "research/2026-11-03-gh-action-pip-audit.md. Action setup checks Python >=3.7 but pip-audit current runtime requires >=3.10; audit results depend on advisory coverage. Internal allow-failure setting can suppress audit failures. Review private index credentials and pin action commit for production."
+    },
+    {
+      "name": "CycloneDX Python Library",
+      "repository": "https://github.com/CycloneDX/cyclonedx-python-lib",
+      "owner": "CycloneDX",
+      "category": [
+        "software-supply-chain",
+        "sbom",
+        "cyclonedx",
+        "python-library",
+        "serialization",
+        "validation"
+      ],
+      "evidence": "VERIFIED",
+      "tier": "S",
+      "score": 27,
+      "license": "Apache-2.0",
+      "license_copy_status": "permissive-with-attribution-and-notice-review",
+      "platforms": [
+        "Python 3.9+",
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "useful_components": [
+        "cyclonedx/model/bom.py BOM and dependency graph models",
+        "cyclonedx/output/json.py JSON serializers",
+        "cyclonedx/validation/json.py JSON schema validators",
+        "CycloneDX 1.7 schema support",
+        "optional XML and JSON validation extras"
+      ],
+      "verification": [
+        "upstream README inspected",
+        "pyproject.toml and dependency constraints inspected",
+        "LICENSE inspected",
+        "source modules inspected",
+        "CHANGELOG v11.12.0 inspected",
+        "CI workflow configuration inspected; execution not independently confirmed"
+      ],
+      "hardware_tested_by_github_gold": false,
+      "research_priority": "high",
+      "copy_restriction_note": "No third-party code copied; inspect NOTICE and dependency licenses before reuse."
     }
   ],
   "deferred_or_rejected": [
