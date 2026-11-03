@@ -24,3 +24,14 @@ Inspect source adapter modules and tests; confirm a successful upstream CI run a
 
 ## Provenance
 GitHub-first recursive follow-up from the cataloged CycloneDX Python Library. No YouTube transcript evidence used.
+
+## Follow-up source inspection — 2026-11-03
+
+Inspected the actual upstream Python modules (not merely the README or configured CI):
+- [`cyclonedx_py/_internal/cli.py`](https://github.com/CycloneDX/cyclonedx-python/blob/main/cyclonedx_py/_internal/cli.py) imports `EnvironmentBB`, `RequirementsBB`, `PoetryBB`, and `PipenvBB`, plus CycloneDX outputters and schema validators. It explicitly supports `SOURCE_DATE_EPOCH` for reproducible-build timestamp control. This verifies command-dispatch and serialization integration exist in source, not that all modes execute successfully.
+- [`requirements.py`](https://github.com/CycloneDX/cyclonedx-python/blob/main/cyclonedx_py/_internal/requirements.py) implements `RequirementsBB` using `pip_requirements_parser.RequirementsFile`; documents stdin and merged requirements use. Its import of `redact_auth_from_url` identifies an intended credential-sanitization path.
+- [`poetry.py`](https://github.com/CycloneDX/cyclonedx-python/blob/main/cyclonedx_py/_internal/poetry.py) defines `_LockEntry` with normalized dependency/extras relationships and uses CycloneDX `Dependency` models. This is more concrete than generic Poetry support claims; graph correctness remains untested.
+- [`pipenv.py`](https://github.com/CycloneDX/cyclonedx-python/blob/main/cyclonedx_py/_internal/pipenv.py) defines `PipenvBB`, parses JSON and handles package metadata, supporting the existence of a dedicated Pipenv adapter.
+- [`utils/secret.py`](https://github.com/CycloneDX/cyclonedx-python/blob/main/cyclonedx_py/_internal/utils/secret.py) defines `redact_auth_from_url` using a regular expression matching `scheme://username:password@` forms. This is **limited syntactic redaction**, not proof that all credential-bearing URLs, percent-encoded cases, tokens, or logging paths are safe. Test with synthetic credentials only.
+
+**Evidence decision:** Keep PROMISING / provisional A 24. Source inspection strengthens evidence for implemented adapters, but no successful CI execution, independent SBOM generation, graph round-trip, or credential-leak regression test has been confirmed. No source code copied. Priority for next pass: inspect test fixtures and CI run outcomes, then promote only if working evidence justifies it.
