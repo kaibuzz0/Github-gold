@@ -3870,6 +3870,27 @@ Suggested tiers:
 - **Caveats / risks:** Advisory completeness limits results; private index URLs require secret handling; internal allow-failure setting suppresses audit failure; avoid assuming Python 3.7 compatibility from setup check.
 - **Research notes:** `research/2026-11-03-gh-action-pip-audit.md`; next check passing upstream CI, version pinning and lockfile coverage.
 
+### CycloneDX Python Library
+
+- **Repository:** https://github.com/CycloneDX/cyclonedx-python-lib
+- **Author / Org:** OWASP CycloneDX
+- **Category:** Python / SBOM / supply-chain security / serialization / validation
+- **Evidence:** VERIFIED (upstream source and release evidence; no independent runtime test)
+- **Tier / Score:** S / 27
+- **What it does:** Python library for modeling, reading, writing, and validating CycloneDX bills of materials; it is not a standalone SBOM generator.
+- **Why it is valuable:** Reusable typed BOM and dependency graph models, serializers, schema validation, and integrations for software supply-chain tooling.
+- **Useful code/components:** `cyclonedx/model/bom.py` (BOM model); `cyclonedx/output/json.py` (JSON rendering); `cyclonedx/validation/json.py` (schema validation); optional XML validation; versioned schemas.
+- **Install / runtime:** Python >=3.9,<4; package `cyclonedx-python-lib`; validation extras for jsonschema/referencing and lxml.
+- **Platforms:** Python-supported Linux, Windows and macOS.
+- **License:** Apache-2.0; preserve notices and attribution if reusing source.
+- **Maintenance signals:** Changelog lists v11.12.0 (2026-08-13), including CycloneDX 1.7 isExternal support; CI workflow defines push, PR and daily checks. Successful CI run not independently confirmed.
+- **Verification performed:** Inspected upstream README, pyproject.toml, LICENSE, CHANGELOG, three source modules and Python CI workflow. No package installation, SBOM generation or validation executed.
+- **Source discovery:** GitHub-first investigation following pip-audit CycloneDX export capability; no YouTube transcript attribution.
+- **Related projects:** CycloneDX/cyclonedx-python (standalone SBOM generation); pypa/pip-audit (CycloneDX export); sonatype-nexus-community/jake.
+- **Caveats / risks:** Library does not discover dependencies by itself; validating a BOM schema does not establish the completeness or accuracy of its contents. Optional validation dependencies required for corresponding features.
+- **Research notes:** `research/2026-11-03-cyclonedx-python-lib.md`; investigate actual JSON/XML round-trip tests and dependency graph behavior.
+
+
 ## Entry format
 
 ### Project / Tool Name
