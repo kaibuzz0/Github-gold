@@ -31,6 +31,19 @@ VALID_EVIDENCE = {"VERIFIED", "PROMISING", "LEAD", "ARCHIVED"}
 VALID_TIERS = {"S", "A", "B", "C", "D"}
 
 
+def expected_tier(score: int) -> str:
+    """Return the tier defined in MASTER_LIST.md for a valid 0–30 score."""
+    if score >= 26:
+        return "S"
+    if score >= 21:
+        return "A"
+    if score >= 16:
+        return "B"
+    if score >= 10:
+        return "C"
+    return "D"
+
+
 class Audit:
     def __init__(self) -> None:
         self.errors: list[str] = []
@@ -112,6 +125,17 @@ def validate_entry(
         audit.error(f"{where}: {score_key} must be an integer from 0 to 30")
     if tier not in VALID_TIERS:
         audit.error(f"{where}: invalid tier {tier!r}")
+    if (
+        isinstance(score, int)
+        and not isinstance(score, bool)
+        and 0 <= score <= 30
+        and tier in VALID_TIERS
+        and tier != expected_tier(score)
+    ):
+        audit.error(
+            f"{where}: {tier_key} {tier!r} does not match {score_key} "
+            f"{score} (expected {expected_tier(score)!r})"
+        )
 
     license_value = entry.get("license")
     if not isinstance(license_value, str) or not license_value.strip():
