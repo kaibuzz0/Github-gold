@@ -60,3 +60,18 @@ Inspected upstream [tests/__init__.py](https://github.com/CycloneDX/cyclonedx-py
 **Assessment:** retain PROMISING / provisional A 24/30. The next highest-value check is to read specific `.bin` snapshots for purls, dependency references, and any literal `user:password` occurrences, then compare against the associated fixture inputs. Verify CI at the exact inspected revision before promotion.
 
 **Workflow correction:** On this pass both draft PR #7 and draft PR #8 were discoverable as open; the earlier note that PR #7 could not be found was an observation from that earlier search, not its current status. Continue the existing PR #8 research branch for this dossier.
+
+## Inspected concrete requirements SBOM snapshot (2026-11-04)
+
+Primary upstream artifacts inspected directly (source inspection, **not** a locally generated SBOM):
+
+- [Credential-bearing test invocation](https://github.com/CycloneDX/cyclonedx-python/blob/main/tests/integration/test_cli_requirements.py) — `test_with_index_auth` supplies synthetic `https://user:password@` URLs for three indexes, enables `--output-reproducible`, and compares normalized output against a checked-in snapshot.
+- [Exact JSON snapshot](https://github.com/CycloneDX/cyclonedx-python/blob/main/tests/_data/snapshots/requirements/index_auth_frozen_1.6.json.bin) — CycloneDX JSON schema 1.6, with two library components: `colorama@0.4.6` and `FooProject@1.2`. Each has a `pkg:pypi/...` purl and a line-derived `bom-ref` (`requirements-L4` and `requirements-L7`). `FooProject` carries two SHA-256 distribution hashes matching the input fixture. Three distribution-reference hosts appear without the synthetic `user:password@` userinfo.
+- [Input requirements fixture](https://github.com/CycloneDX/cyclonedx-python/blob/main/tests/_data/infiles/requirements/frozen.txt) — two pinned packages, including the two hashes on `FooProject`; compared against the snapshot fields above.
+- [Snapshot comparison implementation](https://github.com/CycloneDX/cyclonedx-python/blob/main/tests/__init__.py) — normalizes file URIs and selected tool/library metadata; does not show blanket removal of package purls or index URL userinfo in the inspected JSON normalization function.
+
+**What the evidence supports:** This specific committed expected-output fixture preserves package names, versions, purls, hashes and index hostnames while omitting the synthetic username/password from its distribution URLs. That is narrower than proving all credentials are masked: other URL encodings, stderr/logs, XML output, and runtime behavior have not been independently checked. The fixture's `dependencies` array has three `ref` entries (the two requirements and `root-component`) but **no `dependsOn` edges**. Therefore this fixture does not prove accurate transitive dependency-graph construction. The root component is populated from the optional `--pyproject` fixture, and its license expression is `Apache-2.0 OR MIT`.
+
+**Verification boundary:** The snapshot is a stored expected output, not independently executed output. It was inspected as text via the upstream repository; no package installation, code execution, schema validation, or broad secret-scanning was performed. Retain **PROMISING / provisional A 24/30** until representative generation and stronger graph/security checks. No upstream code was copied.
+
+**Next targeted work:** Inspect Poetry/Pipenv snapshots with explicit `dependsOn` edges, compare credential-bearing XML snapshots, run tests without `CDX_TEST_RECREATE_SNAPSHOTS`, and confirm successful CI at the same upstream revision.
