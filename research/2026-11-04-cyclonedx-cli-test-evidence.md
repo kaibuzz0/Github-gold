@@ -125,3 +125,14 @@ Inspected the upstream checked-in [requirements/index_auth_frozen_1.6.xml.bin](h
 **Security scope:** This is a **static review of one expected-output XML fixture**, not an executed secret-leak test. It supports the narrow observation that synthetic basic-auth userinfo is absent from this stored XML artifact. It does not validate unusual encodings, other SBOM inputs, stderr/logging, or runtime redaction. The JSON counterpart exhibits the same narrow property. No third-party code was copied.
 
 **Assessment unchanged:** PROMISING / provisional A 24/30, Apache-2.0. Next: run pinned tests with snapshot regeneration disabled, exercise synthetic credentials in both XML and JSON at runtime, validate output against schema, and test Python-version-dependent Poetry dependency edges.
+
+
+## Conditional-marker coverage audit (2026-11-05)
+
+Re-read the [pinned Poetry integration module](https://github.com/CycloneDX/cyclonedx-python/blob/9d0acc7be9e2bdc507104a6d6815761c5522e26e/tests/integration/test_cli_poetry.py) and [pinned Poetry 2.1 lockfile](https://github.com/CycloneDX/cyclonedx-python/blob/9d0acc7be9e2bdc507104a6d6815761c5522e26e/tests/_data/infiles/poetry/with-urls/lock21/poetry.lock) to assess the proposed Python-version-dependent graph test.
+
+- The parameterized Poetry test matrix iterates discovered lockfile directories and CycloneDX output format/schema pairs. It does **not** explicitly parameterize target Python interpreter versions or assert a changed `wxPython -> numpy` edge on either side of the lockfile's `python_version < "3.12"` marker.
+- The same fixture declares project Python compatibility `^3.8`, while the resolved NumPy 1.24.4 package declares `>=3.8`. Consequently, **do not use this fixture alone as a valid Python 3.12+ environment test**: package compatibility and marker applicability must both be accounted for when constructing a separate fixture.
+- `test_plain_as_expected` compares normalized snapshots and does not independently assert environment-specific marker evaluation. The existing static comparison demonstrates lockfile-to-expected-output consistency, not correct marker filtering across runtimes.
+
+**Proposed bounded verification:** create two synthetic *compatible* lockfiles or isolated environments with a conditional dependency whose package versions support both target Python versions; generate SBOMs under both targets, compare explicit `dependsOn` edges, validate JSON/XML schemas, and ensure snapshot regeneration remains disabled. Preserve **PROMISING / provisional A 24/30** until execution and compatibility checks. This pass was source inspection only; no tests were executed or third-party source copied.
