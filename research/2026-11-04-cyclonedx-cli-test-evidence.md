@@ -111,3 +111,17 @@ Located and inspected the **actual nested lockfile** [`tests/_data/infiles/poetr
 - **Scope:** This is a direct inspection and static comparison of upstream checked-in inputs and expected outputs, not local execution, proof of runtime graph correctness, or a successful CI run at this exact commit. Keep **PROMISING / provisional A 24/30** pending actual CLI generation and schema validation. Apache-2.0; no upstream code copied.
 
 **Next highest-value verification:** test the conditional NumPy edge with different Python target environments; run the pinned fixture tests with snapshot regeneration disabled; inspect authenticated-index XML output for leaked credentials. The direct and transitive lockfile-to-snapshot graph cross-check for this specific fixture is now complete.
+
+
+## Authenticated-index CycloneDX 1.6 XML snapshot audit (2026-11-05)
+
+Inspected the upstream checked-in [requirements/index_auth_frozen_1.6.xml.bin](https://github.com/CycloneDX/cyclonedx-python/blob/9d0acc7be9e2bdc507104a6d6815761c5522e26e/tests/_data/snapshots/requirements/index_auth_frozen_1.6.xml.bin), pinned to revision `9d0acc7be9e2bdc507104a6d6815761c5522e26e`, and compared its fields with the JSON snapshot and previously inspected synthetic-auth integration invocation.
+
+- XML document declares the CycloneDX 1.6 namespace and contains the two expected libraries: `FooProject@1.2` and `colorama@0.4.6`, with matching `pkg:pypi/...` identifiers and line-based component references.
+- All three synthetic package-index hostnames are preserved as distribution URLs for both libraries, **without** the supplied `user:password@` URL userinfo. The two SHA-256 values attached to FooProject appear in each corresponding distribution reference.
+- Its `dependencies` section contains three empty dependency elements for `requirements-L4`, `requirements-L7`, and `root-component`; no transitive edges are demonstrated by this fixture.
+- The XML contains explicit snapshot-normalization placeholders such as `thisVersion-testing`, `libVersion-testing`, and `<!-- stripped -->`. These prevent interpreting the checked-in XML as untouched runtime output. The `cdx:reproducible=true` property is a declared field, not proof of cross-environment byte reproducibility.
+
+**Security scope:** This is a **static review of one expected-output XML fixture**, not an executed secret-leak test. It supports the narrow observation that synthetic basic-auth userinfo is absent from this stored XML artifact. It does not validate unusual encodings, other SBOM inputs, stderr/logging, or runtime redaction. The JSON counterpart exhibits the same narrow property. No third-party code was copied.
+
+**Assessment unchanged:** PROMISING / provisional A 24/30, Apache-2.0. Next: run pinned tests with snapshot regeneration disabled, exercise synthetic credentials in both XML and JSON at runtime, validate output against schema, and test Python-version-dependent Poetry dependency edges.
