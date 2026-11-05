@@ -75,3 +75,14 @@ Primary upstream artifacts inspected directly (source inspection, **not** a loca
 **Verification boundary:** The snapshot is a stored expected output, not independently executed output. It was inspected as text via the upstream repository; no package installation, code execution, schema validation, or broad secret-scanning was performed. Retain **PROMISING / provisional A 24/30** until representative generation and stronger graph/security checks. No upstream code was copied.
 
 **Next targeted work:** Inspect Poetry/Pipenv snapshots with explicit `dependsOn` edges, compare credential-bearing XML snapshots, run tests without `CDX_TEST_RECREATE_SNAPSHOTS`, and confirm successful CI at the same upstream revision.
+
+
+## Poetry dependency-edge snapshot inspection (2026-11-04)
+
+Inspected the **actual checked-in upstream** [Poetry JSON fixture](https://github.com/CycloneDX/cyclonedx-python/blob/9d0acc7be9e2bdc507104a6d6815761c5522e26e/tests/_data/snapshots/poetry/plain_with-urls_lock21_1.2.json.bin), located by searching upstream source for `dependsOn` rather than guessing filenames. The corresponding [Poetry integration tests](https://github.com/CycloneDX/cyclonedx-python/blob/9d0acc7be9e2bdc507104a6d6815761c5522e26e/tests/integration/test_cli_poetry.py) compare generated normalized output against snapshots through `test_plain_as_expected` and other fixture-backed cases.
+
+**Concrete stored graph evidence:** The `with-urls` root application has explicit `dependsOn` edges to `Pillow@10.1.0`, `numpy@1.24.4`, `six@1.16.0`, and `wxPython@4.2.2`. The `wxPython@4.2.2` component has edges to `numpy@1.24.4` and `six@1.16.0`. The snapshot contains four corresponding component records and `bom-ref` identifiers. It also records VCS and distribution source URLs, including a pinned Pillow Git revision and a wxPython wheel URL. This demonstrates that at least one committed Poetry expected-output fixture encodes nontrivial dependency relationships; it closes the earlier *fixture-inspection* gap left by the requirements snapshot with no edges.
+
+**Important version boundary:** This exact fixture declares **CycloneDX schema 1.2**, not 1.6. Do not describe it as proving graph handling in every schema version or current runtime release. A checked-in expected fixture plus test assertions is upstream test-design evidence, **not** an independently executed graph-correctness test. The input Poetry lockfile was not compared line-by-line here, and CI at the exact linked upstream revision was not checked. No package installation or tests were performed, and no third-party code was copied.
+
+**Assessment:** retain **PROMISING / provisional A 24/30** pending independently executed fixtures and validation of expected edges against lockfile source. Next: compare the specific Poetry `with-urls` input lockfile to these graph edges, inspect a 1.6 JSON snapshot and Pipenv authenticated-index XML snapshot, then verify tests run without snapshot regeneration.
