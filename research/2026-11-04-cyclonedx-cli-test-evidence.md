@@ -99,3 +99,15 @@ Pinned upstream revision: `9d0acc7be9e2bdc507104a6d6815761c5522e26e`. Inspected 
 - The integration test enumerates nested `poetry.lock` fixtures with a glob and compares normalized CLI output against snapshots; this pass did not retrieve the matching lockfile, execute the tests, or validate the JSON against the CycloneDX schema.
 
 **Assessment:** PROMISING, provisional **A / 24** unchanged. Direct dependencies are now cross-checked against an upstream input template, while transitive graph correctness remains unresolved. Apache-2.0 upstream license applies; no code copied. Next: locate the nested lockfile and verify wxPython's transitive requirements, inspect an authenticated-index XML snapshot, and run tests without snapshot regeneration.
+
+
+## Resolved Poetry 2.1 lockfile cross-check (2026-11-05)
+
+Located and inspected the **actual nested lockfile** [`tests/_data/infiles/poetry/with-urls/lock21/poetry.lock`](https://github.com/CycloneDX/cyclonedx-python/blob/9d0acc7be9e2bdc507104a6d6815761c5522e26e/tests/_data/infiles/poetry/with-urls/lock21/poetry.lock), pinned to upstream commit `9d0acc7be9e2bdc507104a6d6815761c5522e26e`. The test discovers this path via `poetry/*/*/poetry.lock`, explaining earlier failed guesses.
+
+- The lockfile contains exactly four resolved packages: `numpy 1.24.4`, `Pillow 10.1.0`, `six 1.16.0`, and `wxPython 4.2.2`. These names and versions match the [CycloneDX 1.6 expected snapshot](https://github.com/CycloneDX/cyclonedx-python/blob/9d0acc7be9e2bdc507104a6d6815761c5522e26e/tests/_data/snapshots/poetry/plain_with-urls_lock21_1.6.json.bin).
+- Crucially, `[package.dependencies]` under wxPython explicitly declares `six = "*"` and `numpy = {version = "*", markers = "python_version >= \\\"3.0\\\" and python_version < \\\"3.12\\\""}`. Thus **both wxPython edges in the expected snapshot have corresponding lockfile declarations**. The NumPy edge is **environment-marker conditional**; its presence in the snapshot must not be presented as a universal dependency across every Python version.
+- The lockfile independently records NumPy and wxPython distribution URLs/hashes and Pillow/six Git sources with resolved revisions. These are useful fields to cross-check against snapshot provenance; no claim of complete byte-for-byte equality is made here.
+- **Scope:** This is a direct inspection and static comparison of upstream checked-in inputs and expected outputs, not local execution, proof of runtime graph correctness, or a successful CI run at this exact commit. Keep **PROMISING / provisional A 24/30** pending actual CLI generation and schema validation. Apache-2.0; no upstream code copied.
+
+**Next highest-value verification:** test the conditional NumPy edge with different Python target environments; run the pinned fixture tests with snapshot regeneration disabled; inspect authenticated-index XML output for leaked credentials. The direct and transitive lockfile-to-snapshot graph cross-check for this specific fixture is now complete.
