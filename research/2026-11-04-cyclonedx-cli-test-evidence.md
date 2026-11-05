@@ -136,3 +136,12 @@ Re-read the [pinned Poetry integration module](https://github.com/CycloneDX/cycl
 - `test_plain_as_expected` compares normalized snapshots and does not independently assert environment-specific marker evaluation. The existing static comparison demonstrates lockfile-to-expected-output consistency, not correct marker filtering across runtimes.
 
 **Proposed bounded verification:** create two synthetic *compatible* lockfiles or isolated environments with a conditional dependency whose package versions support both target Python versions; generate SBOMs under both targets, compare explicit `dependsOn` edges, validate JSON/XML schemas, and ensure snapshot regeneration remains disabled. Preserve **PROMISING / provisional A 24/30** until execution and compatibility checks. This pass was source inspection only; no tests were executed or third-party source copied.
+
+
+## Packaging and reuse boundary audit (2026-11-05)
+
+Inspected the upstream [`pyproject.toml`](https://github.com/CycloneDX/cyclonedx-python/blob/main/pyproject.toml) directly. At inspection time it declares distribution `cyclonedx-bom` version `8.0.1`, Python `>=3.9,<4`, Apache-2.0, and console-script entry point `cyclonedx-py = cyclonedx_py._internal.cli:run`. The package includes `cyclonedx_py` and uses `poetry-core` as its build backend. These are **manifest declarations**, not an independently installed or exercised binary.
+
+Reusable integration boundary: invoke the documented `cyclonedx-py` command as an external SBOM generator rather than importing `cyclonedx_py._internal.cli` as a stable application API; the leading `_internal` signals an implementation-private module, and no stability guarantee was established. The manifest declares `cyclonedx-python-lib[validation]>=8,<12`, `packageurl-python>=0.11,<2`, `pip-requirements-parser>=32,<33`, `packaging>=22,<27`, and `chardet>=5.1,!=6.*,<8`. These dependencies matter for reproducible installation and for distinguishing the CLI from the separately cataloged BOM-model library.
+
+**Version/provenance caution:** the manifest was fetched from upstream's default branch, while the earlier lockfile/snapshot analysis is pinned to `9d0acc7be9e2bdc507104a6d6815761c5522e26e`. Do not silently assume they represent the same upstream revision. Before runtime testing, pin a single commit and record the resolved environment, command, and schema-validation results. No new catalog entry or score promotion is justified by package metadata alone; retain **PROMISING / provisional A 24/30**. No code copied or executed.
