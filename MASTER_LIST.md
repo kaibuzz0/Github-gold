@@ -462,7 +462,7 @@ Suggested tiers:
 - **Verification performed:** Official README, root LICENSE and package.json inspected 2026-11-06. No installation, benchmark or browser/device execution performed.
 - **Source discovery:** GitHub-first, investigated for Meme City wildlife/NPC static spatial broadphase.
 - **Related projects:** mourner/rbush; mourner/kdbush; mourner/geoflatbush; mourner/flatqueue.
-- **Caveats / risks:** **Static index:** moving NPCs need periodic rebuilds or a separate dynamic structure. Requires Android memory/latency benchmark and dependency license verification before production integration.
+- **Caveats / risks:** **Static index:** moving NPCs need periodic rebuilds or a separate dynamic structure. Requires Android memory/latency benchmark before production integration. Direct dependency `mourner/flatqueue` root LICENSE is ISC (copyright 2025 Volodymyr Agafonkin), and package.json version 3.1.0 declares ISC; verified from upstream repository files on 2026-11-06. No dependency installation or execution was performed.
 - **Research notes:** Candidate for a small isolated NPC/habitat query adapter and benchmark; not approved for wholesale engine replacement.
 
 ## Rejected / Deferred Leads
