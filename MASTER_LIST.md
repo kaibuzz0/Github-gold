@@ -445,6 +445,26 @@ Suggested tiers:
 - **Caveats / risks:** Certificate automation is security-critical; deployments must configure storage, permissions, on-demand controls, and issuer policies carefully.
 - **Research notes:** Strong reusable component entry independent of Caddy itself.
 
+### Flatbush — Static Spatial Index
+
+- **Repository:** https://github.com/mourner/flatbush
+- **Author / Org:** Vladimir Agafonkin / mourner
+- **Category:** JavaScript spatial index / game entity broadphase / navigation
+- **Evidence:** PROMISING
+- **Tier / Score:** A / 23 (Utility 5, Working evidence 3, Reusability 5, Novelty 3, Documentation 4, Maintenance 3)
+- **What it does:** Packed Hilbert R-tree for static 2D rectangles and points, with fast range and nearest-neighbor queries.
+- **Why it is valuable:** A compact transferable ArrayBuffer could index terrain obstacles, stationary NPC structures and wildlife habitat zones in browser game worlds.
+- **Useful code/components:** `index.js` static index construction; `search()`; `neighbors()`; `Flatbush.from()` for worker transfer.
+- **Install / runtime:** npm package `flatbush`, upstream package.json reports version 4.7.0, ESM, runtime dependency `flatqueue ^3.1.0`.
+- **Platforms:** Modern JavaScript browsers and Node.js; Android/WebGL1 performance not independently tested.
+- **License:** ISC; upstream root LICENSE inspected on 2026-11-06, copyright 2022 Vladimir Agafonkin. Preserve copyright and permission notice in copies. Review flatqueue separately before importing.
+- **Maintenance signals:** README includes CI badge and package metadata includes Node tests, TypeScript checks and ESLint; current release date/commit recency not independently confirmed.
+- **Verification performed:** Official README, root LICENSE and package.json inspected 2026-11-06. No installation, benchmark or browser/device execution performed.
+- **Source discovery:** GitHub-first, investigated for Meme City wildlife/NPC static spatial broadphase.
+- **Related projects:** mourner/rbush; mourner/kdbush; mourner/geoflatbush; mourner/flatqueue.
+- **Caveats / risks:** **Static index:** moving NPCs need periodic rebuilds or a separate dynamic structure. Requires Android memory/latency benchmark and dependency license verification before production integration.
+- **Research notes:** Candidate for a small isolated NPC/habitat query adapter and benchmark; not approved for wholesale engine replacement.
+
 ## Rejected / Deferred Leads
 
 - **PeterJBurke/esp32-c3-remote-id:** deferred because its own README explicitly states it is broken after an ESP development-stack upgrade and may be deleted. Keep as historical lead only; do not promote as working Gold.
